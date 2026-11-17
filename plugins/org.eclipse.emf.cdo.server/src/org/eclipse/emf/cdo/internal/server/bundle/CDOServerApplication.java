@@ -1,283 +1,213 @@
 /*
- * Copyright (c) 2007-2012, 2018-2022, 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2018-2022, 2025-2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.spi.server.IAppExtension;
-import org.eclipse.emf.cdo.spi.server.IAppExtension3;
-import org.eclipse.emf.cdo.spi.server.IAppExtension4;
-import org.eclipse.emf.cdo.spi.server.IAppExtension5;
-import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
-
-import org.eclipse.net4j.util.PluginUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMBundle.TranslationSupport;
-import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiApplication;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
 
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * Adapts the shared CDO server lifecycle to the Equinox application contract.
+ *
  * @author Eike Stepper
  */
-public class CDOServerApplication extends OSGiApplication
+public class CDOServerApplication extends AbstractCDOServerApplication implements IApplication
 {
+  /**
+   * The registered Equinox application identifier.
+   */
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
-  public static final String PROP_TITLE = "org.eclipse.emf.cdo.server.title"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_TITLE}.
+   */
+  public static final String PROP_TITLE = AbstractCDOServerApplication.PROP_TITLE;
 
-  public static final String PROP_CONFIG_FILE_NAME = "org.eclipse.emf.cdo.server.configFileName"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_CONFIG_FILE_NAME}.
+   */
+  public static final String PROP_CONFIG_FILE_NAME = AbstractCDOServerApplication.PROP_CONFIG_FILE_NAME;
 
-  public static final String PROP_CONFIGURATOR_TYPE = "org.eclipse.emf.cdo.server.repositoryConfiguratorType"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_CONFIGURATOR_TYPE}.
+   */
+  public static final String PROP_CONFIGURATOR_TYPE = AbstractCDOServerApplication.PROP_CONFIGURATOR_TYPE;
 
-  public static final String PROP_CONFIGURATOR_DESCRIPTION = "org.eclipse.emf.cdo.server.repositoryConfiguratorDescription"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_CONFIGURATOR_DESCRIPTION}.
+   */
+  public static final String PROP_CONFIGURATOR_DESCRIPTION = AbstractCDOServerApplication.PROP_CONFIGURATOR_DESCRIPTION;
 
-  public static final String PROP_BROWSER_PORT = "org.eclipse.emf.cdo.server.browser.port"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_BROWSER_PORT}.
+   */
+  public static final String PROP_BROWSER_PORT = AbstractCDOServerApplication.PROP_BROWSER_PORT;
 
-  public static final String PROP_BROWSER_TYPE = "org.eclipse.emf.cdo.server.browser.type"; //$NON-NLS-1$
+  /**
+   * Compatibility alias for {@link AbstractCDOServerApplication#PROP_BROWSER_TYPE}.
+   */
+  public static final String PROP_BROWSER_TYPE = AbstractCDOServerApplication.PROP_BROWSER_TYPE;
 
-  private static final TranslationSupport TS = OM.BUNDLE.getTranslationSupport();
+  private final CountDownLatch stopLatch = new CountDownLatch(1);
 
-  private IRepository[] repositories;
+  private final AtomicBoolean stopRequested = new AtomicBoolean();
 
-  private List<IAppExtension> earlyExtensions = new ArrayList<>();
+  private volatile IApplicationContext context;
 
-  private List<IAppExtension> extensions = new ArrayList<>();
+  private volatile boolean running;
 
+  /**
+   * Creates the Equinox server application adapter.
+   */
   public CDOServerApplication()
   {
-    super(ID);
   }
 
-  protected String getTitle()
+  /**
+   * Returns the Equinox application identifier registered for the CDO server.
+   *
+   * @return the registered application identifier
+   */
+  public String getApplicationID()
   {
-    return OMPlatform.INSTANCE.getProperty(PROP_TITLE, "CDO server"); //$NON-NLS-1$
+    return ID;
   }
 
-  protected File getConfigFile()
+  /**
+   * Returns the application context supplied by Equinox while this application is running.
+   *
+   * @return the current application context, or {@code null} when no start is in progress
+   */
+  public IApplicationContext getApplicationContext()
   {
-    String configFileName = OMPlatform.INSTANCE.getProperty(PROP_CONFIG_FILE_NAME, "cdo-server.xml"); //$NON-NLS-1$
-    return OMPlatform.INSTANCE.getConfigFile(configFileName);
+    return context;
   }
 
-  protected RepositoryConfigurator getConfigurator(IManagedContainer container)
+  /**
+   * Indicates whether the application has completed startup and is waiting for Equinox to stop it.
+   *
+   * @return {@code true} while the application start call is waiting for shutdown
+   */
+  public boolean isRunning()
   {
-    String type = OMPlatform.INSTANCE.getProperty(PROP_CONFIGURATOR_TYPE, RepositoryConfigurator.Factory.Default.TYPE);
-    String description = OMPlatform.INSTANCE.getProperty(PROP_CONFIGURATOR_DESCRIPTION);
-    return (RepositoryConfigurator)container.getElement(RepositoryConfigurator.Factory.PRODUCT_GROUP, type, description);
-  }
-
-  protected IManagedContainer getApplicationContainer()
-  {
-    return getContainer();
-  }
-
-  protected void readExtensions(IManagedContainer container)
-  {
-    IConfigurationElement[] elements = PluginUtil.getConfigurationElements(OM.BUNDLE_ID, IAppExtension.EXT_POINT);
-    elements = PluginUtil.removePredecessors(elements);
-
-    for (IConfigurationElement element : elements)
-    {
-      if ("appExtension".equals(element.getName())) //$NON-NLS-1$
-      {
-        try
-        {
-          IAppExtension extension = PluginUtil.instantiate(element);
-
-          if (extension instanceof ContainerAware)
-          {
-            ((ContainerAware)extension).setManagedContainer(container);
-
-          }
-
-          if (extension instanceof IAppExtension5 && ((IAppExtension5)extension).startBeforeRepositories())
-          {
-            earlyExtensions.add(extension);
-          }
-          else
-          {
-            extensions.add(extension);
-          }
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-    }
-
-    earlyExtensions.sort(IAppExtension4.COMPARATOR);
-    extensions.sort(IAppExtension4.COMPARATOR);
+    return running;
   }
 
   @Override
-  protected void doStart() throws Exception
+  public Object start(IApplicationContext context) throws Exception
   {
-    OM.LOG.info(TS.getString("CDOServerApplication.starting", getTitle())); //$NON-NLS-1$
-    super.doStart();
+    this.context = context;
+    OSGiApplication.traceStart(ID);
 
-    File configFile = getConfigFile();
-    if (configFile != null && configFile.exists())
+    try
     {
-      IManagedContainer container = getApplicationContainer();
-      readExtensions(container);
-
-      startExtensions(configFile, earlyExtensions);
-      startRepositories(configFile, container);
-      startBrowser(container);
-      startExtensions(configFile, extensions);
-    }
-    else
-    {
-      OM.LOG.warn(TS.getString("CDOServerApplication.noConfig") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
-    }
-
-    OM.LOG.info(TS.getString("CDOServerApplication.started", getTitle())); //$NON-NLS-1$
-  }
-
-  protected void startRepositories(File configFile, IManagedContainer container) throws ParserConfigurationException, SAXException, IOException, CoreException
-  {
-    RepositoryConfigurator repositoryConfigurator = getConfigurator(container);
-
-    repositories = repositoryConfigurator.configure(configFile);
-    if (repositories == null || repositories.length == 0)
-    {
-      OM.LOG.warn(TS.getString("CDOServerApplication.noRepos") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
-    }
-  }
-
-  protected void startBrowser(IManagedContainer container)
-  {
-    String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
-    if (port != null)
-    {
-      String type = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_TYPE, "default");
-      container.getElement("org.eclipse.emf.cdo.server.browsers", type, port); //$NON-NLS-1$
-    }
-  }
-
-  protected void startExtensions(File configFile, List<IAppExtension> extensions)
-  {
-    for (IAppExtension extension : extensions)
-    {
-      try
+      synchronized (this)
       {
-        if (extension instanceof IAppExtension5)
+        activate();
+
+        if (stopRequested.get())
         {
-          IAppExtension5 named = (IAppExtension5)extension;
-          OM.LOG.info(TS.getString("AppExtension.starting", named.getName())); //$NON-NLS-1$
+          deactivateAndLog();
+        }
+        else if (context != null)
+        {
+          context.applicationRunning();
         }
 
-        if (extension instanceof IAppExtension3)
-        {
-          IAppExtension3 extension3 = (IAppExtension3)extension;
-          extension3.start(repositories, configFile);
-        }
-        else
-        {
-          extension.start(configFile);
-        }
+        running = true;
+      }
 
-        if (extension instanceof IAppExtension5)
-        {
-          IAppExtension5 named = (IAppExtension5)extension;
-          OM.LOG.info(TS.getString("AppExtension.started", named.getName())); //$NON-NLS-1$
-        }
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
+      stopLatch.await();
+      return EXIT_OK;
+    }
+    catch (Error error)
+    {
+      deactivateAfterStartFailure(error);
+      OM.LOG.error(error);
+      throw error;
+    }
+    catch (Exception ex)
+    {
+      deactivateAfterStartFailure(ex);
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    finally
+    {
+      running = false;
+      this.context = null;
     }
   }
 
   @Override
-  protected void doStop() throws Exception
+  public void stop()
   {
-    OM.LOG.info(TS.getString("CDOServerApplication.stopping", getTitle())); //$NON-NLS-1$
+    OSGiApplication.traceStop(ID);
+    stopRequested.set(true);
 
-    stopExtensions(extensions);
-    stopRepositories();
-    stopExtensions(earlyExtensions);
-
-    IManagedContainer container = getApplicationContainer();
-    container.deactivate();
-
-    super.doStop();
-    OM.LOG.info(TS.getString("CDOServerApplication.stopped", getTitle())); //$NON-NLS-1$
+    try
+    {
+      synchronized (this)
+      {
+        deactivateAndLog();
+      }
+    }
+    catch (Error error)
+    {
+      OM.LOG.error(error);
+      throw error;
+    }
+    finally
+    {
+      context = null;
+      stopLatch.countDown();
+    }
   }
 
-  protected void stopExtensions(List<IAppExtension> extensions)
+  private void deactivateAndLog()
   {
-    Collections.reverse(extensions);
+    Exception exception = deactivate();
+    if (exception != null)
+    {
+      OM.LOG.error(exception);
+    }
+  }
 
-    for (IAppExtension extension : extensions)
+  private void deactivateAfterStartFailure(Throwable failure)
+  {
+    if (isActive())
     {
       try
       {
-        if (extension instanceof IAppExtension5)
+        Exception exception = deactivate();
+        if (exception != null)
         {
-          IAppExtension5 named = (IAppExtension5)extension;
-          OM.LOG.info(TS.getString("AppExtension.stopping", named.getName())); //$NON-NLS-1$
-        }
-
-        if (extension instanceof IAppExtension3)
-        {
-          IAppExtension3 extension3 = (IAppExtension3)extension;
-          extension3.stop(repositories);
-        }
-        else
-        {
-          extension.stop();
-        }
-
-        if (extension instanceof IAppExtension5)
-        {
-          IAppExtension5 named = (IAppExtension5)extension;
-          OM.LOG.info(TS.getString("AppExtension.stopped", named.getName())); //$NON-NLS-1$
+          failure.addSuppressed(exception);
         }
       }
-      catch (Exception ex)
+      catch (Error error)
       {
-        OM.LOG.error(ex);
+        failure.addSuppressed(error);
       }
     }
   }
 
-  protected void stopRepositories()
-  {
-    if (repositories != null)
-    {
-      for (IRepository repository : repositories)
-      {
-        LifecycleUtil.deactivate(repository);
-      }
-    }
-  }
-
+  /**
+   * Returns the global managed container used by server components and legacy callers.
+   *
+   * @return the shared global managed container
+   */
   public static IManagedContainer getContainer()
   {
     return IManagedContainer.INSTANCE;

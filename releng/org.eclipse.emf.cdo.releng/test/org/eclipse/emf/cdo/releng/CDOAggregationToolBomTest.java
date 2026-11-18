@@ -53,6 +53,7 @@ import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -970,9 +971,10 @@ public class CDOAggregationToolBomTest
     String examplesSourceCommit = "fedcba9876543210fedcba9876543210fedcba98";
     String dropID = "I20261118-0801";
     Files.writeString(metadata, "cdo.build.type=I\ncdo.build.stream=4.x\ncdo.drop.id=" + dropID + "\ncdo.git.commit=" + dropCommit
-        + "\ncdo.project.release=4.37.0\n" + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
+        + "\ncdo.project.release=4.37\n" + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
 
-    createExamplesCandidates(candidates, "4.37.0", dropID);
+    createExamplesCandidates(candidates, "4.37", dropID);
+    stageFixtureBom(candidates, staging, "4.37");
 
     File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
     Path central = new File(classes.getParentFile(), "central").toPath();
@@ -1043,6 +1045,7 @@ public class CDOAggregationToolBomTest
     }
 
     Path explicitVersionStaging = Files.createDirectory(root.resolve("explicit-version-staging"));
+    copyStagedBom(staging, explicitVersionStaging, "4.37.0");
     args[7] = explicitVersionStaging.toString();
     createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0", "3.31.0");
     try
@@ -1056,7 +1059,7 @@ public class CDOAggregationToolBomTest
     }
 
     args[7] = staging.toString();
-    Path selectedBom = candidates.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    Path selectedBom = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
     String validBom = Files.readString(selectedBom, StandardCharsets.UTF_8);
     Files.writeString(selectedBom, validBom.replace("<cdo.drop.id>" + dropID + "</cdo.drop.id>", "<cdo.drop.id>I20261117-0801</cdo.drop.id>"),
         StandardCharsets.UTF_8);
@@ -1084,7 +1087,7 @@ public class CDOAggregationToolBomTest
     assertEquals(examplesSourceCommit, childText(properties, "cdo.examples.source.git.commit"));
     assertEquals(dropCommit, childText(properties, "cdo.git.commit"));
     assertEquals(dropID, childText(properties, "cdo.drop.id"));
-    assertEquals("4.37.0", childText(properties, "cdo.project.release"));
+    assertEquals("4.37", childText(properties, "cdo.project.release"));
     assertTrue(child(properties, "examples.cdo.project.release") == null);
   }
 
@@ -1352,6 +1355,7 @@ public class CDOAggregationToolBomTest
       assertEquals("NEW", readProperties(root.resolve("examples-version-selection.properties")).getProperty("examples.distribution.selection"));
 
       Path finalStaging = Files.createDirectories(root.resolve("final-staging"));
+      copyStagedBom(candidate.get("initial.staging"), finalStaging, "4.37.0");
       String sourceRevision = Files.readString(candidate.get("source.revision"), StandardCharsets.US_ASCII);
       CDOAggregationTool.main(new String[] { "stage-examples-distribution", candidate.get("workspace").toString(), candidate.get("candidates").toString(),
           candidate.get("zip").toString(), candidate.get("pom").toString(), candidate.get("metadata").toString(), candidate.get("publishing").toString(),
@@ -1417,6 +1421,7 @@ public class CDOAggregationToolBomTest
     }
 
     CDOAggregationTool.main(new String[] { "stage-release-bom", root.resolve("generated-bom").toString(), metadataFile.toString(), staging.toString() });
+    copyCandidateArtifactsFromStaging(candidate.get("candidates"), staging);
     CDOAggregationTool.main(new String[] { "stage-examples-distribution", candidate.get("workspace").toString(), candidate.get("candidates").toString(),
         candidate.get("zip").toString(), candidate.get("pom").toString(), metadataFile.toString(), candidate.get("publishing").toString(), staging.toString(),
         Files.readString(candidate.get("source.revision"), StandardCharsets.US_ASCII) });
@@ -1435,6 +1440,82 @@ public class CDOAggregationToolBomTest
 
     assertTrue(generatedBom.isFile());
     CDOAggregationTool.main(new String[] { "publish-check", staging.toString(), metadataFile.toString(), "PACKAGE", "SIGNED" });
+  }
+
+  @Test
+  public void stagedBomIsAuthoritativeForExamplesAndNormalizesOverrideRelease() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Map<String, Path> candidate = prepareExamplesVersionCandidate(root, "4.37");
+    Path candidateBom = candidate.get("candidates").resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    assertFalse("The selected-drop candidate repository must not contain the generated release BOM", Files.exists(candidateBom));
+
+    Path stagedBom = candidate.get("initial.staging").resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    Element bomProject = parse(stagedBom.toFile()).getDocumentElement();
+    assertEquals("4.37.0", genericChildText(bomProject, "version"));
+    assertEquals("4.37", genericChildText(bomProject, "cdo.project.release"));
+
+    String validBom = Files.readString(stagedBom, StandardCharsets.UTF_8);
+    assertExamplesStagingFailure(candidate, null, "Maven staging is missing the selected CDO release BOM 4.37.0");
+    assertExamplesStagingFailure(candidate, validBom.replace("<version>4.37.0</version>", "<version>4.36.0</version>"),
+        "Selected CDO release BOM has conflicting Maven coordinates");
+    assertExamplesStagingFailure(candidate, validBom.replace("<cdo.drop.id>R20261001-0900</cdo.drop.id>", "<cdo.drop.id>R20260930-0900</cdo.drop.id>"),
+        "Selected CDO release BOM metadata does not match the selected drop and project release");
+    assertExamplesStagingFailure(candidate, removeBomDependency(validBom, "org.eclipse.net4j.util"),
+        "Selected CDO release BOM does not manage the complete approved artifact set");
+    assertExamplesStagingFailure(candidate,
+        validBom.replace("<artifactId>org.eclipse.emf.cdo.server.security</artifactId><version>4.13.0</version>",
+            "<artifactId>org.eclipse.emf.cdo.server.security</artifactId><version>4.12.0</version>"),
+        "Examples dependency version for org.eclipse.emf.cdo.server.security does not match the selected CDO drop");
+
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path buildFile = new File(classes.getParentFile(), "central/build.xml").toPath();
+    String build = Files.readString(buildFile, StandardCharsets.UTF_8);
+    int stagingTarget = build.indexOf("<target name=\"staging-validate\"");
+    int stagingTargetEnd = build.indexOf("</target>", stagingTarget);
+    String stagingValidation = build.substring(stagingTarget, stagingTargetEnd);
+    int stageBom = stagingValidation.indexOf("<antcall target=\"stage-release-bom\" />");
+    int stageExamples = stagingValidation.indexOf("<antcall target=\"stage-examples-distribution\" />");
+    assertTrue("PACKAGE must stage the generated BOM before validating examples", stageBom >= 0 && stageBom < stageExamples);
+    assertTrue(build.contains("<target name=\"stage-release-bom\" if=\"package.release.bom\">"));
+    assertTrue(build.contains("<target name=\"stage-examples-distribution\" if=\"package.examples.distribution\">"));
+  }
+
+  private void assertExamplesStagingFailure(Map<String, Path> candidate, String bomContents, String expectedMessage) throws Exception
+  {
+    Path staging = temporaryFolder.newFolder().toPath();
+    if (bomContents != null)
+    {
+      Path stagedBom = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+      Files.createDirectories(stagedBom.getParent());
+      Files.writeString(stagedBom, bomContents, StandardCharsets.UTF_8);
+    }
+
+    String sourceRevision = Files.readString(candidate.get("source.revision"), StandardCharsets.US_ASCII);
+    try
+    {
+      CDOAggregationTool.main(new String[] { "stage-examples-distribution", candidate.get("workspace").toString(), candidate.get("candidates").toString(),
+          candidate.get("zip").toString(), candidate.get("pom").toString(), candidate.get("metadata").toString(), candidate.get("publishing").toString(),
+          staging.toString(), sourceRevision });
+      fail("Expected examples staging to reject invalid release BOM contents");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage(), expected.getMessage().contains(expectedMessage));
+    }
+  }
+
+  private static String removeBomDependency(String bom, String artifact)
+  {
+    String dependencyStart = "<dependency><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId>";
+    int start = bom.indexOf(dependencyStart);
+    int end = bom.indexOf("</dependency>", start) + "</dependency>".length();
+    if (start < 0 || end < "</dependency>".length())
+    {
+      throw new IllegalArgumentException("Missing test BOM dependency " + artifact);
+    }
+
+    return bom.substring(0, start) + bom.substring(end);
   }
 
   @Test
@@ -1752,8 +1833,10 @@ public class CDOAggregationToolBomTest
     Path candidates = Files.createDirectories(root.resolve("candidate-repository"));
     createExamplesCandidates(candidates, projectRelease, "R20261001-0900");
     Path zip = root.resolve("candidate-examples.zip");
-    createExamplesZip(workspace, distribution, zip, null, false, false, projectRelease);
+    String normalizedRelease = projectRelease.split("\\.").length == 2 ? projectRelease + ".0" : projectRelease;
+    createExamplesZip(workspace, distribution, zip, null, false, false, normalizedRelease);
     Path initialStaging = Files.createDirectories(root.resolve("initial-staging"));
+    stageFixtureBom(candidates, initialStaging, projectRelease);
     String[] stageArguments = { "stage-examples-distribution", workspace.toString(), candidates.toString(), zip.toString(),
         distribution.resolve("pom.xml").toString(), metadata.toString(), central.resolve("publishing.properties").toString(), initialStaging.toString(),
         sourceRevision };
@@ -2324,6 +2407,7 @@ public class CDOAggregationToolBomTest
 
   private static void createExamplesCandidates(Path repository, String projectRelease, String dropID) throws Exception
   {
+    String normalizedRelease = projectRelease.split("\\.").length == 2 ? projectRelease + ".0" : projectRelease;
     String[] versions = FIXTURE_VERSIONS.clone();
     versions[Arrays.asList(BUNDLES).indexOf("org.eclipse.emf.cdo.server.embedded")] = "4.12.0";
     versions[Arrays.asList(BUNDLES).indexOf("org.eclipse.net4j.db.postgresql")] = "4.6.0";
@@ -2334,7 +2418,7 @@ public class CDOAggregationToolBomTest
 
     StringBuilder bom = new StringBuilder(
         "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>org.eclipse.cdo.bom</artifactId>" + "<version>")
-            .append(projectRelease).append("</version><packaging>pom</packaging><properties><cdo.project.release>").append(projectRelease)
+            .append(normalizedRelease).append("</version><packaging>pom</packaging><properties><cdo.project.release>").append(projectRelease)
             .append("</cdo.project.release><cdo.drop.id>").append(dropID).append("</cdo.drop.id></properties><dependencyManagement><dependencies>");
     for (int i = 0; i < BUNDLES.length; i++)
     {
@@ -2343,9 +2427,64 @@ public class CDOAggregationToolBomTest
     }
 
     bom.append("</dependencies></dependencyManagement></project>");
-    Path directory = repository.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + projectRelease);
+    Path directory = repository.getParent().resolve("examples-bom-fixture/org/eclipse/cdo/org.eclipse.cdo.bom/" + normalizedRelease);
     Files.createDirectories(directory);
-    Files.writeString(directory.resolve("org.eclipse.cdo.bom-" + projectRelease + ".pom"), bom.toString(), StandardCharsets.UTF_8);
+    Files.writeString(directory.resolve("org.eclipse.cdo.bom-" + normalizedRelease + ".pom"), bom.toString(), StandardCharsets.UTF_8);
+  }
+
+  private static void stageFixtureBom(Path repository, Path staging, String projectRelease) throws Exception
+  {
+    String normalizedRelease = projectRelease.split("\\.").length == 2 ? projectRelease + ".0" : projectRelease;
+    Path bom = repository.getParent()
+        .resolve("examples-bom-fixture/org/eclipse/cdo/org.eclipse.cdo.bom/" + normalizedRelease + "/org.eclipse.cdo.bom-" + normalizedRelease + ".pom");
+    copyBom(bom, staging, normalizedRelease);
+  }
+
+  private static void copyStagedBom(Path sourceStaging, Path destinationStaging, String projectRelease) throws Exception
+  {
+    String normalizedRelease = projectRelease.split("\\.").length == 2 ? projectRelease + ".0" : projectRelease;
+    Path bom = sourceStaging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + normalizedRelease + "/org.eclipse.cdo.bom-" + normalizedRelease + ".pom");
+    copyBom(bom, destinationStaging, normalizedRelease);
+  }
+
+  private static void copyBom(Path bom, Path staging, String normalizedRelease) throws Exception
+  {
+    Path destination = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + normalizedRelease + "/" + bom.getFileName());
+    Files.createDirectories(destination.getParent());
+    Files.copy(bom, destination);
+  }
+
+  private static void copyCandidateArtifactsFromStaging(Path candidates, Path staging) throws Exception
+  {
+    for (String artifact : BUNDLES)
+    {
+      Path candidateArtifact = candidates.resolve("org/eclipse/cdo/" + artifact);
+      List<Path> existingPaths;
+      try (Stream<Path> paths = Files.walk(candidateArtifact))
+      {
+        existingPaths = paths.sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+      }
+
+      for (Path path : existingPaths)
+      {
+        Files.delete(path);
+      }
+
+      Path stagedArtifact = staging.resolve("org/eclipse/cdo/" + artifact);
+      Path stagedVersion;
+      try (Stream<Path> versions = Files.list(stagedArtifact))
+      {
+        stagedVersion = versions.filter(Files::isDirectory).findFirst().orElseThrow();
+      }
+
+      Path candidateVersion = candidateArtifact.resolve(stagedVersion.getFileName());
+      Files.createDirectories(candidateVersion);
+      for (String extension : new String[] { ".pom", ".jar" })
+      {
+        Path file = stagedVersion.resolve(artifact + "-" + stagedVersion.getFileName() + extension);
+        Files.copy(file, candidateVersion.resolve(file.getFileName()));
+      }
+    }
   }
 
   private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
@@ -2443,7 +2582,7 @@ public class CDOAggregationToolBomTest
       assertEquals(modules, moduleNames(portableRoot));
       assertEquals(propertyValues(canonicalRoot), propertyValues(portableRoot));
       assertEquals("4.37.0", childText(child(portableRoot, "properties"), "cdo.project.release"));
-      assertEquals("${maven.multiModuleProjectDirectory}/src/main/java", childText(child(portableRoot, "build"), "sourceDirectory"));
+      assertEquals(childText(child(canonicalRoot, "build"), "sourceDirectory"), childText(child(portableRoot, "build"), "sourceDirectory"));
       assertTrue(child(child(portableRoot, "build"), "pluginManagement") == null);
       assertTrue(child(portableRoot, "dependencyManagement") != null);
       assertNotNull(child(child(portableRoot, "build"), "plugins"));

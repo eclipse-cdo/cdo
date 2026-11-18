@@ -2579,7 +2579,7 @@ public final class CDOAggregationTool
       }
 
       File examplesDirectory = sourcePom.getParentFile().getParentFile();
-      validateDistributionZip(workspace, candidateRepository, zip, metadata, examplesDirectory);
+      validateDistributionZip(workspace, candidateRepository, staging, zip, metadata, examplesDirectory);
       Map<String, String> packageProperties = readProperties(
           requireFile(new File(sourcePom.getParentFile(), "package.properties"), "distribution package properties"));
       String releaseVersion = BomCommand.requiredMetadata(metadata, "examples.distribution.version");
@@ -2645,8 +2645,8 @@ public final class CDOAggregationTool
       validateDistributionPom(publishedPom, metadata, publishing, releaseVersion, examplesSourceRevision);
     }
 
-    private static void validateDistributionZip(File workspace, File candidateRepository, File zip, Map<String, String> metadata, File examplesDirectory)
-        throws Exception
+    private static void validateDistributionZip(File workspace, File candidateRepository, File staging, File zip, Map<String, String> metadata,
+        File examplesDirectory) throws Exception
     {
       rejectSymbolicLinks(examplesDirectory.toPath(), "canonical Maven examples directory");
       Path canonicalSourceRoot = new File(workspace, "plugins/org.eclipse.emf.cdo.examples/src").toPath();
@@ -2766,7 +2766,7 @@ public final class CDOAggregationTool
           }
         }
 
-        Map<String, String> bomVersions = readSelectedBomVersions(candidateRepository, projectRelease, metadata);
+        Map<String, String> bomVersions = readSelectedBomVersions(staging, projectRelease, metadata);
         verifyExamplesDependencies(archive, candidateRepository, modules, text(portableProject, "version"), bomVersions);
       }
     }
@@ -2977,12 +2977,12 @@ public final class CDOAggregationTool
       return ids;
     }
 
-    private static Map<String, String> readSelectedBomVersions(File repository, String projectRelease, Map<String, String> metadata)
+    private static Map<String, String> readSelectedBomVersions(File staging, String projectRelease, Map<String, String> metadata)
     {
-      File bom = new File(repository, "org/eclipse/cdo/" + RELEASE_BOM + "/" + projectRelease + "/" + RELEASE_BOM + "-" + projectRelease + ".pom");
+      File bom = new File(staging, "org/eclipse/cdo/" + RELEASE_BOM + "/" + projectRelease + "/" + RELEASE_BOM + "-" + projectRelease + ".pom");
       if (!bom.isFile() || bom.length() == 0)
       {
-        throw new IllegalArgumentException("Selected CDO drop is missing its release BOM " + projectRelease + ": " + bom);
+        throw new IllegalArgumentException("Maven staging is missing the selected CDO release BOM " + projectRelease + ": " + bom);
       }
 
       try
@@ -2996,8 +2996,9 @@ public final class CDOAggregationTool
 
         Element properties = child(project, "properties");
         String expectedRelease = BomCommand.normalizeProjectReleaseVersion(BomCommand.requiredMetadata(metadata, "cdo.project.release"));
+        String bomRelease = BomCommand.normalizeProjectReleaseVersion(text(properties, "cdo.project.release"));
         String expectedDrop = BomCommand.requiredMetadata(metadata, "cdo.drop.id");
-        if (!expectedRelease.equals(text(properties, "cdo.project.release")) || !expectedDrop.equals(text(properties, "cdo.drop.id")))
+        if (!expectedRelease.equals(bomRelease) || !expectedDrop.equals(text(properties, "cdo.drop.id")))
         {
           throw new IllegalArgumentException("Selected CDO release BOM metadata does not match the selected drop and project release");
         }
@@ -3044,8 +3045,6 @@ public final class CDOAggregationTool
     private static void verifyExamplesDependencies(ZipFile archive, File candidateRepository, List<String> modules, String examplesVersion,
         Map<String, String> bomVersions) throws Exception
     {
-      Set<String> usedArtifacts = new LinkedHashSet<>();
-
       for (String module : modules)
       {
         String modulePomPath = module + "/pom.xml";
@@ -3097,13 +3096,12 @@ public final class CDOAggregationTool
             throw new IllegalArgumentException("BOM-managed examples dependency must not declare a version: " + artifact + " in " + modulePomPath);
           }
 
-          usedArtifacts.add(artifact);
         }
       }
 
-      for (String artifact : usedArtifacts)
+      for (Map.Entry<String, String> bomVersion : bomVersions.entrySet())
       {
-        verifyCandidateVersion(candidateRepository, artifact, bomVersions.get(artifact));
+        verifyCandidateVersion(candidateRepository, bomVersion.getKey(), bomVersion.getValue());
       }
     }
 

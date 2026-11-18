@@ -452,8 +452,8 @@
 		<condition property="package.release.bom">
 			<equals arg1="${publishing.mode}" arg2="PACKAGE" />
 		</condition>
-		<antcall target="stage-examples-distribution" />
 		<antcall target="stage-release-bom" />
+		<antcall target="stage-examples-distribution" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publish-check" />
 			<arg value="${staging.dir}" />

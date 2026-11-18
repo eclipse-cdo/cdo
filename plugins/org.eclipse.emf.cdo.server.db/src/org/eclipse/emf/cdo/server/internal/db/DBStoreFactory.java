@@ -39,6 +39,8 @@ import org.w3c.dom.NodeList;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -77,8 +79,15 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
   public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
     IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);
+    DataSource dataSource = getDataSource(storeConfig);
+
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
-    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(getDataSource(storeConfig));
+    if (dbAdapter == null)
+    {
+      dbAdapter = getDBAdapter(dataSource);
+    }
+
+    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
     IModelEvolutionSupport modelEvolutionSupport = getModelEvolutionSupport(storeConfig);
     Map<String, String> storeProperties = getProperties(storeConfig);
 
@@ -123,9 +132,14 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
   private IDBAdapter getDBAdapter(Element storeConfig)
   {
     NodeList dbAdapterConfigs = storeConfig.getElementsByTagName("dbAdapter"); //$NON-NLS-1$
-    if (dbAdapterConfigs.getLength() != 1)
+    if (dbAdapterConfigs.getLength() > 1)
     {
-      throw new IllegalStateException("Exactly one dbAdapter must be configured for DB store"); //$NON-NLS-1$
+      throw new IllegalStateException("At most one dbAdapter can be configured for DB store"); //$NON-NLS-1$
+    }
+
+    if (dbAdapterConfigs.getLength() == 0)
+    {
+      return null;
     }
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
@@ -134,6 +148,31 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     if (dbAdapter == null)
     {
       throw new IllegalArgumentException("Unknown DB adapter: " + dbAdapterName); //$NON-NLS-1$
+    }
+
+    return dbAdapter;
+  }
+
+  private IDBAdapter getDBAdapter(DataSource dataSource)
+  {
+    IDBAdapter dbAdapter;
+
+    try (Connection connection = dataSource.getConnection())
+    {
+      dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter(connection);
+    }
+    catch (SQLException ex)
+    {
+      throw new IllegalStateException("Could not obtain a JDBC connection to automatically determine the DB adapter", ex); //$NON-NLS-1$
+    }
+    catch (RuntimeException ex)
+    {
+      throw new IllegalStateException("Could not automatically determine a DB adapter from the configured data source", ex); //$NON-NLS-1$
+    }
+
+    if (dbAdapter == null)
+    {
+      throw new IllegalStateException("Could not automatically determine a DB adapter from the configured data source"); //$NON-NLS-1$
     }
 
     return dbAdapter;

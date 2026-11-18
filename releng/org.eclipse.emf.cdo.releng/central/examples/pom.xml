@@ -12,6 +12,7 @@
   <modules>
     <module>embedded-h2</module>
     <module>remote-server</module>
+    <module>configured-server</module>
     <module>remote-client</module>
   </modules>
 
@@ -26,6 +27,21 @@
     <cdo.embedded.version>4.11.1</cdo.embedded.version>
     <cdo.net4j.postgresql.version>4.5.1</cdo.net4j.postgresql.version>
     <cdo.company.version>4.1.4</cdo.company.version>
+    <db>h2</db>
+    <transport>tcp</transport>
+    <cdo.db.password></cdo.db.password>
+    <cdo.ssl.keystore></cdo.ssl.keystore>
+    <cdo.ssl.keystore.password></cdo.ssl.keystore.password>
+    <cdo.ssl.keystore.type>PKCS12</cdo.ssl.keystore.type>
+    <cdo.ssl.truststore></cdo.ssl.truststore>
+    <cdo.ssl.truststore.password></cdo.ssl.truststore.password>
+    <cdo.ssl.passphrase></cdo.ssl.passphrase>
+    <cdo.wss.keystore></cdo.wss.keystore>
+    <cdo.wss.keystore.password></cdo.wss.keystore.password>
+    <cdo.wss.truststore></cdo.wss.truststore>
+    <cdo.wss.truststore.password></cdo.wss.truststore.password>
+    <cdo.ws.host>0.0.0.0</cdo.ws.host>
+    <cdo.ws.port></cdo.ws.port>
   </properties>
 
   <dependencyManagement>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdoServer xmlns:if="urn:org.eclipse.net4j:xml:if">
+
+  <!-- For TCP specify -Dtransport=tcp -->
+  <acceptor if:true="$$$equalsIgnoreCase($$$system_property(transport,tcp)$$$,tcp)$$$" type="tcp" listenAddr="0.0.0.0" port="2036"/>
+
+  <!-- For SSL specify -Dtransport=ssl -->
+  <acceptor if:true="$$$equalsIgnoreCase($$$system_property(transport,tcp)$$$,ssl)$$$" type="ssl" listenAddr="0.0.0.0" port="2036"/>
+
+  <!-- For WS specify -Dtransport=ws -->
+  <acceptor if:true="$$$equalsIgnoreCase($$$system_property(transport,tcp)$$$,ws)$$$" type="ws" name="cdo"/>
+
+  <!-- For WSS specify -Dtransport=wss -->
+  <acceptor if:true="$$$equalsIgnoreCase($$$system_property(transport,tcp)$$$,wss)$$$" type="wss" name="cdo"/>
+
+  <repository name="repo1">
+    <property name="supportingAudits" value="false"/>
+    <property name="supportingBranches" value="false"/>
+    <property name="idGenerationLocation" value="STORE"/>
+    <initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
+    <store type="db">
+      <mappingStrategy type="horizontal">
+        <property name="qualifiedNames" value="true"/>
+        <property name="eagerTableCreation" value="false"/>
+        <property name="typeMappingProvider" value="registry"/>
+      </mappingStrategy>
+      
+      <!-- For H2 specify -Ddb=h2 -->
+      <dataSource if:true="$$$equalsIgnoreCase($$$system_property(db,h2)$$$,h2)$$$"
+        class="org.h2.jdbcx.JdbcDataSource"
+        URL="$$$system_property(cdo.db.url,jdbc:h2:file:./data/cdo;AUTO_SERVER=TRUE)$$$"/>
+      
+      <!-- For PostgreSQL specify -Ddb=postgresql -->
+      <dataSource if:true="$$$equalsIgnoreCase($$$system_property(db,h2)$$$,postgresql)$$$"
+        class="org.postgresql.ds.PGSimpleDataSource"
+        serverName="$$$system_property(cdo.db.server,localhost)$$$" 
+        portNumber="$$$system_property(cdo.db.port,5432)$$$" 
+        databaseName="$$$system_property(cdo.db.database,cdo)$$$" 
+        user="$$$system_property(cdo.db.user,cdo)$$$" 
+        password="$$$system_property(cdo.db.password)$$$"/>
+    </store>
+  </repository>
+  
+</cdoServer>

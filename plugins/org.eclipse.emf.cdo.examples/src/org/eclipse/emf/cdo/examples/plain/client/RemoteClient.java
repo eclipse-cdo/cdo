@@ -24,17 +24,29 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.ws.WSSUtil;
+import org.eclipse.net4j.ws.WSUtil;
+
+import java.net.URI;
+import java.util.Locale;
 
 /**
  * Connects to a remote CDO repository and demonstrates first-write and read-first model loading.
- * The optional address argument can be a port, a hostname, or a {@code hostname:port} pair. The
- * default connection address is {@code localhost:2036}; for example, use {@code 2036},
- * {@code server.example.org}, or {@code server.example.org:2036}. The hostname is the address
- * the client connects to, so it must be reachable from the client machine.
+ * <p>
+ * The optional address argument can be a port, a hostname, or a {@code hostname:port} pair.
+ * <p>
+ * The default connection address is {@code localhost:2036}; for example, use {@code 2036},
+ * {@code server.example.org}, or {@code server.example.org:2036}.
+ * <p>
+ * The hostname is the address the client connects to, so it must be reachable from the client machine.
+ * <p>
+ * The {@code transport} system property selects {@code tcp}, {@code ssl}, {@code ws}, or {@code wss}; TCP is the default.
  *
  * @author Eike Stepper
  */
@@ -60,12 +72,14 @@ public final class RemoteClient
    */
   public static void main(String[] args) throws Exception
   {
-    String address = parseAddress(args);
+    String transport = System.getProperty("transport", "tcp").toLowerCase(Locale.ROOT); //$NON-NLS-1$ //$NON-NLS-2$
+    String address = parseAddress(args, transport);
+
     IManagedContainer container = ContainerUtil.createInitializedContainer();
 
     try
     {
-      ITCPConnector connector = TCPUtil.getConnector(container, address);
+      IConnector connector = createConnector(container, transport, address);
 
       CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
       configuration.setConnector(connector);
@@ -80,38 +94,6 @@ public final class RemoteClient
     {
       container.deactivate();
     }
-  }
-
-  /**
-   * Parses the optional client connection argument.
-   *
-   * @param args zero or one hostname, port, or {@code hostname:port} argument
-   * @return the Net4j connector address, defaulting to {@code localhost:2036}
-   */
-  private static String parseAddress(String[] args)
-  {
-    if (args.length > 1)
-    {
-      throw new IllegalArgumentException("Expected at most one connection address, hostname, or port."); //$NON-NLS-1$
-    }
-
-    if (args.length == 0)
-    {
-      return "localhost:" + ITCPConnector.DEFAULT_PORT; //$NON-NLS-1$
-    }
-
-    String argument = args[0];
-    if (argument.indexOf(':') >= 0)
-    {
-      return argument;
-    }
-
-    if (argument.chars().allMatch(Character::isDigit))
-    {
-      return "localhost:" + argument; //$NON-NLS-1$
-    }
-
-    return argument + ":" + ITCPConnector.DEFAULT_PORT; //$NON-NLS-1$
   }
 
   /**
@@ -132,21 +114,21 @@ public final class RemoteClient
       else
       {
         CDOCommitInfo commitInfo;
-
+  
         try (CDOTransaction transaction = session.openTransaction())
         {
           createCompany(transaction);
           commitInfo = transaction.commit();
         }
-
+  
         if (!view.waitForUpdate(commitInfo.getTimeStamp(), VIEW_UPDATE_TIMEOUT_MILLIS))
         {
           throw new IllegalStateException("Read-only view did not receive the committed update within " + VIEW_UPDATE_TIMEOUT_MILLIS + " ms."); //$NON-NLS-1$
         }
-
+  
         System.out.println("CREATED");
       }
-
+  
       printCompany(view);
     }
   }
@@ -162,21 +144,21 @@ public final class RemoteClient
     keyboard.setName("Keyboard"); //$NON-NLS-1$
     keyboard.setVat(VAT.VAT15);
     keyboard.setPrice(49.95f);
-
+  
     Product mouse = CompanyFactory.eINSTANCE.createProduct();
     mouse.setName("Mouse"); //$NON-NLS-1$
     mouse.setVat(VAT.VAT15);
     mouse.setPrice(19.95f);
-
+  
     Category category = CompanyFactory.eINSTANCE.createCategory();
     category.setName("Hardware"); //$NON-NLS-1$
     category.getProducts().add(keyboard);
     category.getProducts().add(mouse);
-
+  
     Company company = CompanyFactory.eINSTANCE.createCompany();
     company.setName("Example Company"); //$NON-NLS-1$
     company.getCategories().add(category);
-
+  
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
     resource.getContents().add(company);
   }
@@ -189,14 +171,14 @@ public final class RemoteClient
   private static void printCompany(CDOView view)
   {
     CDOResource resource = view.getResource(RESOURCE_PATH);
-
+  
     Company company = (Company)resource.getContents().get(0);
     System.out.println("Company: " + company.getName()); //$NON-NLS-1$
-
+  
     for (Category category : company.getCategories())
     {
       System.out.println("  Category: " + category.getName()); //$NON-NLS-1$
-
+  
       for (Product product : category.getProducts())
       {
         System.out.println("    Product: " + product.getName() //$NON-NLS-1$
@@ -204,6 +186,76 @@ public final class RemoteClient
             + ", " + product.getVat() //$NON-NLS-1$
             + ")"); //$NON-NLS-1$
       }
+    }
+  }
+
+  private static IConnector createConnector(IManagedContainer container, String transport, String address)
+  {
+    switch (transport)
+    {
+    case "tcp": //$NON-NLS-1$
+      return TCPUtil.getConnector(container, address);
+  
+    case "ssl": //$NON-NLS-1$
+      return SSLUtil.getConnector(container, address);
+  
+    case "ws": //$NON-NLS-1$
+      return WSUtil.getConnector(container, URI.create("ws://" + address + System.getProperty("cdo.ws.path", "/net4j/")), //$NON-NLS-1$ //$NON-NLS-2$
+          "cdo"); //$NON-NLS-1$
+  
+    case "wss": //$NON-NLS-1$
+      return WSSUtil.getConnector(container, URI.create("wss://" + address + System.getProperty("cdo.ws.path", "/net4j/")), //$NON-NLS-1$ //$NON-NLS-2$
+          "cdo"); //$NON-NLS-1$
+  
+    default:
+      throw new IllegalArgumentException("Unsupported transport: " + transport); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Parses the optional client connection argument.
+   *
+   * @param args zero or one hostname, port, or {@code hostname:port} argument
+   * @return the Net4j connector address, defaulting to {@code localhost:2036}
+   */
+  private static String parseAddress(String[] args, String transport)
+  {
+    if (args.length > 1)
+    {
+      throw new IllegalArgumentException("Expected at most one connection address, hostname, or port."); //$NON-NLS-1$
+    }
+
+    if (args.length == 0)
+    {
+      return "localhost:" + defaultPort(transport); //$NON-NLS-1$
+    }
+
+    String argument = args[0];
+    if (argument.indexOf(':') >= 0)
+    {
+      return argument;
+    }
+
+    if (argument.chars().allMatch(Character::isDigit))
+    {
+      return "localhost:" + argument; //$NON-NLS-1$
+    }
+
+    return argument + ":" + defaultPort(transport); //$NON-NLS-1$
+  }
+
+  private static int defaultPort(String transport)
+  {
+    switch (transport)
+    {
+    case "ws": //$NON-NLS-1$
+      return 8080;
+
+    case "wss": //$NON-NLS-1$
+      return 8443;
+
+    default:
+      return ITCPConnector.DEFAULT_PORT;
     }
   }
 }

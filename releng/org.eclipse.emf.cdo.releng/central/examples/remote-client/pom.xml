@@ -75,6 +75,10 @@
     </dependency>
     <dependency>
       <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.ws</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
       <artifactId>org.eclipse.net4j.util</artifactId>
     </dependency>
   </dependencies>
@@ -93,6 +97,16 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven-plugin.version}</version>
+        <configuration>
+          <mainClass>org.eclipse.emf.cdo.examples.plain.client.RemoteClient</mainClass>
+          <systemPropertyVariables>
+            <transport>${transport}</transport>
+            <javax.net.ssl.trustStore>${cdo.wss.truststore}</javax.net.ssl.trustStore>
+            <javax.net.ssl.trustStorePassword>${cdo.wss.truststore.password}</javax.net.ssl.trustStorePassword>
+            <org.eclipse.net4j.tcp.ssl.trust>${cdo.ssl.truststore}</org.eclipse.net4j.tcp.ssl.trust>
+            <org.eclipse.net4j.tcp.ssl.passphrase>${cdo.ssl.passphrase}</org.eclipse.net4j.tcp.ssl.passphrase>
+          </systemPropertyVariables>
+        </configuration>
       </plugin>
     </plugins>
   </build>

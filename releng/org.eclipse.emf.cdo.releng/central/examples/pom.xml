@@ -24,9 +24,6 @@
     <cdo.project.release>4.37.0</cdo.project.release>
     <h2.version>2.5.252</h2.version>
     <postgresql.version>42.7.13</postgresql.version>
-    <cdo.embedded.version>4.11.1</cdo.embedded.version>
-    <cdo.net4j.postgresql.version>4.5.1</cdo.net4j.postgresql.version>
-    <cdo.company.version>4.1.4</cdo.company.version>
     <db>h2</db>
     <transport>tcp</transport>
     <cdo.db.password></cdo.db.password>
@@ -56,7 +53,54 @@
     </dependencies>
   </dependencyManagement>
 
+  <profiles>
+    <profile>
+      <id>cdo-deployment-repository</id>
+      <activation>
+        <property>
+          <name>cdo.deployment.repository</name>
+        </property>
+      </activation>
+      <repositories>
+        <repository>
+          <id>cdo-deployment-bundle</id>
+          <url>${cdo.deployment.repository}</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
   <build>
+    <sourceDirectory>${project.basedir}/../src/main/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>17</release>
+          <includes>
+            <include>${plain.java.source.file}</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>

@@ -71,12 +71,10 @@
     <dependency>
       <groupId>org.eclipse.cdo</groupId>
       <artifactId>org.eclipse.emf.cdo.examples.company</artifactId>
-      <version>${cdo.company.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.cdo</groupId>
       <artifactId>org.eclipse.net4j.db.postgresql</artifactId>
-      <version>${cdo.net4j.postgresql.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.cdo</groupId>

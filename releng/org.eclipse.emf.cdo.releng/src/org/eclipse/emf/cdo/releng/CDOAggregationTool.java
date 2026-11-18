@@ -2542,10 +2542,6 @@ public final class CDOAggregationTool
    */
   private static final class ExamplesDistributionCommand
   {
-    private static final String[] SOURCES = { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
-        "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
-        "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java" };
-
     public static void execute(String[] args) throws Exception
     {
       if (args.length != 9)
@@ -2582,7 +2578,8 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("Examples source checkout has an invalid Git revision: " + examplesSourceRevision);
       }
 
-      validateDistributionZip(workspace, candidateRepository, zip, metadata);
+      File examplesDirectory = sourcePom.getParentFile().getParentFile();
+      validateDistributionZip(workspace, candidateRepository, zip, metadata, examplesDirectory);
       Map<String, String> packageProperties = readProperties(
           requireFile(new File(sourcePom.getParentFile(), "package.properties"), "distribution package properties"));
       String releaseVersion = BomCommand.requiredMetadata(metadata, "examples.distribution.version");
@@ -2648,32 +2645,96 @@ public final class CDOAggregationTool
       validateDistributionPom(publishedPom, metadata, publishing, releaseVersion, examplesSourceRevision);
     }
 
-    private static void validateDistributionZip(File workspace, File candidateRepository, File zip, Map<String, String> metadata) throws Exception
+    private static void validateDistributionZip(File workspace, File candidateRepository, File zip, Map<String, String> metadata, File examplesDirectory)
+        throws Exception
     {
-      Set<String> expectedFiles = Set.of("pom.xml", "README.md", "LICENSE", "embedded-h2/pom.xml", "remote-server/pom.xml", "remote-client/pom.xml", SOURCES[0],
-          SOURCES[1], SOURCES[2]);
-      try (ZipFile archive = new ZipFile(zip))
+      rejectSymbolicLinks(examplesDirectory.toPath(), "canonical Maven examples directory");
+      Path canonicalSourceRoot = new File(workspace, "plugins/org.eclipse.emf.cdo.examples/src").toPath();
+      rejectSymbolicLinks(canonicalSourceRoot, "canonical JDT examples source directory");
+      File canonicalRootPom = requireFile(new File(examplesDirectory, "pom.xml"), "canonical examples root POM");
+      Element canonicalRoot = parse(canonicalRootPom).getDocumentElement();
+      List<String> modules = moduleNames(canonicalRoot);
+      Set<String> expectedFiles = new LinkedHashSet<>(Arrays.asList("pom.xml", "README.md", "LICENSE"));
+      Map<String, String> moduleSources = new LinkedHashMap<>();
+
+      for (String module : modules)
       {
-        List<String> fileEntries = archive.stream().filter(entry -> !entry.isDirectory()).map(ZipEntry::getName).collect(Collectors.toList());
-        Set<String> actualFiles = new LinkedHashSet<>(fileEntries);
-        if (fileEntries.size() != actualFiles.size() || !actualFiles.equals(expectedFiles))
+        File moduleDirectory = requireDirectory(new File(examplesDirectory, module).getPath(), "canonical examples module " + module);
+        File modulePom = requireFile(new File(moduleDirectory, "pom.xml"), "canonical examples module POM " + module);
+        Element moduleProject = parse(modulePom).getDocumentElement();
+        if (!module.equals(text(moduleProject, "artifactId")))
         {
-          throw new IllegalArgumentException("Examples ZIP file inventory differs from the approved three-module layout: " + actualFiles);
+          throw new IllegalArgumentException("Canonical examples module artifactId does not match its module path: " + modulePom);
         }
 
-        for (String source : SOURCES)
+        expectedFiles.add(module + "/pom.xml");
+        String source = text(child(moduleProject, "properties"), "plain.java.source.file");
+        if (source.isBlank() || source.startsWith("/") || source.contains("\\") || source.contains("..") || !source.endsWith(".java"))
         {
-          File canonicalSource = new File(workspace, "plugins/org.eclipse.emf.cdo.examples/src/" + source.substring(source.indexOf("/src/main/java/") + 15));
+          throw new IllegalArgumentException("Canonical examples module has an invalid plain.java.source.file: " + modulePom);
+        }
+
+        String sourceEntry = "src/main/java/" + source;
+        if (moduleSources.put(sourceEntry, source) != null)
+        {
+          throw new IllegalArgumentException("Canonical examples modules declare a duplicate Java source: " + sourceEntry);
+        }
+
+        Path moduleRoot = moduleDirectory.toPath();
+        try (Stream<Path> files = Files.walk(moduleRoot))
+        {
+          files.filter(Files::isRegularFile).map(moduleRoot::relativize).map(Path::toString).map(path -> path.replace(File.separatorChar, '/'))
+              .filter(path -> !"pom.xml".equals(path) && !path.startsWith("target/") && !path.contains("/target/"))
+              .forEach(path -> expectedFiles.add(module + "/" + path));
+        }
+      }
+
+      for (String sourceEntry : moduleSources.keySet())
+      {
+        expectedFiles.add(sourceEntry);
+      }
+
+      try (ZipFile archive = new ZipFile(zip))
+      {
+        Set<String> names = new LinkedHashSet<>();
+        Set<String> actualFiles = new LinkedHashSet<>();
+        Enumeration<? extends ZipEntry> entries = archive.entries();
+
+        while (entries.hasMoreElements())
+        {
+          ZipEntry entry = entries.nextElement();
+          String name = entry.getName();
+          validateZipEntryName(name);
+
+          if (!names.add(name))
+          {
+            throw new IllegalArgumentException("Duplicate ZIP entry: " + name);
+          }
+
+          if (!entry.isDirectory())
+          {
+            actualFiles.add(name);
+          }
+        }
+
+        if (!actualFiles.equals(expectedFiles))
+        {
+          throw new IllegalArgumentException("Examples ZIP file inventory differs from canonical modules and assembly inputs: " + actualFiles);
+        }
+
+        for (Map.Entry<String, String> source : moduleSources.entrySet())
+        {
+          File canonicalSource = canonicalSourceRoot.resolve(source.getValue()).toFile();
           if (!canonicalSource.isFile())
           {
             throw new IllegalArgumentException("Missing canonical JDT example source: " + canonicalSource);
           }
 
-          try (InputStream packaged = archive.getInputStream(archive.getEntry(source)))
+          try (InputStream packaged = archive.getInputStream(archive.getEntry(source.getKey())))
           {
             if (!Arrays.equals(Files.readAllBytes(canonicalSource.toPath()), packaged.readAllBytes()))
             {
-              throw new IllegalArgumentException("Packaged example source differs from its canonical JDT source: " + source);
+              throw new IllegalArgumentException("Packaged example source differs from its canonical JDT source: " + source.getKey());
             }
           }
         }
@@ -2681,27 +2742,85 @@ public final class CDOAggregationTool
         Document portablePom = parse(archive.getInputStream(archive.getEntry("pom.xml")), "portable examples POM");
         String projectRelease = BomCommand.normalizeProjectReleaseVersion(BomCommand.requiredMetadata(metadata, "cdo.project.release"));
         Element portableProject = portablePom.getDocumentElement();
-        if (!projectRelease.equals(text(child(portableProject, "properties"), "cdo.project.release")))
+        if (!"org.eclipse.cdo.examples".equals(text(portableProject, "groupId")) || !"cdo-examples".equals(text(portableProject, "artifactId"))
+            || !"pom".equals(text(portableProject, "packaging")) || !projectRelease.equals(text(child(portableProject, "properties"), "cdo.project.release")))
         {
-          throw new IllegalArgumentException("Portable POM CDO BOM version does not match the selected release " + projectRelease);
+          throw new IllegalArgumentException(
+              "Portable root POM coordinates or CDO BOM version do not match the canonical examples and selected release " + projectRelease);
         }
 
-        Element rootProperties = child(portableProject, "properties");
-        verifyCandidateVersion(candidateRepository, "org.eclipse.emf.cdo.server.embedded", text(rootProperties, "cdo.embedded.version"));
-        verifyCandidateVersion(candidateRepository, "org.eclipse.emf.cdo.examples.company", text(rootProperties, "cdo.company.version"));
-        String net4jUtilVersion = text(rootProperties, "cdo.net4j.util.version");
-        if (net4jUtilVersion.isBlank())
+        verifyBomImport(portableProject, projectRelease);
+        verifyBomImport(canonicalRoot, projectRelease);
+        verifyPortableRootDerived(canonicalRoot, portableProject);
+
+        if (!modules.equals(moduleNames(portableProject)))
         {
-          verifyBomImport(portableProject, projectRelease);
-          verifyBomManagedDependency(archive, "embedded-h2/pom.xml", "org.eclipse.net4j.util");
-          verifyManagedCandidateVersion(candidateRepository, "org.eclipse.net4j.util");
+          throw new IllegalArgumentException("Portable root POM modules do not match the canonical examples module declarations");
         }
-        else
+
+        for (String checkoutReference : Arrays.asList("checkout-source-copy", "checkout-central-repository", "plugins/org.eclipse.emf.cdo.examples/src"))
         {
-          verifyCandidateVersion(candidateRepository, "org.eclipse.net4j.util", net4jUtilVersion);
+          if (zipContainsText(archive, checkoutReference))
+          {
+            throw new IllegalArgumentException("Portable examples distribution contains checkout-dependent configuration: " + checkoutReference);
+          }
         }
-        verifyCandidateVersion(candidateRepository, "org.eclipse.net4j.db.postgresql", text(rootProperties, "cdo.net4j.postgresql.version"));
+
+        Map<String, String> bomVersions = readSelectedBomVersions(candidateRepository, projectRelease, metadata);
+        verifyExamplesDependencies(archive, candidateRepository, modules, text(portableProject, "version"), bomVersions);
       }
+    }
+
+    private static List<String> moduleNames(Element project)
+    {
+      List<String> names = new ArrayList<>();
+      Set<String> uniqueNames = new LinkedHashSet<>();
+
+      Element modules = child(project, "modules");
+      NodeList entries = modules == null ? null : modules.getElementsByTagNameNS("*", "module");
+      if (entries != null)
+      {
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          String name = entries.item(i).getTextContent().trim();
+          if (name.isBlank() || name.contains("/") || name.contains("\\") || name.equals(".") || name.equals("..") || !uniqueNames.add(name))
+          {
+            throw new IllegalArgumentException("Invalid or duplicate examples module declaration: " + name);
+          }
+
+          names.add(name);
+        }
+      }
+
+      if (names.isEmpty())
+      {
+        throw new IllegalArgumentException("Examples root POM must declare at least one Maven module");
+      }
+
+      return names;
+    }
+
+    private static boolean zipContainsText(ZipFile archive, String value) throws Exception
+    {
+      Enumeration<? extends ZipEntry> entries = archive.entries();
+
+      while (entries.hasMoreElements())
+      {
+        ZipEntry entry = entries.nextElement();
+        if (!entry.isDirectory() && entry.getName().endsWith(".xml"))
+        {
+          try (InputStream input = archive.getInputStream(entry))
+          {
+            String content = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+            if (content.contains(value))
+            {
+              return true;
+            }
+          }
+        }
+      }
+
+      return false;
     }
 
     private static void verifyBomImport(Element project, String expectedRelease)
@@ -2737,64 +2856,255 @@ public final class CDOAggregationTool
       }
     }
 
-    private static void verifyBomManagedDependency(ZipFile archive, String modulePomPath, String artifact) throws Exception
+    private static void verifyPortableRootDerived(Element canonicalRoot, Element portableRoot)
     {
-      if (!BUNDLES.contains(artifact))
+      for (String element : Arrays.asList("groupId", "artifactId", "version", "packaging"))
       {
-        throw new IllegalArgumentException("CDO release BOM does not manage the approved artifact " + artifact);
-      }
-
-      ZipEntry modulePomEntry = archive.getEntry(modulePomPath);
-      if (modulePomEntry == null)
-      {
-        throw new IllegalArgumentException("Missing portable examples module POM " + modulePomPath);
-      }
-
-      Element dependencies;
-      try (InputStream input = archive.getInputStream(modulePomEntry))
-      {
-        dependencies = child(parse(input, modulePomPath).getDocumentElement(), "dependencies");
-      }
-
-      NodeList entries = dependencies == null ? null : dependencies.getChildNodes();
-      int matches = 0;
-      if (entries != null)
-      {
-        for (int i = 0; i < entries.getLength(); i++)
+        if (!text(canonicalRoot, element).equals(text(portableRoot, element)))
         {
-          Node entry = entries.item(i);
-          if (entry instanceof Element && "dependency".equals(entry.getLocalName() == null ? entry.getNodeName() : entry.getLocalName()))
+          throw new IllegalArgumentException("Portable examples root POM changed canonical Maven coordinates: " + element);
+        }
+      }
+
+      if (!pomProperties(canonicalRoot).equals(pomProperties(portableRoot)))
+      {
+        throw new IllegalArgumentException("Portable examples root POM properties differ from the canonical Maven examples POM");
+      }
+
+      if (!managedDependencies(canonicalRoot).equals(managedDependencies(portableRoot)))
+      {
+        throw new IllegalArgumentException("Portable examples root POM dependency management differs from the canonical Maven examples POM");
+      }
+
+      Element canonicalBuild = child(canonicalRoot, "build");
+      Element portableBuild = child(portableRoot, "build");
+      if (!text(canonicalBuild, "sourceDirectory").equals(text(portableBuild, "sourceDirectory")) || child(portableBuild, "pluginManagement") != null)
+      {
+        throw new IllegalArgumentException("Portable examples root POM changed the canonical source layout or retained checkout-only plugin management");
+      }
+
+      Element canonicalCompiler = findCompilerPlugin(canonicalBuild);
+      Element portableCompiler = findCompilerPlugin(portableBuild);
+      if (canonicalCompiler == null || portableCompiler == null || !text(canonicalCompiler, "groupId").equals(text(portableCompiler, "groupId"))
+          || !text(canonicalCompiler, "artifactId").equals(text(portableCompiler, "artifactId"))
+          || !text(canonicalCompiler, "version").equals(text(portableCompiler, "version"))
+          || !text(child(canonicalCompiler, "configuration"), "release").equals(text(child(portableCompiler, "configuration"), "release"))
+          || !text(child(child(canonicalCompiler, "configuration"), "includes"), "include")
+              .equals(text(child(child(portableCompiler, "configuration"), "includes"), "include")))
+      {
+        throw new IllegalArgumentException("Portable examples root POM changed canonical Maven compiler configuration");
+      }
+
+      if (!profileIDs(canonicalRoot).equals(profileIDs(portableRoot)))
+      {
+        throw new IllegalArgumentException("Portable examples root POM profiles differ from the canonical Maven examples POM");
+      }
+    }
+
+    private static Map<String, String> pomProperties(Element project)
+    {
+      Map<String, String> properties = new LinkedHashMap<>();
+      Element propertiesElement = child(project, "properties");
+
+      for (Node node = propertiesElement == null ? null : propertiesElement.getFirstChild(); node != null; node = node.getNextSibling())
+      {
+        if (node instanceof Element)
+        {
+          Element property = (Element)node;
+          String name = property.getLocalName() == null ? property.getNodeName() : property.getLocalName();
+          if (properties.put(name, property.getTextContent().trim()) != null)
           {
-            Element dependency = (Element)entry;
-            if ("org.eclipse.cdo".equals(text(dependency, "groupId")) && artifact.equals(text(dependency, "artifactId")))
-            {
-              matches++;
-              if (!text(dependency, "version").isBlank())
-              {
-                throw new IllegalArgumentException("BOM-managed examples dependency must not declare a version: " + artifact);
-              }
-            }
+            throw new IllegalArgumentException("Duplicate root POM property: " + name);
           }
         }
       }
 
-      if (matches != 1)
+      return properties;
+    }
+
+    private static List<String> managedDependencies(Element project)
+    {
+      List<String> dependencies = new ArrayList<>();
+
+      Element managed = child(child(project, "dependencyManagement"), "dependencies");
+      NodeList entries = managed == null ? null : managed.getElementsByTagNameNS("*", "dependency");
+      if (entries != null)
       {
-        throw new IllegalArgumentException("Expected one versionless BOM-managed examples dependency for " + artifact + " in " + modulePomPath);
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          Element dependency = (Element)entries.item(i);
+          dependencies.add(String.join(":", text(dependency, "groupId"), text(dependency, "artifactId"), text(dependency, "version"), text(dependency, "type"),
+              text(dependency, "scope")));
+        }
+      }
+
+      return dependencies;
+    }
+
+    private static Element findCompilerPlugin(Element build)
+    {
+      Element plugins = child(build, "plugins");
+      NodeList entries = plugins == null ? null : plugins.getElementsByTagNameNS("*", "plugin");
+      if (entries != null)
+      {
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          Element plugin = (Element)entries.item(i);
+          if ("org.apache.maven.plugins".equals(text(plugin, "groupId")) && "maven-compiler-plugin".equals(text(plugin, "artifactId")))
+          {
+            return plugin;
+          }
+        }
+      }
+
+      return null;
+    }
+
+    private static List<String> profileIDs(Element project)
+    {
+      List<String> ids = new ArrayList<>();
+
+      Element profiles = child(project, "profiles");
+      NodeList entries = profiles == null ? null : profiles.getElementsByTagNameNS("*", "profile");
+      if (entries != null)
+      {
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          ids.add(text((Element)entries.item(i), "id"));
+        }
+      }
+
+      return ids;
+    }
+
+    private static Map<String, String> readSelectedBomVersions(File repository, String projectRelease, Map<String, String> metadata)
+    {
+      File bom = new File(repository, "org/eclipse/cdo/" + RELEASE_BOM + "/" + projectRelease + "/" + RELEASE_BOM + "-" + projectRelease + ".pom");
+      if (!bom.isFile() || bom.length() == 0)
+      {
+        throw new IllegalArgumentException("Selected CDO drop is missing its release BOM " + projectRelease + ": " + bom);
+      }
+
+      try
+      {
+        Element project = parse(bom).getDocumentElement();
+        if (!"org.eclipse.cdo".equals(text(project, "groupId")) || !RELEASE_BOM.equals(text(project, "artifactId"))
+            || !projectRelease.equals(text(project, "version")) || !"pom".equals(text(project, "packaging")))
+        {
+          throw new IllegalArgumentException("Selected CDO release BOM has conflicting Maven coordinates: " + bom);
+        }
+
+        Element properties = child(project, "properties");
+        String expectedRelease = BomCommand.normalizeProjectReleaseVersion(BomCommand.requiredMetadata(metadata, "cdo.project.release"));
+        String expectedDrop = BomCommand.requiredMetadata(metadata, "cdo.drop.id");
+        if (!expectedRelease.equals(text(properties, "cdo.project.release")) || !expectedDrop.equals(text(properties, "cdo.drop.id")))
+        {
+          throw new IllegalArgumentException("Selected CDO release BOM metadata does not match the selected drop and project release");
+        }
+
+        Map<String, String> versions = new LinkedHashMap<>();
+        Element dependencies = child(child(project, "dependencyManagement"), "dependencies");
+        NodeList entries = dependencies == null ? null : dependencies.getElementsByTagNameNS("*", "dependency");
+        if (entries != null)
+        {
+          for (int i = 0; i < entries.getLength(); i++)
+          {
+            Element dependency = (Element)entries.item(i);
+            if (!"org.eclipse.cdo".equals(text(dependency, "groupId")))
+            {
+              continue;
+            }
+
+            String artifact = text(dependency, "artifactId");
+            if (!BUNDLES.contains(artifact) || versions.put(artifact, text(dependency, "version")) != null || text(dependency, "version").isBlank())
+            {
+              throw new IllegalArgumentException("Selected CDO release BOM contains an unapproved, duplicate, or versionless CDO artifact: " + artifact);
+            }
+          }
+        }
+
+        if (!versions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
+        {
+          throw new IllegalArgumentException("Selected CDO release BOM does not manage the complete approved artifact set: " + versions.keySet());
+        }
+
+        return versions;
+      }
+      catch (Exception ex)
+      {
+        if (ex instanceof IllegalArgumentException)
+        {
+          throw (IllegalArgumentException)ex;
+        }
+
+        throw new IllegalArgumentException("Unable to validate selected CDO release BOM: " + bom, ex);
       }
     }
 
-    private static void verifyManagedCandidateVersion(File repository, String artifact)
+    private static void verifyExamplesDependencies(ZipFile archive, File candidateRepository, List<String> modules, String examplesVersion,
+        Map<String, String> bomVersions) throws Exception
     {
-      File artifactDirectory = new File(repository, "org/eclipse/cdo/" + artifact);
-      File[] versions = artifactDirectory.listFiles(File::isDirectory);
-      if (versions == null || versions.length != 1)
+      Set<String> usedArtifacts = new LinkedHashSet<>();
+
+      for (String module : modules)
       {
-        throw new IllegalArgumentException("BOM-managed dependency version for " + artifact + " is not unique in the selected CDO drop: candidate="
-            + (versions == null ? "missing" : Arrays.toString(versions)));
+        String modulePomPath = module + "/pom.xml";
+        ZipEntry modulePomEntry = archive.getEntry(modulePomPath);
+        if (modulePomEntry == null)
+        {
+          throw new IllegalArgumentException("Missing portable examples module POM " + modulePomPath);
+        }
+
+        Element project;
+
+        try (InputStream input = archive.getInputStream(modulePomEntry))
+        {
+          project = parse(input, modulePomPath).getDocumentElement();
+        }
+
+        Element parent = child(project, "parent");
+        String moduleGroup = text(project, "groupId");
+        if (moduleGroup.isBlank())
+        {
+          moduleGroup = text(parent, "groupId");
+        }
+
+        if (!"org.eclipse.cdo.examples".equals(moduleGroup) || !module.equals(text(project, "artifactId"))
+            || !"org.eclipse.cdo.examples".equals(text(parent, "groupId")) || !"cdo-examples".equals(text(parent, "artifactId"))
+            || !examplesVersion.equals(text(parent, "version")))
+        {
+          throw new IllegalArgumentException("Portable examples module has incorrect Maven coordinates or parent: " + modulePomPath);
+        }
+
+        NodeList dependencies = project.getElementsByTagNameNS("*", "dependency");
+
+        for (int i = 0; i < dependencies.getLength(); i++)
+        {
+          Element dependency = (Element)dependencies.item(i);
+          if (!"org.eclipse.cdo".equals(text(dependency, "groupId")))
+          {
+            continue;
+          }
+
+          String artifact = text(dependency, "artifactId");
+          if (!BUNDLES.contains(artifact) || !bomVersions.containsKey(artifact))
+          {
+            throw new IllegalArgumentException("Examples dependency is not managed by the selected CDO BOM: " + artifact + " in " + modulePomPath);
+          }
+
+          if (!text(dependency, "version").isBlank())
+          {
+            throw new IllegalArgumentException("BOM-managed examples dependency must not declare a version: " + artifact + " in " + modulePomPath);
+          }
+
+          usedArtifacts.add(artifact);
+        }
       }
 
-      verifyCandidateVersion(repository, artifact, versions[0].getName());
+      for (String artifact : usedArtifacts)
+      {
+        verifyCandidateVersion(candidateRepository, artifact, bomVersions.get(artifact));
+      }
     }
 
     private static void verifyCandidateVersion(File repository, String artifact, String expectedVersion)
@@ -4207,16 +4517,7 @@ public final class CDOAggregationTool
     File examplesZip = new File(repository.toFile(), "org/eclipse/cdo/" + EXAMPLES_DISTRIBUTION + "/" + EXAMPLES_DISTRIBUTION_VERSION + "/"
         + EXAMPLES_DISTRIBUTION + "-" + EXAMPLES_DISTRIBUTION_VERSION + "-examples.zip");
     examplesZip = requireFile(examplesZip, "standalone examples ZIP in final deployment ZIP");
-    Set<String> expectedExamples = new LinkedHashSet<>(List.of("pom.xml", "README.md", "LICENSE", "embedded-h2/pom.xml", "remote-server/pom.xml",
-        "remote-client/pom.xml", "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
-        "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
-        "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"));
-    extractZip(examplesZip, examples, expectedExamples, false);
-    if (!expectedExamples.isEmpty())
-    {
-      throw new IllegalArgumentException("Standalone examples ZIP is missing approved files: " + expectedExamples);
-    }
-
+    extractZip(examplesZip, examples, null, false);
     validateStandaloneExamples(examples.toFile(), releaseVersion);
     System.out.println("Prepared standalone examples from the verified deployment ZIP using its release BOM " + releaseVersion + ".");
   }
@@ -4323,7 +4624,9 @@ public final class CDOAggregationTool
     }
 
     Set<String> requiredArtifacts = new LinkedHashSet<>();
-    for (String module : List.of("embedded-h2", "remote-server", "remote-client"))
+    Element rootPom = parse(examples.resolve("pom.xml").toFile()).getDocumentElement();
+
+    for (String module : ExamplesDistributionCommand.moduleNames(rootPom))
     {
       Element modulePom = parse(requireFile(examples.resolve(module).resolve("pom.xml").toFile(), "standalone examples module POM")).getDocumentElement();
       Element dependencies = child(modulePom, "dependencies");
@@ -4406,9 +4709,11 @@ public final class CDOAggregationTool
       }
     }
 
-    if (!modules.equals(List.of("embedded-h2", "remote-server", "remote-client")))
+    List<String> declaredModules = ExamplesDistributionCommand.moduleNames(project);
+
+    if (!modules.equals(declaredModules))
     {
-      throw new IllegalArgumentException("Packaged standalone examples root POM must build the three approved modules: " + modules);
+      throw new IllegalArgumentException("Packaged standalone examples root POM declares modules that differ from the extracted module list: " + modules);
     }
 
     Element dependencyManagement = child(project, "dependencyManagement");
@@ -4465,9 +4770,47 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("Packaged standalone examples must declare the cdo-deployment-bundle file repository profile");
     }
 
-    for (String module : List.of("embedded-h2", "remote-server", "remote-client"))
+    for (String module : modules)
     {
-      requireFile(examples.toPath().resolve(module).resolve("pom.xml").toFile(), "packaged standalone examples module POM");
+      File modulePomFile = requireFile(examples.toPath().resolve(module).resolve("pom.xml").toFile(), "packaged standalone examples module POM");
+      Element modulePom = parse(modulePomFile).getDocumentElement();
+      Element parent = child(modulePom, "parent");
+      if (!"org.eclipse.cdo.examples".equals(text(parent, "groupId")) || !"cdo-examples".equals(text(parent, "artifactId"))
+          || !text(project, "version").equals(text(parent, "version")) || !module.equals(text(modulePom, "artifactId")))
+      {
+        throw new IllegalArgumentException("Packaged standalone examples module has invalid Maven coordinates: " + modulePomFile);
+      }
+
+      String source = text(child(modulePom, "properties"), "plain.java.source.file");
+      if (source.isBlank() || !Files.isRegularFile(examples.toPath().resolve("src/main/java").resolve(source)))
+      {
+        throw new IllegalArgumentException("Packaged standalone examples module is missing its declared Java source: " + module);
+      }
+
+      String modulePomText = Files.readString(modulePomFile.toPath(), StandardCharsets.UTF_8);
+      if (modulePomText.contains("checkout-source-copy") || modulePomText.contains("checkout-central-repository")
+          || modulePomText.contains("plugins/org.eclipse.emf.cdo.examples/src"))
+      {
+        throw new IllegalArgumentException("Packaged standalone examples module contains checkout-dependent configuration: " + module);
+      }
+    }
+
+    Set<String> extractedModules = new LinkedHashSet<>();
+
+    try (Stream<Path> children = Files.list(examples.toPath()))
+    {
+      for (Path child : children.filter(path -> Files.isDirectory(path, LinkOption.NOFOLLOW_LINKS)).collect(Collectors.toList()))
+      {
+        if (Files.isRegularFile(child.resolve("pom.xml"), LinkOption.NOFOLLOW_LINKS))
+        {
+          extractedModules.add(child.getFileName().toString());
+        }
+      }
+    }
+
+    if (!extractedModules.equals(new LinkedHashSet<>(modules)))
+    {
+      throw new IllegalArgumentException("Standalone examples ZIP module directories do not match its root POM: " + extractedModules);
     }
   }
 
@@ -4509,7 +4852,7 @@ public final class CDOAggregationTool
             throw new IllegalArgumentException("Unexpected file in signed deployment ZIP: " + name);
           }
         }
-        else if (expectedFiles == null || !expectedFiles.remove(name))
+        else if (expectedFiles != null && !expectedFiles.remove(name))
         {
           throw new IllegalArgumentException("Unexpected file in standalone examples ZIP: " + name);
         }

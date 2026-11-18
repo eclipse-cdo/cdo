@@ -67,7 +67,6 @@
     <dependency>
       <groupId>org.eclipse.cdo</groupId>
       <artifactId>org.eclipse.emf.cdo.examples.company</artifactId>
-      <version>${cdo.company.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.cdo</groupId>

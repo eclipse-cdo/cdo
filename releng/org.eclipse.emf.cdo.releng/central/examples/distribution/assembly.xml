@@ -6,7 +6,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <files>
     <file>
-      <source>${project.build.directory}/portable-pom.xml</source>
+      <source>${project.build.directory}/portable-examples/pom.xml</source>
       <outputDirectory>/</outputDirectory>
       <destName>pom.xml</destName>
     </file>
@@ -25,46 +25,30 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../embedded-h2</directory>
-      <outputDirectory>/embedded-h2</outputDirectory>
+      <directory>${project.build.directory}/portable-examples</directory>
+      <outputDirectory>/</outputDirectory>
       <includes>
-        <include>pom.xml</include>
+        <include>*/pom.xml</include>
       </includes>
       <fileMode>0644</fileMode>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../../../../../plugins/org.eclipse.emf.cdo.examples/src</directory>
-      <outputDirectory>/embedded-h2/src/main/java</outputDirectory>
+      <directory>${project.basedir}/..</directory>
+      <outputDirectory>/</outputDirectory>
       <includes>
-        <include>org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java</include>
+        <include>*/**</include>
       </includes>
+      <excludes>
+        <exclude>distribution/**</exclude>
+        <exclude>*/pom.xml</exclude>
+        <exclude>**/target/**</exclude>
+      </excludes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../remote-server</directory>
-      <outputDirectory>/remote-server</outputDirectory>
+      <directory>${project.build.directory}/portable-examples/src/main/java</directory>
+      <outputDirectory>/src/main/java</outputDirectory>
       <includes>
-        <include>pom.xml</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/../../../../../plugins/org.eclipse.emf.cdo.examples/src</directory>
-      <outputDirectory>/remote-server/src/main/java</outputDirectory>
-      <includes>
-        <include>org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/../remote-client</directory>
-      <outputDirectory>/remote-client</outputDirectory>
-      <includes>
-        <include>pom.xml</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}/../../../../../plugins/org.eclipse.emf.cdo.examples/src</directory>
-      <outputDirectory>/remote-client/src/main/java</outputDirectory>
-      <includes>
-        <include>org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java</include>
+        <include>org/eclipse/emf/cdo/examples/plain/**/*.java</include>
       </includes>
     </fileSet>
   </fileSets>

@@ -1,6 +1,6 @@
 # CDO Plain Java Examples
 
-Requires JDK 17 and Maven 3.9+. Build all examples from this directory with `mvn clean verify`. The `verify` phase compiles all three modules and runs the embedded H2 persistence check in two separate JVMs. The remote server and client are compiled; the PostgreSQL-backed server is not started.
+Requires JDK 17 and Maven 3.9+. Build all examples from this directory with `mvn clean verify`. The `verify` phase compiles all four modules and runs the embedded H2 persistence check in two separate JVMs. The remote and configured servers and client are compiled; database-backed remote servers are not started.
 
 ## Embedded H2 Example
  
@@ -20,11 +20,15 @@ Run the client with `mvn -pl remote-client exec:java -Dexec.mainClass=org.eclips
 
 RemoteClient connects to `localhost:2036` by default; its optional argument is a port, hostname, or `hostname:port`.
 
+## Configured Server Example
+
+The configured server runs the standard CDO server from `config/cdo-server.xml`. It supports H2 by default or PostgreSQL, and TCP, SSL, WS, and WSS transports. See `configured-server/README.md` for its settings and commands. Its WebSocket listener requires Jetty, which is declared by that module.
+
 ## Dependencies
 
-CDO and Net4j core dependencies use the project-release BOM imported by the packaged root POM. The BOM version is normalized from the selected CDO project release and keeps independently versioned Maven artifacts aligned. The examples also use the company model, embedded-server, PostgreSQL-adapter, and Net4j utility artifacts at the versions declared in the POMs.
+All CDO and Net4j dependencies in the examples are managed by the project-release BOM imported by the root POM. The BOM version is normalized from the selected CDO project release, keeping independently versioned Maven artifacts aligned without per-example version declarations. Third-party dependencies and Maven plugins retain their own versions.
 
-The examples distribution is independently versioned from the CDO project release and the bundles it consumes. `package.properties` sets its fixed major/minor line with `release.version.line=1.0`. During PACKAGE, the build compares the candidate ZIP and consumer-relevant POM semantics with the latest published patch on that line. It reuses an equivalent coordinate or selects the next numeric patch when content changes. The configured version line changes only by an explicit edit. The imported CDO BOM remains tied to the normalized project-release version, so a new BOM in the portable root POM changes the ZIP and advances the examples patch. The normal `PACKAGE` deployment ZIP contains the CDO/Net4j Maven artifacts, the project-release BOM, and this standalone examples distribution. Extract the complete deployment ZIP, then extract the examples ZIP from its own version directory. Run Maven from the extracted examples root and set `cdo.deployment.repository` to a `file:` URI for the extracted deployment repository. Use a fresh `maven.repo.local` for a clean local cache; Resolver provenance checks separately verify that resolved CDO artifact bytes came from the deployment repository. Maven plugins and third-party dependencies continue to resolve from Maven Central.
+The distribution root POM is generated from the canonical `../pom.xml`; the declared Maven modules and their source-file properties determine the packaged module POMs and canonical Java sources. The generated root removes checkout-only plugin configuration and each packaged module POM omits checkout-dependent profiles. The examples distribution is independently versioned from the CDO project release and the bundles it consumes. `package.properties` sets its fixed major/minor line with `release.version.line=1.0`. During PACKAGE, the build compares the candidate ZIP and consumer-relevant POM semantics with the latest published patch on that line. It reuses an equivalent coordinate or selects the next numeric patch when content changes. The configured version line changes only by an explicit edit. The imported CDO BOM remains tied to the normalized project-release version, so a new BOM in the generated root POM changes the ZIP and advances the examples patch. The normal `PACKAGE` deployment ZIP contains the CDO/Net4j Maven artifacts, the project-release BOM, and this standalone examples distribution. Extract the complete deployment ZIP, then extract the examples ZIP from its own version directory. Run Maven from the extracted examples root and set `cdo.deployment.repository` to a `file:` URI for the extracted deployment repository. Use a fresh `maven.repo.local` for a clean local cache; Resolver provenance checks separately verify that resolved CDO artifact bytes came from the deployment repository. Maven plugins and third-party dependencies continue to resolve from Maven Central.
 
 In Windows PowerShell:
 

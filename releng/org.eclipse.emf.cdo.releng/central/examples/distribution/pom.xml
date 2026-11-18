@@ -10,7 +10,6 @@
   <packaging>pom</packaging>
 
   <properties>
-    <examples.cdo.project.release>4.37.0</examples.cdo.project.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.outputTimestamp>2000-01-01T00:00:00Z</project.build.outputTimestamp>
   </properties>
@@ -50,31 +49,29 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.1</version>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.2.0</version>
         <executions>
           <execution>
-            <id>filter-portable-aggregator</id>
+            <id>prepare-portable-examples</id>
             <phase>generate-resources</phase>
             <goals>
-              <goal>copy-resources</goal>
+              <goal>run</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>portable-pom.xml</include>
-                  </includes>
-                </resource>
-              </resources>
-              <delimiters>
-                <delimiter>@</delimiter>
-              </delimiters>
-              <useDefaultDelimiters>false</useDefaultDelimiters>
-              <encoding>UTF-8</encoding>
+              <target>
+                <delete dir="${project.build.directory}/portable-examples"/>
+                <mkdir dir="${project.build.directory}/portable-examples"/>
+                <xslt in="${project.basedir}/../pom.xml" out="${project.build.directory}/portable-examples/pom.xml"
+                  style="${project.basedir}/portable-pom.xsl"/>
+                <xslt basedir="${project.basedir}/.." includes="*/pom.xml" excludes="distribution/pom.xml"
+                  style="${project.basedir}/portable-pom.xsl" destdir="${project.build.directory}/portable-examples" extension=".xml"/>
+                <copy todir="${project.build.directory}/portable-examples/src/main/java">
+                  <fileset dir="${project.basedir}/../../../../../plugins/org.eclipse.emf.cdo.examples/src">
+                    <include name="org/eclipse/emf/cdo/examples/plain/**/*.java"/>
+                  </fileset>
+                </copy>
+              </target>
             </configuration>
           </execution>
         </executions>

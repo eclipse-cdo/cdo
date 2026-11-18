@@ -32,7 +32,14 @@ import org.w3c.dom.NodeList;
 import javax.tools.ToolProvider;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +48,7 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -57,7 +65,9 @@ import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -648,8 +658,8 @@ public class CDOAggregationToolBomTest
     assertEquals(1, settings.getElementsByTagNameNS("*", "activeProfile").getLength());
     assertEquals("standalone-examples-repositories", settings.getElementsByTagNameNS("*", "activeProfile").item(0).getTextContent().trim());
 
-    Element portablePom = parse(centralDirectory.resolve("examples/distribution/portable-pom.xml").toFile()).getDocumentElement();
-    Element profiles = child(portablePom, "profiles");
+    Element canonicalPom = parse(centralDirectory.resolve("examples/pom.xml").toFile()).getDocumentElement();
+    Element profiles = child(canonicalPom, "profiles");
     NodeList profileNodes = profiles.getElementsByTagNameNS("*", "profile");
     Element deploymentProfile = null;
     for (int i = 0; i < profileNodes.getLength(); i++)
@@ -705,7 +715,7 @@ public class CDOAggregationToolBomTest
     assertEquals("${consumer.examples.repository.url}", environmentValues.get("CDO_DEPLOYMENT_REPOSITORY"));
     assertEquals("${central.repository.url}", environmentValues.get("CDO_CENTRAL_REPOSITORY"));
 
-    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
+    for (String module : canonicalExamplesModules())
     {
       Element modulePom = parse(centralDirectory.resolve("examples/" + module + "/pom.xml").toFile()).getDocumentElement();
       Element moduleProfiles = child(modulePom, "profiles");
@@ -958,13 +968,11 @@ public class CDOAggregationToolBomTest
     Path metadata = root.resolve("metadata.properties");
     String dropCommit = "0123456789abcdef0123456789abcdef01234567";
     String examplesSourceCommit = "fedcba9876543210fedcba9876543210fedcba98";
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.37.0\n"
-        + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
+    String dropID = "I20261118-0801";
+    Files.writeString(metadata, "cdo.build.type=I\ncdo.build.stream=4.x\ncdo.drop.id=" + dropID + "\ncdo.git.commit=" + dropCommit
+        + "\ncdo.project.release=4.37.0\n" + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
 
-    createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
-    createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
-    createCandidate(candidates, "org.eclipse.net4j.util", "3.31.0");
-    createCandidate(candidates, "org.eclipse.net4j.db.postgresql", "4.5.1");
+    createExamplesCandidates(candidates, "4.37.0", dropID);
 
     File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
     Path central = new File(classes.getParentFile(), "central").toPath();
@@ -982,7 +990,7 @@ public class CDOAggregationToolBomTest
     }
     catch (IllegalArgumentException expected)
     {
-      assertTrue(expected.getMessage().contains("Examples dependency version for org.eclipse.emf.cdo.examples.company"));
+      assertTrue(expected.getMessage(), expected.getMessage().contains("must not declare a version"));
     }
 
     createExamplesZip(workspace, distribution, zip, null, true, false, "4.37.0");
@@ -995,6 +1003,33 @@ public class CDOAggregationToolBomTest
     {
       assertTrue(expected.getMessage().contains("Examples ZIP file inventory differs"));
     }
+
+    createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0");
+    rewriteZipWithout(zip, "configured-server/config/cdo-server.xml");
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected an examples ZIP missing configured-server configuration to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("Examples ZIP file inventory differs"));
+    }
+
+    Path duplicateZip = root.resolve("duplicate-examples.zip");
+    writeDuplicateEntryZip(duplicateZip, "pom.xml", "<project/>".getBytes(StandardCharsets.UTF_8));
+    args[3] = duplicateZip.toString();
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected an examples ZIP with duplicate entries to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("Duplicate ZIP entry"));
+    }
+
+    args[3] = zip.toString();
 
     createExamplesZip(workspace, distribution, zip, null, false, true, "4.37.0");
     try
@@ -1010,20 +1045,33 @@ public class CDOAggregationToolBomTest
     Path explicitVersionStaging = Files.createDirectory(root.resolve("explicit-version-staging"));
     args[7] = explicitVersionStaging.toString();
     createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0", "3.31.0");
-    CDOAggregationTool.main(args);
-
-    createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0", "3.30.0");
     try
     {
       CDOAggregationTool.main(args);
-      fail("Expected an explicitly versioned examples dependency that differs from the selected drop to be rejected");
+      fail("Expected a BOM-managed examples dependency with an explicit version to be rejected");
     }
     catch (IllegalArgumentException expected)
     {
-      assertTrue(expected.getMessage().contains("Examples dependency version for org.eclipse.net4j.util"));
+      assertTrue(expected.getMessage().contains("must not declare a version"));
     }
 
     args[7] = staging.toString();
+    Path selectedBom = candidates.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    String validBom = Files.readString(selectedBom, StandardCharsets.UTF_8);
+    Files.writeString(selectedBom, validBom.replace("<cdo.drop.id>" + dropID + "</cdo.drop.id>", "<cdo.drop.id>I20261117-0801</cdo.drop.id>"),
+        StandardCharsets.UTF_8);
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected the selected BOM/drop version mismatch to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage(),
+          expected.getMessage().contains("Selected CDO release BOM metadata does not match the selected drop and project release"));
+    }
+
+    Files.writeString(selectedBom, validBom, StandardCharsets.UTF_8);
     createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0");
     CDOAggregationTool.main(args);
 
@@ -1035,7 +1083,7 @@ public class CDOAggregationToolBomTest
     assertEquals(examplesSourceCommit, childText(child(project, "scm"), "tag"));
     assertEquals(examplesSourceCommit, childText(properties, "cdo.examples.source.git.commit"));
     assertEquals(dropCommit, childText(properties, "cdo.git.commit"));
-    assertEquals("R20260901-1311", childText(properties, "cdo.drop.id"));
+    assertEquals(dropID, childText(properties, "cdo.drop.id"));
     assertEquals("4.37.0", childText(properties, "cdo.project.release"));
     assertTrue(child(properties, "examples.cdo.project.release") == null);
   }
@@ -1422,7 +1470,7 @@ public class CDOAggregationToolBomTest
   @Test
   public void advancesExamplesPatchForChangedZipAndEmbeddedBom() throws Exception
   {
-    for (String release : new String[] { "4.36.0", "4.37.0" })
+    for (String release : new String[] { "4.37.0" })
     {
       Path root = temporaryFolder.newFolder().toPath();
       Map<String, Path> candidate = prepareExamplesVersionCandidate(root, release);
@@ -1702,10 +1750,7 @@ public class CDOAggregationToolBomTest
     Path distribution = central.resolve("examples/distribution").toAbsolutePath();
     Path workspace = distribution.resolve("../../../../..").normalize();
     Path candidates = Files.createDirectories(root.resolve("candidate-repository"));
-    createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
-    createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
-    createCandidate(candidates, "org.eclipse.net4j.util", "3.31.0");
-    createCandidate(candidates, "org.eclipse.net4j.db.postgresql", "4.5.1");
+    createExamplesCandidates(candidates, projectRelease, "R20261001-0900");
     Path zip = root.resolve("candidate-examples.zip");
     createExamplesZip(workspace, distribution, zip, null, false, false, projectRelease);
     Path initialStaging = Files.createDirectories(root.resolve("initial-staging"));
@@ -2096,8 +2141,8 @@ public class CDOAggregationToolBomTest
     Path settings = central.resolve("standalone-examples-settings.xml");
     Path output = temporaryFolder.newFolder().toPath().resolve("examples-maven-output.txt");
     List<String> baseCommand = standaloneMavenCommand();
-    baseCommand.addAll(Arrays.asList("-gs", settings.toString(), "-s", settings.toString(), "-B", "-ntp", "-DskipTests", "-Drevision=1.0-SNAPSHOT",
-        "-Dexamples.cdo.project.release=4.37.0", "-f", project.resolve("pom.xml").toString(), "package"));
+    baseCommand.addAll(Arrays.asList("-gs", settings.toString(), "-s", settings.toString(), "-B", "-ntp", "-DskipTests", "-Drevision=1.0-SNAPSHOT", "-f",
+        project.resolve("pom.xml").toString(), "package"));
 
     byte[][] archives = new byte[2][];
     for (int build = 0; build < archives.length; build++)
@@ -2124,6 +2169,7 @@ public class CDOAggregationToolBomTest
       assertEquals(log, 0, process.exitValue());
       Path archive = project.resolve("target/cdo-examples-distribution-1.0-SNAPSHOT-examples.zip");
       assertTrue("Maven did not create the examples distribution ZIP", Files.isRegularFile(archive));
+      verifyPackagedExamplesArchive(archive, central.resolve("examples"));
       archives[build] = MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(archive));
     }
 
@@ -2219,7 +2265,19 @@ public class CDOAggregationToolBomTest
 
   private static void createStandaloneModulePoms(Path examples) throws Exception
   {
-    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
+    List<String> modules = canonicalExamplesModules();
+    StringBuilder rootPom = new StringBuilder("<project xmlns=\"http://maven.apache.org/POM/4.0.0\"><groupId>org.eclipse.cdo.examples</groupId>"
+        + "<artifactId>cdo-examples</artifactId><version>1.0.0-SNAPSHOT</version><properties><cdo.project.release>4.37.0</cdo.project.release></properties><modules>");
+    for (String module : modules)
+    {
+      rootPom.append("<module>").append(module).append("</module>");
+    }
+
+    rootPom.append("</modules></project>");
+    Files.createDirectories(examples);
+    Files.writeString(examples.resolve("pom.xml"), rootPom.toString(), StandardCharsets.UTF_8);
+
+    for (String module : modules)
     {
       Path pom = examples.resolve(module + "/pom.xml");
       Files.createDirectories(pom.getParent());
@@ -2264,6 +2322,32 @@ public class CDOAggregationToolBomTest
     Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".jar"), "verified candidate fixture", StandardCharsets.UTF_8);
   }
 
+  private static void createExamplesCandidates(Path repository, String projectRelease, String dropID) throws Exception
+  {
+    String[] versions = FIXTURE_VERSIONS.clone();
+    versions[Arrays.asList(BUNDLES).indexOf("org.eclipse.emf.cdo.server.embedded")] = "4.12.0";
+    versions[Arrays.asList(BUNDLES).indexOf("org.eclipse.net4j.db.postgresql")] = "4.6.0";
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      createCandidate(repository, BUNDLES[i], versions[i]);
+    }
+
+    StringBuilder bom = new StringBuilder(
+        "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>org.eclipse.cdo.bom</artifactId>" + "<version>")
+            .append(projectRelease).append("</version><packaging>pom</packaging><properties><cdo.project.release>").append(projectRelease)
+            .append("</cdo.project.release><cdo.drop.id>").append(dropID).append("</cdo.drop.id></properties><dependencyManagement><dependencies>");
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      bom.append("<dependency><groupId>org.eclipse.cdo</groupId><artifactId>").append(BUNDLES[i]).append("</artifactId><version>").append(versions[i])
+          .append("</version></dependency>");
+    }
+
+    bom.append("</dependencies></dependencyManagement></project>");
+    Path directory = repository.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + projectRelease);
+    Files.createDirectories(directory);
+    Files.writeString(directory.resolve("org.eclipse.cdo.bom-" + projectRelease + ".pom"), bom.toString(), StandardCharsets.UTF_8);
+  }
+
   private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
       boolean modifyJavaSource, String projectRelease) throws Exception
   {
@@ -2273,51 +2357,54 @@ public class CDOAggregationToolBomTest
   private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
       boolean modifyJavaSource, String projectRelease, String net4jUtilVersion) throws Exception
   {
-    String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
-        { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
-        { "remote-server/pom.xml", distribution.getParent().resolve("remote-server/pom.xml").toString() },
-        { "remote-client/pom.xml", distribution.getParent().resolve("remote-client/pom.xml").toString() },
-        { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java").toString() },
-        { "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java").toString() },
-        { "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java").toString() } };
+    Path examplesDirectory = distribution.getParent();
+    Map<String, byte[]> entries = new LinkedHashMap<>();
+    Document rootPom = portablePom(examplesDirectory.resolve("pom.xml").toFile(), true, projectRelease, null, null);
+    addZipEntry(entries, "pom.xml", xmlBytes(rootPom));
+    addZipEntry(entries, "README.md", Files.readAllBytes(distribution.resolve("README.md")));
+    addZipEntry(entries, "LICENSE", Files.readAllBytes(workspace.resolve("LICENSE")));
+
+    for (String module : canonicalExamplesModules())
+    {
+      Path moduleDirectory = examplesDirectory.resolve(module);
+      File modulePom = moduleDirectory.resolve("pom.xml").toFile();
+      Document transformedModulePom = portablePom(modulePom, false, projectRelease, companyVersion == null ? null : "org.eclipse.emf.cdo.examples.company",
+          companyVersion);
+      if (net4jUtilVersion != null)
+      {
+        transformedModulePom = portablePom(modulePom, false, projectRelease, "org.eclipse.net4j.util", net4jUtilVersion);
+      }
+
+      addZipEntry(entries, module + "/pom.xml", xmlBytes(transformedModulePom));
+      try (Stream<Path> files = Files.walk(moduleDirectory))
+      {
+        for (Path file : files.filter(Files::isRegularFile).filter(path -> !path.equals(modulePom.toPath()))
+            .filter(path -> !moduleDirectory.relativize(path).toString().replace(File.separatorChar, '/').startsWith("target/")).collect(Collectors.toList()))
+        {
+          String relative = moduleDirectory.relativize(file).toString().replace(File.separatorChar, '/');
+          addZipEntry(entries, module + "/" + relative, Files.readAllBytes(file));
+        }
+      }
+
+      Element moduleProject = parse(modulePom).getDocumentElement();
+      String source = childText(child(moduleProject, "properties"), "plain.java.source.file");
+      String sourceEntry = "src/main/java/" + source;
+      byte[] sourceBytes = Files.readAllBytes(workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src").resolve(source));
+      if (modifyJavaSource && source.endsWith("RemoteClient.java"))
+      {
+        sourceBytes = Arrays.copyOf(sourceBytes, sourceBytes.length + 1);
+        sourceBytes[sourceBytes.length - 1] = '\n';
+      }
+
+      addZipEntry(entries, sourceEntry, sourceBytes);
+    }
 
     try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(zip)))
     {
-      for (String[] entry : entries)
+      for (Map.Entry<String, byte[]> entry : entries.entrySet())
       {
-        output.putNextEntry(new ZipEntry(entry[0]));
-        if ("pom.xml".equals(entry[0]))
-        {
-          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", projectRelease);
-          if (companyVersion != null)
-          {
-            portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
-                "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
-          }
-
-          if (net4jUtilVersion != null)
-          {
-            portablePom = portablePom.replace("<cdo.company.version>",
-                "<cdo.net4j.util.version>" + net4jUtilVersion + "</cdo.net4j.util.version>\n    <cdo.company.version>");
-          }
-
-          output.write(portablePom.getBytes(StandardCharsets.UTF_8));
-        }
-        else if (modifyJavaSource && entry[0].equals("remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"))
-        {
-          byte[] source = Files.readAllBytes(Path.of(entry[1]));
-          byte[] modifiedSource = Arrays.copyOf(source, source.length + 1);
-          modifiedSource[modifiedSource.length - 1] = '\n';
-          output.write(modifiedSource);
-        }
-        else
-        {
-          Files.copy(Path.of(entry[1]), output);
-        }
-
+        output.putNextEntry(new ZipEntry(entry.getKey()));
+        output.write(entry.getValue());
         output.closeEntry();
       }
 
@@ -2328,6 +2415,284 @@ public class CDOAggregationToolBomTest
         output.closeEntry();
       }
     }
+  }
+
+  private static List<String> canonicalExamplesModules() throws Exception
+  {
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path examples = new File(classes.getParentFile(), "central/examples").toPath();
+    Element root = parse(examples.resolve("pom.xml").toFile()).getDocumentElement();
+    Element modules = child(root, "modules");
+    NodeList moduleNodes = modules.getElementsByTagNameNS("*", "module");
+    List<String> names = new ArrayList<>();
+    for (int i = 0; i < moduleNodes.getLength(); i++)
+    {
+      names.add(moduleNodes.item(i).getTextContent().trim());
+    }
+
+    return names;
+  }
+
+  private static void verifyPackagedExamplesArchive(Path archivePath, Path canonicalExamples) throws Exception
+  {
+    List<String> modules = canonicalExamplesModules();
+    try (ZipFile archive = new ZipFile(archivePath.toFile()))
+    {
+      Element portableRoot = parse(new ByteArrayInputStream(zipEntryBytes(archive, "pom.xml")), "portable root POM").getDocumentElement();
+      Element canonicalRoot = parse(canonicalExamples.resolve("pom.xml").toFile()).getDocumentElement();
+      assertEquals(modules, moduleNames(portableRoot));
+      assertEquals(propertyValues(canonicalRoot), propertyValues(portableRoot));
+      assertEquals("4.37.0", childText(child(portableRoot, "properties"), "cdo.project.release"));
+      assertEquals("${maven.multiModuleProjectDirectory}/src/main/java", childText(child(portableRoot, "build"), "sourceDirectory"));
+      assertTrue(child(child(portableRoot, "build"), "pluginManagement") == null);
+      assertTrue(child(portableRoot, "dependencyManagement") != null);
+      assertNotNull(child(child(portableRoot, "build"), "plugins"));
+      assertEquals("3.13.0", childText(child(child(portableRoot, "build"), "plugins"), "version"));
+      assertNotNull(archive.getEntry("configured-server/README.md"));
+      assertNotNull(archive.getEntry("configured-server/config/cdo-server.xml"));
+
+      Element dependencies = child(child(child(portableRoot, "dependencyManagement"), "dependencies"), "dependency");
+      assertEquals("org.eclipse.cdo.bom", childText(dependencies, "artifactId"));
+      assertEquals("${cdo.project.release}", childText(dependencies, "version"));
+
+      for (String module : modules)
+      {
+        String pomPath = module + "/pom.xml";
+        assertNotNull("Missing packaged Maven module POM " + pomPath, archive.getEntry(pomPath));
+        byte[] modulePomBytes = zipEntryBytes(archive, pomPath);
+        Element modulePom = parse(new ByteArrayInputStream(modulePomBytes), pomPath).getDocumentElement();
+        String source = childText(child(modulePom, "properties"), "plain.java.source.file");
+        assertFalse("Missing canonical Java source for module " + module, source.isBlank());
+        assertNotNull("Missing canonical source in distribution " + module, archive.getEntry("src/main/java/" + source));
+        String modulePomText = new String(modulePomBytes, StandardCharsets.UTF_8);
+        assertFalse("Portable module POM retains checkout configuration", modulePomText.contains("checkout-source-copy"));
+        assertFalse("Portable module POM retains checkout configuration", modulePomText.contains("checkout-central-repository"));
+        assertFalse("Portable module POM retains workspace source paths", modulePomText.contains("plugins/org.eclipse.emf.cdo.examples/src"));
+
+        NodeList moduleDependencies = modulePom.getElementsByTagNameNS("*", "dependency");
+        for (int i = 0; i < moduleDependencies.getLength(); i++)
+        {
+          Element dependency = (Element)moduleDependencies.item(i);
+          if ("org.eclipse.cdo".equals(childText(dependency, "groupId")))
+          {
+            assertTrue("BOM-managed dependency declares a redundant version in " + pomPath, childText(dependency, "version").isBlank());
+          }
+        }
+
+        byte[] canonicalSource = Files
+            .readAllBytes(canonicalExamples.resolve("../../../..").resolve("plugins/org.eclipse.emf.cdo.examples/src").resolve(source).normalize());
+        assertTrue("Packaged source differs from canonical Java source " + source,
+            Arrays.equals(canonicalSource, zipEntryBytes(archive, "src/main/java/" + source)));
+      }
+    }
+  }
+
+  private static byte[] zipEntryBytes(ZipFile archive, String path) throws Exception
+  {
+    try (InputStream input = archive.getInputStream(archive.getEntry(path)))
+    {
+      return input.readAllBytes();
+    }
+  }
+
+  private static List<String> moduleNames(Element project)
+  {
+    Element modules = child(project, "modules");
+    NodeList moduleNodes = modules.getElementsByTagNameNS("*", "module");
+    List<String> names = new ArrayList<>();
+    for (int i = 0; i < moduleNodes.getLength(); i++)
+    {
+      names.add(moduleNodes.item(i).getTextContent().trim());
+    }
+
+    return names;
+  }
+
+  private static Map<String, String> propertyValues(Element project)
+  {
+    Element properties = child(project, "properties");
+    Map<String, String> values = new LinkedHashMap<>();
+    for (Node node = properties.getFirstChild(); node != null; node = node.getNextSibling())
+    {
+      if (node instanceof Element)
+      {
+        Element property = (Element)node;
+        values.put(property.getLocalName(), property.getTextContent().trim());
+        assertFalse("CDO artifact versions must come from the release BOM",
+            property.getLocalName().startsWith("cdo.") && property.getLocalName().endsWith(".version"));
+      }
+    }
+
+    return values;
+  }
+
+  private static Document portablePom(File source, boolean rootPom, String projectRelease, String explicitArtifact, String explicitVersion) throws Exception
+  {
+    Document document = parse(source);
+    Element project = document.getDocumentElement();
+    Element profiles = child(project, "profiles");
+    if (profiles != null)
+    {
+      NodeList profileNodes = profiles.getElementsByTagNameNS("*", "profile");
+      for (int i = profileNodes.getLength() - 1; i >= 0; i--)
+      {
+        Element profile = (Element)profileNodes.item(i);
+        if (childText(profile, "id").startsWith("checkout-"))
+        {
+          profile.getParentNode().removeChild(profile);
+        }
+      }
+    }
+
+    if (rootPom)
+    {
+      Element properties = child(project, "properties");
+      child(properties, "cdo.project.release").setTextContent(projectRelease);
+      Element build = child(project, "build");
+      Element pluginManagement = child(build, "pluginManagement");
+      if (pluginManagement != null)
+      {
+        pluginManagement.getParentNode().removeChild(pluginManagement);
+      }
+    }
+
+    if (explicitArtifact != null)
+    {
+      NodeList dependencies = project.getElementsByTagNameNS("*", "dependency");
+      boolean found = false;
+      for (int i = 0; i < dependencies.getLength(); i++)
+      {
+        Element dependency = (Element)dependencies.item(i);
+        if ("org.eclipse.cdo".equals(childText(dependency, "groupId")) && explicitArtifact.equals(childText(dependency, "artifactId")))
+        {
+          Element version = document.createElementNS(project.getNamespaceURI(), "version");
+          version.setTextContent(explicitVersion);
+          dependency.appendChild(version);
+          found = true;
+        }
+      }
+
+      assertTrue("Test fixture could not add the requested explicit dependency version " + explicitArtifact, found);
+    }
+
+    return document;
+  }
+
+  private static byte[] xmlBytes(Document document) throws Exception
+  {
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+    Transformer transformer = TransformerFactory.newInstance().newTransformer();
+    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+    transformer.transform(new DOMSource(document), new StreamResult(output));
+    return output.toByteArray();
+  }
+
+  private static void addZipEntry(Map<String, byte[]> entries, String name, byte[] contents)
+  {
+    if (entries.putIfAbsent(name, contents) != null)
+    {
+      throw new IllegalArgumentException("Duplicate ZIP fixture entry " + name);
+    }
+  }
+
+  private static void rewriteZipWithout(Path zip, String omittedEntry) throws Exception
+  {
+    Path rewritten = zip.resolveSibling("rewritten.zip");
+    try (ZipFile input = new ZipFile(zip.toFile()); ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(rewritten)))
+    {
+      var entries = input.entries();
+      while (entries.hasMoreElements())
+      {
+        ZipEntry entry = entries.nextElement();
+        if (entry.isDirectory() || omittedEntry.equals(entry.getName()))
+        {
+          continue;
+        }
+
+        output.putNextEntry(new ZipEntry(entry.getName()));
+        try (InputStream contents = input.getInputStream(entry))
+        {
+          contents.transferTo(output);
+        }
+
+        output.closeEntry();
+      }
+    }
+
+    Files.move(rewritten, zip, StandardCopyOption.REPLACE_EXISTING);
+  }
+
+  private static void writeDuplicateEntryZip(Path zip, String name, byte[] content) throws Exception
+  {
+    byte[] entryName = name.getBytes(StandardCharsets.UTF_8);
+    CRC32 crc = new CRC32();
+    crc.update(content);
+    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+    int[] offsets = new int[2];
+    for (int i = 0; i < offsets.length; i++)
+    {
+      offsets[i] = bytes.size();
+      writeIntLE(bytes, 0x04034b50);
+      writeShortLE(bytes, 20);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeIntLE(bytes, (int)crc.getValue());
+      writeIntLE(bytes, content.length);
+      writeIntLE(bytes, content.length);
+      writeShortLE(bytes, entryName.length);
+      writeShortLE(bytes, 0);
+      bytes.write(entryName);
+      bytes.write(content);
+    }
+
+    int centralOffset = bytes.size();
+    for (int offset : offsets)
+    {
+      writeIntLE(bytes, 0x02014b50);
+      writeShortLE(bytes, 20);
+      writeShortLE(bytes, 20);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeIntLE(bytes, (int)crc.getValue());
+      writeIntLE(bytes, content.length);
+      writeIntLE(bytes, content.length);
+      writeShortLE(bytes, entryName.length);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeShortLE(bytes, 0);
+      writeIntLE(bytes, 0);
+      writeIntLE(bytes, offset);
+      bytes.write(entryName);
+    }
+
+    int centralLength = bytes.size() - centralOffset;
+    writeIntLE(bytes, 0x06054b50);
+    writeShortLE(bytes, 0);
+    writeShortLE(bytes, 0);
+    writeShortLE(bytes, offsets.length);
+    writeShortLE(bytes, offsets.length);
+    writeIntLE(bytes, centralLength);
+    writeIntLE(bytes, centralOffset);
+    writeShortLE(bytes, 0);
+    Files.write(zip, bytes.toByteArray());
+  }
+
+  private static void writeShortLE(ByteArrayOutputStream output, int value)
+  {
+    output.write(value & 0xff);
+    output.write(value >>> 8 & 0xff);
+  }
+
+  private static void writeIntLE(ByteArrayOutputStream output, int value)
+  {
+    writeShortLE(output, value & 0xffff);
+    writeShortLE(output, value >>> 16 & 0xffff);
   }
 
   private static String path(String artifact, String version, String suffix)
@@ -2359,6 +2724,16 @@ public class CDOAggregationToolBomTest
     factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
     factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
     return factory.newDocumentBuilder().parse(file);
+  }
+
+  private static Document parse(InputStream input, String description) throws Exception
+  {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+    factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+    return factory.newDocumentBuilder().parse(input);
   }
 
   private static Element child(Element parent, String name)

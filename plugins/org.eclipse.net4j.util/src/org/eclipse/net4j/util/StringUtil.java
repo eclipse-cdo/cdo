@@ -748,11 +748,20 @@ public final class StringUtil
   }
 
   /**
-   * Converts the expressions in a string using converters from the given container. Converter expressions use the
-   * form {@code $$$name(arguments)$$$}; nested expressions are evaluated from the inside out. For example,
-   * {@code $$$equalsIgnoreCase($$$upper(ws)$$$,WS)$$$} evaluates to {@code true}. Multiple independent expressions
-   * are converted in order. Unknown, malformed, and unbalanced expressions are preserved, and converter results are
-   * not parsed again. A {@code null} container leaves the string unchanged.
+   * Converts expressions of the form {@code $$$name(arguments)$$$} using converters from the given container. Nested
+   * expressions are evaluated from the inside out, and argument boundaries are identified before nested values are
+   * evaluated. Built-in multi-argument converters therefore retain their argument boundaries even when a nested
+   * converter returns a comma. Other converters continue to receive one comma-separated {@link String} argument.
+   * Inside arguments, {@code $$$name(} with a non-empty name that contains no {@code $} takes precedence as a nested
+   * expression opener. Every other {@code $} escapes the immediately following character, and an expression closes
+   * only when an unescaped {@code )} is immediately followed by {@code $$$}. Thus {@code $,}, {@code $$}, {@code $(},
+   * and {@code $)} yield literal comma, dollar, and parentheses. Escapes are processed once, and only in expression
+   * arguments. For example,
+   * {@code $$$equals_ignore_case($$$upper(ws)$$$,WS)$$$} evaluates to {@code true}. Multiple expressions are supported,
+   * and converter results are not parsed or escaped again. Unknown and malformed expressions are preserved while
+   * parsing resumes at subsequent expressions. Nested converters are all evaluated before their outer converter is
+   * invoked; boolean {@code and} and {@code or} therefore do not short-circuit. A {@code null} container leaves the
+   * string unchanged.
    *
    * @param str the string that may contain converter expressions
    * @param container the container used to resolve converters
@@ -830,18 +839,8 @@ public final class StringUtil
 
       builder.append(str, offset, expressionStart);
 
-      int argumentsStart = str.indexOf('(', expressionStart + STRING_CONVERTER_DELIMITER.length());
-      int nextDelimiter = str.indexOf(STRING_CONVERTER_DELIMITER, expressionStart + STRING_CONVERTER_DELIMITER.length());
-
-      if (argumentsStart < 0 || nextDelimiter >= 0 && nextDelimiter < argumentsStart)
-      {
-        builder.append(STRING_CONVERTER_DELIMITER);
-        offset = expressionStart + STRING_CONVERTER_DELIMITER.length();
-        continue;
-      }
-
-      int argumentsEnd = findExpressionEnd(str, argumentsStart);
-      if (argumentsEnd < 0)
+      ParsedExpression expression = parseExpression(str, expressionStart);
+      if (expression == null)
       {
         int recoveryStart = str.indexOf(STRING_CONVERTER_DELIMITER, expressionStart + STRING_CONVERTER_DELIMITER.length());
         if (recoveryStart < 0)
@@ -855,48 +854,218 @@ public final class StringUtil
         continue;
       }
 
-      String arguments = convertExpressions(str.substring(argumentsStart + 1, argumentsEnd), container);
-      String type = str.substring(expressionStart + STRING_CONVERTER_DELIMITER.length(), argumentsStart);
-
-      StringConverter converter = container.getElementOrNull(StringConverter.PRODUCT_GROUP, type);
-      if (converter == null)
-      {
-        builder.append(str, expressionStart, argumentsStart + 1);
-        builder.append(arguments);
-        builder.append(str, argumentsEnd, argumentsEnd + 1 + STRING_CONVERTER_DELIMITER.length());
-      }
-      else
-      {
-        builder.append(safe(converter.apply(arguments)));
-      }
-
-      offset = argumentsEnd + 1 + STRING_CONVERTER_DELIMITER.length();
+      builder.append(evaluateExpression(expression, container).value);
+      offset = expression.endIndex;
     }
 
     return builder.toString();
   }
 
-  private static int findExpressionEnd(String str, int argumentsStart)
+  private static ParsedExpression parseExpression(String str, int expressionStart)
   {
-    int depth = 0;
+    int typeStart = expressionStart + STRING_CONVERTER_DELIMITER.length();
+    int argumentsStart = str.indexOf('(', typeStart);
+    int nextDelimiter = str.indexOf(STRING_CONVERTER_DELIMITER, typeStart);
 
-    for (int i = argumentsStart; i < str.length(); i++)
+    if (argumentsStart < 0 //
+        || nextDelimiter >= 0 && nextDelimiter < argumentsStart //
+        || argumentsStart == typeStart //
+        || str.substring(typeStart, argumentsStart).indexOf('$') >= 0)
+    {
+      return null;
+    }
+
+    String type = str.substring(typeStart, argumentsStart);
+    List<ParsedArgument> arguments = new ArrayList<>();
+    List<ParsedExpression> nestedExpressions = new ArrayList<>();
+
+    int argumentStart = argumentsStart + 1;
+    int parenthesisDepth = 0;
+
+    for (int i = argumentStart; i < str.length(); i++)
     {
       char c = str.charAt(i);
-      if (c == '(')
+      if (c == '$')
       {
-        ++depth;
-      }
-      else if (c == ')' && depth > 0)
-      {
-        if (--depth == 0)
+        if (str.startsWith(STRING_CONVERTER_DELIMITER, i) && hasConverterStart(str, i))
         {
-          return str.startsWith(STRING_CONVERTER_DELIMITER, i + 1) ? i : -1;
+          ParsedExpression nested = parseExpression(str, i);
+          if (nested == null)
+          {
+            return null;
+          }
+
+          nestedExpressions.add(nested);
+          i = nested.endIndex - 1;
         }
+        else if (i + 1 < str.length())
+        {
+          ++i;
+        }
+        else
+        {
+          return null;
+        }
+      }
+      else if (c == '(')
+      {
+        ++parenthesisDepth;
+      }
+      else if (c == ')')
+      {
+        if (parenthesisDepth > 0)
+        {
+          --parenthesisDepth;
+        }
+        else if (str.startsWith(STRING_CONVERTER_DELIMITER, i + 1))
+        {
+          arguments.add(new ParsedArgument(str, argumentStart, i, nestedExpressions));
+          return new ParsedExpression(str, expressionStart, type, arguments, i + 1 + STRING_CONVERTER_DELIMITER.length());
+        }
+        else
+        {
+          return null;
+        }
+      }
+      else if (c == ',' && parenthesisDepth == 0)
+      {
+        arguments.add(new ParsedArgument(str, argumentStart, i, nestedExpressions));
+        nestedExpressions = new ArrayList<>();
+        argumentStart = i + 1;
       }
     }
 
-    return -1;
+    return null;
+  }
+
+  private static boolean hasConverterStart(String str, int expressionStart)
+  {
+    int typeStart = expressionStart + STRING_CONVERTER_DELIMITER.length();
+    int argumentsStart = str.indexOf('(', typeStart);
+    int nextDelimiter = str.indexOf(STRING_CONVERTER_DELIMITER, typeStart);
+
+    return argumentsStart > typeStart //
+        && str.substring(typeStart, argumentsStart).indexOf('$') < 0 //
+        && (nextDelimiter < 0 || argumentsStart < nextDelimiter);
+  }
+
+  private static ExpressionResult evaluateExpression(ParsedExpression expression, IManagedContainer container)
+  {
+    String[] arguments = new String[expression.arguments.size()];
+    List<ArgumentEvaluation> evaluations = new ArrayList<>();
+
+    for (int i = 0; i < arguments.length; i++)
+    {
+      ArgumentEvaluation evaluation = evaluateArgument(expression.arguments.get(i), container);
+      evaluations.add(evaluation);
+      arguments[i] = evaluation.value;
+    }
+
+    StringConverter converter = container.getElementOrNull(StringConverter.PRODUCT_GROUP, expression.type);
+    if (converter == null)
+    {
+      return new ExpressionResult(preserveUnknownExpression(expression, evaluations), false);
+    }
+
+    String result;
+
+    if (converter instanceof StringConverter.WithArguments)
+    {
+      result = ((StringConverter.WithArguments)converter).applyArguments(arguments);
+    }
+    else
+    {
+      result = converter.apply(String.join(",", arguments)); //$NON-NLS-1$
+    }
+
+    return new ExpressionResult(safe(result), true);
+  }
+
+  private static ArgumentEvaluation evaluateArgument(ParsedArgument argument, IManagedContainer container)
+  {
+    StringBuilder value = new StringBuilder();
+    StringBuilder preserved = new StringBuilder();
+    int offset = argument.startIndex;
+
+    for (ParsedExpression nested : argument.nestedExpressions)
+    {
+      String prefix = argument.source.substring(offset, nested.startIndex);
+      value.append(unescapeArgument(prefix));
+      preserved.append(prefix);
+
+      ExpressionResult nestedResult = evaluateExpression(nested, container);
+      value.append(nestedResult.value);
+      if (nestedResult.known)
+      {
+        preserved.append(escapeArgument(nestedResult.value));
+      }
+      else
+      {
+        preserved.append(nestedResult.value);
+      }
+
+      offset = nested.endIndex;
+    }
+
+    String suffix = argument.source.substring(offset, argument.endIndex);
+    value.append(unescapeArgument(suffix));
+    preserved.append(suffix);
+    return new ArgumentEvaluation(value.toString(), preserved.toString());
+  }
+
+  private static String preserveUnknownExpression(ParsedExpression expression, List<ArgumentEvaluation> arguments)
+  {
+    StringBuilder builder = new StringBuilder();
+    int offset = expression.startIndex;
+
+    for (int i = 0; i < expression.arguments.size(); i++)
+    {
+      ParsedArgument argument = expression.arguments.get(i);
+      builder.append(expression.source, offset, argument.startIndex);
+      builder.append(arguments.get(i).preserved);
+      offset = argument.endIndex;
+    }
+
+    builder.append(expression.source, offset, expression.endIndex);
+    return builder.toString();
+  }
+
+  private static String unescapeArgument(String argument)
+  {
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 0; i < argument.length(); i++)
+    {
+      char c = argument.charAt(i);
+      if (c == '$' && i + 1 < argument.length())
+      {
+        builder.append(argument.charAt(++i));
+      }
+      else
+      {
+        builder.append(c);
+      }
+    }
+
+    return builder.toString();
+  }
+
+  private static String escapeArgument(String argument)
+  {
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 0; i < argument.length(); i++)
+    {
+      char c = argument.charAt(i);
+      if (c == '$' || c == ',' || c == '(' || c == ')')
+      {
+        builder.append('$');
+      }
+
+      builder.append(c);
+    }
+
+    return builder.toString();
   }
 
   /**
@@ -1167,5 +1336,92 @@ public final class StringUtil
   public static boolean equalsUpperOrLowerCase(String s, String upperOrLowerCase)
   {
     return equalsIgnoreCase(s, upperOrLowerCase);
+  }
+
+  /**
+   * Represents a converter expression after its argument boundaries have been parsed.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ParsedExpression
+  {
+    public final String source;
+
+    public final int startIndex;
+
+    public final String type;
+
+    public final List<ParsedArgument> arguments;
+
+    public final int endIndex;
+
+    public ParsedExpression(String source, int startIndex, String type, List<ParsedArgument> arguments, int endIndex)
+    {
+      this.source = source;
+      this.startIndex = startIndex;
+      this.type = type;
+      this.arguments = arguments;
+      this.endIndex = endIndex;
+    }
+  }
+
+  /**
+   * Represents the original source range of one argument and its nested expressions.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ParsedArgument
+  {
+    public final String source;
+
+    public final int startIndex;
+
+    public final int endIndex;
+
+    public final List<ParsedExpression> nestedExpressions;
+
+    public ParsedArgument(String source, int startIndex, int endIndex, List<ParsedExpression> nestedExpressions)
+    {
+      this.source = source;
+      this.startIndex = startIndex;
+      this.endIndex = endIndex;
+      this.nestedExpressions = new ArrayList<>(nestedExpressions);
+    }
+  }
+
+  /**
+   * Holds a converter result and whether it came from a registered converter.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ExpressionResult
+  {
+    public final String value;
+
+    public final boolean known;
+
+    public ExpressionResult(String value, boolean known)
+    {
+      this.value = value;
+      this.known = known;
+    }
+  }
+
+  /**
+   * Holds both evaluated arguments and their source-preserving forms.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ArgumentEvaluation
+  {
+    public final String value;
+
+    public final String preserved;
+
+    public ArgumentEvaluation(String value, String preserved)
+    {
+      this.value = value;
+      this.preserved = preserved;
+    }
   }
 }

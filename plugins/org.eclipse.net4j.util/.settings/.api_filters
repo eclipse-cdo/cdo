@@ -28,7 +28,31 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="AND"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
                 <message_argument value="BASE64"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="CONTAINS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="CONTAINS_IGNORE_CASE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="ENDS_WITH"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -52,7 +76,31 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="NOT"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="OR"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="STARTS_WITH"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
                 <message_argument value="STRIP_HTML"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="XOR"/>
             </message_arguments>
         </filter>
     </resource>

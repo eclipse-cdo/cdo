@@ -58,7 +58,15 @@
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="upper" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="lower" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="equals" class="org.eclipse.net4j.util.StringConverter"/>
-      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="equalsIgnoreCase" class="org.eclipse.net4j.util.StringConverter" name="EQUALS_IGNORE_CASE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="equals_ignore_case" class="org.eclipse.net4j.util.StringConverter" name="EQUALS_IGNORE_CASE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="contains" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="contains_ignore_case" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="starts_with" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="ends_with" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="and" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="or" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="xor" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="not" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="cap" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="cap_all" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="uncap" class="org.eclipse.net4j.util.StringConverter"/>

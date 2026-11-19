@@ -32,16 +32,18 @@ detects the appropriate DBAdapter from a temporary JDBC connection to the config
 
 #### 2.1.1 H2 (default)
 
-H2 is embedded and stores its database in a file. The relative path is resolved from the server's
-working directory; when launched by the Maven `exec:java` goal, that is the configured-server
-module directory.
+H2 is embedded and stores its database in a file. Its default URL uses the configured-server
+module's absolute path so it is stable regardless of Maven's launch directory.
 
 | Property | Default | Description |
 |---|---|---|
 | `db` | `h2` | Selects the database implementation. |
-| `cdo.db.url` | `jdbc:h2:file:./data/cdo;AUTO_SERVER=TRUE` | JDBC URL for the H2 file database. |
+| `cdo.db.url` | configured-server `data/cdo` | JDBC URL for the H2 file database; override with `-Dcdo.db.url=...`. |
 
-The file under `data/cdo` keeps repository data when the server stops and starts again. Do not
+The module sets `net4j.config` to its `${project.basedir}/config`, so the same
+`config/cdo-server.xml` is found whether Maven is launched from the examples root or this module
+directory. The file
+under `data/cdo` keeps repository data when the server stops and starts again. Do not
 delete it if you want to retain the example data.
 
 #### 2.1.2 PostgreSQL
@@ -165,8 +167,9 @@ From the examples directory, start the server with default H2 storage and TCP tr
 mvn -pl configured-server exec:java
 ```
 
-The configured-server POM passes its Maven `db` and `transport` properties into the server JVM;
-the defaults are `h2` and `tcp`. Override transport with `-Dtransport=ssl`, `-Dtransport=ws`, or
+The configured-server POM forwards Maven project and command-line properties to the server JVM;
+the defaults are `h2` and `tcp`. Thus `-Dtransport=ws` selects WebSocket without `MAVEN_OPTS`.
+Override transport with `-Dtransport=ssl`, `-Dtransport=ws`, or
 `-Dtransport=wss`. For PostgreSQL, use `-Ppostgresql` and provide any non-default
 `cdo.db.server`, `cdo.db.port`, `cdo.db.database`, `cdo.db.user`, and `cdo.db.password` values as
 Maven `-D` properties. With the PostgreSQL defaults except for the password, start it with:
@@ -183,11 +186,17 @@ type defaults to PKCS12 and can be changed with `cdo.ssl.keystore.type`. For exa
 own keystore and password values with:
 
 ```powershell
-mvn -pl configured-server exec:java -Dtransport=wss -Dcdo.wss.keystore=C:/certs/server.p12 -Dcdo.wss.keystore.password=YOUR_KEYSTORE_PASSWORD
+mvn -pl configured-server exec:java -Dtransport=wss `
+  -Dcdo.wss.keystore=C:/certs/server.p12 `
+  -Dcdo.wss.keystore.password=YOUR_KEYSTORE_PASSWORD
 ```
 
-Enter `stop` and press Enter to shut the server down cleanly. Maven `-D`
-options for `cdo.db.url`, `cdo.db.server`,
+You can also run from `configured-server` itself with `mvn exec:java`; the same properties and
+defaults apply. Enter `stop` and press Enter to shut the server down cleanly. Use a normal
+PowerShell console for interactive shutdown. PowerShell ISE did not reliably deliver `stop` to
+Maven's interactive input.
+
+Maven `-D` options for `cdo.db.url`, `cdo.db.server`,
 `cdo.db.port`, `cdo.db.database`, `cdo.db.user`, and `cdo.db.password` are available as system
 properties to the in-process `exec:java` server. Unspecified values retain the fallbacks in
 `config/cdo-server.xml`.
@@ -200,7 +209,8 @@ After building, run the existing `RemoteClient` from the examples directory:
 mvn -pl remote-client exec:java
 ```
 
-The client's `transport` property is independent of the server's Maven invocation. Set it to the
+The client's Maven properties are forwarded to its JVM. The client's `transport` property is
+independent of the server's Maven invocation. Set it to the
 same value as the server; it defaults to TCP. The optional client argument accepts a port, host
 name, or `host:port`; without an argument, the defaults are `localhost:2036` for TCP/SSL and
 `localhost:8080` or `localhost:8443` for WS/WSS.
@@ -209,13 +219,17 @@ To connect to another TCP server, pass its address through the Exec Maven Plugin
 transport as the server and provide the client trust settings, for example:
 
 ```powershell
-mvn -pl remote-client exec:java -Dtransport=ssl -Dcdo.ssl.truststore=C:/certs/cdo-trust.p12 -Dcdo.ssl.passphrase=YOUR_TRUSTSTORE_PASSPHRASE
+mvn -pl remote-client exec:java -Dtransport=ssl `
+  -Dcdo.ssl.truststore=C:/certs/cdo-trust.p12 `
+  -Dcdo.ssl.passphrase=YOUR_TRUSTSTORE_PASSPHRASE
 ```
 
 For WSS, the client uses the JSSE truststore properties:
 
 ```powershell
-mvn -pl remote-client exec:java -Dtransport=wss -Dcdo.wss.truststore=C:/certs/cdo-trust.p12 -Dcdo.wss.truststore.password=YOUR_TRUSTSTORE_PASSWORD
+mvn -pl remote-client exec:java -Dtransport=wss `
+  -Dcdo.wss.truststore=C:/certs/cdo-trust.p12 `
+  -Dcdo.wss.truststore.password=YOUR_TRUSTSTORE_PASSWORD
 ```
 
 For WS/WSS, the client uses

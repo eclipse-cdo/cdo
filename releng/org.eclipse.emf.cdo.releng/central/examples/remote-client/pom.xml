@@ -19,6 +19,56 @@
 
   <profiles>
     <profile>
+      <id>forward-wss-truststore</id>
+      <activation><property><name>cdo.wss.truststore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.trustStore</key><value>${cdo.wss.truststore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-wss-truststore-password</id>
+      <activation><property><name>cdo.wss.truststore.password</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.trustStorePassword</key><value>${cdo.wss.truststore.password}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-net4j-ssl-trust</id>
+      <activation><property><name>cdo.ssl.truststore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>org.eclipse.net4j.tcp.ssl.trust</key><value>${cdo.ssl.truststore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-net4j-ssl-passphrase</id>
+      <activation><property><name>cdo.ssl.passphrase</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>org.eclipse.net4j.tcp.ssl.passphrase</key><value>${cdo.ssl.passphrase}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-ws-path</id>
+      <activation><property><name>cdo.ws.path</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>cdo.ws.path</key><value>${cdo.ws.path}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
       <id>checkout-central-repository</id>
       <activation>
         <file>
@@ -98,13 +148,9 @@
         <version>${exec-maven-plugin.version}</version>
         <configuration>
           <mainClass>org.eclipse.emf.cdo.examples.plain.client.RemoteClient</mainClass>
-          <systemPropertyVariables>
-            <transport>${transport}</transport>
-            <javax.net.ssl.trustStore>${cdo.wss.truststore}</javax.net.ssl.trustStore>
-            <javax.net.ssl.trustStorePassword>${cdo.wss.truststore.password}</javax.net.ssl.trustStorePassword>
-            <org.eclipse.net4j.tcp.ssl.trust>${cdo.ssl.truststore}</org.eclipse.net4j.tcp.ssl.trust>
-            <org.eclipse.net4j.tcp.ssl.passphrase>${cdo.ssl.passphrase}</org.eclipse.net4j.tcp.ssl.passphrase>
-          </systemPropertyVariables>
+          <systemProperties>
+            <systemProperty><key>transport</key><value>${transport}</value></systemProperty>
+          </systemProperties>
         </configuration>
       </plugin>
     </plugins>

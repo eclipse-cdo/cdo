@@ -16,113 +16,109 @@
   <properties>
     <plain.java.source.file>org/eclipse/emf/cdo/examples/plain/server/ConfiguredWebSocketServerExtension.java</plain.java.source.file>
     <jetty.version>12.1.14</jetty.version>
+    <cdo.db.url>jdbc:h2:file:${project.basedir}/data/cdo;AUTO_SERVER=TRUE</cdo.db.url>
   </properties>
 
   <profiles>
     <profile>
-      <id>forward-cdo-db-url</id>
-      <activation>
-        <property>
-          <name>cdo.db.url</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <cdo.db.url>${cdo.db.url}</cdo.db.url>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+      <id>forward-server-password</id>
+      <activation><property><name>cdo.db.password</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>cdo.db.password</key><value>${cdo.db.password}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
     </profile>
     <profile>
-      <id>forward-cdo-db-server</id>
-      <activation>
-        <property>
-          <name>cdo.db.server</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <cdo.db.server>${cdo.db.server}</cdo.db.server>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+      <id>forward-wss-truststore</id>
+      <activation><property><name>cdo.wss.truststore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.trustStore</key><value>${cdo.wss.truststore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
     </profile>
     <profile>
-      <id>forward-cdo-db-port</id>
-      <activation>
-        <property>
-          <name>cdo.db.port</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <cdo.db.port>${cdo.db.port}</cdo.db.port>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+      <id>forward-wss-truststore-password</id>
+      <activation><property><name>cdo.wss.truststore.password</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.trustStorePassword</key><value>${cdo.wss.truststore.password}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
     </profile>
     <profile>
-      <id>forward-cdo-db-database</id>
-      <activation>
-        <property>
-          <name>cdo.db.database</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <cdo.db.database>${cdo.db.database}</cdo.db.database>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+      <id>forward-ws-path</id>
+      <activation><property><name>cdo.ws.path</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>cdo.ws.path</key><value>${cdo.ws.path}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
     </profile>
     <profile>
-      <id>forward-cdo-db-user</id>
-      <activation>
-        <property>
-          <name>cdo.db.user</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <configuration>
-              <systemPropertyVariables>
-                <cdo.db.user>${cdo.db.user}</cdo.db.user>
-              </systemPropertyVariables>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
+      <id>forward-wss-keystore</id>
+      <activation><property><name>cdo.wss.keystore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.keyStore</key><value>${cdo.wss.keystore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-wss-keystore-password</id>
+      <activation><property><name>cdo.wss.keystore.password</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>javax.net.ssl.keyStorePassword</key><value>${cdo.wss.keystore.password}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-net4j-ssl-key</id>
+      <activation><property><name>cdo.ssl.keystore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>org.eclipse.net4j.tcp.ssl.key</key><value>${cdo.ssl.keystore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-net4j-ssl-trust</id>
+      <activation><property><name>cdo.ssl.truststore</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>org.eclipse.net4j.tcp.ssl.trust</key><value>${cdo.ssl.truststore}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-net4j-ssl-passphrase</id>
+      <activation><property><name>cdo.ssl.passphrase</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>org.eclipse.net4j.tcp.ssl.passphrase</key><value>${cdo.ssl.passphrase}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
+    </profile>
+    <profile>
+      <id>forward-ws-port</id>
+      <activation><property><name>cdo.ws.port</name></property></activation>
+      <build><plugins><plugin>
+        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
+        <configuration><systemProperties combine.children="append"><systemProperty>
+          <key>cdo.ws.port</key><value>${cdo.ws.port}</value>
+        </systemProperty></systemProperties></configuration>
+      </plugin></plugins></build>
     </profile>
     <profile>
       <id>checkout-central-repository</id>
@@ -226,6 +222,12 @@
       <version>${jetty.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.0.17</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
       <groupId>org.eclipse.cdo</groupId>
       <artifactId>org.eclipse.net4j.util</artifactId>
     </dependency>
@@ -250,24 +252,43 @@
         <version>3.6.2</version>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven-plugin.version}</version>
         <configuration>
           <mainClass>org.eclipse.emf.cdo.server.Main</mainClass>
-          <systemPropertyVariables>
-            <db>${db}</db>
-            <transport>${transport}</transport>
-            <cdo.db.password>${cdo.db.password}</cdo.db.password>
-            <javax.net.ssl.keyStore>${cdo.wss.keystore}</javax.net.ssl.keyStore>
-            <javax.net.ssl.keyStorePassword>${cdo.wss.keystore.password}</javax.net.ssl.keyStorePassword>
-            <javax.net.ssl.keyStoreType>${cdo.ssl.keystore.type}</javax.net.ssl.keyStoreType>
-            <cdo.ws.host>${cdo.ws.host}</cdo.ws.host>
-            <cdo.ws.port>${cdo.ws.port}</cdo.ws.port>
-            <org.eclipse.net4j.tcp.ssl.key>${cdo.ssl.keystore}</org.eclipse.net4j.tcp.ssl.key>
-            <org.eclipse.net4j.tcp.ssl.trust>${cdo.ssl.truststore}</org.eclipse.net4j.tcp.ssl.trust>
-            <org.eclipse.net4j.tcp.ssl.passphrase>${cdo.ssl.passphrase}</org.eclipse.net4j.tcp.ssl.passphrase>
-          </systemPropertyVariables>
+          <systemProperties>
+            <systemProperty>
+              <key>net4j.config</key>
+              <value>${project.basedir}/config</value>
+            </systemProperty>
+            <systemProperty><key>db</key><value>${db}</value></systemProperty>
+            <systemProperty><key>transport</key><value>${transport}</value></systemProperty>
+            <systemProperty><key>cdo.db.url</key><value>${cdo.db.url}</value></systemProperty>
+            <systemProperty><key>cdo.db.server</key><value>${cdo.db.server}</value></systemProperty>
+            <systemProperty><key>cdo.db.port</key><value>${cdo.db.port}</value></systemProperty>
+            <systemProperty><key>cdo.db.database</key><value>${cdo.db.database}</value></systemProperty>
+            <systemProperty><key>cdo.db.user</key><value>${cdo.db.user}</value></systemProperty>
+            <systemProperty><key>cdo.ws.host</key><value>${cdo.ws.host}</value></systemProperty>
+            <systemProperty>
+              <key>org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS</key>
+              <value>true</value>
+            </systemProperty>
+            <systemProperty>
+              <key>javax.net.ssl.keyStoreType</key>
+              <value>${cdo.ssl.keystore.type}</value>
+            </systemProperty>
+          </systemProperties>
         </configuration>
       </plugin>
     </plugins>

@@ -9,13 +9,16 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.net4j.util.security.NegotiationContext;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import org.eclipse.internal.net4j.ControlChannel;
 import org.eclipse.internal.net4j.RoundRobinScheduler;
 
 import org.eclipse.spi.net4j.InternalChannel;
@@ -25,7 +28,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -419,6 +425,70 @@ public class SchedulingConnectorTest extends AbstractOMTest
     assertTrue(connector.getScheduler().isEmpty());
   }
 
+  public void testOldHandshakeCompletionCannotAdvanceReactivatedConnector() throws Exception
+  {
+    TestSchedulingConnector connector = new TestSchedulingConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)64));
+    LifecycleUtil.activate(connector);
+    connector.completeDeferredActivation();
+    connector.beginHandshake();
+    long oldGeneration = connector.handshakeGeneration();
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+    CountDownLatch progressionEntered = new CountDownLatch(1);
+    CountDownLatch allowProgression = new CountDownLatch(1);
+    connector.blockHandshakeProgression(progressionEntered, allowProgression);
+    Thread completion = worker("stale-handshake-completion", new CountDownLatch(0), failure, () -> connector.completeHandshake(oldGeneration)); //$NON-NLS-1$
+    completion.start();
+    assertTrue("Handshake completion did not reach the post-lock progression point", progressionEntered.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+    LifecycleUtil.deactivate(connector);
+    LifecycleUtil.activate(connector);
+    connector.completeDeferredActivation();
+    allowProgression.countDown();
+    join(completion);
+    assertNull(failure.get());
+    try
+    {
+      assertEquals("An old HELLO advanced the new activation", ConnectorState.CONNECTING, connector.getState()); //$NON-NLS-1$
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testPartialTCPHelloRemainsClassifiableWhileWriting() throws Exception
+  {
+    TestSchedulingConnector connector = new TestSchedulingConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)64));
+    LifecycleUtil.activate(connector);
+    try (ServerSocketChannel server = ServerSocketChannel.open())
+    {
+      server.bind(new InetSocketAddress("127.0.0.1", 0)); //$NON-NLS-1$
+      try (SocketChannel sender = SocketChannel.open(server.getLocalAddress()); SocketChannel receiver = server.accept())
+      {
+        sender.configureBlocking(false);
+        sender.socket().setSendBufferSize(1024);
+        ByteBuffer filler = ByteBuffer.allocate(65536);
+        while (sender.write(filler) > 0)
+        {
+          filler.clear();
+        }
+
+        connector.beginHandshake();
+        IBuffer hello = connector.provideBuffer();
+        hello.startPutting((short)0).put(ControlChannel.OPCODE_HELLO).putInt(0x45494B45).putInt(1);
+        assertFalse("The saturated socket unexpectedly accepted the complete HELLO", hello.write(sender)); //$NON-NLS-1$
+        assertEquals(BufferState.WRITING, hello.getState());
+        assertTrue("A partially written HELLO could no longer be classified", connector.isHello((InternalChannel)connector.getControlChannel(), hello)); //$NON-NLS-1$
+        hello.release();
+      }
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
   public void testDeactivationWhileTransmissionIsPending() throws Exception
   {
     TestSchedulingConnector connector = new TestSchedulingConnector();
@@ -719,6 +789,33 @@ public class SchedulingConnectorTest extends AbstractOMTest
   {
     private int notificationCount;
 
+    private CountDownLatch handshakeProgressionEntered;
+
+    private CountDownLatch allowHandshakeProgression;
+
+    @Override
+    public INegotiator getNegotiator()
+    {
+      CountDownLatch entered = handshakeProgressionEntered;
+      CountDownLatch allow = allowHandshakeProgression;
+      if (entered != null)
+      {
+        handshakeProgressionEntered = null;
+        entered.countDown();
+        try
+        {
+          allow.await();
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw new AssertionError(ex);
+        }
+      }
+
+      return super.getNegotiator();
+    }
+
     @Override
     protected void onSendingRequired()
     {
@@ -766,6 +863,37 @@ public class SchedulingConnectorTest extends AbstractOMTest
     public boolean complete(InternalChannel channel)
     {
       return completeScheduledChannel(channel, true);
+    }
+
+    public void beginHandshake()
+    {
+      leaveConnecting();
+    }
+
+    public void completeDeferredActivation()
+    {
+      deferredActivate(true);
+    }
+
+    public long handshakeGeneration()
+    {
+      return controlHandshakeGeneration();
+    }
+
+    public void completeHandshake(long generation)
+    {
+      controlHandshakeCompleted(generation);
+    }
+
+    public boolean isHello(InternalChannel channel, IBuffer buffer)
+    {
+      return isControlHelloBuffer(channel, buffer);
+    }
+
+    public void blockHandshakeProgression(CountDownLatch entered, CountDownLatch allow)
+    {
+      handshakeProgressionEntered = entered;
+      allowHandshakeProgression = allow;
     }
   }
 }

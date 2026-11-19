@@ -57,6 +57,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class MessageConnector extends SchedulingConnector
 {
+  private static final byte NO_RECEIVE_CONTROL_BARRIER_OPCODE = -1;
+
   private static final long DEFAULT_ZERO_COPY_RECEIVE_BUDGET = 1024L * 1024L;
 
   private static final long DEFAULT_COPY_RECEIVE_BUDGET = 4L * 1024L * 1024L;
@@ -133,6 +135,10 @@ public class MessageConnector extends SchedulingConnector
    */
   private volatile long generation;
 
+  private volatile long controlHandshakeTransportGeneration = -1;
+
+  private volatile long controlHandshakeGeneration = -1;
+
   /**
    * A wakeup arrived while the pump was scheduled or running and may require another pass.
    */
@@ -159,6 +165,11 @@ public class MessageConnector extends SchedulingConnector
   private boolean rejected;
 
   /**
+   * A writable callback raced with the return from a rejected submission.
+   */
+  private boolean writableWhileSubmitting;
+
+  /**
    * Whether one incoming message has been requested and has not yet been delivered.
    */
   private boolean receiveCredit;
@@ -179,7 +190,10 @@ public class MessageConnector extends SchedulingConnector
 
   private short receiveControlBarrierChannelID = IBuffer.NO_CHANNEL;
 
-  private byte receiveControlBarrierOpcode;
+  /**
+   * Uses -1 as the unset value because opcode 0 is the valid HELLO opcode.
+   */
+  private byte receiveControlBarrierOpcode = NO_RECEIVE_CONTROL_BARRIER_OPCODE;
 
   /**
    * A receive-demand replenishment task is queued on the receive executor.
@@ -356,6 +370,58 @@ public class MessageConnector extends SchedulingConnector
   }
 
   @Override
+  protected void leaveConnecting()
+  {
+    long handshakeGeneration = controlHandshakeGeneration();
+
+    synchronized (transportLock)
+    {
+      controlHandshakeTransportGeneration = generation;
+      controlHandshakeGeneration = handshakeGeneration;
+    }
+
+    super.leaveConnecting();
+  }
+
+  @Override
+  protected void advanceConnectionAfterHandshake(long handshakeGeneration)
+  {
+    if (controlHandshakeGeneration != handshakeGeneration || !isCurrentControlHandshakeGeneration(handshakeGeneration))
+    {
+      return;
+    }
+
+    long transportGeneration = controlHandshakeTransportGeneration;
+
+    if (getNegotiator() == null)
+    {
+      IMessageConnection source = connection;
+      if (completeConnection(source, transportGeneration))
+      {
+        onControlHandshakeCompleted(handshakeGeneration);
+      }
+
+      return;
+    }
+
+    boolean progressed = setStateIf(ConnectorState.NEGOTIATING,
+        () -> isCurrentControlHandshakeGeneration(handshakeGeneration) && generation == transportGeneration);
+    if (progressed)
+    {
+      onControlHandshakeCompleted(handshakeGeneration);
+    }
+  }
+
+  @Override
+  protected void onControlHandshakeCompleted(long generation)
+  {
+    if (controlHandshakeGeneration == generation)
+    {
+      schedulePump(controlHandshakeTransportGeneration);
+    }
+  }
+
+  @Override
   protected void onSendingNoLongerRequired()
   {
     // The message provider has no write-interest switch; work resumes from a completion or writable callback.
@@ -481,37 +547,41 @@ public class MessageConnector extends SchedulingConnector
     long currentGeneration;
     IMessageConnection current;
 
-    synchronized (activationLock)
+    synchronized (this)
     {
-      synchronized (transportLock)
+      synchronized (activationLock)
       {
-        currentGeneration = ++generation;
-        ready = false;
-        activationComplete = false;
-        activationFailure = null;
-        abortIssued = false;
-        activationOutcome = ACTIVATION_PENDING;
-        terminationPending = false;
-        closing = false;
-        rejected = false;
-        receiveCredit = false;
-        receiveAccounting = new ReceiveAccounting(zeroCopyReceiveBudgetBytes, copyReceiveBudgetBytes);
-        receiveQueue.clear();
-        pendingReceiveQueue.clear();
-        channelReceiveQueues.clear();
-        receiveDispatchScheduled = false;
-        nextReceiveControlSequence = 0;
-        receiveControlBarrierSequence = 0;
-        receiveControlBarrierChannelID = IBuffer.NO_CHANNEL;
-        receiveControlBarrierOpcode = 0;
-        receiveRequestScheduled = false;
-        gracefulCloseRequested = false;
-        gracefulCloseStarted = false;
-        pumpRequested = false;
-        pumpScheduled = false;
-        pumpRunning = false;
-        inFlight = null;
-        current = connection;
+        synchronized (transportLock)
+        {
+          currentGeneration = ++generation;
+          ready = false;
+          activationComplete = false;
+          activationFailure = null;
+          abortIssued = false;
+          activationOutcome = ACTIVATION_PENDING;
+          terminationPending = false;
+          closing = false;
+          rejected = false;
+          writableWhileSubmitting = false;
+          receiveCredit = false;
+          receiveAccounting = new ReceiveAccounting(zeroCopyReceiveBudgetBytes, copyReceiveBudgetBytes);
+          receiveQueue.clear();
+          pendingReceiveQueue.clear();
+          channelReceiveQueues.clear();
+          receiveDispatchScheduled = false;
+          nextReceiveControlSequence = 0;
+          receiveControlBarrierSequence = 0;
+          receiveControlBarrierChannelID = IBuffer.NO_CHANNEL;
+          receiveControlBarrierOpcode = NO_RECEIVE_CONTROL_BARRIER_OPCODE;
+          receiveRequestScheduled = false;
+          gracefulCloseRequested = false;
+          gracefulCloseStarted = false;
+          pumpRequested = false;
+          pumpScheduled = false;
+          pumpRunning = false;
+          inFlight = null;
+          current = connection;
+        }
       }
     }
 
@@ -549,25 +619,28 @@ public class MessageConnector extends SchedulingConnector
       boolean abortCurrent;
       boolean currentAttempt;
 
-      synchronized (activationLock)
+      synchronized (this)
       {
-        synchronized (transportLock)
+        synchronized (activationLock)
         {
-          currentAttempt = isCurrent(current, currentGeneration);
-          if (currentAttempt)
+          synchronized (transportLock)
           {
-            ++generation;
-            ready = false;
-            closing = true;
-            receiveCredit = false;
-            receiveRequestScheduled = false;
-            connection = null;
-            abortCurrent = !abortIssued;
-            abortIssued = true;
-          }
-          else
-          {
-            abortCurrent = false;
+            currentAttempt = isCurrent(current, currentGeneration);
+            if (currentAttempt)
+            {
+              ++generation;
+              ready = false;
+              closing = true;
+              receiveCredit = false;
+              receiveRequestScheduled = false;
+              connection = null;
+              abortCurrent = !abortIssued;
+              abortIssued = true;
+            }
+            else
+            {
+              abortCurrent = false;
+            }
           }
         }
       }
@@ -610,33 +683,37 @@ public class MessageConnector extends SchedulingConnector
     IMessageConnection current;
     InFlight pending;
     boolean abort;
-    synchronized (activationLock)
+
+    synchronized (this)
     {
-      synchronized (transportLock)
+      synchronized (activationLock)
       {
-        ++generation;
-        ready = false;
-        closing = true;
-        receiveCredit = false;
-        receiveRequestScheduled = false;
-        gracefulCloseRequested = false;
-        gracefulCloseStarted = false;
-        rejected = false;
-
-        pending = inFlight;
-        if (pending != null)
+        synchronized (transportLock)
         {
-          pending.detached = true;
-        }
+          ++generation;
+          ready = false;
+          closing = true;
+          receiveCredit = false;
+          receiveRequestScheduled = false;
+          gracefulCloseRequested = false;
+          gracefulCloseStarted = false;
+          rejected = false;
 
-        inFlight = null;
-        pumpRequested = false;
-        pumpRunning = false;
-        pumpScheduled = false;
-        current = connection;
-        connection = null;
-        abort = current != null && !abortIssued;
-        abortIssued = true;
+          pending = inFlight;
+          if (pending != null)
+          {
+            pending.detached = true;
+          }
+
+          inFlight = null;
+          pumpRequested = false;
+          pumpRunning = false;
+          pumpScheduled = false;
+          current = connection;
+          connection = null;
+          abort = current != null && !abortIssued;
+          abortIssued = true;
+        }
       }
     }
 
@@ -768,7 +845,7 @@ public class MessageConnector extends SchedulingConnector
 
   private boolean isSendPumpAvailable()
   {
-    return isActive() || isNegotiating();
+    return isActive() || isNegotiating() || isConnecting();
   }
 
   /**
@@ -781,75 +858,83 @@ public class MessageConnector extends SchedulingConnector
   private void sendNext(long expectedGeneration)
   {
     IMessageConnection current;
-    InternalChannel channel;
+    InternalChannel channel = null;
     Queue<IBuffer> queue = null;
     IBuffer buffer = null;
     InFlight send = null;
+
     boolean selected = false;
     boolean applicationBufferDeferred = false;
+    boolean pumpEligible;
 
     synchronized (activationLock)
     {
       synchronized (transportLock)
       {
-        if (generation != expectedGeneration //
-            || !ready //
-            || closing //
-            || gracefulCloseStarted //
-            || !isSendPumpAvailable() //
-            || inFlight != null //
-            || rejected)
-        {
-          return;
-        }
+        pumpEligible = generation == expectedGeneration //
+            && ready //
+            && !closing //
+            && !gracefulCloseStarted //
+            && isSendPumpAvailable() //
+            && inFlight == null //
+            && !rejected;
 
         current = connection;
       }
 
-      channel = selectScheduledChannel();
-      if (channel == null)
+      if (pumpEligible)
       {
-        stopSendingIfIdle();
-      }
-      else if (!isActive() && channel != getInternalControlChannel())
-      {
-        // Keep application buffers queued until deferred negotiation activation completes.
-        applicationBufferDeferred = true;
-      }
-      else
-      {
-        queue = channel.getSendQueue();
-
-        synchronized (queue == null ? transportLock : queue)
+        channel = selectScheduledChannel();
+        if (channel == null)
         {
-          if (queue != null && channel.isActive() && channel.getSendQueue() == queue)
+          stopSendingIfIdle();
+        }
+        else if (!isActive() && channel != getInternalControlChannel())
+        {
+          // Keep application buffers queued until deferred negotiation activation completes.
+          applicationBufferDeferred = true;
+        }
+        else
+        {
+          queue = channel.getSendQueue();
+
+          synchronized (queue == null ? transportLock : queue)
           {
-            buffer = queue.peek();
-            if (buffer != null && channel instanceof Channel && !((Channel)channel).pinSendBuffer(buffer))
+            if (queue != null && channel.isActive() && channel.getSendQueue() == queue)
             {
-              buffer = null;
+              buffer = queue.peek();
+              if (buffer != null && channel instanceof Channel && !((Channel)channel).pinSendBuffer(buffer))
+              {
+                buffer = null;
+              }
+            }
+          }
+
+          if (buffer != null)
+          {
+            send = new InFlight(expectedGeneration, channel, queue, buffer, buffer.isCCAM());
+
+            synchronized (transportLock)
+            {
+              selected = generation == expectedGeneration && !closing && inFlight == null && ready;
+              if (selected)
+              {
+                inFlight = send;
+              }
+              else
+              {
+                send.detached = true;
+              }
             }
           }
         }
-
-        if (buffer != null)
-        {
-          send = new InFlight(expectedGeneration, channel, queue, buffer, buffer.isCCAM());
-
-          synchronized (transportLock)
-          {
-            selected = generation == expectedGeneration && !closing && inFlight == null && ready;
-            if (selected)
-            {
-              inFlight = send;
-            }
-            else
-            {
-              send.detached = true;
-            }
-          }
-        }
       }
+    }
+
+    if (!pumpEligible)
+    {
+      finishPump(expectedGeneration, false);
+      return;
     }
 
     if (applicationBufferDeferred)
@@ -950,6 +1035,7 @@ public class MessageConnector extends SchedulingConnector
   {
     boolean completeNow = false;
     boolean releaseNow = false;
+    boolean resumeAfterRejection = false;
     boolean detached;
     boolean currentGeneration;
 
@@ -964,12 +1050,18 @@ public class MessageConnector extends SchedulingConnector
       {
         send.state = SendState.REJECTED;
 
+        resumeAfterRejection = failure == null && currentGeneration && writableWhileSubmitting;
+        if (currentGeneration)
+        {
+          writableWhileSubmitting = false;
+        }
+
         if (inFlight == send)
         {
           inFlight = null;
         }
 
-        if (failure == null && currentGeneration)
+        if (failure == null && currentGeneration && !resumeAfterRejection)
         {
           rejected = true;
         }
@@ -978,6 +1070,11 @@ public class MessageConnector extends SchedulingConnector
       }
       else
       {
+        if (currentGeneration)
+        {
+          writableWhileSubmitting = false;
+        }
+
         send.state = SendState.ACCEPTED;
         completeNow = send.callbackSeen;
       }
@@ -994,7 +1091,7 @@ public class MessageConnector extends SchedulingConnector
         ((Channel)send.channel).finishPinnedSendBuffer(send.queue, send.buffer, false);
       }
 
-      finishPump(send.generation, false);
+      finishPump(send.generation, resumeAfterRejection);
     }
 
     if (failure != null)
@@ -1052,6 +1149,7 @@ public class MessageConnector extends SchedulingConnector
   private void processCompletion(InFlight send, Throwable failure)
   {
     boolean currentGeneration;
+    boolean controlHello;
 
     synchronized (transportLock)
     {
@@ -1069,6 +1167,7 @@ public class MessageConnector extends SchedulingConnector
       }
     }
 
+    controlHello = failure == null && currentGeneration && isControlHelloBuffer(send.channel, send.buffer);
     finishSendOwnership(send);
 
     if (failure != null)
@@ -1107,6 +1206,11 @@ public class MessageConnector extends SchedulingConnector
     }
 
     finishPump(send.generation, true);
+
+    if (controlHello)
+    {
+      controlHelloSent(send.generation);
+    }
   }
 
   /**
@@ -1153,7 +1257,7 @@ public class MessageConnector extends SchedulingConnector
       }
 
       pumpRunning = false;
-      rerun = allowPending && pumpRequested;
+      rerun = pumpRequested && (allowPending || isActive());
       pumpRequested = false;
     }
 
@@ -1195,15 +1299,21 @@ public class MessageConnector extends SchedulingConnector
     }
 
     int bytes = data.remaining();
-    boolean copy;
+    boolean copy = false;
+    boolean reserved = false;
 
-    if (accounting.reserveZeroCopy(bytes))
+    if (isControlHello(data))
     {
-      copy = false;
+      // The protocol bootstrap must work even when the application receive budget is zero.
+    }
+    else if (accounting.reserveZeroCopy(bytes))
+    {
+      reserved = true;
     }
     else if (accounting.reserveCopy(bytes))
     {
       copy = true;
+      reserved = true;
     }
     else
     {
@@ -1253,6 +1363,7 @@ public class MessageConnector extends SchedulingConnector
     }
     else
     {
+      boolean releaseReservation = reserved;
       Runnable release = once(() -> {
         try
         {
@@ -1260,7 +1371,10 @@ public class MessageConnector extends SchedulingConnector
         }
         finally
         {
-          accounting.releaseZeroCopy(bytes);
+          if (releaseReservation)
+          {
+            accounting.releaseZeroCopy(bytes);
+          }
         }
       });
 
@@ -1316,6 +1430,11 @@ public class MessageConnector extends SchedulingConnector
         dispatcher.start();
       }
     }
+  }
+
+  private static boolean isControlHello(ByteBuffer data)
+  {
+    return ControlChannel.isWellFormedHelloFrame(data.duplicate());
   }
 
   private List<ChannelReceiveQueue> dispatchReceivedBuffers(long callbackGeneration)
@@ -1525,7 +1644,7 @@ public class MessageConnector extends SchedulingConnector
 
       receiveControlBarrierSequence = 0;
       receiveControlBarrierChannelID = IBuffer.NO_CHANNEL;
-      receiveControlBarrierOpcode = 0;
+      receiveControlBarrierOpcode = NO_RECEIVE_CONTROL_BARRIER_OPCODE;
 
       if (channelAvailable)
       {
@@ -1589,7 +1708,7 @@ public class MessageConnector extends SchedulingConnector
 
       receiveControlBarrierSequence = 0;
       receiveControlBarrierChannelID = IBuffer.NO_CHANNEL;
-      receiveControlBarrierOpcode = 0;
+      receiveControlBarrierOpcode = NO_RECEIVE_CONTROL_BARRIER_OPCODE;
       dispatchers = new ArrayList<>(channelReceiveQueues.values());
       channelReceiveQueues.clear();
       receiveDispatchScheduled = false;
@@ -1940,28 +2059,36 @@ public class MessageConnector extends SchedulingConnector
 
   private boolean completeConnection(IMessageConnection source, long callbackGeneration)
   {
-    synchronized (activationLock)
+    boolean connected = setStateIf(ConnectorState.CONNECTED, () -> {
+      synchronized (activationLock)
+      {
+        synchronized (transportLock)
+        {
+          if (!isCurrent(source, callbackGeneration) || closing || !ready || activationOutcome == ACTIVATION_FAILED)
+          {
+            return false;
+          }
+        }
+
+        if (LifecycleUtil.getLifecycleState(this) == LifecycleState.ACTIVATING)
+        {
+          if (activationOutcome != ACTIVATION_PENDING)
+          {
+            return false;
+          }
+
+          activationOutcome = ACTIVATION_SUCCEEDED;
+        }
+
+        return true;
+      }
+    });
+
+    if (!connected)
     {
-      synchronized (transportLock)
-      {
-        if (!isCurrent(source, callbackGeneration) || closing || !ready || activationOutcome == ACTIVATION_FAILED)
-        {
-          return false;
-        }
-      }
-
-      if (LifecycleUtil.getLifecycleState(this) == LifecycleState.ACTIVATING)
-      {
-        if (activationOutcome != ACTIVATION_PENDING)
-        {
-          return false;
-        }
-
-        activationOutcome = ACTIVATION_SUCCEEDED;
-      }
+      return false;
     }
 
-    super.setState(ConnectorState.CONNECTED);
     boolean terminate;
 
     synchronized (activationLock)
@@ -2182,6 +2309,8 @@ public class MessageConnector extends SchedulingConnector
     @Override
     public void writable()
     {
+      boolean submissionPending;
+
       synchronized (transportLock)
       {
         if (!isCurrent(source, callbackGeneration) || closing)
@@ -2189,10 +2318,22 @@ public class MessageConnector extends SchedulingConnector
           return;
         }
 
-        rejected = false;
+        submissionPending = inFlight != null && inFlight.state == SendState.SUBMITTING;
+        if (submissionPending)
+        {
+          writableWhileSubmitting = true;
+          pumpRequested = true;
+        }
+        else
+        {
+          rejected = false;
+        }
       }
 
-      schedulePump();
+      if (!submissionPending)
+      {
+        schedulePump();
+      }
     }
 
     @Override
@@ -2200,6 +2341,7 @@ public class MessageConnector extends SchedulingConnector
     {
       boolean terminateActivation;
       boolean activationIncomplete;
+      boolean handshakePending;
 
       synchronized (transportLock)
       {
@@ -2207,6 +2349,8 @@ public class MessageConnector extends SchedulingConnector
         {
           return;
         }
+
+        handshakePending = !closing && isConnecting();
 
         if (!activationComplete)
         {
@@ -2224,6 +2368,11 @@ public class MessageConnector extends SchedulingConnector
           abortIssued = true;
           terminateActivation = LifecycleUtil.getLifecycleState(MessageConnector.this) == LifecycleState.ACTIVATING;
         }
+      }
+
+      if (handshakePending)
+      {
+        failControlHandshakeIfPending(cause);
       }
 
       if (activationIncomplete)

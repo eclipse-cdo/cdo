@@ -16,6 +16,7 @@ import org.eclipse.net4j.TransportInjector;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
@@ -107,6 +108,21 @@ public class NegotiationTest extends AbstractConfigTest
       assertFalse("Acceptor remains active after stopTransport", LifecycleUtil.isActive(acceptor)); //$NON-NLS-1$
       assertEquals("Acceptor retained accepted connectors after stopTransport", 0, acceptor.getAcceptedConnectors().length); //$NON-NLS-1$
     }
+  }
+
+  public void testControlHandshakeCompletesWithoutAuthentication() throws Exception
+  {
+    startTransport();
+    IConnector clientConnector = getConnector();
+    clientConnector.waitForConnection(DEFAULT_TIMEOUT);
+
+    IConnector serverConnector = getAcceptor().getAcceptedConnectors()[0];
+    serverConnector.waitForConnection(DEFAULT_TIMEOUT);
+    assertEquals(ConnectorState.CONNECTED, clientConnector.getState());
+    assertEquals(ConnectorState.CONNECTED, serverConnector.getState());
+
+    IChannel channel = clientConnector.openChannel();
+    assertNotNull(channel);
   }
 
   private void closeClientAndWaitForServerConnector(IConnector clientConnector, IConnector serverConnector) throws Exception

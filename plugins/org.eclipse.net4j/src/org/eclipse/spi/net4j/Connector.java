@@ -33,6 +33,7 @@ import org.eclipse.internal.net4j.bundle.OM;
 import java.text.MessageFormat;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BooleanSupplier;
 
 /**
  * Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.
@@ -119,6 +120,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public void setState(ConnectorState newState) throws ConnectorException
   {
+    setStateIf(newState, () -> true);
+  }
+
+  final boolean setStateIf(ConnectorState newState, BooleanSupplier condition) throws ConnectorException
+  {
     ConnectorState oldState;
     CountDownLatch connectingLatch = null;
     CountDownLatch negotiatingLatch = null;
@@ -126,10 +132,15 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
     synchronized (this)
     {
-      oldState = connectorState;
-      if (newState == oldState)
+      if (!condition.getAsBoolean())
       {
-        return;
+        return false;
+      }
+
+      oldState = connectorState;
+      if (oldState == newState)
+      {
+        return true;
       }
 
       if (!isValidTransition(oldState, newState))
@@ -139,7 +150,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
           TRACER.format("Ignoring invalid state transition from {0} to {1} for {2}", oldState, newState, this); //$NON-NLS-1$
         }
 
-        return;
+        return false;
       }
 
       switch (newState)
@@ -204,6 +215,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     }
 
     fireEvent(new ConnectorStateEvent(this, oldState, newState));
+    return true;
   }
 
   public boolean isDisconnected()

@@ -46,6 +46,8 @@ import org.eclipse.net4j.ws.IWSConnector;
 import org.eclipse.net4j.ws.IWSNegotiationContext;
 import org.eclipse.net4j.ws.WSUtil;
 
+import org.eclipse.internal.net4j.ControlChannel;
+
 import org.eclipse.spi.net4j.InternalConnector;
 import org.eclipse.spi.net4j.MessageConnectionFactory;
 import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
@@ -417,6 +419,7 @@ public class WSFrameworkTest extends AbstractOMTest
       assertEquals(Location.SERVER, connector.getLocation());
       assertSame(acceptor, connector.getAcceptor());
       assertEquals(1, connection.readyCallbacks.get());
+      connector.waitForConnection(5000);
       assertEquals("Lifecycle state was " + LifecycleUtil.getLifecycleState(connector), ConnectorState.CONNECTED, connector.getState()); //$NON-NLS-1$
     }
     finally
@@ -476,6 +479,7 @@ public class WSFrameworkTest extends AbstractOMTest
       ready.join(5000);
 
       assertFalse("Readiness callback remained blocked", ready.isAlive()); //$NON-NLS-1$
+      connector.waitForConnection(5000);
       assertEquals(LifecycleState.ACTIVE, LifecycleUtil.getLifecycleState(connector));
       assertEquals(ConnectorState.CONNECTED, connector.getState());
       assertEquals(1, acceptor.getAcceptedConnectors().length);
@@ -491,6 +495,7 @@ public class WSFrameworkTest extends AbstractOMTest
   public void testDeferredAcceptCanNegotiateAfterReadiness() throws Exception
   {
     AtomicReference<INegotiationContext> negotiation = new AtomicReference<>();
+    CountDownLatch negotiationStarted = new CountDownLatch(1);
     WSAcceptor acceptor = new WSAcceptor("ws"); //$NON-NLS-1$
     acceptor.setName("deferred-negotiation-" + UUID.randomUUID()); //$NON-NLS-1$
     acceptor.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
@@ -506,6 +511,7 @@ public class WSFrameworkTest extends AbstractOMTest
       public void negotiate(INegotiationContext context)
       {
         negotiation.set(context);
+        negotiationStarted.countDown();
       }
     });
     LifecycleUtil.activate(acceptor);
@@ -517,6 +523,7 @@ public class WSFrameworkTest extends AbstractOMTest
       acceptor.accept(connection);
       WSServerConnector connector = (WSServerConnector)acceptor.getAcceptedConnectors()[0];
       connection.listener.ready();
+      assertTrue("Control HELLO did not begin authentication negotiation", negotiationStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       assertEquals(ConnectorState.NEGOTIATING, connector.getState());
       assertEquals(LifecycleState.ACTIVATING, LifecycleUtil.getLifecycleState(connector));
 
@@ -599,6 +606,7 @@ public class WSFrameworkTest extends AbstractOMTest
 
       assertFalse("Reactivation remained blocked", reactivationThread.isAlive()); //$NON-NLS-1$
       assertNull(reactivation.get());
+      connector.waitForConnection(5000);
       connection.listener.ready();
       connection.listener.closed(new IllegalStateException("stale provider callback")); //$NON-NLS-1$
       assertEquals(LifecycleState.ACTIVE, LifecycleUtil.getLifecycleState(connector));
@@ -1504,6 +1512,7 @@ public class WSFrameworkTest extends AbstractOMTest
 
   public void testImmediateConnectorDeactivationDoesNotLeaveAStaleRegistration() throws Exception
   {
+    CountDownLatch deactivated = new CountDownLatch(1);
     WSAcceptor acceptor = new WSAcceptor("ws") //$NON-NLS-1$
     {
       @Override
@@ -1516,6 +1525,7 @@ public class WSFrameworkTest extends AbstractOMTest
           protected void onActivated(ILifecycle lifecycle)
           {
             LifecycleUtil.deactivate(lifecycle);
+            deactivated.countDown();
           }
         });
       }
@@ -1528,7 +1538,8 @@ public class WSFrameworkTest extends AbstractOMTest
     try
     {
       acceptor.accept(connection);
-      fail("Expected connector deactivation during startup"); //$NON-NLS-1$
+      assertTrue("Connector was not deactivated after HELLO", deactivated.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertEquals(0, acceptor.getAcceptedConnectors().length);
     }
     catch (IllegalStateException expected)
     {
@@ -1558,7 +1569,8 @@ public class WSFrameworkTest extends AbstractOMTest
       @Override
       public void addConnector(InternalConnector connector)
       {
-        assertTrue("Connector was not active before registration", LifecycleUtil.isActive(connector)); //$NON-NLS-1$
+        assertTrue("Connector was not viable before registration",
+            LifecycleUtil.isActive(connector) || LifecycleUtil.getLifecycleState(connector) == LifecycleState.ACTIVATING);
         registeringConnector.set(connector);
         connector.addListener(new LifecycleEventAdapter()
         {
@@ -1633,8 +1645,10 @@ public class WSFrameworkTest extends AbstractOMTest
     try
     {
       startWorker(accepter);
-      assertTrue("Connector did not reach registration", registrationEntered.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-      assertTrue(LifecycleUtil.isActive(registeringConnector.get()));
+      boolean reachedRegistration = registrationEntered.await(5, TimeUnit.SECONDS);
+      assertTrue("Connector did not reach registration", reachedRegistration); //$NON-NLS-1$
+      assertTrue(LifecycleUtil.getLifecycleState(registeringConnector.get()) == LifecycleState.ACTIVE
+          || LifecycleUtil.getLifecycleState(registeringConnector.get()) == LifecycleState.ACTIVATING);
       startWorker(deactivator);
       assertTrue("Connector did not deactivate before registration", connectorDeactivated.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       continueRegistration.countDown();
@@ -2169,6 +2183,8 @@ public class WSFrameworkTest extends AbstractOMTest
 
     private final AtomicInteger readyCallbacks = new AtomicInteger();
 
+    private final AtomicInteger requests = new AtomicInteger();
+
     private boolean failStart;
 
     private boolean autoReady = true;
@@ -2179,10 +2195,13 @@ public class WSFrameworkTest extends AbstractOMTest
 
     private Runnable startAction;
 
+    private boolean helloSent;
+
     @Override
     public void start(Listener listener)
     {
       this.listener = listener;
+      helloSent = false;
       started.countDown();
       if (failStart)
       {
@@ -2203,12 +2222,34 @@ public class WSFrameworkTest extends AbstractOMTest
     @Override
     public boolean send(IBuffer buffer, SendCallback callback)
     {
+      ByteBuffer bytes = buffer.getByteBuffer().duplicate();
+      if (buffer.getChannelID() == ControlChannel.CONTROL_CHANNEL_ID && bytes.get(IBuffer.HEADER_SIZE) == ControlChannel.OPCODE_HELLO
+          && bytes.getInt(IBuffer.HEADER_SIZE + 1) == 0x45494B45 && bytes.getInt(IBuffer.HEADER_SIZE + 5) == ControlChannel.CONTROL_PROTOCOL_VERSION)
+      {
+        callback.completed();
+        return true;
+      }
+
       return false;
     }
 
     @Override
     public void request(long messages)
     {
+      requests.incrementAndGet();
+      if (!helloSent)
+      {
+        helloSent = true;
+        ByteBuffer hello = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 1 + Integer.BYTES * 2);
+        hello.putShort((short)0);
+        hello.putShort((short)(1 + Integer.BYTES * 2));
+        hello.put(ControlChannel.OPCODE_HELLO);
+        hello.putInt(0x45494B45);
+        hello.putInt(ControlChannel.CONTROL_PROTOCOL_VERSION);
+        hello.flip();
+        listener.received(hello, () -> {
+        });
+      }
     }
 
     @Override

@@ -8,15 +8,23 @@
  */
 package org.eclipse.spi.net4j;
 
+import org.eclipse.net4j.buffer.BufferState;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.connector.IncompatibleControlProtocolException;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.INegotiationContext;
+import org.eclipse.net4j.util.security.NegotiationException;
 
 import org.eclipse.internal.net4j.ControlChannel;
 import org.eclipse.internal.net4j.RoundRobinScheduler;
+
+import java.nio.ByteBuffer;
 
 /**
  * A connector base for transports that send channel buffers over a shared connection. It owns the common channel scheduler and control
@@ -49,6 +57,12 @@ public abstract class SchedulingConnector extends Connector
   private volatile ControlChannel controlChannel;
 
   private volatile boolean schedulingEnabled;
+
+  private final Object controlHandshakeLock = new Object();
+
+  private ControlHandshakeState controlHandshakeState = ControlHandshakeState.INACTIVE;
+
+  private volatile long controlHandshakeGeneration;
 
   public SchedulingConnector()
   {
@@ -148,6 +162,244 @@ public abstract class SchedulingConnector extends Connector
    * asynchronous work and must not perform transport I/O or block.
    */
   protected abstract void onSendingRequired();
+
+  @Override
+  protected void leaveConnecting()
+  {
+    ControlChannel control;
+    long generation;
+
+    synchronized (controlHandshakeLock)
+    {
+      if (controlHandshakeState != ControlHandshakeState.NOT_STARTED)
+      {
+        return;
+      }
+
+      controlHandshakeState = ControlHandshakeState.STARTED;
+      generation = controlHandshakeGeneration;
+      control = controlChannel;
+    }
+
+    if (control == null)
+    {
+      failControlHandshake(generation, new ConnectorException("Control channel is not available for protocol negotiation")); //$NON-NLS-1$
+      return;
+    }
+
+    control.startHandshake(generation);
+  }
+
+  /**
+   * Completes the normal connector connection progression after the peer's HELLO has been validated. This preserves the configured
+   * authentication negotiation and connected transition while ensuring neither can begin before control compatibility is established.
+   *
+   * @param generation the activation generation that received and validated the HELLO
+   */
+  public final void controlHandshakeCompleted(long generation)
+  {
+    boolean won;
+
+    synchronized (controlHandshakeLock)
+    {
+      won = generation == controlHandshakeGeneration && controlHandshakeState == ControlHandshakeState.STARTED;
+      if (won)
+      {
+        controlHandshakeState = ControlHandshakeState.COMPLETED;
+      }
+    }
+
+    if (won)
+    {
+      advanceConnectionAfterHandshake(generation);
+    }
+  }
+
+  /**
+   * Advances the connector after a compatible HELLO. The default implementation uses the base connector lifecycle transition and
+   * guards it against activation changes. A transport with additional readiness arbitration can override this method, but must retain
+   * the supplied handshake generation when publishing its state.
+   *
+   * @param generation the activation generation that completed the HELLO exchange
+   */
+  protected void advanceConnectionAfterHandshake(long generation)
+  {
+    ConnectorState nextState = getNegotiator() == null ? ConnectorState.CONNECTED : ConnectorState.NEGOTIATING;
+
+    boolean progressed = setStateIf(nextState, () -> generation == controlHandshakeGeneration);
+    if (progressed)
+    {
+      onControlHandshakeCompleted(generation);
+    }
+  }
+
+  /**
+   * Returns whether the supplied control-handshake generation still belongs to the current activation.
+   *
+   * @param generation the generation captured by a handshake callback
+   * @return whether that callback may affect the current activation
+   */
+  protected final boolean isCurrentControlHandshakeGeneration(long generation)
+  {
+    return generation == controlHandshakeGeneration;
+  }
+
+  /**
+   * Called after normal connector progression resumes so transports can restart work deferred during the handshake.
+   */
+  protected void onControlHandshakeCompleted(long generation)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * Fails a pending handshake when the transport closes before it advertises a control version.
+   */
+  protected final void failControlHandshakeIfPending(Throwable cause)
+  {
+    long generation;
+
+    synchronized (controlHandshakeLock)
+    {
+      if (controlHandshakeState != ControlHandshakeState.STARTED)
+      {
+        return;
+      }
+
+      generation = controlHandshakeGeneration;
+    }
+
+    IncompatibleControlProtocolException failure = new IncompatibleControlProtocolException(
+        "Incompatible Net4j control protocol: remote version is unknown (connection closed before HELLO)", //$NON-NLS-1$
+        cause);
+    failControlHandshake(generation, failure);
+  }
+
+  /**
+   * Records and publishes a control-protocol failure so waiters receive its diagnostic instead of a connection timeout.
+   *
+   * @param generation the activation generation that observed the failure
+   * @param failure the incompatibility or malformed-message failure
+   */
+  public final void failControlHandshake(long generation, ConnectorException failure)
+  {
+    boolean won;
+
+    synchronized (controlHandshakeLock)
+    {
+      won = generation == controlHandshakeGeneration && controlHandshakeState == ControlHandshakeState.STARTED;
+      if (won)
+      {
+        controlHandshakeState = ControlHandshakeState.FAILED;
+      }
+    }
+
+    if (!won)
+    {
+      return;
+    }
+
+    ControlChannel control = controlChannel;
+    if (control != null)
+    {
+      control.cancelHandshakeTimeout(generation);
+    }
+
+    synchronized (controlHandshakeLock)
+    {
+      if (generation != controlHandshakeGeneration || controlHandshakeState != ControlHandshakeState.FAILED)
+      {
+        return;
+      }
+
+      setNegotiationException(new NegotiationException(failure.getMessage(), failure));
+    }
+
+    deferredActivate(false);
+
+    ConcurrencyUtil.execute(getConfig().getReceiveExecutor(), () -> {
+      if (isCurrentFailedHandshake(generation))
+      {
+        deactivate();
+      }
+    });
+  }
+
+  /**
+   * Completes the local half of HELLO after a transport confirms that the control buffer was sent successfully.
+   *
+   * @param channel the channel whose buffer completed
+   * @param buffer the complete frame accepted by the transport
+   */
+  protected final void controlBufferSent(InternalChannel channel, IBuffer buffer)
+  {
+    controlBufferSent(channel, buffer, controlHandshakeGeneration());
+  }
+
+  /**
+   * Identifies a completed control buffer only for the activation that submitted it.
+   */
+  protected final void controlBufferSent(InternalChannel channel, IBuffer buffer, long generation)
+  {
+    if (isControlHelloBuffer(channel, buffer))
+    {
+      controlHelloSent(generation);
+    }
+  }
+
+  /**
+   * Returns whether a complete frame is the HELLO sent on this connector's control channel.
+   */
+  protected final boolean isControlHelloBuffer(InternalChannel channel, IBuffer buffer)
+  {
+    ControlChannel control = controlChannel;
+    if (channel != control || buffer == null)
+    {
+      return false;
+    }
+
+    if (buffer.getState() == BufferState.WRITING)
+    {
+      synchronized (controlHandshakeLock)
+      {
+        return controlHandshakeState == ControlHandshakeState.STARTED;
+      }
+    }
+
+    ByteBuffer bytes = buffer.getByteBuffer().duplicate();
+    return bytes.limit() > IBuffer.HEADER_SIZE && bytes.get(IBuffer.HEADER_SIZE) == ControlChannel.OPCODE_HELLO;
+  }
+
+  /**
+   * Completes the local HELLO half after a transport finishes transmitting it.
+   */
+  protected final void controlHelloSent()
+  {
+    controlHelloSent(controlHandshakeGeneration());
+  }
+
+  /**
+   * Completes the local HELLO half only if the captured activation still owns the pending handshake.
+   */
+  protected final void controlHelloSent(long generation)
+  {
+    ControlChannel control = controlChannel;
+    if (control != null)
+    {
+      control.helloSent(generation);
+    }
+  }
+
+  /**
+   * Returns the activation generation associated with the current control handshake.
+   */
+  protected final long controlHandshakeGeneration()
+  {
+    synchronized (controlHandshakeLock)
+    {
+      return controlHandshakeGeneration;
+    }
+  }
 
   /**
    * Called when the scheduler becomes idle. Implementations should asynchronously stop requesting transport write readiness without
@@ -274,6 +526,16 @@ public abstract class SchedulingConnector extends Connector
   @Override
   protected void doActivate() throws Exception
   {
+    synchronized (controlHandshakeLock)
+    {
+      synchronized (this)
+      {
+        ++controlHandshakeGeneration;
+      }
+
+      controlHandshakeState = ControlHandshakeState.NOT_STARTED;
+    }
+
     super.doActivate();
 
     synchronized (schedulingLock)
@@ -322,6 +584,16 @@ public abstract class SchedulingConnector extends Connector
   @Override
   protected void doDeactivate() throws Exception
   {
+    synchronized (controlHandshakeLock)
+    {
+      controlHandshakeState = ControlHandshakeState.INACTIVE;
+
+      synchronized (this)
+      {
+        ++controlHandshakeGeneration;
+      }
+    }
+
     schedulingEnabled = false;
 
     synchronized (schedulingLock)
@@ -372,6 +644,24 @@ public abstract class SchedulingConnector extends Connector
         }
       }
     }
+  }
+
+  private boolean isCurrentFailedHandshake(long generation)
+  {
+    synchronized (controlHandshakeLock)
+    {
+      return generation == controlHandshakeGeneration && controlHandshakeState == ControlHandshakeState.FAILED;
+    }
+  }
+
+  /**
+   * Tracks the one terminal outcome permitted for a control handshake activation.
+   *
+   * @author Eike Stepper
+   */
+  private enum ControlHandshakeState
+  {
+    INACTIVE, NOT_STARTED, STARTED, COMPLETED, FAILED
   }
 
   /**

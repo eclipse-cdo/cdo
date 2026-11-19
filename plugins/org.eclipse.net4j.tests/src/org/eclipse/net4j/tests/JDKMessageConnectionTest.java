@@ -13,6 +13,7 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.internal.ws.WSConnector;
 import org.eclipse.net4j.internal.ws.jdk.JDKMessageConnectionFactory;
 import org.eclipse.net4j.internal.ws.jdk.JDKWebSocketMessageConnection;
@@ -21,6 +22,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 import org.eclipse.net4j.ws.jdk.JDKWSOptions;
+
+import org.eclipse.internal.net4j.ControlChannel;
 
 import org.eclipse.spi.net4j.InternalBuffer;
 import org.eclipse.spi.net4j.MessageConnector;
@@ -49,6 +52,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -173,18 +177,34 @@ public class JDKMessageConnectionTest extends AbstractOMTest
     CountingBufferProvider bufferProvider = new CountingBufferProvider(Net4jUtil.createBufferFactory((short)128));
     CountDownLatch terminalCallback = new CountDownLatch(1);
     AtomicInteger failures = new AtomicInteger();
+    AtomicInteger requests = new AtomicInteger();
+    AtomicInteger helloSends = new AtomicInteger();
     IMessageConnection connection = new IMessageConnection()
     {
+      private Listener listener;
+
+      private boolean helloSent;
+
       @Override
       public void start(Listener listener)
       {
-        setListenerUnchecked(provider, listener);
+        this.listener = listener;
         provider.onOpen(socket.webSocket);
+        listener.ready();
       }
 
       @Override
       public boolean send(IBuffer buffer, SendCallback callback)
       {
+        ByteBuffer bytes = buffer.getByteBuffer().duplicate();
+        if (buffer.getChannelID() == ControlChannel.CONTROL_CHANNEL_ID && bytes.get(IBuffer.HEADER_SIZE) == ControlChannel.OPCODE_HELLO
+            && bytes.getInt(IBuffer.HEADER_SIZE + 1) == 0x45494B45 && bytes.getInt(IBuffer.HEADER_SIZE + 5) == ControlChannel.CONTROL_PROTOCOL_VERSION)
+        {
+          helloSends.incrementAndGet();
+          callback.completed();
+          return true;
+        }
+
         return provider.send(buffer, new SendCallback()
         {
           @Override
@@ -207,7 +227,17 @@ public class JDKMessageConnectionTest extends AbstractOMTest
       @Override
       public void request(long messages)
       {
-        provider.request(messages);
+        requests.incrementAndGet();
+        if (!helloSent)
+        {
+          helloSent = true;
+          listener.received(controlHelloFrame(), () -> {
+          });
+        }
+        else
+        {
+          provider.request(messages);
+        }
       }
 
       @Override
@@ -220,14 +250,24 @@ public class JDKMessageConnectionTest extends AbstractOMTest
       public void abort()
       {
         provider.abort();
+        listener.closed(null);
       }
     };
     WSConnector connector = new WSConnector(URI.create("ws://localhost/net4j/"), "test", "ws", Collections.emptyList()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     connector.getConfig().setBufferProvider(bufferProvider);
+    connector.getConfig().setReceiveExecutor(ForkJoinPool.commonPool());
     connector.setMessageConnection(connection);
     LifecycleUtil.activate(connector);
     try
     {
+      try
+      {
+        connector.waitForConnection(5000);
+      }
+      catch (ConnectorException ex)
+      {
+        throw new AssertionError("HELLO exchange did not finish (requests=" + requests.get() + ", hello sends=" + helloSends.get() + ")", ex); //$NON-NLS-1$
+      }
       IChannel channel = connector.getControlChannel();
       IBuffer buffer = connector.provideBuffer();
       buffer.startPutting(channel.getID()).put((byte)0x55);
@@ -255,6 +295,17 @@ public class JDKMessageConnectionTest extends AbstractOMTest
       socket.releaseSend.countDown();
       LifecycleUtil.deactivate(connector);
     }
+  }
+
+  private static ByteBuffer controlHelloFrame()
+  {
+    ByteBuffer frame = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 1 + Integer.BYTES * 2);
+    frame.putShort((short)0);
+    frame.putShort((short)(1 + Integer.BYTES * 2));
+    frame.put(ControlChannel.OPCODE_HELLO);
+    frame.putInt(0x45494B45);
+    frame.putInt(ControlChannel.CONTROL_PROTOCOL_VERSION);
+    return frame.flip();
   }
 
   public void testAbortKeepsBorrowedBufferUntilLateSendCompletion() throws Exception
@@ -635,18 +686,6 @@ public class JDKMessageConnectionTest extends AbstractOMTest
     Field listenerField = JDKWebSocketMessageConnection.class.getDeclaredField("listener"); //$NON-NLS-1$
     listenerField.setAccessible(true);
     listenerField.set(connection, listener);
-  }
-
-  private static void setListenerUnchecked(JDKWebSocketMessageConnection connection, IMessageConnection.Listener listener)
-  {
-    try
-    {
-      setListener(connection, listener);
-    }
-    catch (Exception ex)
-    {
-      throw new IllegalStateException(ex);
-    }
   }
 
   private static Object getInFlight(MessageConnector connector) throws Exception

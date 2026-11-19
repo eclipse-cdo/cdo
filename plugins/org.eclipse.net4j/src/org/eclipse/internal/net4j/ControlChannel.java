@@ -12,10 +12,14 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
+import org.eclipse.net4j.connector.IncompatibleControlProtocolException;
 import org.eclipse.net4j.protocol.IProtocol;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.concurrent.TimerLifecycle;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
@@ -29,19 +33,40 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Implements negotiation and channel registration messages for a {@link SchedulingConnector} shared connection. Acknowledgements are
- * correlated by channel ID, so a genuinely late acknowledgement can still satisfy a later registration if that ID has already been reused.
+ * Implements negotiation, control-version HELLO, and channel registration messages for a {@link SchedulingConnector} shared connection.
+ * Both peers send HELLO simultaneously before normal connector establishment. Its payload is opcode 0, the four-byte big-endian
+ * magic, and the four-byte big-endian control version, inside the normal Net4j frame on reserved channel 0. A connector
+ * stays in {@code CONNECTING} until it validates the peer HELLO; configured authentication negotiation then runs before the connector
+ * reaches {@code CONNECTED}. Version 1 denotes the shared control format plus this mandatory handshake; pre-handshake implementations do
+ * not implicitly use version 1. Increment {@link #CONTROL_PROTOCOL_VERSION} only when changing the control wire contract incompatibly.
+ * Acknowledgements are correlated by channel ID, so a genuinely late acknowledgement can still satisfy a later registration if that ID
+ * has already been reused.
  *
  * @author Eike Stepper
  */
 public class ControlChannel extends Channel
 {
   /**
+   * Initial shared control wire version. Version 1 uses the shared control messages and requires the HELLO exchange described by this
+   * class; it does not identify pre-handshake peers. This value is independent of bundle and application protocol versions. Increment it
+   * for every future incompatible control wire change, including a change to HELLO encoding or to registration and acknowledgement
+   * semantics. Compatible additions that preserve existing peers' interpretation do not require an increment.
+   */
+  public static final int CONTROL_PROTOCOL_VERSION = 1;
+
+  /**
    * The reserved ID used for control messages.
    */
   public static final short CONTROL_CHANNEL_ID = 0;
+
+  /**
+   * The HELLO opcode used to exchange the shared control wire-protocol version.
+   */
+  public static final byte OPCODE_HELLO = 0;
 
   /**
    * The negotiation message opcode.
@@ -63,6 +88,10 @@ public class ControlChannel extends Channel
    */
   public static final byte OPCODE_DEREGISTRATION = 4;
 
+  private static final int HELLO_MAGIC = 0x45494B45;
+
+  private static final long HELLO_TIMEOUT_MILLIS = 10000;
+
   private static final String SUCCESS = ""; //$NON-NLS-1$
 
   private final SynchronizingCorrelator<Short, String> acknowledgements = new SynchronizingCorrelator<>();
@@ -72,6 +101,18 @@ public class ControlChannel extends Channel
   private final Object registrationLock = new Object();
 
   private boolean shuttingDown;
+
+  private volatile boolean helloReceived;
+
+  private volatile boolean helloSent;
+
+  private volatile boolean helloCompleted;
+
+  private TimerTask helloTimeout;
+
+  private int remoteVersion = -1;
+
+  private long handshakeGeneration;
 
   /**
    * Creates the control channel for its owning connector.
@@ -83,6 +124,20 @@ public class ControlChannel extends Channel
     setID(CONTROL_CHANNEL_ID);
     setMultiplexer(connector);
     setUserID(connector.getUserID());
+  }
+
+  /** Returns whether a complete frame has the HELLO channel, opcode, magic, and fixed payload length. */
+  public static boolean isWellFormedHelloFrame(ByteBuffer frame)
+  {
+    int offset = frame.position();
+    if (frame.remaining() != IBuffer.HEADER_SIZE + 9 || frame.getShort(offset + IBuffer.CHANNEL_ID_POS) != CONTROL_CHANNEL_ID
+        || frame.getShort(offset + IBuffer.PAYLOAD_SIZE_POS) != 9)
+    {
+      return false;
+    }
+
+    int payloadOffset = offset + IBuffer.HEADER_SIZE;
+    return frame.get(payloadOffset) == OPCODE_HELLO && frame.getInt(payloadOffset + 1) == HELLO_MAGIC;
   }
 
   /**
@@ -156,6 +211,130 @@ public class ControlChannel extends Channel
   }
 
   /**
+   * Begins the mandatory control-protocol handshake after transport readiness by queueing this peer's HELLO and starting the bounded
+   * wait for the peer's HELLO. The receive path completes the connector lifecycle only after validating the peer's magic and version.
+   *
+   * @param handshakeGeneration the activation generation that owns this exchange
+   */
+  public void startHandshake(long handshakeGeneration)
+  {
+    synchronized (registrationLock)
+    {
+      this.handshakeGeneration = handshakeGeneration;
+      helloReceived = false;
+      helloSent = false;
+      helloCompleted = false;
+      remoteVersion = -1;
+    }
+
+    IBuffer buffer = provideBuffer();
+    boolean handedOff = false;
+
+    try
+    {
+      ByteBuffer bytes = buffer.startPutting(CONTROL_CHANNEL_ID);
+      bytes.put(OPCODE_HELLO);
+      bytes.putInt(HELLO_MAGIC);
+      bytes.putInt(CONTROL_PROTOCOL_VERSION);
+
+      handedOff = true;
+      handleBuffer(buffer);
+    }
+    finally
+    {
+      if (!handedOff)
+      {
+        buffer.release();
+      }
+    }
+
+    TimerTask timeout = new TimerTask()
+    {
+      @Override
+      public void run()
+      {
+        String diagnostic = null;
+
+        synchronized (registrationLock)
+        {
+          if (!helloCompleted && !shuttingDown)
+          {
+            diagnostic = helloReceived //
+                ? "Net4j control protocol HELLO exchange timed out after receiving remote version " + remoteVersion //$NON-NLS-1$
+                : "Incompatible Net4j control protocol: remote version is unknown (HELLO timeout)"; //$NON-NLS-1$
+          }
+        }
+
+        if (diagnostic != null)
+        {
+          IncompatibleControlProtocolException failure = new IncompatibleControlProtocolException(diagnostic);
+          ConcurrencyUtil.execute(getConnector().getConfig().getReceiveExecutor(), //
+              () -> getConnector().failControlHandshake(handshakeGeneration, failure));
+        }
+      }
+    };
+
+    IManagedContainer container = getContainer();
+    if (container == null)
+    {
+      container = IManagedContainer.INSTANCE;
+    }
+
+    Timer timer = TimerLifecycle.DaemonFactory.getTimer(container, null);
+    timer.schedule(timeout, HELLO_TIMEOUT_MILLIS);
+
+    synchronized (registrationLock)
+    {
+      if (helloCompleted || shuttingDown)
+      {
+        timeout.cancel();
+      }
+      else
+      {
+        helloTimeout = timeout;
+      }
+    }
+  }
+
+  /**
+   * Records that this activation's HELLO was accepted by the transport and completes the exchange if the peer's HELLO was already
+   * validated.
+   *
+   * @param handshakeGeneration the activation generation that sent the HELLO
+   */
+  public void helloSent(long handshakeGeneration)
+  {
+    synchronized (registrationLock)
+    {
+      if (handshakeGeneration != this.handshakeGeneration || helloSent || helloCompleted || shuttingDown)
+      {
+        return;
+      }
+
+      helloSent = true;
+    }
+
+    completeHandshakeIfReady();
+  }
+
+  /**
+   * Cancels the timeout associated with the supplied activation after the connector has accepted a handshake failure. A stale failure
+   * callback cannot cancel a later activation's timeout.
+   *
+   * @param handshakeGeneration the activation generation whose timeout is to be cancelled
+   */
+  public void cancelHandshakeTimeout(long handshakeGeneration)
+  {
+    synchronized (registrationLock)
+    {
+      if (this.handshakeGeneration == handshakeGeneration)
+      {
+        cancelHelloTimeout();
+      }
+    }
+  }
+
+  /**
    * Sends a deregistration message for a channel.
    *
    * @param channelID the channel ID
@@ -193,8 +372,52 @@ public class ControlChannel extends Channel
     try
     {
       byte opcode = buffer.get();
+      if (opcode != OPCODE_HELLO && !helloCompleted)
+      {
+        throw new IncompatibleControlProtocolException(
+            "Incompatible Net4j control protocol: unexpected control opcode " + opcode + " before HELLO; remote version is unknown"); //$NON-NLS-1$
+      }
+
       switch (opcode)
       {
+      case OPCODE_HELLO:
+      {
+        synchronized (registrationLock)
+        {
+          if (helloCompleted)
+          {
+            throw new IllegalArgumentException("Unexpected duplicate HELLO for Net4j control protocol version " + CONTROL_PROTOCOL_VERSION); //$NON-NLS-1$
+          }
+
+          if (helloReceived)
+          {
+            throw new IncompatibleControlProtocolException("Unexpected duplicate Net4j control protocol HELLO"); //$NON-NLS-1$
+          }
+        }
+
+        ByteBuffer bytes = buffer.getByteBuffer();
+        if (bytes.remaining() != 8 || bytes.getInt() != HELLO_MAGIC)
+        {
+          throw new IncompatibleControlProtocolException("Malformed Net4j control protocol HELLO"); //$NON-NLS-1$
+        }
+
+        int peerVersion = bytes.getInt();
+        if (peerVersion != CONTROL_PROTOCOL_VERSION)
+        {
+          throw new IncompatibleControlProtocolException(
+              "Incompatible Net4j control protocol: local version " + CONTROL_PROTOCOL_VERSION + ", remote version " + peerVersion); //$NON-NLS-1$
+        }
+
+        synchronized (registrationLock)
+        {
+          helloReceived = true;
+          remoteVersion = peerVersion;
+        }
+
+        completeHandshakeIfReady();
+        break;
+      }
+
       case OPCODE_NEGOTIATION:
       {
         SchedulingConnector connector = getConnector();
@@ -279,8 +502,26 @@ public class ControlChannel extends Channel
       }
 
       default:
-        throw new IllegalArgumentException("Invalid control opcode: " + opcode); //$NON-NLS-1$
+        throw new IllegalArgumentException("Invalid control opcode " + opcode + " for Net4j control protocol version " + CONTROL_PROTOCOL_VERSION); //$NON-NLS-1$
       }
+    }
+    catch (RuntimeException ex)
+    {
+      if (!helloCompleted)
+      {
+        synchronized (registrationLock)
+        {
+          cancelHelloTimeout();
+        }
+
+        IncompatibleControlProtocolException failure = ex instanceof IncompatibleControlProtocolException //
+            ? (IncompatibleControlProtocolException)ex //
+            : new IncompatibleControlProtocolException("Malformed or unexpected Net4j control protocol message before HELLO", ex); //$NON-NLS-1$
+        getConnector().failControlHandshake(handshakeGeneration, failure);
+        throw failure;
+      }
+
+      throw ex;
     }
     finally
     {
@@ -300,6 +541,7 @@ public class ControlChannel extends Channel
     synchronized (registrationLock)
     {
       shuttingDown = true;
+      cancelHelloTimeout();
 
       for (Map.Entry<Short, ISynchronizer<String>> entry : pendingAcknowledgements.entrySet())
       {
@@ -313,6 +555,39 @@ public class ControlChannel extends Channel
   private SchedulingConnector getConnector()
   {
     return (SchedulingConnector)getMultiplexer();
+  }
+
+  private void completeHandshakeIfReady()
+  {
+    boolean complete = false;
+    long generation;
+
+    synchronized (registrationLock)
+    {
+      if (helloSent && helloReceived && !helloCompleted && !shuttingDown)
+      {
+        helloCompleted = true;
+        cancelHelloTimeout();
+
+        complete = true;
+      }
+
+      generation = handshakeGeneration;
+    }
+
+    if (complete)
+    {
+      getConnector().controlHandshakeCompleted(generation);
+    }
+  }
+
+  private void cancelHelloTimeout()
+  {
+    if (helloTimeout != null)
+    {
+      helloTimeout.cancel();
+      helloTimeout = null;
+    }
   }
 
   private void sendStatus(byte opcode, short channelID, String error)

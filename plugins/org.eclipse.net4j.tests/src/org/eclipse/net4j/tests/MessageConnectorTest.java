@@ -16,13 +16,14 @@ import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
@@ -32,22 +33,21 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.Negotiator;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
-import org.eclipse.spi.net4j.ChannelMultiplexer;
+import org.eclipse.internal.net4j.ControlChannel;
+
 import org.eclipse.spi.net4j.InternalBuffer;
 import org.eclipse.spi.net4j.MessageConnector;
 import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
+import org.eclipse.spi.net4j.Protocol;
 import org.eclipse.spi.net4j.SchedulingConnector;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Proxy;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,50 +125,60 @@ public class MessageConnectorTest extends AbstractOMTest
     }
   }
 
-  public void testRemovalBeforeFirstReceiveQueueCreationDoesNotReintroduceQueue() throws Exception
+  public void testRemovalRacingFirstReceiveReleasesStaleFrame() throws Exception
   {
     MemoryConnection connection = new MemoryConnection();
     TestConnector connector = activate(connection);
     IChannel channel = connector.openInverse((short)-28);
-    CountDownLatch channelResolved = new CountDownLatch(1);
-    CountDownLatch continueLookup = new CountDownLatch(1);
-    CountDownLatch channelRemoved = new CountDownLatch(1);
+    CountDownLatch raceStart = new CountDownLatch(1);
+    CountDownLatch frameReleased = new CountDownLatch(1);
     AtomicInteger providerReleases = new AtomicInteger();
-    BlockingChannelMap blockingMap = null;
     Thread receiver = null;
     Thread remover = null;
+    AtomicReference<Throwable> failure = new AtomicReference<>();
     try
     {
-      Field channelsField = ChannelMultiplexer.class.getDeclaredField("channels"); //$NON-NLS-1$
-      channelsField.setAccessible(true);
-      @SuppressWarnings("unchecked")
-      ConcurrentMap<Short, IChannel> channels = (ConcurrentMap<Short, IChannel>)channelsField.get(connector);
-      blockingMap = new BlockingChannelMap((short)-28, channelResolved, continueLookup, channelRemoved);
-      blockingMap.putAll(channels);
-      channelsField.set(connector, blockingMap);
-
-      receiver = new Thread(() -> connection.receive(dataFrame((short)-28), providerReleases::incrementAndGet), "Receive lookup race"); //$NON-NLS-1$
+      receiver = new Thread(() -> {
+        try
+        {
+          raceStart.await();
+          connection.receive(dataFrame((short)-28), () -> {
+            providerReleases.incrementAndGet();
+            frameReleased.countDown();
+          });
+        }
+        catch (Throwable ex)
+        {
+          failure.compareAndSet(null, ex);
+        }
+      }, "Receive lookup race"); //$NON-NLS-1$
       receiver.start();
-      assertTrue("The receiver did not resolve the target channel", channelResolved.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-
-      remover = new Thread(channel::close, "Remove receive channel"); //$NON-NLS-1$
+      remover = new Thread(() -> {
+        try
+        {
+          raceStart.await();
+          channel.close();
+        }
+        catch (Throwable ex)
+        {
+          failure.compareAndSet(null, ex);
+        }
+      }, "Remove receive channel"); //$NON-NLS-1$
       remover.start();
-      assertTrue("The channel was not removed from the multiplexer", channelRemoved.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-      continueLookup.countDown();
+      raceStart.countDown();
       receiver.join(5000);
       remover.join(5000);
       assertFalse("The receive callback did not finish", receiver.isAlive()); //$NON-NLS-1$
       assertFalse("The channel close did not finish", remover.isAlive()); //$NON-NLS-1$
-
-      Field queuesField = MessageConnector.class.getDeclaredField("channelReceiveQueues"); //$NON-NLS-1$
-      queuesField.setAccessible(true);
-      Map<?, ?> queues = (Map<?, ?>)queuesField.get(connector);
-      assertFalse("A removed channel was reintroduced into the receive queue map", queues.containsKey(channel)); //$NON-NLS-1$
+      assertTrue("The frame was not released after the channel removal race", frameReleased.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertNull(failure.get());
+      assertNull(connector.getChannel((short)-28));
+      assertFalse("The receive/removal interleaving left a queue for the removed channel", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
       assertEquals("The stale-channel frame was not released exactly once", 1, providerReleases.get()); //$NON-NLS-1$
     }
     finally
     {
-      continueLookup.countDown();
+      raceStart.countDown();
       if (receiver != null)
       {
         receiver.join(1000);
@@ -180,6 +190,97 @@ public class MessageConnectorTest extends AbstractOMTest
       }
 
       channel.close();
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testRemovalBeforeFirstReceiveQueueCreationDoesNotReintroduceQueue() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = activate(connection);
+    IChannel channel = connector.openInverse((short)-29);
+    CountDownLatch frameReleased = new CountDownLatch(1);
+    AtomicInteger providerReleases = new AtomicInteger();
+    try
+    {
+      assertFalse("A receive queue existed before the channel's first received frame", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
+      channel.close();
+      assertNull("The channel remained registered after removal", connector.getChannel((short)-29)); //$NON-NLS-1$
+      assertFalse("Removing a channel left a receive queue behind", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
+
+      connection.receive(dataFrame((short)-29), () -> {
+        providerReleases.incrementAndGet();
+        frameReleased.countDown();
+      });
+
+      assertTrue("The frame for the removed channel was not released", frameReleased.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertNull("A stale frame made the removed channel visible again", connector.getChannel((short)-29)); //$NON-NLS-1$
+      assertFalse("The first stale frame reintroduced a receive queue for the removed channel", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
+      assertEquals("The discarded frame was not released exactly once", 1, providerReleases.get()); //$NON-NLS-1$
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testDuplicateHelloClosesAnEstablishedMessageConnection() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = activate(connection);
+    AtomicInteger releaseCount = new AtomicInteger();
+    try
+    {
+      connection.receive(controlHelloFrame(), releaseCount::incrementAndGet);
+      awaitInactive(connector);
+      assertEquals("The duplicate HELLO frame was not released", 1, releaseCount.get()); //$NON-NLS-1$
+      assertTrue("The provider connection remained open after a duplicate HELLO", connection.aborted); //$NON-NLS-1$
+      assertFalse("A duplicate HELLO left the connector connected", connector.getState() == ConnectorState.CONNECTED); //$NON-NLS-1$
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testMalformedHelloDoesNotBypassReceiveAccounting() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = activate(connection, 0, 0);
+    AtomicInteger releases = new AtomicInteger();
+    try
+    {
+      ByteBuffer malformed = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 9).order(ByteOrder.BIG_ENDIAN);
+      malformed.putShort((short)0).putShort((short)9).put(ControlChannel.OPCODE_HELLO).putInt(0x12345678).putInt(1).flip();
+      connection.receive(malformed, releases::incrementAndGet);
+
+      awaitInactive(connector);
+      assertTrue("A malformed HELLO bypassed the receive budget", connection.aborted); //$NON-NLS-1$
+      assertEquals("The malformed frame provider lease was not released exactly once", 1, releases.get()); //$NON-NLS-1$
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testOversizedHelloDoesNotBypassReceiveAccounting() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = activate(connection, 0, 0);
+    AtomicInteger releases = new AtomicInteger();
+    try
+    {
+      ByteBuffer oversized = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 10).order(ByteOrder.BIG_ENDIAN);
+      oversized.putShort((short)0).putShort((short)10).put(ControlChannel.OPCODE_HELLO).putInt(0x45494B45).putInt(1).put((byte)0).flip();
+      connection.receive(oversized, releases::incrementAndGet);
+
+      awaitInactive(connector);
+      assertTrue("An oversized HELLO bypassed the receive budget", connection.aborted); //$NON-NLS-1$
+      assertEquals("The oversized frame provider lease was not released exactly once", 1, releases.get()); //$NON-NLS-1$
+    }
+    finally
+    {
       LifecycleUtil.deactivate(connector);
     }
   }
@@ -370,7 +471,8 @@ public class MessageConnectorTest extends AbstractOMTest
     {
       IChannel channel = connector.openInverse((short)-9);
       IBuffer buffer = enqueue(connector, channel);
-      assertTrue("Channel send was not submitted", connection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertTrue("Channel send was not submitted (state=" + connector.getState() + ", sendCount=" + connection.sendCount.get() + ", scheduled="
+          + connector.getScheduler().select() + ")", connection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       channel.close();
       assertFalse("Channel close released a buffer still borrowed by the provider", isReleased(buffer)); //$NON-NLS-1$
       connection.complete();
@@ -447,6 +549,7 @@ public class MessageConnectorTest extends AbstractOMTest
       MemoryConnection replacement = new MemoryConnection();
       connector.setConnection(replacement);
       LifecycleUtil.activate(connector);
+      connector.waitForConnection(5000);
       assertEquals(ConnectorState.CONNECTED, connector.getState());
 
       failedConnection.complete();
@@ -510,6 +613,7 @@ public class MessageConnectorTest extends AbstractOMTest
     MemoryConnection secondConnection = new MemoryConnection();
     connector.setConnection(secondConnection);
     LifecycleUtil.activate(connector);
+    connector.waitForConnection(5000);
     assertEquals(ConnectorState.CONNECTED, connector.getState());
     firstConnection.listener.ready();
     firstConnection.listener.writable();
@@ -548,6 +652,7 @@ public class MessageConnectorTest extends AbstractOMTest
     MemoryConnection replacement = new MemoryConnection();
     connector.setConnection(replacement);
     LifecycleUtil.activate(connector);
+    connector.waitForConnection(5000);
     assertEquals(ConnectorState.CONNECTED, connector.getState());
     LifecycleUtil.deactivate(connector);
   }
@@ -591,6 +696,7 @@ public class MessageConnectorTest extends AbstractOMTest
       newActivation.join(TimeUnit.SECONDS.toMillis(5));
       assertFalse("New activation did not return", newActivation.isAlive()); //$NON-NLS-1$
       assertNull(newActivationFailure.get());
+      connector.waitForConnection(5000);
       assertEquals(LifecycleState.ACTIVE, connector.getLifecycleState());
       assertEquals(ConnectorState.CONNECTED, connector.getState());
       assertTrue(newConnection.requested.get() > 0);
@@ -653,6 +759,7 @@ public class MessageConnectorTest extends AbstractOMTest
       assertFalse("New activation did not return", newActivation.isAlive()); //$NON-NLS-1$
       assertNull(newActivationFailure.get());
       newConnection.listener.ready();
+      connector.waitForConnection(5000);
       assertEquals(LifecycleState.ACTIVE, connector.getLifecycleState());
       assertEquals(ConnectorState.CONNECTED, connector.getState());
 
@@ -660,6 +767,7 @@ public class MessageConnectorTest extends AbstractOMTest
       MemoryConnection thirdConnection = new MemoryConnection();
       connector.setConnection(thirdConnection);
       LifecycleUtil.activate(connector);
+      connector.waitForConnection(5000);
       assertEquals(LifecycleState.ACTIVE, connector.getLifecycleState());
       LifecycleUtil.deactivate(connector);
     }
@@ -815,9 +923,11 @@ public class MessageConnectorTest extends AbstractOMTest
     MemoryConnection newConnection = new MemoryConnection();
     connector.setConnection(newConnection);
     LifecycleUtil.activate(connector);
+    connector.waitForConnection(5000);
     assertEquals(ConnectorState.CONNECTED, connector.getState());
     IBuffer newBuffer = enqueue(connector, connector.getControlChannel());
-    assertTrue("New connection was affected by an old callback", newConnection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+    assertTrue("New connection was affected by an old callback (state=" + connector.getState() + ", sendCount=" + newConnection.sendCount.get() + ", selected="
+        + connector.getScheduler().select() + ")", newConnection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
     assertFalse("New connection buffer was released by the old callback", isReleased(newBuffer)); //$NON-NLS-1$
 
     oldConnection.complete();
@@ -839,30 +949,232 @@ public class MessageConnectorTest extends AbstractOMTest
       oldConnection.throwBlockedSubmission = throwFromSubmission;
       oldConnection.deferAbortCompletions = true;
       TestConnector connector = activate(oldConnection);
+      try
+      {
+        IBuffer oldBuffer = enqueue(connector, connector.getControlChannel());
+        assertTrue(
+            "Old provider submission did not block (scenario=" + scenario + ", state=" + connector.getState() + ", active=" + connector.isActive()
+                + ", sendCount=" + oldConnection.sendCount.get() + ", scheduled=" + connector.getScheduler().isEmpty() + ")", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            oldConnection.submissionEntered.await(5, TimeUnit.SECONDS));
+
+        LifecycleUtil.deactivate(connector);
+        MemoryConnection newConnection = new MemoryConnection();
+        connector.setConnection(newConnection);
+        LifecycleUtil.activate(connector);
+        connector.waitForConnection(5000);
+        assertEquals(ConnectorState.CONNECTED, connector.getState());
+
+        oldConnection.allowSubmission.countDown();
+        if (throwFromSubmission)
+        {
+          assertTrue("Old provider did not record its ambiguous submission", oldConnection.submissionOutcomeReady.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+        }
+
+        IBuffer newBuffer = enqueue(connector, connector.getControlChannel());
+        assertTrue("Obsolete submission result blocked the new provider", newConnection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+        assertSame(newBuffer, newConnection.lastBuffer);
+        assertTrue("New connector generation was deactivated by an old submission result", connector.isActive()); //$NON-NLS-1$
+
+        awaitReleased(oldBuffer);
+
+        newConnection.complete();
+        awaitReleased(newBuffer);
+      }
+      finally
+      {
+        oldConnection.allowSubmission.countDown();
+        LifecycleUtil.deactivate(connector);
+      }
+    }
+  }
+
+  public void testStaleSubmissionCannotClearWritableNotificationOfNewGeneration() throws Exception
+  {
+    MemoryConnection oldConnection = new MemoryConnection();
+    oldConnection.blockSubmission = true;
+    oldConnection.rejectBlockedSubmission = true;
+    TestConnector connector = activate(oldConnection);
+    MemoryConnection newConnection = new MemoryConnection();
+    newConnection.blockSubmission = true;
+    newConnection.rejectBlockedSubmission = true;
+    try
+    {
       IBuffer oldBuffer = enqueue(connector, connector.getControlChannel());
       assertTrue("Old provider submission did not block", oldConnection.submissionEntered.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
 
       LifecycleUtil.deactivate(connector);
-      MemoryConnection newConnection = new MemoryConnection();
       connector.setConnection(newConnection);
       LifecycleUtil.activate(connector);
-      assertEquals(ConnectorState.CONNECTED, connector.getState());
-
-      oldConnection.allowSubmission.countDown();
-      if (throwFromSubmission)
-      {
-        assertTrue("Old provider did not record its ambiguous submission", oldConnection.submissionOutcomeReady.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-      }
-
+      connector.waitForConnection(5000);
       IBuffer newBuffer = enqueue(connector, connector.getControlChannel());
-      assertTrue("Obsolete submission result blocked the new provider", newConnection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-      assertSame(newBuffer, newConnection.lastBuffer);
-      assertTrue("New connector generation was deactivated by an old submission result", connector.isActive()); //$NON-NLS-1$
+      assertTrue("New provider submission did not block", newConnection.submissionEntered.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
 
+      newConnection.listener.writable();
+      oldConnection.allowSubmission.countDown();
       awaitReleased(oldBuffer);
+
+      newConnection.blockSubmission = false;
+      newConnection.allowSubmission.countDown();
+      assertTrue("New submission did not resume after its writable notification", newConnection.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertSame(newBuffer, newConnection.lastBuffer);
+      assertEquals("The rejected new submission should be retried exactly once", 2, newConnection.sendCount.get()); //$NON-NLS-1$
 
       newConnection.complete();
       awaitReleased(newBuffer);
+    }
+    finally
+    {
+      oldConnection.allowSubmission.countDown();
+      newConnection.allowSubmission.countDown();
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testConnectedCallbackDoesNotBlockConcurrentDeactivationOrReactivation() throws Exception
+  {
+    MemoryConnection firstConnection = new MemoryConnection();
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    connector.setConnection(firstConnection);
+    CountDownLatch firstConnectedEvent = new CountDownLatch(1);
+    CountDownLatch allowFirstConnectedEvent = new CountDownLatch(1);
+    AtomicInteger connectedEvents = new AtomicInteger();
+    connector.addListener(event -> {
+      if (event instanceof IConnectorStateEvent && ((IConnectorStateEvent)event).getNewState() == ConnectorState.CONNECTED
+          && connectedEvents.incrementAndGet() == 1)
+      {
+        firstConnectedEvent.countDown();
+        try
+        {
+          allowFirstConnectedEvent.await();
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw new AssertionError(ex);
+        }
+      }
+    });
+
+    AtomicReference<Throwable> deactivationFailure = new AtomicReference<>();
+    CountDownLatch deactivationFinished = new CountDownLatch(1);
+    Thread deactivation = new Thread(() -> {
+      try
+      {
+        LifecycleUtil.deactivate(connector);
+      }
+      catch (Throwable ex)
+      {
+        deactivationFailure.set(ex);
+      }
+      finally
+      {
+        deactivationFinished.countDown();
+      }
+    }, "MessageConnectorTest concurrent deactivation"); //$NON-NLS-1$
+
+    try
+    {
+      LifecycleUtil.activate(connector);
+      connector.waitForConnection(5000);
+      assertTrue("CONNECTED event did not enter its callback", firstConnectedEvent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+
+      deactivation.start();
+      assertTrue("Concurrent deactivation waited for a CONNECTED listener to return", deactivationFinished.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertNull(deactivationFailure.get());
+      assertEquals(1, firstConnection.abortCount.get());
+
+      MemoryConnection replacement = new MemoryConnection();
+      connector.setConnection(replacement);
+      LifecycleUtil.activate(connector);
+      connector.waitForConnection(5000);
+      assertEquals(ConnectorState.CONNECTED, connector.getState());
+
+      allowFirstConnectedEvent.countDown();
+      IBuffer buffer = enqueue(connector, connector.getControlChannel());
+      assertTrue("The replacement generation was stranded by the old completion callback", replacement.sent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertSame(buffer, replacement.lastBuffer);
+      assertEquals("Only the two real activation generations may publish CONNECTED", 2, connectedEvents.get()); //$NON-NLS-1$
+      replacement.complete();
+      awaitReleased(buffer);
+    }
+    finally
+    {
+      allowFirstConnectedEvent.countDown();
+      if (deactivation.isAlive())
+      {
+        deactivation.join(5000);
+      }
+
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testInterruptedDeactivationStillCleansTransportAndChannels() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = activate(connection);
+    try
+    {
+      IChannel channel = connector.openInverse((short)-42);
+      Thread.currentThread().interrupt();
+      try
+      {
+        LifecycleUtil.deactivate(connector);
+      }
+      finally
+      {
+        Thread.interrupted();
+      }
+
+      assertFalse(connector.isActive());
+      assertEquals(ConnectorState.DISCONNECTED, connector.getState());
+      assertEquals("Interrupted deactivation did not abort the transport", 1, connection.abortCount.get()); //$NON-NLS-1$
+      assertFalse("Channel remained active after interrupted deactivation", LifecycleUtil.isActive(channel)); //$NON-NLS-1$
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testReentrantDeactivationFromConnectedCallbackCompletes() throws Exception
+  {
+    MemoryConnection connection = new MemoryConnection();
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    connector.setConnection(connection);
+    CountDownLatch deactivated = new CountDownLatch(1);
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+    connector.addListener(event -> {
+      if (event instanceof IConnectorStateEvent && ((IConnectorStateEvent)event).getNewState() == ConnectorState.CONNECTED)
+      {
+        try
+        {
+          LifecycleUtil.deactivate(connector);
+        }
+        catch (Throwable ex)
+        {
+          failure.set(ex);
+        }
+        finally
+        {
+          deactivated.countDown();
+        }
+      }
+    });
+
+    try
+    {
+      LifecycleUtil.activate(connector);
+      assertTrue("Reentrant deactivation from CONNECTED callback did not finish", deactivated.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertNull(failure.get());
+      assertFalse(connector.isActive());
+      assertEquals(ConnectorState.DISCONNECTED, connector.getState());
+      assertEquals(1, connection.abortCount.get());
+    }
+    finally
+    {
       LifecycleUtil.deactivate(connector);
     }
   }
@@ -893,7 +1205,6 @@ public class MessageConnectorTest extends AbstractOMTest
     successful.setConnection(new MemoryConnection());
     successful.getConfig().setNegotiator(createNegotiator(true));
     LifecycleUtil.activate(successful);
-    assertEquals(ConnectorState.CONNECTED, successful.getState());
     successful.waitForConnection(5000);
     assertEquals(ConnectorState.CONNECTED, successful.getState());
     LifecycleUtil.deactivate(successful);
@@ -925,10 +1236,19 @@ public class MessageConnectorTest extends AbstractOMTest
     connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
     connector.setConnection(connection);
     connector.getConfig().setNegotiator(createDeferredNegotiator());
+    CountDownLatch negotiating = new CountDownLatch(1);
+    IListener stateListener = event -> {
+      if (event instanceof IConnectorStateEvent && ((IConnectorStateEvent)event).getNewState() == ConnectorState.NEGOTIATING)
+      {
+        negotiating.countDown();
+      }
+    };
+    connector.addListener(stateListener);
 
     try
     {
       LifecycleUtil.activate(connector);
+      assertTrue("Control HELLO did not advance to authentication negotiation", negotiating.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       assertEquals(ConnectorState.NEGOTIATING, connector.getState());
       assertFalse(connector.isActive());
       assertTrue("Negotiation control buffer was not submitted during deferred activation", //$NON-NLS-1$
@@ -958,6 +1278,7 @@ public class MessageConnectorTest extends AbstractOMTest
     }
     finally
     {
+      connector.removeListener(stateListener);
       LifecycleUtil.deactivate(connector);
     }
   }
@@ -1480,6 +1801,7 @@ public class MessageConnectorTest extends AbstractOMTest
     connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
     connector.setConnection(connection);
     LifecycleUtil.activate(connector);
+    connector.waitForConnection(5000);
     assertEquals(ConnectorState.CONNECTED, connector.getState());
     return connector;
   }
@@ -1490,6 +1812,13 @@ public class MessageConnectorTest extends AbstractOMTest
     buffer.startPutting(channel.getID()).put((byte)0x42);
     channel.sendBuffer(buffer);
     return buffer;
+  }
+
+  private static Map<?, ?> receiveQueues(MessageConnector connector) throws ReflectiveOperationException
+  {
+    Field field = MessageConnector.class.getDeclaredField("channelReceiveQueues"); //$NON-NLS-1$
+    field.setAccessible(true);
+    return (Map<?, ?>)field.get(connector);
   }
 
   private static ByteBuffer registrationFrame(short channelID)
@@ -1520,6 +1849,17 @@ public class MessageConnectorTest extends AbstractOMTest
     frame.position(0);
     frame.limit(IBuffer.HEADER_SIZE + 1);
     return frame;
+  }
+
+  private static ByteBuffer controlHelloFrame()
+  {
+    ByteBuffer frame = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 1 + Integer.BYTES * 2).order(ByteOrder.BIG_ENDIAN);
+    frame.putShort((short)0);
+    frame.putShort((short)(1 + Integer.BYTES * 2));
+    frame.put(ControlChannel.OPCODE_HELLO);
+    frame.putInt(0x45494B45);
+    frame.putInt(ControlChannel.CONTROL_PROTOCOL_VERSION);
+    return frame.flip();
   }
 
   private static ByteBuffer signalFrame(short channelID, int correlationID)
@@ -1599,6 +1939,12 @@ public class MessageConnectorTest extends AbstractOMTest
    */
   private static final class TestConnector extends MessageConnector
   {
+    private static final ExecutorService RECEIVE_EXECUTOR = Executors.newCachedThreadPool(runnable -> {
+      Thread thread = new Thread(runnable, "MessageConnectorTest receive"); //$NON-NLS-1$
+      thread.setDaemon(true);
+      return thread;
+    });
+
     private boolean skipPeerRegistration;
 
     private CountDownLatch protocolCreationEntered;
@@ -1611,11 +1957,13 @@ public class MessageConnectorTest extends AbstractOMTest
 
     private TestConnector()
     {
+      getConfig().setReceiveExecutor(RECEIVE_EXECUTOR);
     }
 
     private TestConnector(long zeroCopyBudget, long copyBudget)
     {
       super(zeroCopyBudget, copyBudget);
+      getConfig().setReceiveExecutor(RECEIVE_EXECUTOR);
     }
 
     private void setSkipPeerRegistration(boolean skipPeerRegistration)
@@ -1645,7 +1993,6 @@ public class MessageConnectorTest extends AbstractOMTest
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected <INFRA_STRUCTURE> IProtocol<INFRA_STRUCTURE> createProtocol(String type, INFRA_STRUCTURE infraStructure)
     {
       CountDownLatch entered = protocolCreationEntered;
@@ -1667,30 +2014,8 @@ public class MessageConnectorTest extends AbstractOMTest
         }
       }
 
-      return (IProtocol<INFRA_STRUCTURE>)Proxy.newProxyInstance(IProtocol2.class.getClassLoader(), new Class<?>[] { IProtocol2.class },
-          (proxy, method, args) -> {
-            if ("getType".equals(method.getName())) //$NON-NLS-1$
-            {
-              return type;
-            }
-
-            if ("getVersion".equals(method.getName())) //$NON-NLS-1$
-            {
-              return 0;
-            }
-
-            if ("handleBuffer".equals(method.getName())) //$NON-NLS-1$
-            {
-              ((IBuffer)args[0]).release();
-              CountDownLatch received = type == null ? independentDataFrameReceived : dataFrameReceived;
-              if (received != null)
-              {
-                received.countDown();
-              }
-            }
-
-            return null;
-          });
+      CountDownLatch received = type == null ? independentDataFrameReceived : dataFrameReceived;
+      return new TestProtocol<>(type, received);
     }
 
     public IChannel openInverse(short channelID)
@@ -1709,70 +2034,6 @@ public class MessageConnectorTest extends AbstractOMTest
     private TestSignalProtocol()
     {
       super("test.signal"); //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * Pauses the first channel lookup after returning the channel, exposing removal before receive-queue creation.
-   *
-   * @author Eike Stepper
-   */
-  private static final class BlockingChannelMap extends ConcurrentHashMap<Short, IChannel>
-  {
-    private static final long serialVersionUID = 1L;
-
-    private final short blockedChannelID;
-
-    private final CountDownLatch channelResolved;
-
-    private final CountDownLatch continueLookup;
-
-    private final CountDownLatch channelRemoved;
-
-    private final AtomicInteger lookupBlocked = new AtomicInteger();
-
-    private BlockingChannelMap(short blockedChannelID, CountDownLatch channelResolved, CountDownLatch continueLookup, CountDownLatch channelRemoved)
-    {
-      this.blockedChannelID = blockedChannelID;
-      this.channelResolved = channelResolved;
-      this.continueLookup = continueLookup;
-      this.channelRemoved = channelRemoved;
-    }
-
-    @Override
-    public IChannel get(Object key)
-    {
-      IChannel channel = super.get(key);
-      if (channel != null && key.equals(blockedChannelID) && lookupBlocked.compareAndSet(0, 1))
-      {
-        channelResolved.countDown();
-        try
-        {
-          if (!continueLookup.await(5, TimeUnit.SECONDS))
-          {
-            throw new IllegalStateException("The test did not release channel lookup"); //$NON-NLS-1$
-          }
-        }
-        catch (InterruptedException ex)
-        {
-          Thread.currentThread().interrupt();
-          throw new IllegalStateException(ex);
-        }
-      }
-
-      return channel;
-    }
-
-    @Override
-    public boolean remove(Object key, Object value)
-    {
-      boolean removed = super.remove(key, value);
-      if (removed && key.equals(blockedChannelID))
-      {
-        channelRemoved.countDown();
-      }
-
-      return removed;
     }
   }
 
@@ -1831,6 +2092,8 @@ public class MessageConnectorTest extends AbstractOMTest
 
     private volatile boolean autoReadyOnStart = true;
 
+    private volatile boolean helloSent;
+
     private final CountDownLatch startEntered = new CountDownLatch(1);
 
     private final CountDownLatch allowStart = new CountDownLatch(1);
@@ -1854,6 +2117,7 @@ public class MessageConnectorTest extends AbstractOMTest
     {
       startCalls.incrementAndGet();
       this.listener = listener;
+      helloSent = false;
       startEntered.countDown();
       if (blockStart)
       {
@@ -1889,7 +2153,16 @@ public class MessageConnectorTest extends AbstractOMTest
     @Override
     public boolean send(IBuffer buffer, SendCallback callback)
     {
+      ByteBuffer bytes = buffer.getByteBuffer().duplicate();
+      if (buffer.getChannelID() == ControlChannel.CONTROL_CHANNEL_ID && bytes.get(IBuffer.HEADER_SIZE) == ControlChannel.OPCODE_HELLO
+          && bytes.getInt(IBuffer.HEADER_SIZE + 1) == 0x45494B45 && bytes.getInt(IBuffer.HEADER_SIZE + 5) == ControlChannel.CONTROL_PROTOCOL_VERSION)
+      {
+        callback.completed();
+        return true;
+      }
+
       sendCount.incrementAndGet();
+      lastBuffer = buffer;
       firstAttempt.countDown();
       if (blockSubmission)
       {
@@ -1969,6 +2242,21 @@ public class MessageConnectorTest extends AbstractOMTest
       {
         requestFailure = null;
         throw failure;
+      }
+
+      if (!helloSent)
+      {
+        helloSent = true;
+        ByteBuffer hello = ByteBuffer.allocate(IBuffer.HEADER_SIZE + 1 + Integer.BYTES * 2);
+        hello.putShort((short)0);
+        hello.putShort((short)(1 + Integer.BYTES * 2));
+        hello.put(ControlChannel.OPCODE_HELLO);
+        hello.putInt(0x45494B45);
+        hello.putInt(ControlChannel.CONTROL_PROTOCOL_VERSION);
+        hello.flip();
+        requested.decrementAndGet();
+        listener.received(hello, () -> {
+        });
       }
     }
 
@@ -2110,6 +2398,38 @@ public class MessageConnectorTest extends AbstractOMTest
       }
 
       delegate.retainBuffer(buffer);
+    }
+  }
+
+  /**
+   * Releases received test frames and signals the tests that observe protocol delivery.
+   *
+   * @author Eike Stepper
+   */
+  private static final class TestProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
+  {
+    private final CountDownLatch received;
+
+    private TestProtocol(String type, CountDownLatch received)
+    {
+      super(type);
+      this.received = received;
+    }
+
+    @Override
+    public int getVersion()
+    {
+      return 0;
+    }
+
+    @Override
+    public void handleBuffer(IBuffer buffer)
+    {
+      buffer.release();
+      if (received != null)
+      {
+        received.countDown();
+      }
     }
   }
 

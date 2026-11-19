@@ -12,7 +12,9 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelException;
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.connector.IncompatibleControlProtocolException;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -22,17 +24,21 @@ import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.net4j.util.security.NegotiationContext;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
+import org.eclipse.internal.net4j.ControlChannel;
+import org.eclipse.internal.net4j.buffer.Buffer;
 import org.eclipse.internal.net4j.buffer.BufferUtil;
 
+import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.Protocol;
 import org.eclipse.spi.net4j.SchedulingConnector;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Proxy;
 import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,43 +50,338 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class ControlChannelTest extends AbstractOMTest
 {
+  public void testHelloOpcodeIsZero()
+  {
+    assertEquals(0, ControlChannel.OPCODE_HELLO);
+  }
+
   public void testUnknownOpcodeIsRejectedAndBufferReleased() throws Exception
   {
-    TestConnector connector = activateConnector();
+    TestConnector connector = new TestConnector();
+    TrackingBufferProvider provider = new TrackingBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    connector.getConfig().setBufferProvider(provider);
+    LifecycleUtil.activate(connector);
+    connector.leaveConnecting();
+    receiveHello(connector);
     try
     {
       IBuffer delegate = connector.provideBuffer();
-      int[] releaseCount = { 0 };
-      IBuffer buffer = (IBuffer)Proxy.newProxyInstance(IBuffer.class.getClassLoader(), new Class<?>[] { IBuffer.class }, (proxy, method, args) -> {
-        if ("release".equals(method.getName())) //$NON-NLS-1$
-        {
-          ++releaseCount[0];
-        }
-
-        try
-        {
-          return method.invoke(delegate, args);
-        }
-        catch (InvocationTargetException ex)
-        {
-          throw ex.getCause();
-        }
-      });
-      ByteBuffer payload = buffer.startPutting((short)0);
+      int releasesBefore = provider.releaseCount.get();
+      ByteBuffer payload = delegate.startPutting((short)0);
       payload.put((byte)99);
-      buffer.flip();
+      delegate.flip();
 
       try
       {
-        control(connector).handleBufferFromMultiplexer(buffer);
+        control(connector).handleBufferFromMultiplexer(delegate);
         fail("Unknown opcode was accepted");
       }
       catch (IllegalArgumentException expected)
       {
-        assertTrue(expected.getMessage().contains("99"));
+        assertTrue(expected.getMessage().contains("Invalid control opcode 99 for Net4j control protocol version 1")); //$NON-NLS-1$
       }
 
-      assertEquals(1, releaseCount[0]);
+      assertEquals(releasesBefore + 1, provider.releaseCount.get());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testHelloCompletesConnectionAfterVersionCheck() throws Exception
+  {
+    assertEquals("The version 1 HELLO opcode changed", 0, ControlChannel.OPCODE_HELLO); //$NON-NLS-1$
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      receiveHello(connector);
+      assertEquals(ConnectorState.CONNECTED, connector.getState());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testVersionMismatchIsPreservedForConnectionWaiter() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      try
+      {
+        receiveHello(connector, 2, 0x45494B45);
+        fail("A different control protocol version was accepted"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        assertTrue(expected instanceof IncompatibleControlProtocolException);
+        assertTrue(expected.getMessage().contains("local version 1, remote version 2")); //$NON-NLS-1$
+      }
+
+      assertFalse(connector.getState() == ConnectorState.CONNECTED);
+
+      try
+      {
+        connector.waitForConnection(5000);
+        fail("A failed control handshake reported a connection"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        IncompatibleControlProtocolException incompatibility = findIncompatibleCause(expected);
+        assertNotNull(incompatibility);
+        assertTrue(incompatibility.getMessage().contains("local version 1, remote version 2")); //$NON-NLS-1$
+      }
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testConcurrentHandshakeCompletionAndFailureHaveOneWinner() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    CountDownLatch start = new CountDownLatch(1);
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+    Thread completion = new Thread(() -> {
+      await(start, failure);
+      receiveHello(connector);
+    }, "Complete control handshake"); //$NON-NLS-1$
+    Thread transportFailure = new Thread(() -> {
+      await(start, failure);
+      connector.failControlHandshake(1, new ConnectorException("concurrent transport failure")); //$NON-NLS-1$
+    }, "Fail control handshake"); //$NON-NLS-1$
+
+    try
+    {
+      connector.leaveConnecting();
+      completion.start();
+      transportFailure.start();
+      start.countDown();
+      completion.join(TimeUnit.SECONDS.toMillis(5));
+      transportFailure.join(TimeUnit.SECONDS.toMillis(5));
+      assertFalse("Handshake completion did not finish", completion.isAlive()); //$NON-NLS-1$
+      assertFalse("Handshake failure did not finish", transportFailure.isAlive()); //$NON-NLS-1$
+      assertNull(failure.get());
+
+      if (connector.getState() == ConnectorState.CONNECTED)
+      {
+        connector.waitForConnection(1000);
+        assertTrue(connector.isConnected());
+      }
+      else
+      {
+        try
+        {
+          connector.waitForConnection(1000);
+          fail("The failed handshake was reported as connected"); //$NON-NLS-1$
+        }
+        catch (ConnectorException expected)
+        {
+          assertNotNull(expected.getCause());
+          assertTrue(expected.getCause().getMessage().contains("concurrent transport failure")); //$NON-NLS-1$
+        }
+      }
+    }
+    finally
+    {
+      start.countDown();
+      completion.join(TimeUnit.SECONDS.toMillis(1));
+      transportFailure.join(TimeUnit.SECONDS.toMillis(1));
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testMalformedHelloCannotCompleteConnection() throws Exception
+  {
+    assertRejectedHello(0x12345678, ControlChannel.CONTROL_PROTOCOL_VERSION, "Malformed Net4j control protocol HELLO"); //$NON-NLS-1$
+  }
+
+  public void testTruncatedHelloCannotCompleteConnection() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      IBuffer hello = connector.provideBuffer();
+      hello.startPutting((short)0).put(ControlChannel.OPCODE_HELLO);
+      hello.flip();
+      try
+      {
+        control(connector).handleBufferFromMultiplexer(hello);
+        fail("A truncated HELLO was accepted"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        assertTrue(expected instanceof IncompatibleControlProtocolException);
+        assertTrue(expected.getMessage().contains("Malformed Net4j control protocol HELLO")); //$NON-NLS-1$
+      }
+
+      assertFalse(connector.getState() == ConnectorState.CONNECTED);
+      assertHandshakeFailure(connector);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testUnexpectedControlMessageCannotCompleteConnection() throws Exception
+  {
+    for (byte opcode : new byte[] { 1, 5, 99 })
+    {
+      TestConnector connector = new TestConnector();
+      connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+      LifecycleUtil.activate(connector);
+      try
+      {
+        connector.leaveConnecting();
+        IBuffer unexpected = connector.provideBuffer();
+        unexpected.startPutting((short)0).put(opcode);
+        unexpected.flip();
+        try
+        {
+          control(connector).handleBufferFromMultiplexer(unexpected);
+          fail("A non-HELLO control opcode was accepted before the handshake: " + opcode); //$NON-NLS-1$
+        }
+        catch (IncompatibleControlProtocolException expected)
+        {
+          assertTrue(expected.getMessage().contains("unexpected control opcode " + opcode + " before HELLO")); //$NON-NLS-1$
+          assertTrue(expected.getMessage().contains("remote version is unknown")); //$NON-NLS-1$
+        }
+
+        assertFalse(connector.getState() == ConnectorState.CONNECTED);
+        assertHandshakeFailure(connector);
+      }
+      finally
+      {
+        LifecycleUtil.deactivate(connector);
+      }
+    }
+  }
+
+  public void testDuplicateHelloIsRejected() throws Exception
+  {
+    TestConnector connector = activateConnector();
+    try
+    {
+      try
+      {
+        receiveHello(connector);
+        fail("A duplicate HELLO was accepted"); //$NON-NLS-1$
+      }
+      catch (IllegalArgumentException expected)
+      {
+        assertTrue(expected.getMessage().contains("Unexpected duplicate HELLO for Net4j control protocol version 1")); //$NON-NLS-1$
+      }
+
+      assertEquals(ConnectorState.CONNECTED, connector.getState());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testDuplicateHelloDuringHandshakeIsIncompatible() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    connector.deferHelloSent = true;
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      receiveHello(connector);
+      try
+      {
+        receiveHello(connector);
+        fail("A duplicate HELLO during handshake was accepted"); //$NON-NLS-1$
+      }
+      catch (IncompatibleControlProtocolException expected)
+      {
+        assertTrue(expected.getMessage().contains("Unexpected duplicate Net4j control protocol HELLO")); //$NON-NLS-1$
+      }
+
+      assertHandshakeFailure(connector);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testMissingHelloTimesOutWithUnknownRemoteVersion() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      try
+      {
+        connector.waitForConnection(15000);
+        fail("A peer that omitted HELLO reported a connection"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        IncompatibleControlProtocolException incompatibility = findIncompatibleCause(expected);
+        assertNotNull(incompatibility);
+        assertTrue(incompatibility.getMessage().contains("remote version is unknown")); //$NON-NLS-1$
+      }
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  public void testMalformedPreHelloPayloadPreservesDecodingCause() throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      IBuffer malformed = connector.provideBuffer();
+      malformed.startPutting((short)0);
+      malformed.flip();
+      IncompatibleControlProtocolException failure = null;
+      try
+      {
+        control(connector).handleBufferFromMultiplexer(malformed);
+        fail("A control frame without an opcode was accepted"); //$NON-NLS-1$
+      }
+      catch (IncompatibleControlProtocolException expected)
+      {
+        assertNotNull(expected.getCause());
+        failure = expected;
+      }
+
+      try
+      {
+        connector.waitForConnection(5000);
+        fail("The malformed control frame was reported as connected"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        assertSame(failure, findIncompatibleCause(expected));
+        assertNotNull(findIncompatibleCause(expected).getCause());
+      }
     }
     finally
     {
@@ -353,7 +654,9 @@ public class ControlChannelTest extends AbstractOMTest
     TrackingBufferProvider provider = new TrackingBufferProvider(Net4jUtil.createBufferFactory((short)64));
     connector.getConfig().setBufferProvider(provider);
     LifecycleUtil.activate(connector);
-    connector.setState(ConnectorState.CONNECTED);
+    connector.leaveConnecting();
+    receiveHello(connector);
+    int releasesBeforeRegistration = provider.releaseCount.get();
     try
     {
       try
@@ -363,7 +666,7 @@ public class ControlChannelTest extends AbstractOMTest
       }
       catch (RuntimeException expected)
       {
-        assertEquals(1, provider.releaseCount.get());
+        assertEquals(releasesBeforeRegistration + 1, provider.releaseCount.get());
       }
 
       connector.acknowledgement = null;
@@ -378,7 +681,13 @@ public class ControlChannelTest extends AbstractOMTest
 
   public void testInverseDeregistrationClosesPeerChannel() throws Exception
   {
-    TestConnector connector = activateConnector();
+    TestConnector connector = new TestConnector();
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    connector.getConfig().setReceiveExecutor(executor);
+    LifecycleUtil.activate(connector);
+    connector.leaveConnecting();
+    receiveHello(connector);
     try
     {
       InternalChannel peerChannel = connector.openInverse((short)-44);
@@ -397,6 +706,7 @@ public class ControlChannelTest extends AbstractOMTest
     finally
     {
       LifecycleUtil.deactivate(connector);
+      executor.shutdownNow();
     }
   }
 
@@ -423,6 +733,7 @@ public class ControlChannelTest extends AbstractOMTest
     try
     {
       connector.leaveConnecting();
+      receiveHello(connector);
       IBuffer negotiation = connector.provideBuffer();
       ByteBuffer payload = negotiation.startPutting((short)0);
       payload.put((byte)1);
@@ -468,24 +779,7 @@ public class ControlChannelTest extends AbstractOMTest
 
   private static IProtocol2<?> protocol(String type)
   {
-    return (IProtocol2<?>)Proxy.newProxyInstance(IProtocol2.class.getClassLoader(), new Class<?>[] { IProtocol2.class }, (proxy, method, args) -> {
-      if ("getType".equals(method.getName())) //$NON-NLS-1$
-      {
-        return type;
-      }
-
-      if ("getVersion".equals(method.getName())) //$NON-NLS-1$
-      {
-        return 7;
-      }
-
-      if ("toString".equals(method.getName())) //$NON-NLS-1$
-      {
-        return "test.protocol/7"; //$NON-NLS-1$
-      }
-
-      return null;
-    });
+    return new TestProtocol(type);
   }
 
   private static Thread registrationWorker(TestConnector connector, short channelID, CountDownLatch start, AtomicReference<Throwable> failure)
@@ -511,13 +805,97 @@ public class ControlChannelTest extends AbstractOMTest
     assertFalse("Registration worker did not terminate", thread.isAlive()); //$NON-NLS-1$
   }
 
+  private static void await(CountDownLatch latch, AtomicReference<Throwable> failure)
+  {
+    try
+    {
+      latch.await();
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      failure.compareAndSet(null, ex);
+    }
+  }
+
   private TestConnector activateConnector() throws Exception
   {
     TestConnector connector = new TestConnector();
     connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
     LifecycleUtil.activate(connector);
-    connector.setState(ConnectorState.CONNECTED);
+    connector.leaveConnecting();
+    receiveHello(connector);
     return connector;
+  }
+
+  private static void receiveHello(TestConnector connector)
+  {
+    receiveHello(connector, ControlChannel.CONTROL_PROTOCOL_VERSION, 0x45494B45);
+  }
+
+  private static void receiveHello(TestConnector connector, int version, int magic)
+  {
+    IBuffer hello = connector.provideBuffer();
+    ByteBuffer payload = hello.startPutting((short)0);
+    payload.put(ControlChannel.OPCODE_HELLO);
+    payload.putInt(magic);
+    payload.putInt(version);
+    hello.flip();
+    control(connector).handleBufferFromMultiplexer(hello);
+  }
+
+  private void assertRejectedHello(int magic, int version, String diagnostic) throws Exception
+  {
+    TestConnector connector = new TestConnector();
+    connector.getConfig().setBufferProvider(Net4jUtil.createBufferFactory((short)128));
+    LifecycleUtil.activate(connector);
+    try
+    {
+      connector.leaveConnecting();
+      try
+      {
+        receiveHello(connector, version, magic);
+        fail("An invalid HELLO was accepted"); //$NON-NLS-1$
+      }
+      catch (ConnectorException expected)
+      {
+        assertTrue(expected instanceof IncompatibleControlProtocolException);
+        assertTrue(expected.getMessage().contains(diagnostic));
+      }
+
+      assertFalse(connector.getState() == ConnectorState.CONNECTED);
+      assertHandshakeFailure(connector);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(connector);
+    }
+  }
+
+  private void assertHandshakeFailure(TestConnector connector)
+  {
+    try
+    {
+      connector.waitForConnection(5000);
+      fail("An invalid handshake reported a connection"); //$NON-NLS-1$
+    }
+    catch (ConnectorException expected)
+    {
+      assertNotNull(findIncompatibleCause(expected));
+    }
+  }
+
+  private static IncompatibleControlProtocolException findIncompatibleCause(Throwable failure)
+  {
+    for (Throwable cause = failure; cause != null; cause = cause.getCause())
+    {
+      if (cause instanceof IncompatibleControlProtocolException)
+      {
+        return (IncompatibleControlProtocolException)cause;
+      }
+    }
+
+    return null;
   }
 
   private static InternalChannel control(TestConnector connector)
@@ -532,6 +910,8 @@ public class ControlChannelTest extends AbstractOMTest
    */
   private static final class TestConnector extends SchedulingConnector
   {
+    private boolean deferHelloSent;
+
     private volatile String acknowledgement;
 
     private volatile CountDownLatch registrationsProcessed = new CountDownLatch(1);
@@ -586,6 +966,24 @@ public class ControlChannelTest extends AbstractOMTest
       ByteBuffer bytes = buffer.getByteBuffer().duplicate();
       bytes.position(IBuffer.HEADER_SIZE);
       byte opcode = bytes.get();
+      if (opcode == ControlChannel.OPCODE_HELLO)
+      {
+        if (deferHelloSent)
+        {
+          return;
+        }
+
+        controlBufferSent(control, buffer);
+        synchronized (control.getSendQueue())
+        {
+          control.getSendQueue().remove(buffer);
+        }
+
+        buffer.release();
+        completeScheduledChannel(control, true);
+        return;
+      }
+
       short channelID = bytes.getShort();
       if (opcode != 2)
       {
@@ -628,7 +1026,7 @@ public class ControlChannelTest extends AbstractOMTest
     @SuppressWarnings("unchecked")
     protected <INFRA_STRUCTURE> IProtocol<INFRA_STRUCTURE> createProtocol(String type, INFRA_STRUCTURE infraStructure)
     {
-      return (IProtocol<INFRA_STRUCTURE>)protocol();
+      return (IProtocol<INFRA_STRUCTURE>)new TestProtocol(type);
     }
 
     @Override
@@ -644,15 +1042,8 @@ public class ControlChannelTest extends AbstractOMTest
 
     public void deregister(short channelID)
     {
-      InternalChannel channel = (InternalChannel)Proxy.newProxyInstance(InternalChannel.class.getClassLoader(), new Class<?>[] { InternalChannel.class },
-          (proxy, method, args) -> {
-            if ("getID".equals(method.getName())) //$NON-NLS-1$
-            {
-              return channelID;
-            }
-
-            return null;
-          });
+      InternalChannel channel = new Channel();
+      channel.setID(channelID);
       deregisterChannelFromPeer(channel);
     }
   }
@@ -682,28 +1073,39 @@ public class ControlChannelTest extends AbstractOMTest
     @Override
     public IBuffer provideBuffer()
     {
-      IBuffer buffer = delegate.provideBuffer();
-      return (IBuffer)Proxy.newProxyInstance(IBuffer.class.getClassLoader(), new Class<?>[] { IBuffer.class }, (proxy, method, args) -> {
-        if ("release".equals(method.getName())) //$NON-NLS-1$
-        {
-          releaseCount.incrementAndGet();
-        }
-
-        try
-        {
-          return method.invoke(buffer, args);
-        }
-        catch (InvocationTargetException ex)
-        {
-          throw ex.getCause();
-        }
-      });
+      return new Buffer(this, getBufferCapacity());
     }
 
     @Override
     public void retainBuffer(IBuffer buffer)
     {
+      releaseCount.incrementAndGet();
       delegate.retainBuffer(buffer);
+    }
+  }
+
+  /**
+   * Supplies stable protocol metadata for control-channel registration tests.
+   *
+   * @author Eike Stepper
+   */
+  private static final class TestProtocol extends Protocol<Object>
+  {
+    private TestProtocol(String type)
+    {
+      super(type);
+    }
+
+    @Override
+    public int getVersion()
+    {
+      return 7;
+    }
+
+    @Override
+    public void handleBuffer(IBuffer buffer)
+    {
+      buffer.release();
     }
   }
 }

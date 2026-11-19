@@ -15,6 +15,7 @@ package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.ConnectorState;
+import org.eclipse.net4j.connector.IncompatibleControlProtocolException;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.messages.Messages;
 import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
@@ -278,12 +279,22 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
         TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
       }
 
+      failControlHandshakeIfPending(ex);
       deactivateAsync();
       throw ex;
     }
     catch (Exception ex)
     {
-      if (isActive())
+      if (ex instanceof IncompatibleControlProtocolException)
+      {
+        OM.LOG.warn(ex.getMessage());
+
+        if (isActive())
+        {
+          deactivateAsync();
+        }
+      }
+      else if (isActive())
       {
         OM.LOG.error(ex);
         deactivateAsync();
@@ -313,6 +324,8 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
 
       boolean completed = false;
       boolean closeChannelAfterMe = false;
+      boolean controlHello = false;
+      long controlHelloGeneration = -1;
 
       synchronized (sendQueue)
       {
@@ -327,6 +340,12 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
           {
             // The CCAM flag must be remembered *before* the buffer.write() call below!
             closeChannelAfterMe = buffer.isCCAM();
+
+            controlHello = isControlHelloBuffer(channel, buffer);
+            if (controlHello)
+            {
+              controlHelloGeneration = controlHandshakeGeneration();
+            }
 
             if (buffer.write(socketChannel))
             {
@@ -346,6 +365,11 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
         }
 
         completeScheduledChannel(channel, true);
+
+        if (controlHello)
+        {
+          controlHelloSent(controlHelloGeneration);
+        }
       }
       else
       {
@@ -359,6 +383,7 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
         TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
       }
 
+      failControlHandshakeIfPending(ex);
       deactivateAsync();
     }
     catch (Exception ex)

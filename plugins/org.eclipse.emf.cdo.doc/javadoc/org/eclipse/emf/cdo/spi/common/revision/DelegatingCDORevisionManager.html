@@ -72,8 +72,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#getFactory()" tabindex="0">getFactory()</a></li>
 <li><a href="#getRevisionLoader()" tabindex="0">getRevisionLoader()</a></li>
 <li><a href="#setRevisionLoader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader)" tabindex="0">setRevisionLoader(InternalCDORevisionManager.RevisionLoader)</a></li>
-<li><a href="#getRevisionLocker()" tabindex="0">getRevisionLocker()</a></li>
-<li><a href="#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" tabindex="0">setRevisionLocker(InternalCDORevisionManager.RevisionLocker)</a></li>
 <li><a href="#isSupportingAudits()" tabindex="0">isSupportingAudits()</a></li>
 <li><a href="#setSupportingAudits(boolean)" tabindex="0">setSupportingAudits(boolean)</a></li>
 <li><a href="#isSupportingBranches()" tabindex="0">isSupportingBranches()</a></li>
@@ -96,11 +94,23 @@ loadScripts(document, 'script');</script>
 <li><a href="#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)" tabindex="0">prefetchRevisions(CDOID, CDOBranchPoint, int, boolean, Consumer)</a></li>
 <li><a href="#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" tabindex="0">handleRevisions(EClass, CDOBranch, boolean, long, boolean, CDORevisionHandler)</a></li>
 <li><a href="#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" tabindex="0">reviseLatest(CDOID, CDOBranch)</a></li>
+<li><a href="#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" tabindex="0">reviseDetached(CDOID, CDOBranchVersion, long)</a></li>
 <li><a href="#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" tabindex="0">reviseVersion(CDOID, CDOBranchVersion, long)</a></li>
+<li><a href="#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" tabindex="0">evictRevision(CDORevision)</a></li>
+<li><a href="#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" tabindex="0">removeRevisions(CDOBranch...)</a></li>
+<li><a href="#clearCache()" tabindex="0">clearCache()</a></li>
+<li><a href="#beginCacheEventDeferral()" tabindex="0">beginCacheEventDeferral()</a></li>
+<li><a href="#endCacheEventDeferral()" tabindex="0">endCacheEventDeferral()</a></li>
+<li><a href="#beginPermissionUpdate()" tabindex="0">beginPermissionUpdate()</a></li>
+<li><a href="#enterPermissionUpdater()" tabindex="0">enterPermissionUpdater()</a></li>
+<li><a href="#exitPermissionUpdater()" tabindex="0">exitPermissionUpdater()</a></li>
+<li><a href="#endPermissionUpdate()" tabindex="0">endPermissionUpdate()</a></li>
 <li><a href="#doActivate()" tabindex="0">doActivate()</a></li>
 <li><a href="#doDeactivate()" tabindex="0">doDeactivate()</a></li>
 <li><a href="#isDelegatingLifecycle()" tabindex="0">isDelegatingLifecycle()</a></li>
 <li><a href="#getDelegate()" tabindex="0">getDelegate()</a></li>
+<li><a href="#getRevisionLocker()" tabindex="0">getRevisionLocker()</a></li>
+<li><a href="#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" tabindex="0">setRevisionLocker(InternalCDORevisionManager.RevisionLocker)</a></li>
 <li><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)" tabindex="0">getBaseRevision(CDORevision, int, boolean)</a></li>
 <li><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)" tabindex="0">getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)</a></li>
 <li><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" tabindex="0">getRevision(CDOID, CDOBranchPoint, int, int, boolean)</a></li>
@@ -207,28 +217,70 @@ storage and loader.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">containsRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
- <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beginCacheEventDeferral()" class="member-name-link">beginCacheEventDeferral</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Defers cache listener notifications until the matching <a href="InternalCDORevisionManager.html#endCacheEventDeferral()"><code>InternalCDORevisionManager.endCacheEventDeferral()</code></a> call.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beginPermissionUpdate()" class="member-name-link">beginPermissionUpdate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks the beginning of a security-permission update.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearCache()" class="member-name-link">clearCache</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Clears the cache and prevents active loads from immediately republishing their in-flight results.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">containsRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> contains a <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>
 with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp),
 <code>false</code> otherwise.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">containsRevisionByVersion</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">containsRevisionByVersion</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision cache</code></a> contains a <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>
 with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch version</code></a> (branch + version),
 <code>false</code> otherwise.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#endCacheEventDeferral()" class="member-name-link">endCacheEventDeferral</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Completes a cache event deferral and dispatches queued notifications when no other deferral or permission update
+is active.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#endPermissionUpdate()" class="member-name-link">endPermissionUpdate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks completion of a previously begun security-permission update and releases loads waiting for a stable
+permission generation.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enterPermissionUpdater()" class="member-name-link">enterPermissionUpdater</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Marks the current thread as executing a permission updater callback.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">evictRevision</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes one revision from the cache without changing its validity interval.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exitPermissionUpdater()" class="member-name-link">exitPermissionUpdater</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Clears the current thread's permission updater callback marker.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)" class="member-name-link">getBaseRevision</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  int&nbsp;referenceChunk,
@@ -319,9 +371,11 @@ cache, <code>null</code> otherwise.</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionLoader()" class="member-name-link">getRevisionLoader</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionLocker()" class="member-name-link">getRevisionLocker</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getRevisionLocker()" class="member-name-link">getRevisionLocker</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -427,6 +481,20 @@ a revision with the same <a href="../../../common/revision/CDORevisionKey.html" 
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes cached revisions from the specified branches and prevents overlapping loads from republishing revisions
+from those branches.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseDetached</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ long&nbsp;timeStamp)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Revises the exact predecessor affected by a detach notification and prevents an overlapping load from restoring
+it as the current revision.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -446,9 +514,11 @@ a revision with the same <a href="../../../common/revision/CDORevisionKey.html" 
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionLoader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader)" class="member-name-link">setRevisionLoader</a><wbr>(<a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a>&nbsp;revisionLoader)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" class="member-name-link">setRevisionLocker</a><wbr>(<a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>&nbsp;revisionLocker)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" class="member-name-link">setRevisionLocker</a><wbr>(<a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>&nbsp;revisionLocker)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSupportingAudits(boolean)" class="member-name-link">setSupportingAudits</a><wbr>(boolean&nbsp;on)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -573,30 +643,6 @@ a revision with the same <a href="../../../common/revision/CDORevisionKey.html" 
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="InternalCDORevisionManager.html#setRevisionLoader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader)">setRevisionLoader</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getRevisionLocker()">
-<h3>getRevisionLocker</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></span>&nbsp;<span class="element-name">getRevisionLocker</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="InternalCDORevisionManager.html#getRevisionLocker()">getRevisionLocker</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">
-<h3>setRevisionLocker</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRevisionLocker</span><wbr><span class="parameters">(<a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>&nbsp;revisionLocker)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="InternalCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">setRevisionLocker</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
 </dl>
 </div>
 </section>
@@ -1074,6 +1120,27 @@ the request configuration.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">
+<h3>reviseDetached</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reviseDetached</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ long&nbsp;timeStamp)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Revises the exact predecessor affected by a detach notification and prevents an overlapping load from restoring
+it as the current revision.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">reviseDetached</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>id</code> - the detached object's ID</dd>
+<dd><code>branchVersion</code> - the exact predecessor version, or the unspecified version when unavailable</dd>
+<dd><code>timeStamp</code> - the detach commit timestamp, or the unspecified date when unavailable</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">
 <h3>reviseVersion</h3>
 <div class="horizontal-scroll">
@@ -1083,6 +1150,144 @@ the request configuration.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="InternalCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)">reviseVersion</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>evictRevision</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">evictRevision</span><wbr><span class="parameters">(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Removes one revision from the cache without changing its validity interval. An overlapping load of the same
+revision key must not immediately republish the evicted entry.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">evictRevision</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision to remove from the cache</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)">
+<h3>removeRevisions</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeRevisions</span><wbr><span class="parameters">(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Removes cached revisions from the specified branches and prevents overlapping loads from republishing revisions
+from those branches.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)">removeRevisions</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>branches</code> - the branches whose cached revisions are removed</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearCache()">
+<h3>clearCache</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearCache</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#clearCache()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Clears the cache and prevents active loads from immediately republishing their in-flight results.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#clearCache()">clearCache</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="beginCacheEventDeferral()">
+<h3>beginCacheEventDeferral</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">beginCacheEventDeferral</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#beginCacheEventDeferral()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Defers cache listener notifications until the matching <a href="InternalCDORevisionManager.html#endCacheEventDeferral()"><code>InternalCDORevisionManager.endCacheEventDeferral()</code></a> call. Revision changes
+remain visible through the cache while notifications are deferred. The deferral is manager-wide and may be
+completed by a different thread from the one that began it.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#beginCacheEventDeferral()">beginCacheEventDeferral</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="endCacheEventDeferral()">
+<h3>endCacheEventDeferral</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">endCacheEventDeferral</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#endCacheEventDeferral()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Completes a cache event deferral and dispatches queued notifications when no other deferral or permission update
+is active. Listener callbacks are dispatched outside the manager's mutation synchronization.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#endCacheEventDeferral()">endCacheEventDeferral</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="beginPermissionUpdate()">
+<h3>beginPermissionUpdate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">beginPermissionUpdate</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#beginPermissionUpdate()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Marks the beginning of a security-permission update. Revision loads that overlap the update must validate their
+response against the permission generation before publishing or returning it.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#beginPermissionUpdate()">beginPermissionUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="enterPermissionUpdater()">
+<h3>enterPermissionUpdater</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enterPermissionUpdater</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#enterPermissionUpdater()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Marks the current thread as executing a permission updater callback. Revision loads invoked from this thread fail
+promptly instead of waiting for the update that is calling them.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#enterPermissionUpdater()">enterPermissionUpdater</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="exitPermissionUpdater()">
+<h3>exitPermissionUpdater</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">exitPermissionUpdater</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#exitPermissionUpdater()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Clears the current thread's permission updater callback marker.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#exitPermissionUpdater()">exitPermissionUpdater</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="endPermissionUpdate()">
+<h3>endPermissionUpdate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">endPermissionUpdate</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="InternalCDORevisionManager.html#endPermissionUpdate()">InternalCDORevisionManager</a></code></span></div>
+<div class="block">Marks completion of a previously begun security-permission update and releases loads waiting for a stable
+permission generation. Completion may occur on a different thread from the one that began the update.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#endPermissionUpdate()">endPermissionUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
 </dl>
 </div>
 </section>
@@ -1130,6 +1335,34 @@ the request configuration.</div>
 <h3>getDelegate</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></span>&nbsp;<span class="element-name">getDelegate</span>()</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevisionLocker()">
+<h3>getRevisionLocker</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></span>&nbsp;<span class="element-name">getRevisionLocker</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#getRevisionLocker()">getRevisionLocker</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">
+<h3>setRevisionLocker</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRevisionLocker</span><wbr><span class="parameters">(<a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>&nbsp;revisionLocker)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="InternalCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">setRevisionLocker</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></code></dd>
+</dl>
 </div>
 </section>
 </li>

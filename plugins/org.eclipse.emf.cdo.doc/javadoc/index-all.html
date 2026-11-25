@@ -360,7 +360,9 @@ and utility methods for working with them.</div>
 <dt><a href="org/eclipse/emf/cdo/CDOLock.html#acquire(long,java.util.concurrent.TimeUnit,boolean)" class="member-name-link">acquire(long, TimeUnit, boolean)</a> - Method in interface org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html#acquireAtomicRequestLock(java.lang.Object)" class="member-name-link">acquireAtomicRequestLock(Object)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html#acquireSession()" class="member-name-link">acquireSession()</a> - Method in interface org.eclipse.emf.cdo.explorer.repositories.<a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories">CDORepository</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.Input.html#activate()" class="member-name-link">activate()</a> - Method in class org.eclipse.emf.cdo.ui.widgets.<a href="org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.Input.html" title="class in org.eclipse.emf.cdo.ui.widgets">CommitHistoryComposite.Input</a></dt>
@@ -2841,6 +2843,18 @@ to pass contextual information that can be used when a data type's value is <a h
 </dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.OutputStreamHandler.html#begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)" class="member-name-link">begin(CDORevisionCrawler)</a> - Method in class org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.OutputStreamHandler.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#beginCacheEventDeferral()" class="member-name-link">beginCacheEventDeferral()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#beginCacheEventDeferral()" class="member-name-link">beginCacheEventDeferral()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Defers cache listener notifications until the matching <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#endCacheEventDeferral()"><code>InternalCDORevisionManager.endCacheEventDeferral()</code></a> call.</div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#beginPermissionUpdate()" class="member-name-link">beginPermissionUpdate()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#beginPermissionUpdate()" class="member-name-link">beginPermissionUpdate()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Marks the beginning of a security-permission update.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.Handler.html#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">beginRevision(CDORevision)</a> - Method in interface org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.Handler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></dt>
 <dd>
 <div class="block">Called when a revision is about to be processed.</div>
@@ -4838,7 +4852,9 @@ impose an alternative contents tree structure.</div>
 <div class="block">A moveable placeholder for the element of a <a href="org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> at a specified <a href="org/eclipse/emf/cdo/common/revision/CDOElementProxy.html#getIndex()"><code>index</code></a>.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.embedded">CDOEmbeddedRepositoryConfig</a> - Class in <a href="org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Configures and manages an embedded CDO repository.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#%3Cinit%3E(java.lang.String)" class="member-name-link">CDOEmbeddedRepositoryConfig(String)</a> - Constructor for class org.eclipse.emf.cdo.server.embedded.<a href="org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html" title="class in org.eclipse.emf.cdo.server.embedded">CDOEmbeddedRepositoryConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/ui/CDOEventHandler.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a> - Class in <a href="org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</a></dt>
@@ -8139,6 +8155,12 @@ The following features are supported:
 <dd>
 <div class="block">Clears the set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>objects</code></a> that are to be treated as exemptions to the <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled()"><code>CDOTransaction.Options.isAutoReleaseLocksEnabled()</code></a> option.</div>
 </dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#clearCache()" class="member-name-link">clearCache()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#clearCache()" class="member-name-link">clearCache()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Clears the cache and prevents active loads from immediately republishing their in-flight results.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalView.html#clearChangeSubscription()" class="member-name-link">clearChangeSubscription()</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#clearClassMappings()" class="member-name-link">clearClassMappings()</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></dt>
@@ -9362,6 +9384,10 @@ session when the notification is not delivered to that session.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure(java.io.Reader)" class="member-name-link">configure(Reader)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure(org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">configure(XMLConfiguration)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
+<dd>
+<div class="block">Configures repositories from an already prepared shared XML snapshot.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure(org.w3c.dom.Document)" class="member-name-link">configure(Document)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/server/LMAppExtension.html#configureFingerPrinter(org.w3c.dom.Element,org.eclipse.emf.cdo.spi.server.InternalRepository,org.eclipse.emf.cdo.lm.server.XMLLifecycleManager)" class="member-name-link">configureFingerPrinter(Element, InternalRepository, XMLLifecycleManager)</a> - Method in class org.eclipse.emf.cdo.lm.server.<a href="org/eclipse/emf/cdo/lm/server/LMAppExtension.html" title="class in org.eclipse.emf.cdo.lm.server">LMAppExtension</a></dt>
@@ -9866,6 +9892,10 @@ internal lock.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html#copyPackageUnit(org.eclipse.emf.cdo.common.model.CDOPackageUnit)" class="member-name-link">copyPackageUnit(CDOPackageUnit)</a> - Static method in class org.eclipse.emf.cdo.common.model.<a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#copyParameters()" class="member-name-link">copyParameters()</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
+<dd>
+<div class="block">Returns a copy of parameters initialized by this configurator.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#copyRevisable(org.eclipse.emf.cdo.common.revision.CDORevisable)" class="member-name-link">copyRevisable(CDORevisable)</a> - Static method in class org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#copyRevisionKey(org.eclipse.emf.cdo.common.revision.CDORevisionKey)" class="member-name-link">copyRevisionKey(CDORevisionKey)</a> - Static method in class org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</a></dt>
@@ -12116,6 +12146,10 @@ and accumulates the total update count.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)" class="member-name-link">createStore(String, Map, Element)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/server/IStoreFactory.html#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">createStore(String, Map, Element, XMLConfiguration)</a> - Method in interface org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></dt>
+<dd>
+<div class="block">Creates a store from a DOM element belonging to the shared prepared XML configuration.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider)" class="member-name-link">createStore(IMappingStrategy, IDBAdapter, IDBConnectionProvider)</a> - Static method in class org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html" title="class in org.eclipse.emf.cdo.server.db">CDODBUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.util.Map)" class="member-name-link">createStore(IMappingStrategy, IDBAdapter, IDBConnectionProvider, Map)</a> - Static method in class org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html" title="class in org.eclipse.emf.cdo.server.db">CDODBUtil</a></dt>
@@ -14974,6 +15008,13 @@ later point in time.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#encrypt(java.lang.String,byte%5B%5D,java.lang.String,byte%5B%5D,int)" class="member-name-link">encrypt(String, byte[], String, byte[], int)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#endCacheEventDeferral()" class="member-name-link">endCacheEventDeferral()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#endCacheEventDeferral()" class="member-name-link">endCacheEventDeferral()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Completes a cache event deferral and dispatches queued notifications when no other deferral or permission update
+is active.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalRepository.html#endCommit(long)" class="member-name-link">endCommit(long)</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></dt>
 <dd>
 <div class="block">Notifies the repository of the completion of a commit.</div>
@@ -14986,6 +15027,13 @@ later point in time.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/CDOServerExporter.html#endPackageUnit(OUT)" class="member-name-link">endPackageUnit(OUT)</a> - Method in class org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#endPermissionUpdate()" class="member-name-link">endPermissionUpdate()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#endPermissionUpdate()" class="member-name-link">endPermissionUpdate()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Marks completion of a previously begun security-permission update and releases loads waiting for a stable
+permission generation.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.Handler.html#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">endRevision(CDORevision)</a> - Method in interface org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionCrawler.Handler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></dt>
 <dd>
 <div class="block">Called when a revision has been processed.</div>
@@ -15104,6 +15152,12 @@ later point in time.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/LongIDStore.html#ensureLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">ensureLastObjectID(CDOID)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server">LongIDStore</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#enterPermissionUpdater()" class="member-name-link">enterPermissionUpdater()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#enterPermissionUpdater()" class="member-name-link">enterPermissionUpdater()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Marks the current thread as executing a permission updater callback.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/Store.html#entityBuilder()" class="member-name-link">entityBuilder()</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentMap.html#entrySet()" class="member-name-link">entrySet()</a> - Method in class org.eclipse.emf.cdo.server.ocl.<a href="org/eclipse/emf/cdo/server/ocl/CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a></dt>
@@ -15590,6 +15644,12 @@ and each data type
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.EventAdapter.html#%3Cinit%3E()" class="member-name-link">EventAdapter()</a> - Constructor for class org.eclipse.emf.cdo.session.remote.<a href="org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.EventAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">evictRevision(CDORevision)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#evictRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">evictRevision(CDORevision)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Removes one revision from the cache without changing its validity interval.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/security/PatternStyle.html#EXACT" class="member-name-link">EXACT</a> - Enum constant in enum class org.eclipse.emf.cdo.security.<a href="org/eclipse/emf/cdo/security/PatternStyle.html" title="enum class in org.eclipse.emf.cdo.security">PatternStyle</a></dt>
 <dd>
 <div class="block">The '<em><b>EXACT</b></em>' literal object.</div>
@@ -15678,6 +15738,12 @@ specified <a href="org/eclipse/emf/cdo/server/IQueryContext.html" title="interfa
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOViewSet.html#executeWithoutNotificationHandling(java.util.concurrent.Callable)" class="member-name-link">executeWithoutNotificationHandling(Callable)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#exitPermissionUpdater()" class="member-name-link">exitPermissionUpdater()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#exitPermissionUpdater()" class="member-name-link">exitPermissionUpdater()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Clears the current thread's permission updater callback marker.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#expandValue(java.lang.String,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">expandValue(String, Map, IManagedContainer)</a> - Static method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportAll(org.eclipse.emf.cdo.common.protocol.CDODataOutput)" class="member-name-link">exportAll(CDODataOutput)</a> - Method in class org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Binary</a></dt>
@@ -20410,6 +20476,10 @@ depth-first traversal order.</div>
 <div class="block">Returns the meta object for data type '<a href="org/eclipse/emf/cdo/expressions/EvaluationContext.html" title="interface in org.eclipse.emf.cdo.expressions"><code><em>Evaluation Context</em></code></a>'.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/expressions/impl/ExpressionsPackageImpl.html#getEvaluationContext()" class="member-name-link">getEvaluationContext()</a> - Method in class org.eclipse.emf.cdo.expressions.impl.<a href="org/eclipse/emf/cdo/expressions/impl/ExpressionsPackageImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">ExpressionsPackageImpl</a></dt>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html#getEventDispatcher()" class="member-name-link">getEventDispatcher()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></dt>
+<dd>
+<div class="block">Returns the optional deferred cache-event callback.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/evolution/phased/PhasedModelEvolutionSupport.html#getEvolutionFolder()" class="member-name-link">getEvolutionFolder()</a> - Method in class org.eclipse.emf.cdo.server.db.evolution.phased.<a href="org/eclipse/emf/cdo/server/db/evolution/phased/PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport</a></dt>
 <dd>
 <div class="block">Returns the evolution folder for the current evolution ID, or <code>null</code> if the evolution ID is less than 1.</div>
@@ -25540,6 +25610,10 @@ client-visible lock change.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/server/IStoreChunkReader.html#getRevision()" class="member-name-link">getRevision()</a> - Method in interface org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html#getRevision()" class="member-name-link">getRevision()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></dt>
+<dd>
+<div class="block">Returns the canonical revision selected by the cache.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/StoreChunkReader.html#getRevision()" class="member-name-link">getRevision()</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/StoreChunkReader.html" title="class in org.eclipse.emf.cdo.spi.server">StoreChunkReader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getRevision(CDOID)</a> - Method in interface org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></dt>
@@ -25701,9 +25775,15 @@ client-visible lock change.</div>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionLoader()" class="member-name-link">getRevisionLoader()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisionLocker()" class="member-name-link">getRevisionLocker()</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionLocker()" class="member-name-link">getRevisionLocker()</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.29 no longer supported or used. Returns <code>null</code>.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/CDOCommonSession.html#getRevisionManager()" class="member-name-link">getRevisionManager()</a> - Method in interface org.eclipse.emf.cdo.common.<a href="org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getRevisionManager()" class="member-name-link">getRevisionManager()</a> - Method in interface org.eclipse.emf.cdo.net4j.<a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></dt>
@@ -26229,6 +26309,11 @@ editor.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalTopicManager.html#getSessionManager()" class="member-name-link">getSessionManager()</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalTopicManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTopicManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/server/StoreThreadLocal.html#getSessionOrNull()" class="member-name-link">getSessionOrNull()</a> - Static method in class org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/StoreThreadLocal.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal</a></dt>
+<dd>
+<div class="block">Returns the session associated with the current thread,
+or <code>null</code> if no session is registered.</div>
+</dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#getSessionProtocol()" class="member-name-link">getSessionProtocol()</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/ISessionManager.html#getSessions()" class="member-name-link">getSessions()</a> - Method in interface org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></dt>
@@ -29598,6 +29683,10 @@ on the XML configurations of dynamically-managed repositories.</div>
 <dd>
 <div class="block">An optional extension of the <a href="org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="org/eclipse/emf/cdo/spi/server/IAppExtension5.html#getName()"><code>named</code></a> app extensions.</div>
 </dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/IAppExtension6.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension6</a> - Interface in <a href="org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></dt>
+<dd>
+<div class="block">Optional extension callback for consumers of the server's centrally prepared XML configuration.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/client/IAssemblyDescriptor.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.client">IAssemblyDescriptor</a> - Interface in <a href="org/eclipse/emf/cdo/lm/client/package-summary.html">org.eclipse.emf.cdo.lm.client</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/client/IAssemblyDescriptor.AvailableUpdatesChangedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.client">IAssemblyDescriptor.AvailableUpdatesChangedEvent</a> - Interface in <a href="org/eclipse/emf/cdo/lm/client/package-summary.html">org.eclipse.emf.cdo.lm.client</a></dt>
@@ -30513,6 +30602,10 @@ serialize, and rebase versioned object state.</div>
 <dd>
 <div class="block">Internal cache and interner for revisions shared by a revision manager.</div>
 </dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a> - Class in <a href="org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></dt>
+<dd>
+<div class="block">Result of an atomic cache interning operation whose event delivery is deferred to the caller.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a> - Interface in <a href="org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></dt>
 <dd>
 <div class="block">Mutable internal form of a revision delta used while building, applying, and rebasing changes to one object.</div>
@@ -30541,7 +30634,9 @@ prefetch options.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a> - Interface in <a href="org/eclipse/emf/cdo/spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a></dt>
 <dd>
-<div class="block">Lock used to keep a multi-step revision request atomic with respect to other loads for the same key.</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.29 no longer supported or used.</div>
+</div>
 </dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a> - Interface in <a href="org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></dt>
 <dd>
@@ -30810,6 +30905,10 @@ commit.</div>
 <dd>
 <div class="block">Server-side state for one client view or transaction.</div>
 </dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html#%3Cinit%3E(org.eclipse.emf.cdo.common.revision.CDORevision,java.lang.Runnable)" class="member-name-link">InternResult(CDORevision, Runnable)</a> - Constructor for class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></dt>
+<dd>
+<div class="block">Creates an interning result.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">internRevision(CDORevision)</a> - Method in interface org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a></dt>
 <dd>
 <div class="block">Interns the given revision and returns either the given revision or
@@ -30817,6 +30916,11 @@ a revision with the same <a href="org/eclipse/emf/cdo/common/revision/CDORevisio
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">internRevision(CDORevision)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html#internRevisionDeferredEvents(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">internRevisionDeferredEvents(CDORevision)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></dt>
+<dd>
+<div class="block">Interns a revision atomically and returns any cache event for delivery after the caller's publication lock has been
+released.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/expressions/IntValue.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.expressions">IntValue</a> - Interface in <a href="org/eclipse/emf/cdo/expressions/package-summary.html">org.eclipse.emf.cdo.expressions</a></dt>
 <dd>
 <div class="block">A representation of the model object '<em><b>Int Value</b></em>'.</div>
@@ -31104,6 +31208,10 @@ was rejected because one or more semantic validation checks reported errors.</di
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/reviews/server/IReviewManagerEvent.Type.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.lm.reviews.server">IReviewManagerEvent.Type</a> - Enum Class in <a href="org/eclipse/emf/cdo/lm/reviews/server/package-summary.html">org.eclipse.emf.cdo.lm.reviews.server</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#isAccessHeldByCurrentThread()" class="member-name-link">isAccessHeldByCurrentThread()</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></dt>
+<dd>
+<div class="block">Returns whether the current thread holds this view's access lock.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isActivateOnOpen()" class="member-name-link">isActivateOnOpen()</a> - Method in interface org.eclipse.emf.cdo.session.<a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></dt>
 <dd>
 <div class="block">Returns <code>true</code> if the session opened by <a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#openSession()"><code>CDOSessionConfiguration.openSession()</code></a> will be automatically activated,
@@ -31197,7 +31305,13 @@ was rejected because one or more semantic validation checks reported errors.</di
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/IRepositoryProtector.AuthorizationStrategy.html#isAuthorizeModify()" class="member-name-link">isAuthorizeModify()</a> - Method in class org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/IRepositoryProtector.AuthorizationStrategy.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.AuthorizationStrategy</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthorizing()" class="member-name-link">isAuthorizing()</a> - Method in interface org.eclipse.emf.cdo.common.<a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></dt>
+<dd>
+<div class="block">Returns <code>true</code> if this repository has a permission manager installed, <code>false</code> otherwise.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/ui/Authorizer.html#isAuthorizing()" class="member-name-link">isAuthorizing()</a> - Method in class org.eclipse.emf.cdo.ui.<a href="org/eclipse/emf/cdo/ui/Authorizer.html" title="class in org.eclipse.emf.cdo.ui">Authorizer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isAuthorizing()" class="member-name-link">isAuthorizing()</a> - Method in class org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.OpenSessionResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthorizingOperations()" class="member-name-link">isAuthorizingOperations()</a> - Method in interface org.eclipse.emf.cdo.common.<a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></dt>
 <dd>&nbsp;</dd>
@@ -31870,7 +31984,9 @@ remote changes), <code>false</code> otherwise.</div>
 <dt><a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html#isLob(org.eclipse.emf.ecore.EClassifier)" class="member-name-link">isLob(EClassifier)</a> - Static method in class org.eclipse.emf.cdo.common.model.<a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/CDOState.html#isLocal()" class="member-name-link">isLocal()</a> - Method in enum class org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Indicates whether the state has a local component, including locally created objects and uncommitted changes.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/branch/CDOBranch.html#isLocal()" class="member-name-link">isLocal()</a> - Method in interface org.eclipse.emf.cdo.common.branch.<a href="org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></dt>
 <dd>
 <div class="block">Returns <code>true</code> if this branch is a local branch, <code>false</code> otherwise.</div>
@@ -32168,7 +32284,9 @@ this view, <code>false</code> otherwise.</div>
 <dt><a href="org/eclipse/emf/cdo/lm/impl/DropImpl.html#isRelease()" class="member-name-link">isRelease()</a> - Method in class org.eclipse.emf.cdo.lm.impl.<a href="org/eclipse/emf/cdo/lm/impl/DropImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">DropImpl</a></dt>
 <dt><a href="org/eclipse/emf/cdo/lm/impl/DropTypeImpl.html#isRelease()" class="member-name-link">isRelease()</a> - Method in class org.eclipse.emf.cdo.lm.impl.<a href="org/eclipse/emf/cdo/lm/impl/DropTypeImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">DropTypeImpl</a></dt>
 <dt><a href="org/eclipse/emf/cdo/CDOState.html#isRemote()" class="member-name-link">isRemote()</a> - Method in enum class org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Indicates whether the state has a remote component.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html#isRemote()" class="member-name-link">isRemote()</a> - Method in interface org.eclipse.emf.cdo.explorer.repositories.<a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories">CDORepository</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#isRemote()" class="member-name-link">isRemote()</a> - Method in interface org.eclipse.emf.cdo.session.<a href="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</a></dt>
@@ -32570,6 +32688,10 @@ collection loading</i>.</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.20 use <code>ParameterAware</code>.</div>
 </div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/CDOState.html#isTracked()" class="member-name-link">isTracked()</a> - Method in enum class org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a></dt>
+<dd>
+<div class="block">Indicates whether revisions in this state are eligible for view-level permission tracking.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/eresource/CDOResource.html#isTrackingModification()" class="member-name-link">isTrackingModification()</a> - Method in interface org.eclipse.emf.cdo.eresource.<a href="org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></dt>
 <dd>
@@ -33792,9 +33914,17 @@ change.</div>
 </dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
+<dt><a href="org/eclipse/emf/cdo/server/Main.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/Main.html" title="class in org.eclipse.emf.cdo.server">Main</a></dt>
+<dd>
+<div class="block">Starts the standalone CDO server.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/ui/widgets/AuditScale.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.eclipse.emf.cdo.ui.widgets.<a href="org/eclipse/emf/cdo/ui/widgets/AuditScale.html" title="class in org.eclipse.emf.cdo.ui.widgets">AuditScale</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/server/Main.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server">Main</a> - Class in <a href="org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></dt>
+<dd>
+<div class="block">Starts the CDO server as a plain Java application.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/common/branch/CDOBranchRef.html#MAIN" class="member-name-link">MAIN</a> - Static variable in class org.eclipse.emf.cdo.common.branch.<a href="org/eclipse/emf/cdo/common/branch/CDOBranchRef.html" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchRef</a></dt>
 <dd>&nbsp;</dd>
@@ -39383,7 +39513,9 @@ the registered annotation validator of the annotation source.</div>
 <dt><a href="org/eclipse/emf/cdo/spi/server/Store.html#releaseAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)" class="member-name-link">releaseAccessor(StoreAccessorBase)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html#releaseAtomicRequestLock(java.lang.Object)" class="member-name-link">releaseAtomicRequestLock(Object)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#releasePreparedStatement(java.sql.PreparedStatement)" class="member-name-link">releasePreparedStatement(PreparedStatement)</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
@@ -39656,8 +39788,15 @@ the registered annotation validator of the annotation source.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/IRepositoryProtector.html#removeRevisionAuthorizer(org.eclipse.emf.cdo.server.IRepositoryProtector.RevisionAuthorizer)" class="member-name-link">removeRevisionAuthorizer(IRepositoryProtector.RevisionAuthorizer)</a> - Method in interface org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions(CDOBranch...)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions(CDOBranch...)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions(CDOBranch...)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Removes cached revisions from the specified branches and prevents overlapping loads from republishing revisions
+from those branches.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/security/impl/DirectoryImpl.html#removeRole(java.lang.String)" class="member-name-link">removeRole(String)</a> - Method in class org.eclipse.emf.cdo.security.impl.<a href="org/eclipse/emf/cdo/security/impl/DirectoryImpl.html" title="class in org.eclipse.emf.cdo.security.impl">DirectoryImpl</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/security/impl/RealmImpl.html#removeRole(java.lang.String)" class="member-name-link">removeRole(String)</a> - Method in class org.eclipse.emf.cdo.security.impl.<a href="org/eclipse/emf/cdo/security/impl/RealmImpl.html" title="class in org.eclipse.emf.cdo.security.impl">RealmImpl</a></dt>
@@ -40785,6 +40924,13 @@ and utility methods for working with them.</div>
 <dt><a href="org/eclipse/emf/cdo/lm/reviews/provider/ReviewTemplateItemProvider.html#%3Cinit%3E(org.eclipse.emf.common.notify.AdapterFactory)" class="member-name-link">ReviewTemplateItemProvider(AdapterFactory)</a> - Constructor for class org.eclipse.emf.cdo.lm.reviews.provider.<a href="org/eclipse/emf/cdo/lm/reviews/provider/ReviewTemplateItemProvider.html" title="class in org.eclipse.emf.cdo.lm.reviews.provider">ReviewTemplateItemProvider</a></dt>
 <dd>
 <div class="block">This constructs an instance from a factory and a notifier.</div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseDetached(CDOID, CDOBranchVersion, long)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseDetached(CDOID, CDOBranchVersion, long)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
+<dd>
+<div class="block">Revises the exact predecessor affected by a detach notification and prevents an overlapping load from restoring
+it as the current revision.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest(CDOID, CDOBranch)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
 <dd>&nbsp;</dd>
@@ -43605,9 +43751,15 @@ when <a href="org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()">
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#setRevisionLoader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader)" class="member-name-link">setRevisionLoader(InternalCDORevisionManager.RevisionLoader)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" class="member-name-link">setRevisionLocker(InternalCDORevisionManager.RevisionLocker)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)" class="member-name-link">setRevisionLocker(InternalCDORevisionManager.RevisionLocker)</a> - Method in interface org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.29 no longer supported or used. Does noting.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)" class="member-name-link">setRevisionManager(CDORevisionManager)</a> - Method in interface org.eclipse.emf.cdo.net4j.<a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalRepository.html#setRevisionManager(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager)" class="member-name-link">setRevisionManager(InternalCDORevisionManager)</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></dt>
@@ -44649,10 +44801,20 @@ sequence baseline.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/IAppExtension3.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,java.io.File)" class="member-name-link">start(IRepository[], File)</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/IAppExtension3.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension3</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/AppExtension.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">start(IRepository[], XMLConfiguration)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/AppExtension.html" title="class in org.eclipse.emf.cdo.spi.server">AppExtension</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/IAppExtension6.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">start(IRepository[], XMLConfiguration)</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/IAppExtension6.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension6</a></dt>
+<dd>
+<div class="block">Starts a repository-aware extension with repositories and the prepared configuration.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/server/LMAppExtension.html#start(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)" class="member-name-link">start(InternalRepository, Element)</a> - Method in class org.eclipse.emf.cdo.lm.server.<a href="org/eclipse/emf/cdo/lm/server/LMAppExtension.html" title="class in org.eclipse.emf.cdo.lm.server">LMAppExtension</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/AppExtension.html#start(org.eclipse.emf.cdo.spi.server.InternalRepository,org.w3c.dom.Element)" class="member-name-link">start(InternalRepository, Element)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/AppExtension.html" title="class in org.eclipse.emf.cdo.spi.server">AppExtension</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/IAppExtension6.html#start(org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">start(XMLConfiguration)</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/IAppExtension6.html" title="interface in org.eclipse.emf.cdo.spi.server">IAppExtension6</a></dt>
+<dd>
+<div class="block">Starts an ordinary extension with the prepared configuration.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/lm/impl/StreamImpl.html#START_TIME_STAMP_EDEFAULT" class="member-name-link">START_TIME_STAMP_EDEFAULT</a> - Static variable in class org.eclipse.emf.cdo.lm.impl.<a href="org/eclipse/emf/cdo/lm/impl/StreamImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">StreamImpl</a></dt>
 <dd>
 <div class="block">The default value of the '<a href="org/eclipse/emf/cdo/lm/impl/StreamImpl.html#getStartTimeStamp()"><code><em>Start Time Stamp</em></code></a>' attribute.</div>
@@ -45427,6 +45589,11 @@ needs to be synchronized with the internal operations of the view of the given o
 </dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#syncExec(org.eclipse.net4j.util.RunnableWithException)" class="member-name-link">syncExec(RunnableWithException)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#synchronizeTrackedViewedRevisions(java.util.Map)" class="member-name-link">synchronizeTrackedViewedRevisions(Map)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></dt>
+<dd>
+<div class="block">Propagates permissions from revisions included in a completed permission update to same-key revisions that were
+installed in this view while the update was running.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html#SYNCING" class="member-name-link">SYNCING</a> - Enum constant in enum class org.eclipse.emf.cdo.common.<a href="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/SyncingUtil.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">SyncingUtil</a> - Class in <a href="org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></dt>
@@ -46404,6 +46571,10 @@ if no such transition exists.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#trimResourceInfos(org.eclipse.emf.common.util.URI)" class="member-name-link">trimResourceInfos(URI)</a> - Static method in class org.eclipse.emf.cdo.util.<a href="org/eclipse/emf/cdo/util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util">CDOURIUtil</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#tryCollectViewedRevisions(java.util.Map)" class="member-name-link">tryCollectViewedRevisions(Map)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></dt>
+<dd>
+<div class="block">Collects viewed revisions without waiting for this view's access lock.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/CDOLock.html#tryLock(long)" class="member-name-link">tryLock(long)</a> - Method in interface org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/CDOLock.html#tryLock(long,java.util.concurrent.TimeUnit,boolean)" class="member-name-link">tryLock(long, TimeUnit, boolean)</a> - Method in interface org.eclipse.emf.cdo.<a href="org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</a></dt>
@@ -46842,6 +47013,11 @@ lock change.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/ui/Authorizer.AuthorizerContext.html#updateUIAfterAuthorization()" class="member-name-link">updateUIAfterAuthorization()</a> - Method in interface org.eclipse.emf.cdo.ui.<a href="org/eclipse/emf/cdo/ui/Authorizer.AuthorizerContext.html" title="interface in org.eclipse.emf.cdo.ui">Authorizer.AuthorizerContext</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#updateViewedRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">updateViewedRevision(CDOID, InternalCDORevision)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></dt>
+<dd>
+<div class="block">Records the revision currently retained by an object in this view so that security updates can find it even when
+the view access lock is contended and the revision is no longer present in the revision cache.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/eresource/EresourcePackage.Literals.html#URI" class="member-name-link">URI</a> - Static variable in interface org.eclipse.emf.cdo.eresource.<a href="org/eclipse/emf/cdo/eresource/EresourcePackage.Literals.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage.Literals</a></dt>
 <dd>
 <div class="block">The meta object literal for the '<em>URI</em>' data type.</div>

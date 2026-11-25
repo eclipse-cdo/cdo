@@ -77,6 +77,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#valueOf(java.lang.String)" tabindex="0">valueOf(String)</a></li>
 <li><a href="#isLocal()" tabindex="0">isLocal()</a></li>
 <li><a href="#isRemote()" tabindex="0">isRemote()</a></li>
+<li><a href="#isTracked()" tabindex="0">isTracked()</a></li>
 </ol>
 </li>
 </ol>
@@ -164,18 +165,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isLocal()" class="member-name-link">isLocal</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates whether the state has a local component, including locally created objects and uncommitted changes.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isRemote()" class="member-name-link">isRemote</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates whether the state has a remote component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTracked()" class="member-name-link">isTracked</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates whether revisions in this state are eligible for view-level permission tracking.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDOState.html" title="enum class in org.eclipse.emf.cdo">CDOState</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </div>
@@ -352,6 +362,7 @@ not permitted.)</div>
 <h3>isLocal</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isLocal</span>()</div>
+<div class="block">Indicates whether the state has a local component, including locally created objects and uncommitted changes.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>
@@ -364,9 +375,29 @@ not permitted.)</div>
 <h3>isRemote</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRemote</span>()</div>
+<div class="block">Indicates whether the state has a remote component. Repository-backed objects can be remote even before their
+revisions have been loaded.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isTracked()">
+<h3>isTracked</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTracked</span>()</div>
+<div class="block">Indicates whether revisions in this state are eligible for view-level permission tracking. CLEAN, DIRTY, and
+CONFLICT revisions participate so permission updates can reach revisions retained by a view, including revisions
+no longer present in the revision cache. This describes tracking eligibility only: <code>true</code> does not
+imply that an entry currently exists in a tracking map. Tracking is enabled only for views of repositories whose
+<code>isAuthorizing()</code> capability is true, and an eligible object without a retained revision has nothing to
+track.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
 </dl>
 </div>
 </section>

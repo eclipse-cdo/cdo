@@ -70,9 +70,13 @@ loadScripts(document, 'script');</script>
 <li><a href="#getDelegate()" tabindex="0">getDelegate()</a></li>
 <li><a href="#setDelegate(java.util.concurrent.Executor)" tabindex="0">setDelegate(Executor)</a></li>
 <li><a href="#execute(java.lang.Runnable)" tabindex="0">execute(Runnable)</a></li>
+<li><a href="#submit(java.lang.Runnable)" tabindex="0">submit(Runnable)</a></li>
+<li><a href="#submit(java.lang.Runnable,T)" tabindex="0">submit(Runnable, T)</a></li>
+<li><a href="#submit(java.util.concurrent.Callable)" tabindex="0">submit(Callable)</a></li>
 <li><a href="#run()" tabindex="0">run()</a></li>
 <li><a href="#handleFailedTask(java.lang.Runnable,java.lang.Throwable)" tabindex="0">handleFailedTask(Runnable, Throwable)</a></li>
 <li><a href="#doActivate()" tabindex="0">doActivate()</a></li>
+<li><a href="#doAfterActivate()" tabindex="0">doAfterActivate()</a></li>
 <li><a href="#doDeactivate()" tabindex="0">doDeactivate()</a></li>
 </ol>
 </li>
@@ -100,6 +104,11 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SerializingExecutor</span>
 <span class="extends-implements">extends <a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
 implements <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span></div>
+<div class="block">An executor that runs submitted tasks one at a time, in the order in which they are queued, using a delegate executor.
+The delegate remains externally owned. Before the first activation, <a href="#execute(java.lang.Runnable)"><code>execute(Runnable)</code></a> and all <code>submit</code>
+methods retain tasks until activation. After deactivation, <a href="#execute(java.lang.Runnable)"><code>execute(Runnable)</code></a> continues to retain tasks until
+a later activation, while <code>submit</code> rejects new tasks. Tasks that were queued when deactivation begins are
+discarded, and their submitted futures are cancelled.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
@@ -164,30 +173,51 @@ implements <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute(java.lang.Runnable)" class="member-name-link">execute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDelegate()" class="member-name-link">getDelegate</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doAfterActivate()" class="member-name-link">doAfterActivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleFailedTask(java.lang.Runnable,java.lang.Throwable)" class="member-name-link">handleFailedTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task,
- <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;failure)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute(java.lang.Runnable)" class="member-name-link">execute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;command)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Executes the given command in queue order.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDelegate()" class="member-name-link">getDelegate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleFailedTask(java.lang.Runnable,java.lang.Throwable)" class="member-name-link">handleFailedTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;failure)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDelegate(java.util.concurrent.Executor)" class="member-name-link">setDelegate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a>&nbsp;delegate)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#run()" class="member-name-link">run</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDelegate(java.util.concurrent.Executor)" class="member-name-link">setDelegate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a>&nbsp;delegate)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a><wbr>&lt;?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#submit(java.lang.Runnable)" class="member-name-link">submit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Queues a task for serial execution and returns a future that completes when the task completes.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a><wbr>&lt;T&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#submit(java.lang.Runnable,T)" class="member-name-link">submit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task,
+ T&nbsp;result)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Queues a task for serial execution and returns a future that yields the given result after successful completion.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a><wbr>&lt;T&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#submit(java.util.concurrent.Callable)" class="member-name-link">submit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;T&gt;&nbsp;task)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Queues a callable for serial execution and returns a future for its result or failure.</div>
+</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Methods inherited from class&nbsp;<a href="../lifecycle/Lifecycle.html#method-summary" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../lifecycle/Lifecycle.html#activate()" title="activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()" title="checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)" title="checkArg(boolean, String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)" title="checkArg(Object, String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()" title="checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)" title="checkNull(Object, String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)" title="checkState(boolean, String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)" title="checkState(Object, String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()" title="deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)" title="deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doAfterActivate()" title="doAfterActivate()">doAfterActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeActivate()" title="doBeforeActivate()">doBeforeActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()" title="doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#doCancelActivation()" title="doCancelActivation()">doCancelActivation</a>, <a href="../lifecycle/Lifecycle.html#dump()" title="dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()" title="getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()" title="isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()" title="isDeferredActivation()">isDeferredActivation</a>, <a href="../lifecycle/Lifecycle.html#toString()" title="toString()">toString</a></code></div>
+<code><a href="../lifecycle/Lifecycle.html#activate()" title="activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()" title="checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)" title="checkArg(boolean, String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)" title="checkArg(Object, String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()" title="checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)" title="checkNull(Object, String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)" title="checkState(boolean, String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)" title="checkState(Object, String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()" title="deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)" title="deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeActivate()" title="doBeforeActivate()">doBeforeActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()" title="doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#doCancelActivation()" title="doCancelActivation()">doCancelActivation</a>, <a href="../lifecycle/Lifecycle.html#dump()" title="dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()" title="getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()" title="isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()" title="isDeferredActivation()">isDeferredActivation</a>, <a href="../lifecycle/Lifecycle.html#toString()" title="toString()">toString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Methods inherited from class&nbsp;<a href="../event/Notifier.html#method-summary" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
 <code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)" title="addListener(IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)" title="addUniqueListener(IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()" title="fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="fireEvent(IEvent)">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)" title="fireEvent(IEvent, IListener[])">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)" title="fireThrowable(Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()" title="firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()" title="getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()" title="getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)" title="hasListener(IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()" title="hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()" title="lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)" title="listenerAdded(IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)" title="listenerRemoved(IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)" title="removeListener(IListener)">removeListener</a></code></div>
@@ -252,10 +282,88 @@ implements <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base
 <section class="detail" id="execute(java.lang.Runnable)">
 <h3>execute</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;command)</span></div>
+<div class="block">Executes the given command in queue order. Before the first activation, and after deactivation, the command is
+retained until a later activation. A command queued when deactivation begins is discarded.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html#execute(java.lang.Runnable)" title="class or interface in java.util.concurrent" class="external-link">execute</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>command</code> - the command to execute</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the command is <code>null</code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="submit(java.lang.Runnable)">
+<h3>submit</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a>&lt;?&gt;</span>&nbsp;<span class="element-name">submit</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
+<div class="block">Queues a task for serial execution and returns a future that completes when the task completes. Before the first
+activation, the task is retained until activation. After deactivation, this method rejects the task. If scheduling
+the worker is rejected, this method throws the rejection and cancels any futures that were already accepted but
+cannot be scheduled as a result.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>task</code> - the task to execute</dd>
+<dt>Returns:</dt>
+<dd>the future representing the task</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/RejectedExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">RejectedExecutionException</a></code> - if this executor is deactivated or the delegate rejects the worker submission</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the task is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="submit(java.lang.Runnable,T)">
+<h3 id="submit(java.lang.Runnable,java.lang.Object)">submit</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a>&lt;T&gt;</span>&nbsp;<span class="element-name">submit</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task,
+ T&nbsp;result)</span></div>
+<div class="block">Queues a task for serial execution and returns a future that yields the given result after successful completion.
+Before the first activation, the task is retained until activation. After deactivation, this method rejects the
+task. Cancellation follows the standard <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link"><code>Future</code></a> contract.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><span id="submit(java.lang.Runnable,T)-type-param-T"><code>T</code> - the result type</span></dd>
+<dt>Parameters:</dt>
+<dd><code>task</code> - the task to execute</dd>
+<dd><code>result</code> - the result to return after successful execution</dd>
+<dt>Returns:</dt>
+<dd>the future representing the task</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/RejectedExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">RejectedExecutionException</a></code> - if this executor is deactivated or the delegate rejects the worker submission</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the task is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="submit(java.util.concurrent.Callable)">
+<h3>submit</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Future.html" title="class or interface in java.util.concurrent" class="external-link">Future</a>&lt;T&gt;</span>&nbsp;<span class="element-name">submit</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;T&gt;&nbsp;task)</span></div>
+<div class="block">Queues a callable for serial execution and returns a future for its result or failure. Before the first activation,
+the task is retained until activation. After deactivation, this method rejects the task.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><span id="submit(java.util.concurrent.Callable)-type-param-T"><code>T</code> - the result type</span></dd>
+<dt>Parameters:</dt>
+<dd><code>task</code> - the callable to execute</dd>
+<dt>Returns:</dt>
+<dd>the future representing the task</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/concurrent/RejectedExecutionException.html" title="class or interface in java.util.concurrent" class="external-link">RejectedExecutionException</a></code> - if this executor is deactivated or the delegate rejects the worker submission</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the task is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
 </dl>
 </div>
 </section>
@@ -290,6 +398,21 @@ implements <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../lifecycle/Lifecycle.html#doActivate()">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doAfterActivate()">
+<h3>doAfterActivate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doAfterActivate</span>()
+                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a></code>&nbsp;in class&nbsp;<code><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
 </dl>

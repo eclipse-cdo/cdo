@@ -240,6 +240,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SchedulingConnector.</span><code><a href="../../../spi/net4j/SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">controlBufferSent</a><wbr>(<a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+ <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Completes the local half of HELLO after a transport confirms that the control buffer was sent successfully.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected final void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SchedulingConnector.</span><code><a href="../../../spi/net4j/SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer,long)" class="member-name-link">controlBufferSent</a><wbr>(<a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+ <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer,
+ long&nbsp;generation)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Identifies a completed control buffer only for the activation that submitted it.</div>
+</div>
 <div class="col-first even-row-color"><code>protected <a href="../../../spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">createReceiverWork</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last even-row-color">
@@ -267,35 +280,41 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalChannel.</span><code><a href="../../../spi/net4j/InternalChannel.html#handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBufferFromMultiplexer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalChannelMultiplexer.BufferMultiplexer.</span><code><a href="../../../spi/net4j/InternalChannelMultiplexer.BufferMultiplexer.html#multiplexBuffer(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">multiplexBuffer</a><wbr>(<a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+<div class="col-first odd-row-color"><code>protected final boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SchedulingConnector.</span><code><a href="../../../spi/net4j/SchedulingConnector.html#isControlHelloBuffer(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">isControlHelloBuffer</a><wbr>(<a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
  <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Called by a <a href="../../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>channel</code></a> each time a new <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffer</code></a> is available for multiplexing.</div>
-</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Channel.SendQueue.</span><code><a href="../../../spi/net4j/Channel.SendQueue.html#offer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">offer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#pinSendBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">pinSendBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Pins the active send-queue head while an asynchronous transport borrows its storage.</div>
+<div class="block">Returns whether a complete frame is the HELLO sent on this connector's control channel.</div>
 </div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">retainBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Connector.</span><code><a href="../../../spi/net4j/Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">retainBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MessageConnector.IMessageConnection.</span><code><a href="../../../spi/net4j/MessageConnector.IMessageConnection.html#send(org.eclipse.net4j.buffer.IBuffer,org.eclipse.spi.net4j.MessageConnector.IMessageConnection.SendCallback)" class="member-name-link">send</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer,
- <a href="../../../spi/net4j/MessageConnector.IMessageConnection.SendCallback.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection.SendCallback</a>&nbsp;callback)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalChannelMultiplexer.BufferMultiplexer.</span><code><a href="../../../spi/net4j/InternalChannelMultiplexer.BufferMultiplexer.html#multiplexBuffer(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">multiplexBuffer</a><wbr>(<a href="../../../spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+ <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Attempts to send one complete framed buffer.</div>
+<div class="block">Called by a <a href="../../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>channel</code></a> each time a new <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffer</code></a> is available for multiplexing.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Channel.SendQueue.</span><code><a href="../../../spi/net4j/Channel.SendQueue.html#offer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">offer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#pinSendBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">pinSendBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Pins the active send-queue head while an asynchronous transport borrows its storage.</div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">sendBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">retainBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Connector.</span><code><a href="../../../spi/net4j/Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">retainBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">MessageConnector.IMessageConnection.</span><code><a href="../../../spi/net4j/MessageConnector.IMessageConnection.html#send(org.eclipse.net4j.buffer.IBuffer,org.eclipse.spi.net4j.MessageConnector.IMessageConnection.SendCallback)" class="member-name-link">send</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer,
+ <a href="../../../spi/net4j/MessageConnector.IMessageConnection.SendCallback.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection.SendCallback</a>&nbsp;callback)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Attempts to send one complete framed buffer.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Channel.</span><code><a href="../../../spi/net4j/Channel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">sendBuffer</a><wbr>(<a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> with type arguments of type <a href="../IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></span></div>
 <div class="summary-table three-column-summary">

@@ -192,12 +192,16 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">convert</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Converts expressions of the form <code>$$$name(arguments)$$$</code> using converters from the given container.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer,java.util.regex.Pattern)" class="member-name-link">convert</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a>&nbsp;pattern)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Converts matches of the supplied pattern using the first two capture groups as the converter type and argument.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(char,int)" class="member-name-link">create</a><wbr>(char&nbsp;c,
  int&nbsp;length)</code></div>
@@ -737,7 +741,26 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">convert</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</span></div>
+<div class="block">Converts expressions of the form <code>$$$name(arguments)$$$</code> using converters from the given container. Nested
+expressions are evaluated from the inside out, and argument boundaries are identified before nested values are
+evaluated. Built-in multi-argument converters therefore retain their argument boundaries even when a nested
+converter returns a comma. Other converters continue to receive one comma-separated <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link"><code>String</code></a> argument.
+Inside arguments, <code>$$$name(</code> with a non-empty name that contains no <code>$</code> takes precedence as a nested
+expression opener. Every other <code>$</code> escapes the immediately following character, and an expression closes
+only when an unescaped <code>)</code> is immediately followed by <code>$$$</code>. Thus <code>$,</code>, <code>$$</code>, <code>$(</code>,
+and <code>$)</code> yield literal comma, dollar, and parentheses. Escapes are processed once, and only in expression
+arguments. For example,
+<code>$$$equals_ignore_case($$$upper(ws)$$$,WS)$$$</code> evaluates to <code>true</code>. Multiple expressions are supported,
+and converter results are not parsed or escaped again. Unknown and malformed expressions are preserved while
+parsing resumes at subsequent expressions. Nested converters are all evaluated before their outer converter is
+invoked; boolean <code>and</code> and <code>or</code> therefore do not short-circuit. A <code>null</code> container leaves the
+string unchanged.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>str</code> - the string that may contain converter expressions</dd>
+<dd><code>container</code> - the container used to resolve converters</dd>
+<dt>Returns:</dt>
+<dd>the string with recognized converter expressions evaluated</dd>
 <dt>Since:</dt>
 <dd>3.23</dd>
 </dl>
@@ -751,7 +774,16 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">convert</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a>&nbsp;pattern)</span></div>
+<div class="block">Converts matches of the supplied pattern using the first two capture groups as the converter type and argument.
+This overload retains the pattern-based, single-pass behavior; use <a href="#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer)"><code>convert(String, IManagedContainer)</code></a> for
+the standard nested <code>$$$name(arguments)$$$</code> syntax.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>str</code> - the string to convert</dd>
+<dd><code>container</code> - the container used to resolve converters</dd>
+<dd><code>pattern</code> - the pattern whose first two capture groups contain the converter type and argument</dd>
+<dt>Returns:</dt>
+<dd>the string with recognized matches converted</dd>
 <dt>Since:</dt>
 <dd>3.23</dd>
 </dl>

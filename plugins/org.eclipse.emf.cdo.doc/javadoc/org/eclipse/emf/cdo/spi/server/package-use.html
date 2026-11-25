@@ -107,8 +107,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="IAppExtension5.html#getName()"><code>named</code></a> app extensions.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalRepository.html#org.eclipse.emf.cdo.lm.server">InternalRepository</a></div>
+<div class="col-first odd-row-color"><a href="class-use/IAppExtension6.html#org.eclipse.emf.cdo.lm.server">IAppExtension6</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Optional extension callback for consumers of the server's centrally prepared XML configuration.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/InternalRepository.html#org.eclipse.emf.cdo.lm.server">InternalRepository</a></div>
+<div class="col-last even-row-color">
 <div class="block">Internal composition point for a running CDO repository.</div>
 </div>
 </div>
@@ -199,165 +203,169 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="IAppExtension5.html#getName()"><code>named</code></a> app extensions.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IAuthenticationProtocol.html#org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></div>
+<div class="col-first even-row-color"><a href="class-use/IAppExtension6.html#org.eclipse.emf.cdo.spi.server">IAppExtension6</a></div>
 <div class="col-last even-row-color">
+<div class="block">Optional extension callback for consumers of the server's centrally prepared XML configuration.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IAuthenticationProtocol.html#org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Defines the server protocol operations used to authenticate a session.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ICommitConflictResolver.html#org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ICommitConflictResolver.html#org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></div>
+<div class="col-last even-row-color">
 <div class="block">Resolves conflicts detected while committing a transaction.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalCommitContext.html#org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalCommitContext.html#org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Prepared server-side description of one transaction commit.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalCommitManager.html#org.eclipse.emf.cdo.spi.server">InternalCommitManager</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalCommitManager.html#org.eclipse.emf.cdo.spi.server">InternalCommitManager</a></div>
+<div class="col-last even-row-color">
 <div class="block">Repository service that schedules transaction commit contexts and lets callers await, remove, or roll back the
 pending work.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalLockManager.html#org.eclipse.emf.cdo.spi.server">InternalLockManager</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.html#org.eclipse.emf.cdo.spi.server">InternalLockManager</a></div>
+<div class="col-last odd-row-color">
 <div class="block">The type of the to-be-locked objects is either <a href="../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a> or <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>, depending on whether
 branching is supported by the repository or not.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockChangeOperationResult.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockChangeOperationResult.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></div>
+<div class="col-last even-row-color">
 <div class="block">The generic lock-manager modification count and optional reservation produced by one operation.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockChangeReservationSet.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockChangeReservationSet.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An aggregate of per-session reservations for one lock change.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockStateQuery.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateQuery</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockStateQuery.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateQuery</a></div>
+<div class="col-last even-row-color">
 <div class="block">A selective lock-state query paired with a session sequence baseline.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockStateSnapshot.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateSnapshot</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockStateSnapshot.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateSnapshot</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A consistent lock-state snapshot for one session.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalQueryManager.html#org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalQueryManager.html#org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></div>
+<div class="col-last even-row-color">
 <div class="block">Repository service that starts query handlers for a view and tracks their running results.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalQueryResult.html#org.eclipse.emf.cdo.spi.server">InternalQueryResult</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalQueryResult.html#org.eclipse.emf.cdo.spi.server">InternalQueryResult</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Server-side result stream for a query executing against a view.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalRepository.html#org.eclipse.emf.cdo.spi.server">InternalRepository</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalRepository.html#org.eclipse.emf.cdo.spi.server">InternalRepository</a></div>
+<div class="col-last even-row-color">
 <div class="block">Internal composition point for a running CDO repository.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalRepositorySynchronizer.html#org.eclipse.emf.cdo.spi.server">InternalRepositorySynchronizer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalRepositorySynchronizer.html#org.eclipse.emf.cdo.spi.server">InternalRepositorySynchronizer</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Lifecycle-managed link between a synchronizable local repository and its remote repository session.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalSession.html#org.eclipse.emf.cdo.spi.server">InternalSession</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalSession.html#org.eclipse.emf.cdo.spi.server">InternalSession</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server representation of one connected client session.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalSession.LockChangeReservation.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeReservation</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalSession.LockChangeReservation.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeReservation</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents a position reserved in this session's lock-change sequence.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalSession.LockChangeResult.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeResult</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalSession.LockChangeResult.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeResult</a></div>
+<div class="col-last even-row-color">
 <div class="block">The session-specific result of a completed lock-change reservation.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalSessionManager.html#org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalSessionManager.html#org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Repository service that owns connected sessions and coordinates their authentication and notification flow.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalStore.html#org.eclipse.emf.cdo.spi.server">InternalStore</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalStore.html#org.eclipse.emf.cdo.spi.server">InternalStore</a></div>
+<div class="col-last even-row-color">
 <div class="block">Internal lifecycle and repository-binding contract for a storage backend.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalSynchronizableRepository.html#org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalSynchronizableRepository.html#org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Repository-side contract for a repository that participates in replication.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalTopic.html#org.eclipse.emf.cdo.spi.server">InternalTopic</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalTopic.html#org.eclipse.emf.cdo.spi.server">InternalTopic</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides the server-internal operations of a topic.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalTopicManager.html#org.eclipse.emf.cdo.spi.server">InternalTopicManager</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalTopicManager.html#org.eclipse.emf.cdo.spi.server">InternalTopicManager</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides the server-internal operations of a topic manager.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalTransaction.html#org.eclipse.emf.cdo.spi.server">InternalTransaction</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalTransaction.html#org.eclipse.emf.cdo.spi.server">InternalTransaction</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server-side transaction extension of a view that creates the commit context used to validate and persist a client
 commit.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalTransaction.CommitAttempt.html#org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/InternalUnitManager.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalTransaction.CommitAttempt.html#org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/InternalUnitManager.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides the server-internal operations of a unit manager.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InternalUnitManager.InternalObjectAttacher.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InternalUnitManager.InternalObjectAttacher.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Receives completion notification for object attachment during a commit.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InternalView.html#org.eclipse.emf.cdo.spi.server">InternalView</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/InternalView.html#org.eclipse.emf.cdo.spi.server">InternalView</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server-side state for one client view or transaction.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ISessionProtocol.html#org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ISessionProtocol.html#org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Server-side protocol contract for a connected CDO session.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/LongIDStore.html#org.eclipse.emf.cdo.spi.server">LongIDStore</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/LongIDStore.html#org.eclipse.emf.cdo.spi.server">LongIDStore</a></div>
+<div class="col-last even-row-color">
 <div class="block">Store base for backends that identify objects with 64-bit IDs.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/LongIDStoreAccessor.html#org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/LongIDStoreAccessor.html#org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Store-accessor base paired with <a href="LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server"><code>LongIDStore</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/PluginRepositoryProvider.html#org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/PluginRepositoryProvider.html#org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></div>
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.20 use <a href="ContainerRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server"><code>ContainerRepositoryProvider</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/RepositoryActivityLog.html#org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/RepositoryActivityLog.Factory.html#org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></div>
+<div class="col-first odd-row-color"><a href="class-use/RepositoryActivityLog.html#org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/RepositoryConfigurator.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/RepositoryActivityLog.Factory.html#org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/RepositoryConfigurator.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Builds configured repository instances from CDO server configuration.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/RepositoryConfigurator.Extension.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Extension</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/RepositoryConfigurator.Extension.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Extension</a></div>
+<div class="col-last even-row-color">
 <div class="block">Can use <code>cdo-server.xml</code> markup elements to configure extended aspects of a <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/RepositoryConfigurator.Factory.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/RepositoryUserManager.html#org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="class-use/RepositoryConfigurator.Factory.html#org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/RepositoryUserManager.html#org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></div>
+<div class="col-last even-row-color">
 <div class="block">Repository-scoped source of user credentials that also authenticates clients against those credentials.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/RepositoryUserManager.RepositoryUserManagerFactory.html#org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/RepositoryUserManager.RepositoryUserManagerFactory.html#org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Factory for installing a repository-backed <a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server"><code>RepositoryUserManager</code></a> as a user manager.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/Store.html#org.eclipse.emf.cdo.spi.server">Store</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/Store.html#org.eclipse.emf.cdo.spi.server">Store</a></div>
+<div class="col-last even-row-color">
 <div class="block">Base for repository storage backends.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/StoreAccessor.html#org.eclipse.emf.cdo.spi.server">StoreAccessor</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/StoreAccessor.html#org.eclipse.emf.cdo.spi.server">StoreAccessor</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Base for store accessors that implement repository reads and writes for one session or transaction.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/StoreAccessorBase.html#org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/StoreAccessorBase.html#org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></div>
+<div class="col-last even-row-color">
 <div class="block">Shared lifecycle and commit pipeline for store readers and writers.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/StoreAccessorPool.html#org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/StoreAccessorPool.html#org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Reuses passivated store accessors managed by an <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>IStore</code></a>.</div>
 </div>
 </div>

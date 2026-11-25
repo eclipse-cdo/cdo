@@ -38,6 +38,7 @@
         <topic label="RunnableWithException" href="javadoc/org/eclipse/net4j/util/RunnableWithException.html" icon="interface" />
         <topic label="StringConverter" href="javadoc/org/eclipse/net4j/util/StringConverter.html" icon="interface" />
         <topic label="StringConverter.MetaFactory" href="javadoc/org/eclipse/net4j/util/StringConverter.MetaFactory.html" icon="class" />
+        <topic label="StringConverter.WithArguments" href="javadoc/org/eclipse/net4j/util/StringConverter.WithArguments.html" icon="interface" />
         <topic label="StringParser&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/StringParser.html" icon="interface" />
         <topic label="StringParser.EnumStringParser&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/StringParser.EnumStringParser.html" icon="class" />
         <topic label="StringParser.MetaFactory" href="javadoc/org/eclipse/net4j/util/StringParser.MetaFactory.html" icon="class" />
@@ -46,6 +47,7 @@
         <topic label="StringUtil" href="javadoc/org/eclipse/net4j/util/StringUtil.html" icon="class" />
         <topic label="UUIDGenerator" href="javadoc/org/eclipse/net4j/util/UUIDGenerator.html" icon="class" />
         <topic label="WrappedException" href="javadoc/org/eclipse/net4j/util/WrappedException.html" icon="class" />
+        <topic label="XMLConfiguration" href="javadoc/org/eclipse/net4j/util/XMLConfiguration.html" icon="class" />
         <topic label="XMLUtil" href="javadoc/org/eclipse/net4j/util/XMLUtil.html" icon="class" />
         <topic label="XMLUtil.ElementHandler" href="javadoc/org/eclipse/net4j/util/XMLUtil.ElementHandler.html" icon="interface" />
       </topic>

@@ -61,6 +61,7 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#getStoreType()" tabindex="0">getStoreType()</a></li>
 <li><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)" tabindex="0">createStore(String, Map, Element)</a></li>
+<li><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element,org.eclipse.net4j.util.XMLConfiguration)" tabindex="0">createStore(String, Map, Element, XMLConfiguration)</a></li>
 </ol>
 </li>
 </ol>
@@ -107,7 +108,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -118,9 +119,17 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;storeConfig)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStoreType()" class="member-name-link">getStoreType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">createStore</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;storeConfig,
+ org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Creates a store from a DOM element belonging to the shared prepared XML configuration.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStoreType()" class="member-name-link">getStoreType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -153,6 +162,31 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="createStore(java.lang.String,java.util.Map,org.w3c.dom.Element,org.eclipse.net4j.util.XMLConfiguration)">
+<h3>createStore</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></span>&nbsp;<span class="element-name">createStore</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;storeConfig,
+ org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</span></div>
+<div class="block">Creates a store from a DOM element belonging to the shared prepared XML configuration. The default delegates to the
+original factory method for compatibility; implementations that need the whole configuration may override it.
+Attribute expansion state is available directly from <code>XMLConfiguration.isExpanded(org.w3c.dom.Node)</code>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>repositoryName</code> - the repository being configured</dd>
+<dd><code>repositoryProperties</code> - effective repository properties</dd>
+<dd><code>storeConfig</code> - the prepared store element</dd>
+<dd><code>configuration</code> - the shared prepared configuration</dd>
+<dt>Returns:</dt>
+<dd>the created store</dd>
+<dt>Since:</dt>
+<dd>4.27</dd>
 </dl>
 </div>
 </section>

@@ -71,6 +71,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#getStoreFactories()" tabindex="0">getStoreFactories()</a></li>
 <li><a href="#getParameter(java.lang.String)" tabindex="0">getParameter(String)</a></li>
 <li><a href="#setParameter(java.lang.String,java.lang.String)" tabindex="0">setParameter(String, String)</a></li>
+<li><a href="#copyParameters()" tabindex="0">copyParameters()</a></li>
+<li><a href="#configure(org.eclipse.net4j.util.XMLConfiguration)" tabindex="0">configure(XMLConfiguration)</a></li>
 <li><a href="#configure(java.io.File)" tabindex="0">configure(File)</a></li>
 <li><a href="#configure(java.io.Reader)" tabindex="0">configure(Reader)</a></li>
 <li><a href="#configure(org.w3c.dom.Document)" tabindex="0">configure(Document)</a></li>
@@ -204,9 +206,19 @@ applies properties and security components, and installs the resulting repositor
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(java.io.Reader)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;configReader)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(org.w3c.dom.Document)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">configure</a><wbr>(org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Configures repositories from an already prepared shared XML snapshot.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(org.w3c.dom.Document)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copyParameters()" class="member-name-link">copyParameters</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a copy of parameters initialized by this configurator.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element)" class="member-name-link">createStore</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
@@ -423,6 +435,47 @@ applies properties and security components, and installs the resulting repositor
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.10</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="copyParameters()">
+<h3>copyParameters</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">copyParameters</span>()</div>
+<div class="block">Returns a copy of parameters initialized by this configurator.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>mutable copy suitable for an XML configuration preparation phase</dd>
+<dt>Since:</dt>
+<dd>4.27</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="configure(org.eclipse.net4j.util.XMLConfiguration)">
+<h3>configure</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</span>&nbsp;<span class="element-name">configure</span><wbr><span class="parameters">(org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</span>
+                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/xml/sax/SAXException.html" title="class or interface in org.xml.sax" class="external-link">SAXException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
+<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html" title="class or interface in org.eclipse.core.runtime" class="external-link">CoreException</a></span></div>
+<div class="block">Configures repositories from an already prepared shared XML snapshot.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>configuration</code> - the finalized configuration</dd>
+<dt>Returns:</dt>
+<dd>configured repositories</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a></code> - if the XML parser cannot be configured</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/xml/sax/SAXException.html" title="class or interface in org.xml.sax" class="external-link">SAXException</a></code> - if the configuration XML is invalid</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the configuration cannot be read</dd>
+<dd><code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/CoreException.html" title="class or interface in org.eclipse.core.runtime" class="external-link">CoreException</a></code> - if repository extension creation fails</dd>
+<dt>Since:</dt>
+<dd>4.27</dd>
 </dl>
 </div>
 </section>

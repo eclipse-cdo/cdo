@@ -1417,6 +1417,7 @@
           <topic label="InternalCDOList.Owner" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.Owner.html" icon="interface" />
           <topic label="InternalCDORevision" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" icon="interface" />
           <topic label="InternalCDORevisionCache" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" icon="interface" />
+          <topic label="InternalCDORevisionCache.InternResult" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.InternResult.html" icon="class" />
           <topic label="InternalCDORevisionDelta" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" icon="interface" />
           <topic label="InternalCDORevisionManager" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" icon="interface" />
           <topic label="InternalCDORevisionManager.RevisionLoader" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" icon="interface" />
@@ -2087,6 +2088,7 @@
           <topic label="IUnit" href="javadoc/org/eclipse/emf/cdo/server/IUnit.html" icon="interface" />
           <topic label="IUnitManager" href="javadoc/org/eclipse/emf/cdo/server/IUnitManager.html" icon="interface" />
           <topic label="IView" href="javadoc/org/eclipse/emf/cdo/server/IView.html" icon="interface" />
+          <topic label="Main" href="javadoc/org/eclipse/emf/cdo/server/Main.html" icon="class" />
           <topic label="RepositoryNotFoundException" href="javadoc/org/eclipse/emf/cdo/server/RepositoryNotFoundException.html" icon="class" />
           <topic label="StoreThreadLocal" href="javadoc/org/eclipse/emf/cdo/server/StoreThreadLocal.html" icon="class" />
           <topic label="StoreThreadLocal.NoSessionRegisteredException" href="javadoc/org/eclipse/emf/cdo/server/StoreThreadLocal.NoSessionRegisteredException.html" icon="class" />
@@ -2117,6 +2119,7 @@
           <topic label="IAppExtension3" href="javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension3.html" icon="interface" />
           <topic label="IAppExtension4" href="javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension4.html" icon="interface" />
           <topic label="IAppExtension5" href="javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html" icon="interface" />
+          <topic label="IAppExtension6" href="javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension6.html" icon="interface" />
           <topic label="IAuthenticationProtocol" href="javadoc/org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" icon="interface" />
           <topic label="ICommitConflictResolver" href="javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" icon="interface" />
           <topic label="ICommitConflictResolver.Merging" href="javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.Merging.html" icon="class" />

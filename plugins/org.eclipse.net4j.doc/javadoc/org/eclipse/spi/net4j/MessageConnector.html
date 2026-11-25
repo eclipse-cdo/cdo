@@ -75,6 +75,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#fireElementRemovedEvent(org.eclipse.net4j.channel.IChannel)" tabindex="0">fireElementRemovedEvent(IChannel)</a></li>
 <li><a href="#closeGracefully()" tabindex="0">closeGracefully()</a></li>
 <li><a href="#onSendingRequired()" tabindex="0">onSendingRequired()</a></li>
+<li><a href="#leaveConnecting()" tabindex="0">leaveConnecting()</a></li>
+<li><a href="#advanceConnectionAfterHandshake(long)" tabindex="0">advanceConnectionAfterHandshake(long)</a></li>
+<li><a href="#onControlHandshakeCompleted(long)" tabindex="0">onControlHandshakeCompleted(long)</a></li>
 <li><a href="#onSendingNoLongerRequired()" tabindex="0">onSendingNoLongerRequired()</a></li>
 <li><a href="#createNegotiationContext()" tabindex="0">createNegotiationContext()</a></li>
 <li><a href="#doBeforeActivate()" tabindex="0">doBeforeActivate()</a></li>
@@ -237,74 +240,87 @@ accepted sends but cannot reclaim their buffers until terminal completion; abort
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#closeGracefully()" class="member-name-link">closeGracefully</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#advanceConnectionAfterHandshake(long)" class="member-name-link">advanceConnectionAfterHandshake</a><wbr>(long&nbsp;handshakeGeneration)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Advances the connector after a compatible HELLO.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#closeGracefully()" class="member-name-link">closeGracefully</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Drains currently queued Net4j messages and then requests graceful local closure of the underlying connection.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.security.INegotiationContext</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createNegotiationContext()" class="member-name-link">createNegotiationContext</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.security.INegotiationContext</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createNegotiationContext()" class="member-name-link">createNegotiationContext</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeActivate()" class="member-name-link">doBeforeActivate</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doCancelActivation()" class="member-name-link">doCancelActivation</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeActivate()" class="member-name-link">doBeforeActivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doCancelActivation()" class="member-name-link">doCancelActivation</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fireElementAddedEvent(org.eclipse.net4j.channel.IChannel)" class="member-name-link">fireElementAddedEvent</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fireElementAddedEvent(org.eclipse.net4j.channel.IChannel)" class="member-name-link">fireElementAddedEvent</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Routes queued receive frames after a channel has been added to the multiplexer.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fireElementRemovedEvent(org.eclipse.net4j.channel.IChannel)" class="member-name-link">fireElementRemovedEvent</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fireElementRemovedEvent(org.eclipse.net4j.channel.IChannel)" class="member-name-link">fireElementRemovedEvent</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Removes a channel's receive queue after the multiplexer has removed it, releasing any frames that can no longer be delivered.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocation()" class="member-name-link">getLocation</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocation()" class="member-name-link">getLocation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the configured client or server role used for signed Net4j channel identifiers.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leaveConnecting()" class="member-name-link">leaveConnecting</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onActivationFailed()" class="member-name-link">onActivationFailed</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called after a provider terminates while this connector is still undergoing deferred activation.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingNoLongerRequired()" class="member-name-link">onSendingNoLongerRequired</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onControlHandshakeCompleted(long)" class="member-name-link">onControlHandshakeCompleted</a><wbr>(long&nbsp;generation)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Called when the scheduler becomes idle.</div>
+<div class="block">Called after normal connector progression resumes so transports can restart work deferred during the handshake.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingRequired()" class="member-name-link">onSendingRequired</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingNoLongerRequired()" class="member-name-link">onSendingNoLongerRequired</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when the scheduler becomes idle.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingRequired()" class="member-name-link">onSendingRequired</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the scheduler transitions from idle to having pending work.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setConnection(org.eclipse.spi.net4j.MessageConnector.IMessageConnection)" class="member-name-link">setConnection</a><wbr>(<a href="MessageConnector.IMessageConnection.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection</a>&nbsp;connection)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setConnection(org.eclipse.spi.net4j.MessageConnector.IMessageConnection)" class="member-name-link">setConnection</a><wbr>(<a href="MessageConnector.IMessageConnection.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the provider connection before activation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLocation(org.eclipse.net4j.ILocationAware.Location)" class="member-name-link">setLocation</a><wbr>(<a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;location)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLocation(org.eclipse.net4j.ILocationAware.Location)" class="member-name-link">setLocation</a><wbr>(<a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets whether this connector represents a Net4j client or a server-side accepted connection.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(org.eclipse.net4j.connector.ConnectorState)" class="member-name-link">setState</a><wbr>(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(org.eclipse.net4j.connector.ConnectorState)" class="member-name-link">setState</a><wbr>(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates this connector's transport and negotiation state.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#terminatePendingActivation()" class="member-name-link">terminatePendingActivation</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#terminatePendingActivation()" class="member-name-link">terminatePendingActivation</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Ends a deferred activation when its owner explicitly aborts the provider connection.</div>
 </div>
 </div>
@@ -312,10 +328,10 @@ accepted sends but cannot reclaim their buffers until terminal completion; abort
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.spi.net4j.SchedulingConnector">Methods inherited from class&nbsp;<a href="SchedulingConnector.html#method-summary" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></h3>
-<code><a href="SchedulingConnector.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)" title="closeChannel(InternalChannel)">closeChannel</a>, <a href="SchedulingConnector.html#completeScheduledChannel(org.eclipse.spi.net4j.InternalChannel,boolean)" title="completeScheduledChannel(InternalChannel, boolean)">completeScheduledChannel</a>, <a href="SchedulingConnector.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)" title="deregisterChannelFromPeer(InternalChannel)">deregisterChannelFromPeer</a>, <a href="SchedulingConnector.html#getControlChannel()" title="getControlChannel()">getControlChannel</a>, <a href="SchedulingConnector.html#getInternalControlChannel()" title="getInternalControlChannel()">getInternalControlChannel</a>, <a href="SchedulingConnector.html#getScheduler()" title="getScheduler()">getScheduler</a>, <a href="SchedulingConnector.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)" title="multiplexChannel(InternalChannel)">multiplexChannel</a>, <a href="SchedulingConnector.html#registerChannelWithPeer(short,long,org.eclipse.net4j.protocol.IProtocol)" title="registerChannelWithPeer(short, long, IProtocol)">registerChannelWithPeer</a>, <a href="SchedulingConnector.html#restoreSendingInterest(boolean)" title="restoreSendingInterest(boolean)">restoreSendingInterest</a>, <a href="SchedulingConnector.html#selectScheduledChannel()" title="selectScheduledChannel()">selectScheduledChannel</a>, <a href="SchedulingConnector.html#setScheduler(org.eclipse.spi.net4j.SchedulingConnector.IScheduler)" title="setScheduler(SchedulingConnector.IScheduler)">setScheduler</a>, <a href="SchedulingConnector.html#stopSendingIfIdle()" title="stopSendingIfIdle()">stopSendingIfIdle</a></code></div>
+<code><a href="SchedulingConnector.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)" title="closeChannel(InternalChannel)">closeChannel</a>, <a href="SchedulingConnector.html#completeScheduledChannel(org.eclipse.spi.net4j.InternalChannel,boolean)" title="completeScheduledChannel(InternalChannel, boolean)">completeScheduledChannel</a>, <a href="SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" title="controlBufferSent(InternalChannel, IBuffer)">controlBufferSent</a>, <a href="SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer,long)" title="controlBufferSent(InternalChannel, IBuffer, long)">controlBufferSent</a>, <a href="SchedulingConnector.html#controlHandshakeCompleted(long)" title="controlHandshakeCompleted(long)">controlHandshakeCompleted</a>, <a href="SchedulingConnector.html#controlHandshakeGeneration()" title="controlHandshakeGeneration()">controlHandshakeGeneration</a>, <a href="SchedulingConnector.html#controlHelloSent()" title="controlHelloSent()">controlHelloSent</a>, <a href="SchedulingConnector.html#controlHelloSent(long)" title="controlHelloSent(long)">controlHelloSent</a>, <a href="SchedulingConnector.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)" title="deregisterChannelFromPeer(InternalChannel)">deregisterChannelFromPeer</a>, <a href="SchedulingConnector.html#failControlHandshake(long,org.eclipse.net4j.connector.ConnectorException)" title="failControlHandshake(long, ConnectorException)">failControlHandshake</a>, <a href="SchedulingConnector.html#failControlHandshakeIfPending(java.lang.Throwable)" title="failControlHandshakeIfPending(Throwable)">failControlHandshakeIfPending</a>, <a href="SchedulingConnector.html#getControlChannel()" title="getControlChannel()">getControlChannel</a>, <a href="SchedulingConnector.html#getInternalControlChannel()" title="getInternalControlChannel()">getInternalControlChannel</a>, <a href="SchedulingConnector.html#getScheduler()" title="getScheduler()">getScheduler</a>, <a href="SchedulingConnector.html#isControlHelloBuffer(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" title="isControlHelloBuffer(InternalChannel, IBuffer)">isControlHelloBuffer</a>, <a href="SchedulingConnector.html#isCurrentControlHandshakeGeneration(long)" title="isCurrentControlHandshakeGeneration(long)">isCurrentControlHandshakeGeneration</a>, <a href="SchedulingConnector.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)" title="multiplexChannel(InternalChannel)">multiplexChannel</a>, <a href="SchedulingConnector.html#registerChannelWithPeer(short,long,org.eclipse.net4j.protocol.IProtocol)" title="registerChannelWithPeer(short, long, IProtocol)">registerChannelWithPeer</a>, <a href="SchedulingConnector.html#restoreSendingInterest(boolean)" title="restoreSendingInterest(boolean)">restoreSendingInterest</a>, <a href="SchedulingConnector.html#selectScheduledChannel()" title="selectScheduledChannel()">selectScheduledChannel</a>, <a href="SchedulingConnector.html#setScheduler(org.eclipse.spi.net4j.SchedulingConnector.IScheduler)" title="setScheduler(SchedulingConnector.IScheduler)">setScheduler</a>, <a href="SchedulingConnector.html#stopSendingIfIdle()" title="stopSendingIfIdle()">stopSendingIfIdle</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.spi.net4j.Connector">Methods inherited from class&nbsp;<a href="Connector.html#method-summary" title="class in org.eclipse.spi.net4j">Connector</a></h3>
-<code><a href="Connector.html#close()" title="close()">close</a>, <a href="Connector.html#connect()" title="connect()">connect</a>, <a href="Connector.html#connect(long)" title="connect(long)">connect</a>, <a href="Connector.html#connectAsync()" title="connectAsync()">connectAsync</a>, <a href="Connector.html#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)" title="doBeforeOpenChannel(IProtocol)">doBeforeOpenChannel</a>, <a href="Connector.html#getBufferCapacity()" title="getBufferCapacity()">getBufferCapacity</a>, <a href="Connector.html#getNegotiationContext()" title="getNegotiationContext()">getNegotiationContext</a>, <a href="Connector.html#getNegotiationException()" title="getNegotiationException()">getNegotiationException</a>, <a href="Connector.html#getNegotiator()" title="getNegotiator()">getNegotiator</a>, <a href="Connector.html#getState()" title="getState()">getState</a>, <a href="Connector.html#getURL()" title="getURL()">getURL</a>, <a href="Connector.html#getUserID()" title="getUserID()">getUserID</a>, <a href="Connector.html#initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)" title="initChannel(InternalChannel, IProtocol)">initChannel</a>, <a href="Connector.html#isClient()" title="isClient()">isClient</a>, <a href="Connector.html#isClosed()" title="isClosed()">isClosed</a>, <a href="Connector.html#isConnected()" title="isConnected()">isConnected</a>, <a href="Connector.html#isConnecting()" title="isConnecting()">isConnecting</a>, <a href="Connector.html#isDeferredActivation()" title="isDeferredActivation()">isDeferredActivation</a>, <a href="Connector.html#isDisconnected()" title="isDisconnected()">isDisconnected</a>, <a href="Connector.html#isNegotiating()" title="isNegotiating()">isNegotiating</a>, <a href="Connector.html#isServer()" title="isServer()">isServer</a>, <a href="Connector.html#leaveConnecting()" title="leaveConnecting()">leaveConnecting</a>, <a href="Connector.html#provideBuffer()" title="provideBuffer()">provideBuffer</a>, <a href="Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" title="retainBuffer(IBuffer)">retainBuffer</a>, <a href="Connector.html#setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)" title="setNegotiationException(NegotiationException)">setNegotiationException</a>, <a href="Connector.html#setNegotiator(org.eclipse.net4j.util.security.INegotiator)" title="setNegotiator(INegotiator)">setNegotiator</a>, <a href="Connector.html#setUserID(java.lang.String)" title="setUserID(String)">setUserID</a>, <a href="Connector.html#waitForConnection(long)" title="waitForConnection(long)">waitForConnection</a></code></div>
+<code><a href="Connector.html#close()" title="close()">close</a>, <a href="Connector.html#connect()" title="connect()">connect</a>, <a href="Connector.html#connect(long)" title="connect(long)">connect</a>, <a href="Connector.html#connectAsync()" title="connectAsync()">connectAsync</a>, <a href="Connector.html#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)" title="doBeforeOpenChannel(IProtocol)">doBeforeOpenChannel</a>, <a href="Connector.html#getBufferCapacity()" title="getBufferCapacity()">getBufferCapacity</a>, <a href="Connector.html#getNegotiationContext()" title="getNegotiationContext()">getNegotiationContext</a>, <a href="Connector.html#getNegotiationException()" title="getNegotiationException()">getNegotiationException</a>, <a href="Connector.html#getNegotiator()" title="getNegotiator()">getNegotiator</a>, <a href="Connector.html#getState()" title="getState()">getState</a>, <a href="Connector.html#getURL()" title="getURL()">getURL</a>, <a href="Connector.html#getUserID()" title="getUserID()">getUserID</a>, <a href="Connector.html#initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)" title="initChannel(InternalChannel, IProtocol)">initChannel</a>, <a href="Connector.html#isClient()" title="isClient()">isClient</a>, <a href="Connector.html#isClosed()" title="isClosed()">isClosed</a>, <a href="Connector.html#isConnected()" title="isConnected()">isConnected</a>, <a href="Connector.html#isConnecting()" title="isConnecting()">isConnecting</a>, <a href="Connector.html#isDeferredActivation()" title="isDeferredActivation()">isDeferredActivation</a>, <a href="Connector.html#isDisconnected()" title="isDisconnected()">isDisconnected</a>, <a href="Connector.html#isNegotiating()" title="isNegotiating()">isNegotiating</a>, <a href="Connector.html#isServer()" title="isServer()">isServer</a>, <a href="Connector.html#provideBuffer()" title="provideBuffer()">provideBuffer</a>, <a href="Connector.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" title="retainBuffer(IBuffer)">retainBuffer</a>, <a href="Connector.html#setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)" title="setNegotiationException(NegotiationException)">setNegotiationException</a>, <a href="Connector.html#setNegotiator(org.eclipse.net4j.util.security.INegotiator)" title="setNegotiator(INegotiator)">setNegotiator</a>, <a href="Connector.html#setUserID(java.lang.String)" title="setUserID(String)">setUserID</a>, <a href="Connector.html#waitForConnection(long)" title="waitForConnection(long)">waitForConnection</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.spi.net4j.ChannelMultiplexer">Methods inherited from class&nbsp;<a href="ChannelMultiplexer.html#method-summary" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></h3>
 <code><a href="ChannelMultiplexer.html#createChannel()" title="createChannel()">createChannel</a>, <a href="ChannelMultiplexer.html#createProtocol(java.lang.String,INFRA_STRUCTURE)" title="createProtocol(String, INFRA_STRUCTURE)">createProtocol</a>, <a href="ChannelMultiplexer.html#createProtocolFactoryKey(java.lang.String)" title="createProtocolFactoryKey(String)">createProtocolFactoryKey</a>, <a href="ChannelMultiplexer.html#getChannel(short)" title="getChannel(short)">getChannel</a>, <a href="ChannelMultiplexer.html#getChannels()" title="getChannels()">getChannels</a>, <a href="ChannelMultiplexer.html#getConfig()" title="getConfig()">getConfig</a>, <a href="ChannelMultiplexer.html#getElements()" title="getElements()">getElements</a>, <a href="ChannelMultiplexer.html#getExecutorService()" title="getExecutorService()">getExecutorService</a>, <a href="ChannelMultiplexer.html#getOpenChannelTimeout()" title="getOpenChannelTimeout()">getOpenChannelTimeout</a>, <a href="ChannelMultiplexer.html#inverseClose()" title="inverseClose()">inverseClose</a>, <a href="ChannelMultiplexer.html#inverseCloseChannel(short)" title="inverseCloseChannel(short)">inverseCloseChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String)" title="inverseOpenChannel(short, String)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String,int)" title="inverseOpenChannel(short, String, int)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#isEmpty()" title="isEmpty()">isEmpty</a>, <a href="ChannelMultiplexer.html#needsBufferProvider()" title="needsBufferProvider()">needsBufferProvider</a>, <a href="ChannelMultiplexer.html#openChannel()" title="openChannel()">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)" title="openChannel(String, Object)">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)" title="openChannel(IProtocol)">openChannel</a>, <a href="ChannelMultiplexer.html#properties()" title="properties()">properties</a>, <a href="ChannelMultiplexer.html#setConfig(org.eclipse.net4j.ITransportConfig)" title="setConfig(ITransportConfig)">setConfig</a>, <a href="ChannelMultiplexer.html#setOpenChannelTimeout(long)" title="setOpenChannelTimeout(long)">setOpenChannelTimeout</a></code></div>
@@ -526,6 +542,50 @@ asynchronous work and must not perform transport I/O or block.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="SchedulingConnector.html#onSendingRequired()">onSendingRequired</a></code>&nbsp;in class&nbsp;<code><a href="SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="leaveConnecting()">
+<h3>leaveConnecting</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">leaveConnecting</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="SchedulingConnector.html#leaveConnecting()">leaveConnecting</a></code>&nbsp;in class&nbsp;<code><a href="SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="advanceConnectionAfterHandshake(long)">
+<h3>advanceConnectionAfterHandshake</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">advanceConnectionAfterHandshake</span><wbr><span class="parameters">(long&nbsp;handshakeGeneration)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="SchedulingConnector.html#advanceConnectionAfterHandshake(long)">SchedulingConnector</a></code></span></div>
+<div class="block">Advances the connector after a compatible HELLO. The default implementation uses the base connector lifecycle transition and
+guards it against activation changes. A transport with additional readiness arbitration can override this method, but must retain
+the supplied handshake generation when publishing its state.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="SchedulingConnector.html#advanceConnectionAfterHandshake(long)">advanceConnectionAfterHandshake</a></code>&nbsp;in class&nbsp;<code><a href="SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>handshakeGeneration</code> - the activation generation that completed the HELLO exchange</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="onControlHandshakeCompleted(long)">
+<h3>onControlHandshakeCompleted</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onControlHandshakeCompleted</span><wbr><span class="parameters">(long&nbsp;generation)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="SchedulingConnector.html#onControlHandshakeCompleted(long)">SchedulingConnector</a></code></span></div>
+<div class="block">Called after normal connector progression resumes so transports can restart work deferred during the handshake.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="SchedulingConnector.html#onControlHandshakeCompleted(long)">onControlHandshakeCompleted</a></code>&nbsp;in class&nbsp;<code><a href="SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></code></dd>
 </dl>
 </div>
 </section>

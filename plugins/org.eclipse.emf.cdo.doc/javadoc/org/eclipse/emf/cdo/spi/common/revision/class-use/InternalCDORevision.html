@@ -964,6 +964,13 @@ lock.</div>
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../../spi/cdo/InternalCDOView.html#updateViewedRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">updateViewedRevision</a><wbr>(<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Records the revision currently retained by an object in this view so that security updates can find it even when
+the view access lock is contended and the revision is no longer present in the revision cache.</div>
+</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span></div>
 <div class="summary-table three-column-summary">
@@ -1025,6 +1032,17 @@ lock.</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#setOldRevisions(java.util.Map)" class="member-name-link">setOldRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>, <a href="../../../../common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../../spi/cdo/InternalCDOView.html#synchronizeTrackedViewedRevisions(java.util.Map)" class="member-name-link">synchronizeTrackedViewedRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;sourceRevisions)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Propagates permissions from revisions included in a completed permission update to same-key revisions that were
+installed in this view while the update was running.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../../spi/cdo/InternalCDOView.html#tryCollectViewedRevisions(java.util.Map)" class="member-name-link">tryCollectViewedRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Collects viewed revisions without waiting for this view's access lock.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>, <a href="../../../../common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPermissionUpdater.</span><code><a href="../../../../../spi/cdo/CDOPermissionUpdater.html#updatePermissions(org.eclipse.emf.spi.cdo.InternalCDOSession,java.util.Set)" class="member-name-link">updatePermissions</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;session,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code></div>

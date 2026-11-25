@@ -131,12 +131,16 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StringUtil.</span><code><a href="../../StringUtil.html#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">convert</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Converts expressions of the form <code>$$$name(arguments)$$$</code> using converters from the given container.</div>
+</div>
 <div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">StringUtil.</span><code><a href="../../StringUtil.html#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer,java.util.regex.Pattern)" class="member-name-link">convert</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a>&nbsp;pattern)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Converts matches of the supplied pattern using the first two capture groups as the converter type and argument.</div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../../ExceptionHandler.html" title="interface in org.eclipse.net4j.util">ExceptionHandler</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ExceptionHandler.Factory.</span><code><a href="../../ExceptionHandler.Factory.html#get(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">get</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
@@ -159,6 +163,24 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type,
  boolean&nbsp;enumCaseSensitive)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XMLUtil.</span><code><a href="../../XMLUtil.html#preprocessConditions(org.w3c.dom.Document,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">preprocessConditions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;parameters,
+ <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Preprocesses conditional attributes in a namespace-aware DOM.</div>
+</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../package-summary.html">org.eclipse.net4j.util</a> with parameters of type <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../XMLConfiguration.html#%3Cinit%3E(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">XMLConfiguration</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a configuration preparation context.</div>
+</div>
 </div>
 </section>
 </li>

@@ -110,6 +110,15 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">CDOEmbeddedRepositoryConfig</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
 implements org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
+<div class="block">Configures and manages an embedded CDO repository. Embedded repositories support optional authentication and multiple
+concurrent sessions, but do not support authorization: every successfully opened session has unrestricted access.
+The caller must supply a properly initialized, configured, and active container through <a href="#getContainer()"><code>getContainer()</code></a>.
+Embedded CDO consumes this container but does not initialize, prepare, or configure it. For Plain Java applications,
+use <code>ContainerUtil.createInitializedContainer()</code> by default or <code>IManagedContainer.INSTANCE</code> for the
+global container. Applications with custom container configurations are responsible for registering all factories
+and services required by Embedded CDO. Permission managers, operation authorizers, and repository protectors that
+install authorization mechanisms are not supported. Authentication identifies a session; it does not restrict that
+session's repository access.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>

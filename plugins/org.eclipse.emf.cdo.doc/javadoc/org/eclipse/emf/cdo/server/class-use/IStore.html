@@ -120,12 +120,20 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;storeConfig)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRepository.</span><code><a href="../IRepository.html#getStore()" class="member-name-link">getStore</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>default <a href="../IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IStoreFactory.</span><code><a href="../IStoreFactory.html#createStore(java.lang.String,java.util.Map,org.w3c.dom.Element,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">createStore</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;repositoryProperties,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;storeConfig,
+ org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a store from a DOM element belonging to the shared prepared XML configuration.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../IStoreAccessor.html#getStore()" class="member-name-link">getStore</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><span class="type-name-label">IRepository.</span><code><a href="../IRepository.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../IStoreAccessor.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Returns the store this accessor is associated with.</div>
 </div>
 </div>

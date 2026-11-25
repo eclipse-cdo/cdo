@@ -66,6 +66,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#clear()" tabindex="0">clear()</a></li>
 <li><a href="#getRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" tabindex="0">getRevisions(CDOBranchPoint)</a></li>
 <li><a href="#getAllRevisions(java.util.List)" tabindex="0">getAllRevisions(List)</a></li>
+<li><a href="#internRevisionDeferredEvents(org.eclipse.emf.cdo.common.revision.CDORevision)" tabindex="0">internRevisionDeferredEvents(CDORevision)</a></li>
 </ol>
 </li>
 </ol>
@@ -104,6 +105,17 @@ version, supports branch-scoped eviction, and participates in the manager's life
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="InternalCDORevisionCache.InternResult.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Result of an atomic cache interning operation whose event delivery is deferred to the caller.</div>
+</div>
+</div>
 <div class="inherited-list">
 <h3 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDORevisionCache">Nested classes/interfaces inherited from interface&nbsp;<a href="../../../common/revision/CDORevisionCache.html#nested-class-summary" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a></h3>
 <code><a href="../../../common/revision/CDORevisionCache.AdditionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.AdditionEvent</a>, <a href="../../../common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a></code></div>
@@ -149,13 +161,19 @@ version, supports branch-scoped eviction, and participates in the manager's life
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#instantiate(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">instantiate</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">removeRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#internRevisionDeferredEvents(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">internRevisionDeferredEvents</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Interns a revision atomically and returns any cache event for delivery after the caller's publication lock has been
+released.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">removeRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeRevisions(org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">removeRevisions</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -245,6 +263,24 @@ version, supports branch-scoped eviction, and participates in the manager's life
 <li><a href="../../../common/revision/CDOAllRevisionsProvider.html#getAllRevisions()"><code>CDOAllRevisionsProvider.getAllRevisions()</code></a></li>
 </ul>
 </dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="internRevisionDeferredEvents(org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>internRevisionDeferredEvents</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></span>&nbsp;<span class="element-name">internRevisionDeferredEvents</span><wbr><span class="parameters">(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Interns a revision atomically and returns any cache event for delivery after the caller's publication lock has been
+released. Implementations must not execute the returned callback as part of this method.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision to intern</dd>
+<dt>Returns:</dt>
+<dd>the canonical revision and an optional deferred event callback</dd>
+<dt>Since:</dt>
+<dd>4.29</dd>
 </dl>
 </div>
 </section>

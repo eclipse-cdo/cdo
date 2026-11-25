@@ -68,6 +68,16 @@ loadScripts(document, 'script');</script>
 <li><a href="#BASE64" tabindex="0">BASE64</a></li>
 <li><a href="#UPPER" tabindex="0">UPPER</a></li>
 <li><a href="#LOWER" tabindex="0">LOWER</a></li>
+<li><a href="#EQUALS" tabindex="0">EQUALS</a></li>
+<li><a href="#EQUALS_IGNORE_CASE" tabindex="0">EQUALS_IGNORE_CASE</a></li>
+<li><a href="#CONTAINS" tabindex="0">CONTAINS</a></li>
+<li><a href="#CONTAINS_IGNORE_CASE" tabindex="0">CONTAINS_IGNORE_CASE</a></li>
+<li><a href="#STARTS_WITH" tabindex="0">STARTS_WITH</a></li>
+<li><a href="#ENDS_WITH" tabindex="0">ENDS_WITH</a></li>
+<li><a href="#AND" tabindex="0">AND</a></li>
+<li><a href="#OR" tabindex="0">OR</a></li>
+<li><a href="#XOR" tabindex="0">XOR</a></li>
+<li><a href="#NOT" tabindex="0">NOT</a></li>
 <li><a href="#CAP" tabindex="0">CAP</a></li>
 <li><a href="#CAP_ALL" tabindex="0">CAP_ALL</a></li>
 <li><a href="#UNCAP" tabindex="0">UNCAP</a></li>
@@ -102,6 +112,10 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></dd>
 </dl>
 <dl class="notes">
+<dt>All Known Subinterfaces:</dt>
+<dd><code><a href="StringConverter.WithArguments.html" title="interface in org.eclipse.net4j.util">StringConverter.WithArguments</a></code></dd>
+</dl>
+<dl class="notes">
 <dt>Functional Interface:</dt>
 <dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
 </dl>
@@ -110,7 +124,12 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/FunctionalInterface.html" title="class or interface in java.lang" class="external-link">@FunctionalInterface</a>
 </span><span class="modifiers">public interface </span><span class="element-name type-name-label">StringConverter</span><span class="extends-implements">
 extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span></div>
-<div class="block">Converts any kind of <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>objects</code></a> to strings.</div>
+<div class="block">Converts any kind of <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link"><code>objects</code></a> to strings.
+<p>
+Built-in argument converters use comma-separated operands in expressions processed by
+<a href="StringUtil.html#convert(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer)"><code>StringUtil.convert(String, IManagedContainer)</code></a>. Nested expression operands
+are evaluated before the enclosing converter is invoked. Boolean converters accept only trimmed, case-insensitive
+<code>true</code> and <code>false</code> values.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.23</dd>
@@ -133,6 +152,12 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="StringConverter.MetaFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util">StringConverter.MetaFactory</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="StringConverter.WithArguments.html" class="type-name-link" title="interface in org.eclipse.net4j.util">StringConverter.WithArguments</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A StringConverter that accepts parsed argument arrays while retaining direct invocation through
+<a href="StringConverter.WithArguments.html#apply(java.lang.Object)"><code>StringConverter.WithArguments.apply(Object)</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
@@ -146,17 +171,47 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#BASE64" class="member-name-link">BASE64</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#AND" class="member-name-link">AND</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns true when all two or more Boolean operands are true.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#CAP" class="member-name-link">CAP</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#BASE64" class="member-name-link">BASE64</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#CAP_ALL" class="member-name-link">CAP_ALL</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CAP" class="member-name-link">CAP</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#CHARS" class="member-name-link">CHARS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#CAP_ALL" class="member-name-link">CAP_ALL</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CHARS" class="member-name-link">CHARS</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#CONTAINS" class="member-name-link">CONTAINS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Tests whether the first string contains the second string, with case-sensitive matching.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CONTAINS_IGNORE_CASE" class="member-name-link">CONTAINS_IGNORE_CASE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Tests whether the first string contains the second string, ignoring case.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ENDS_WITH" class="member-name-link">ENDS_WITH</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Tests whether the first string ends with the second string, with case-sensitive matching.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#EQUALS" class="member-name-link">EQUALS</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Compares two strings case-sensitively; surrounding whitespace on each operand is ignored.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#EQUALS_IGNORE_CASE" class="member-name-link">EQUALS_IGNORE_CASE</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Compares two strings case-insensitively; surrounding whitespace on each operand is ignored.</div>
+</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
 <div class="col-second even-row-color"><code><a href="#ESCAPE" class="member-name-link">ESCAPE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -178,6 +233,16 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
 <div class="col-second even-row-color"><code><a href="#NET4J_USER_PATH" class="member-name-link">NET4J_USER_PATH</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#NOT" class="member-name-link">NOT</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Negates one Boolean operand.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#OR" class="member-name-link">OR</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns true when at least one of the two or more Boolean operands is true.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#PRODUCT_GROUP" class="member-name-link">PRODUCT_GROUP</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -188,23 +253,35 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 <div class="col-second odd-row-color"><code><a href="#SAFE" class="member-name-link">SAFE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#STRIP_HTML" class="member-name-link">STRIP_HTML</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#STARTS_WITH" class="member-name-link">STARTS_WITH</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Tests whether the first string starts with the second string, with case-sensitive matching.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#SYSTEM_PROPERTY" class="member-name-link">SYSTEM_PROPERTY</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#STRIP_HTML" class="member-name-link">STRIP_HTML</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#UNCAP" class="member-name-link">UNCAP</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#SYSTEM_PROPERTY" class="member-name-link">SYSTEM_PROPERTY</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Looks up an OMPlatform property by name.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#UNCAP_ALL" class="member-name-link">UNCAP_ALL</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#UNCAP" class="member-name-link">UNCAP</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second even-row-color"><code><a href="#UNESCAPE" class="member-name-link">UNESCAPE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#UNCAP_ALL" class="member-name-link">UNCAP_ALL</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#UPPER" class="member-name-link">UPPER</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#UNESCAPE" class="member-name-link">UNESCAPE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second even-row-color"><code><a href="#UPPER" class="member-name-link">UPPER</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#XOR" class="member-name-link">XOR</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns true when an odd number of the two or more Boolean operands are true.</div>
+</div>
 </div>
 </section>
 </li>
@@ -326,6 +403,139 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 </section>
 </li>
 <li>
+<section class="detail" id="EQUALS">
+<h3>EQUALS</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">EQUALS</span></div>
+<div class="block">Compares two strings case-sensitively; surrounding whitespace on each operand is ignored.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="EQUALS_IGNORE_CASE">
+<h3>EQUALS_IGNORE_CASE</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">EQUALS_IGNORE_CASE</span></div>
+<div class="block">Compares two strings case-insensitively; surrounding whitespace on each operand is ignored. Its converter name is
+<code>equals_ignore_case</code>.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="CONTAINS">
+<h3>CONTAINS</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">CONTAINS</span></div>
+<div class="block">Tests whether the first string contains the second string, with case-sensitive matching.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="CONTAINS_IGNORE_CASE">
+<h3>CONTAINS_IGNORE_CASE</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">CONTAINS_IGNORE_CASE</span></div>
+<div class="block">Tests whether the first string contains the second string, ignoring case.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="STARTS_WITH">
+<h3>STARTS_WITH</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">STARTS_WITH</span></div>
+<div class="block">Tests whether the first string starts with the second string, with case-sensitive matching.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ENDS_WITH">
+<h3>ENDS_WITH</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">ENDS_WITH</span></div>
+<div class="block">Tests whether the first string ends with the second string, with case-sensitive matching.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="AND">
+<h3>AND</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">AND</span></div>
+<div class="block">Returns true when all two or more Boolean operands are true. Every nested operand is evaluated before this
+converter is invoked, so this operation does not short-circuit.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="OR">
+<h3>OR</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">OR</span></div>
+<div class="block">Returns true when at least one of the two or more Boolean operands is true. Every nested operand is evaluated
+before this converter is invoked, so this operation does not short-circuit.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="XOR">
+<h3>XOR</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">XOR</span></div>
+<div class="block">Returns true when an odd number of the two or more Boolean operands are true.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="NOT">
+<h3>NOT</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">NOT</span></div>
+<div class="block">Negates one Boolean operand.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="CAP">
 <h3>CAP</h3>
 <div class="horizontal-scroll">
@@ -414,6 +624,15 @@ extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/ja
 <h3>SYSTEM_PROPERTY</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="StringConverter.html" title="interface in org.eclipse.net4j.util">StringConverter</a></span>&nbsp;<span class="element-name">SYSTEM_PROPERTY</span></div>
+<div class="block">Looks up an OMPlatform property by name. With one argument, it returns the property value or <code>null</code> if absent.
+The argument may also be <code>propertyName,defaultValue</code>; the first comma separates the property name and the
+complete remaining text is the default. That default is returned only when the property is absent, not when its
+value is empty. For example, <code>$$$system_property(transport,tcp)$$$</code> returns <code>tcp</code> when
+<code>transport</code> is undefined.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
 </div>
 </section>
 </li>

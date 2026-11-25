@@ -450,32 +450,37 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#configure(java.io.Reader)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;configReader)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#configure(org.w3c.dom.Document)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RepositoryFactory.</span><code><a href="../../spi/server/RepositoryFactory.html#createRepository()" class="member-name-link">createRepository</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RepositoryFactory.</span><code><a href="../../spi/server/RepositoryFactory.html#get(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">get</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
- <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ContainerRepositoryProvider.</span><code><a href="../../spi/server/ContainerRepositoryProvider.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#configure(org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">configure</a><wbr>(org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Configures repositories from an already prepared shared XML snapshot.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#configure(org.w3c.dom.Document)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RepositoryActivityLog.</span><code><a href="../../spi/server/RepositoryActivityLog.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RepositoryFactory.</span><code><a href="../../spi/server/RepositoryFactory.html#createRepository()" class="member-name-link">createRepository</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryType)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RepositoryFactory.</span><code><a href="../../spi/server/RepositoryFactory.html#get(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">get</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ContainerRepositoryProvider.</span><code><a href="../../spi/server/ContainerRepositoryProvider.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RepositoryActivityLog.</span><code><a href="../../spi/server/RepositoryActivityLog.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#getRepository(org.w3c.dom.Element)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;repositoryConfig)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryType)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RepositoryUserManager.</span><code><a href="../../spi/server/RepositoryUserManager.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getRepository</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
- <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RepositoryConfigurator.</span><code><a href="../../spi/server/RepositoryConfigurator.html#getRepository(org.w3c.dom.Element)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;repositoryConfig)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RepositoryUserManager.</span><code><a href="../../spi/server/RepositoryUserManager.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getRepository</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span></div>
 <div class="summary-table three-column-summary">
@@ -517,9 +522,19 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;configFile)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IAppExtension3.</span><code><a href="../../spi/server/IAppExtension3.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,java.io.File)" class="member-name-link">start</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;repositories,
- <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;configFile)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AppExtension.</span><code><a href="../../spi/server/AppExtension.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">start</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;repositories,
+ org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IAppExtension3.</span><code><a href="../../spi/server/IAppExtension3.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,java.io.File)" class="member-name-link">start</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;repositories,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;configFile)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>default void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IAppExtension6.</span><code><a href="../../spi/server/IAppExtension6.html#start(org.eclipse.emf.cdo.server.IRepository%5B%5D,org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">start</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;repositories,
+ org.eclipse.net4j.util.XMLConfiguration&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Starts a repository-aware extension with repositories and the prepared configuration.</div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">AppExtension.</span><code><a href="../../spi/server/AppExtension.html#stop(org.eclipse.emf.cdo.server.IRepository%5B%5D)" class="member-name-link">stop</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]&nbsp;repositories)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>

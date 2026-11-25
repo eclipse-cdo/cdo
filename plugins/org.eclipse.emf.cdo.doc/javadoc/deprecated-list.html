@@ -155,20 +155,24 @@ supported and policies overriding them are rejected when installed in a session.
 <div class="col-last even-row-color">
 <div class="block">As of 4.5 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html" title="class or interface in org.eclipse.emf.ecore.util" class="external-link"><code>feature maps</code></a> are no longer supported.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/server/InternalStore.NoExternalReferences.html" title="interface in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker</a></div>
 <div class="col-last odd-row-color">
+<div class="block">As of 4.29 no longer supported or used.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/server/InternalStore.NoExternalReferences.html" title="interface in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.6 use IRepositoryConfig.CAPABILITY_EXTERNAL_REFS.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/server/InternalStore.NoFeatureMaps.html" title="interface in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/server/InternalStore.NoFeatureMaps.html" title="interface in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.5 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html" title="class or interface in org.eclipse.emf.ecore.util" class="external-link"><code>feature maps</code></a> are no longer supported.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionConflictEvent.html" title="interface in org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionConflictEvent.html" title="interface in org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.19 use <a href="org/eclipse/emf/cdo/transaction/CDOTransactionConflictAddedEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionConflictAddedEvent</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.CDOView.Options.ReferencePolicyEvent</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.CDOView.Options.ReferencePolicyEvent</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Use <a href="org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.StrongReferencePolicyEvent</code></a> instead.</div>
 </div>
 </div>
@@ -1415,13 +1419,17 @@ or <a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#remove
 <div class="col-last even-row-color"></div>
 <div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisionByVersion<wbr>(CDOID, CDOBranchVersion, int, boolean)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisionLocker()">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisionLocker()</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, List&lt;CDORevision&gt;)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, List&lt;CDORevision&gt;)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager.setRevisionLocker<wbr>(InternalCDORevisionManager.RevisionLocker)</a></div>
 <div class="col-last odd-row-color"></div>
 <div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision.getList<wbr>(EStructuralFeature)</a></div>
 <div class="col-last even-row-color">
@@ -1463,17 +1471,29 @@ or <a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#remove
 <div class="col-last odd-row-color">
 <div class="block">As of 4.37 use <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>InternalCDORevisionManager.getRevisionByVersion(CDOID, CDOBranchVersion, CDORevisionManager.Request.Config)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionLocker()">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisionLocker()</a></div>
 <div class="col-last even-row-color">
+<div class="block">As of 4.29 no longer supported or used. Returns <code>null</code>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.37 use the configuration-based <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>InternalCDORevisionManager.getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, SyntheticCDORevision[])</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.getRevisions<wbr>(List&lt;CDOID&gt;, CDOBranchPoint, int, int, boolean, SyntheticCDORevision[])</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.37 use <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>InternalCDORevisionManager.getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html#loadRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader.loadRevisions<wbr>(List&lt;RevisionInfo&gt;, CDOBranchPoint, int, int)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html#loadRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader.loadRevisions<wbr>(List&lt;RevisionInfo&gt;, CDOBranchPoint, int, int)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.15 use <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader3.html#loadRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)"><code>InternalCDORevisionManager.RevisionLoader3.loadRevisions(List, CDOBranchPoint, int, int, boolean)</code></a>.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html#acquireAtomicRequestLock(java.lang.Object)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker.acquireAtomicRequestLock<wbr>(Object)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html#releaseAtomicRequestLock(java.lang.Object)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker.releaseAtomicRequestLock<wbr>(Object)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#setRevisionLocker(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker)">org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.setRevisionLocker<wbr>(InternalCDORevisionManager.RevisionLocker)</a></div>
+<div class="col-last even-row-color">
+<div class="block">As of 4.29 no longer supported or used. Does noting.</div>
 </div>
 <div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#doReadResult(org.eclipse.emf.cdo.common.protocol.CDODataInput)">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.doReadResult<wbr>(CDODataInput)</a></div>
 <div class="col-last odd-row-color">

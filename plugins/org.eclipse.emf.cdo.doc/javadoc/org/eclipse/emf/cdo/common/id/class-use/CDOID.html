@@ -2182,6 +2182,19 @@ detached without scanning the three change-set lists repeatedly.</div>
  <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseDetached</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ long&nbsp;timeStamp)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#reviseDetached(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseDetached</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ long&nbsp;timeStamp)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Revises the exact predecessor affected by a detach notification and prevents an overlapping load from restoring
+it as the current revision.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -3564,6 +3577,13 @@ active savepoint chain, or <code>null</code> if no such transition was captured.
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#setCommittedSinceLastRefresh(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setCommittedSinceLastRefresh</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../spi/cdo/InternalCDOView.html#updateViewedRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">updateViewedRevision</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Records the revision currently retained by an object in this view so that security updates can find it even when
+the view access lock is contended and the revision is no longer present in the revision cache.</div>
+</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span></div>
 <div class="summary-table three-column-summary">
@@ -3697,6 +3717,17 @@ represented by the query result.</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#setOldRevisions(java.util.Map)" class="member-name-link">setOldRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>, <a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../spi/cdo/InternalCDOView.html#synchronizeTrackedViewedRevisions(java.util.Map)" class="member-name-link">synchronizeTrackedViewedRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;sourceRevisions)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Propagates permissions from revisions included in a completed permission update to same-key revisions that were
+installed in this view while the update was running.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../spi/cdo/InternalCDOView.html#tryCollectViewedRevisions(java.util.Map)" class="member-name-link">tryCollectViewedRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Collects viewed revisions without waiting for this view's access lock.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../../spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;objectIDs,

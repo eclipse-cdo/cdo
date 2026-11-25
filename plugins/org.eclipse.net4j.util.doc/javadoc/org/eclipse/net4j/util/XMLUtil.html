@@ -60,11 +60,14 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#createDocumentBuilder()" tabindex="0">createDocumentBuilder()</a></li>
+<li><a href="#createSecureDocumentBuilder()" tabindex="0">createSecureDocumentBuilder()</a></li>
 <li><a href="#loadRootElement(javax.xml.parsers.DocumentBuilder,java.io.File)" tabindex="0">loadRootElement(DocumentBuilder, File)</a></li>
 <li><a href="#loadDocument(javax.xml.parsers.DocumentBuilder,java.io.File)" tabindex="0">loadDocument(DocumentBuilder, File)</a></li>
 <li><a href="#handleElements(org.w3c.dom.NodeList,org.eclipse.net4j.util.XMLUtil.ElementHandler)" tabindex="0">handleElements(NodeList, XMLUtil.ElementHandler)</a></li>
 <li><a href="#handleChildElements(org.w3c.dom.Element,org.eclipse.net4j.util.XMLUtil.ElementHandler)" tabindex="0">handleChildElements(Element, XMLUtil.ElementHandler)</a></li>
 <li><a href="#handleElementsByTagName(org.w3c.dom.Element,java.lang.String,org.eclipse.net4j.util.XMLUtil.ElementHandler)" tabindex="0">handleElementsByTagName(Element, String, XMLUtil.ElementHandler)</a></li>
+<li><a href="#preprocessConditions(org.w3c.dom.Document,java.util.Map)" tabindex="0">preprocessConditions(Document, Map)</a></li>
+<li><a href="#preprocessConditions(org.w3c.dom.Document,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)" tabindex="0">preprocessConditions(Document, Map, IManagedContainer)</a></li>
 </ol>
 </li>
 </ol>
@@ -121,27 +124,47 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createDocumentBuilder()" class="member-name-link">createDocumentBuilder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSecureDocumentBuilder()" class="member-name-link">createSecureDocumentBuilder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a namespace-aware parser that rejects DTD declarations and disables external entities, XInclude, and entity
+expansion.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleChildElements(org.w3c.dom.Element,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleChildElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;rootElement,
+ <a href="XMLUtil.ElementHandler.html" title="interface in org.eclipse.net4j.util">XMLUtil.ElementHandler</a>&nbsp;handler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleChildElements(org.w3c.dom.Element,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleChildElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;rootElement,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleElements(org.w3c.dom.NodeList,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/NodeList.html" title="class or interface in org.w3c.dom" class="external-link">NodeList</a>&nbsp;nodeList,
  <a href="XMLUtil.ElementHandler.html" title="interface in org.eclipse.net4j.util">XMLUtil.ElementHandler</a>&nbsp;handler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleElements(org.w3c.dom.NodeList,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/NodeList.html" title="class or interface in org.w3c.dom" class="external-link">NodeList</a>&nbsp;nodeList,
- <a href="XMLUtil.ElementHandler.html" title="interface in org.eclipse.net4j.util">XMLUtil.ElementHandler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleElementsByTagName(org.w3c.dom.Element,java.lang.String,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleElementsByTagName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;rootElement,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleElementsByTagName(org.w3c.dom.Element,java.lang.String,org.eclipse.net4j.util.XMLUtil.ElementHandler)" class="member-name-link">handleElementsByTagName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a>&nbsp;rootElement,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tagName,
  <a href="XMLUtil.ElementHandler.html" title="interface in org.eclipse.net4j.util">XMLUtil.ElementHandler</a>&nbsp;handler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadDocument(javax.xml.parsers.DocumentBuilder,java.io.File)" class="member-name-link">loadDocument</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a>&nbsp;documentBuilder,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadDocument(javax.xml.parsers.DocumentBuilder,java.io.File)" class="member-name-link">loadDocument</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a>&nbsp;documentBuilder,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadRootElement(javax.xml.parsers.DocumentBuilder,java.io.File)" class="member-name-link">loadRootElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a>&nbsp;documentBuilder,
  <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#loadRootElement(javax.xml.parsers.DocumentBuilder,java.io.File)" class="member-name-link">loadRootElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a>&nbsp;documentBuilder,
- <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#preprocessConditions(org.w3c.dom.Document,java.util.Map)" class="member-name-link">preprocessConditions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;parameters)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Preprocesses conditional attributes in a namespace-aware DOM without an explicit container for resolving
+<a href="StringConverter.html" title="interface in org.eclipse.net4j.util"><code>StringConverters</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#preprocessConditions(org.w3c.dom.Document,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">preprocessConditions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;parameters,
+ <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Preprocesses conditional attributes in a namespace-aware DOM.</div>
+</div>
 </div>
 </div>
 </div>
@@ -168,6 +191,25 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="createSecureDocumentBuilder()">
+<h3>createSecureDocumentBuilder</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/DocumentBuilder.html" title="class or interface in javax.xml.parsers" class="external-link">DocumentBuilder</a></span>&nbsp;<span class="element-name">createSecureDocumentBuilder</span>()
+                                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a></span></div>
+<div class="block">Creates a namespace-aware parser that rejects DTD declarations and disables external entities, XInclude, and entity
+expansion.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a secure non-validating document builder</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a></code> - if the parser does not support the required security features</dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
 </dl>
 </div>
 </section>
@@ -241,6 +283,91 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="preprocessConditions(org.w3c.dom.Document,java.util.Map)">
+<h3>preprocessConditions</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">preprocessConditions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;parameters)</span></div>
+<div class="block">Preprocesses conditional attributes in a namespace-aware DOM without an explicit container for resolving
+<a href="StringConverter.html" title="interface in org.eclipse.net4j.util"><code>StringConverters</code></a>. See
+<a href="#preprocessConditions(org.w3c.dom.Document,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)"><code>preprocessConditions(Document, Map, IManagedContainer)</code></a> for the condition syntax and processing details.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>document</code> - the document to preprocess</dd>
+<dd><code>parameters</code> - the configuration parameters used by <code>true</code> and <code>blank</code>, and queried by exact key
+         for <code>set</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if an operator or expanded <code>true</code> value is invalid, or if the root element
+          is excluded</dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="preprocessConditions(org.w3c.dom.Document,java.util.Map,org.eclipse.net4j.util.container.IManagedContainer)">
+<h3>preprocessConditions</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">preprocessConditions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a>&nbsp;document,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;parameters,
+ <a href="container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</span></div>
+<div class="block">Preprocesses conditional attributes in a namespace-aware DOM.
+<p>
+<b>Namespace declarations and example:</b> Declare the conditional namespaces on the document element and use
+their prefixes on condition attributes:
+
+<pre>
+&lt;configuration xmlns:if="urn:org.eclipse.net4j:xml:if"
+    xmlns:unless="urn:org.eclipse.net4j:xml:unless"&gt;
+  &lt;endpoint if:true="@enabled"/&gt;
+  &lt;option if:blank="@optional"/&gt;
+  &lt;debug if:set="@debug"/&gt;
+  &lt;release unless:true="@debug"/&gt;
+&lt;/configuration&gt;
+</pre>
+<p>
+<b>Operators and semantics:</b> The supported operators are <code>true</code>, <code>blank</code>, and <code>set</code>, each
+available in both namespaces. <code>unless</code> negates the corresponding operator.
+<ul>
+<li><code>true</code> expands its value using the supplied parameters and registered StringConverters, trims the result,
+and accepts only case-insensitive <code>true</code> or <code>false</code>. An empty or whitespace-only value is false.</li>
+<li><code>blank</code> accepts an expanded null, empty, or whitespace-only value.</li>
+<li><code>set</code> tests whether a property exists, not the property's contents. An exact parameter key is set even
+when its value is empty or <code>false</code>. Otherwise, the value names a JVM/OMPlatform property, which is set when
+its value is non-null, including empty and <code>false</code> values. The exact expression
+<code>$$$system_property(name)$$$</code> checks the named system property directly. Ordinary converter results and
+arbitrary non-empty text do not imply that a property is set.</li>
+</ul>
+<p>
+<b>Parameter and property evaluation:</b> The supplied parameters are used to expand <code>true</code> and
+<code>blank</code> values. Registered StringConverters are resolved through the supplied container for these values.
+For <code>set</code>, an exact parameter key is checked first; if it does not match, the value is interpreted as a
+JVM/OMPlatform property name, except for the exact system-property expression described above.
+<p>
+<b>Combining conditions and removing subtrees:</b> Multiple conditions on one element are combined with AND.
+Nested elements are processed only while their parents remain included. Excluding an element removes its entire
+subtree, and all conditional attributes are removed from retained elements.
+<p>
+<b>Namespace awareness and ordinary attributes:</b> The DOM must have been parsed with namespace awareness enabled
+for the namespace-qualified conditions to be recognized. This method expands values used to evaluate conditions
+only; it does not expand ordinary attributes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>document</code> - the document to preprocess</dd>
+<dd><code>parameters</code> - the configuration parameters used by <code>true</code> and <code>blank</code>, and queried by exact key
+         for <code>set</code></dd>
+<dd><code>container</code> - the container used to resolve StringConverters in <code>true</code> and <code>blank</code> values</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if an operator or expanded <code>true</code> value is invalid, or if the root element
+          is excluded</dd>
+<dt>Since:</dt>
+<dd>3.31</dd>
 </dl>
 </div>
 </section>

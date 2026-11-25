@@ -64,6 +64,7 @@
 		<factory type="gzip" class="org.eclipse.net4j.util.io.GZIPStreamWrapper$Factory" contributor="org.eclipse.net4j"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringConverters" name="String Converters" description="" deprecated="false">
+		<factory type="and" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.AND" contributor="org.eclipse.net4j.util"/>
 		<factory type="base64" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.BASE64" contributor="org.eclipse.net4j.util"/>
 		<factory type="cap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP" contributor="org.eclipse.net4j.util"/>
 		<factory type="cap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP_ALL" contributor="org.eclipse.net4j.util"/>
@@ -73,6 +74,11 @@
 		<factory type="cdo.lm.server.repository_type" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="cdo.lm.server.system_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="chars" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CHARS" contributor="org.eclipse.net4j.util"/>
+		<factory type="contains" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CONTAINS" contributor="org.eclipse.net4j.util"/>
+		<factory type="contains_ignore_case" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CONTAINS_IGNORE_CASE" contributor="org.eclipse.net4j.util"/>
+		<factory type="ends_with" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.ENDS_WITH" contributor="org.eclipse.net4j.util"/>
+		<factory type="equals" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.EQUALS" contributor="org.eclipse.net4j.util"/>
+		<factory type="equals_ignore_case" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.EQUALS_IGNORE_CASE" contributor="org.eclipse.net4j.util"/>
 		<factory type="escape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.ESCAPE" contributor="org.eclipse.net4j.util"/>
 		<factory type="hex" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.HEX" contributor="org.eclipse.net4j.util"/>
 		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.IDENTITY" contributor="org.eclipse.net4j.util"/>
@@ -80,13 +86,17 @@
 		<factory type="net4j_config_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_CONFIG_PATH" contributor="org.eclipse.net4j.util"/>
 		<factory type="net4j_state_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_STATE_PATH" contributor="org.eclipse.net4j.util"/>
 		<factory type="net4j_user_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_USER_PATH" contributor="org.eclipse.net4j.util"/>
+		<factory type="not" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NOT" contributor="org.eclipse.net4j.util"/>
+		<factory type="or" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.OR" contributor="org.eclipse.net4j.util"/>
 		<factory type="property_uri" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.PROPERTY_URI" contributor="org.eclipse.net4j.util"/>
 		<factory type="safe" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.SAFE" contributor="org.eclipse.net4j.util"/>
+		<factory type="starts_with" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.STARTS_WITH" contributor="org.eclipse.net4j.util"/>
 		<factory type="system_property" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.SYSTEM_PROPERTY" contributor="org.eclipse.net4j.util"/>
 		<factory type="uncap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNCAP" contributor="org.eclipse.net4j.util"/>
 		<factory type="uncap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNCAP_ALL" contributor="org.eclipse.net4j.util"/>
 		<factory type="unescape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNESCAPE" contributor="org.eclipse.net4j.util"/>
 		<factory type="upper" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UPPER" contributor="org.eclipse.net4j.util"/>
+		<factory type="xor" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.XOR" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringParsers" name="String Parsers" description="" deprecated="false">
 		<factory type="boolean" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BOOLEAN" contributor="org.eclipse.net4j.util"/>

@@ -83,7 +83,14 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOPermissionUpdater</span></div>
 <div class="block">A <a href="../../cdo/session/CDOSession.Options.html#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)"><code>pluggable</code></a>
-strategy for updating the permissions of a set of <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
+strategy for updating the permissions of a set of <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.
+<p>
+Permission updates may temporarily suspend revision loading. An implementation must not synchronously or indirectly
+wait for a revision load through the supplied session while its update is executing. This restriction includes
+waiting for another thread that performs such a load. Accessing an already cached revision is not categorically
+prohibited, but an operation that may trigger loading must not be relied upon to complete during the update. The
+permission-protocol operations used by the built-in server updaters are not revision loads and are permitted. This is
+a restriction on updater implementations, not a general requirement that they be non-reentrant.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>

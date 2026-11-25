@@ -122,6 +122,12 @@ unsuccessfully unless already successfully completed.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#addStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" class="member-name-link">addStreamWrapper(IStreamWrapper)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/MessageConnector.html#advanceConnectionAfterHandshake(long)" class="member-name-link">advanceConnectionAfterHandshake(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.html" title="class in org.eclipse.spi.net4j">MessageConnector</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#advanceConnectionAfterHandshake(long)" class="member-name-link">advanceConnectionAfterHandshake(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Advances the connector after a compatible HELLO.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/security/AuthenticatingSignalProtocol.html" class="type-name-link" title="class in org.eclipse.net4j.signal.security">AuthenticatingSignalProtocol&lt;INFRA_STRUCTURE&gt;</a> - Class in <a href="org/eclipse/net4j/signal/security/package-summary.html">org.eclipse.net4j.signal.security</a></dt>
 <dd>
 <div class="block">An abstract signal protocol that supports authentication.</div>
@@ -333,6 +339,10 @@ underlying transport while managing channel registration and lifecycle.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#configure(java.io.File)" class="member-name-link">configure(File)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/TransportConfigurator.html#configure(org.eclipse.net4j.util.XMLConfiguration)" class="member-name-link">configure(XMLConfiguration)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
+<dd>
+<div class="block">Configures transport components from a shared prepared XML snapshot.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#configureAcceptor(org.w3c.dom.Element)" class="member-name-link">configureAcceptor(Element)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#configureNegotiator(org.w3c.dom.Element)" class="member-name-link">configureNegotiator(Element)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
@@ -490,6 +500,30 @@ protocols.</div>
 <dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#CONTROL_OPCODE_NEGOTIATION" class="member-name-link">CONTROL_OPCODE_NEGOTIATION</a> - Static variable in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
 <dd>
 <div class="block">The opcode used for negotiation messages on the shared control channel.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">controlBufferSent(InternalChannel, IBuffer)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Completes the local half of HELLO after a transport confirms that the control buffer was sent successfully.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlBufferSent(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer,long)" class="member-name-link">controlBufferSent(InternalChannel, IBuffer, long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Identifies a completed control buffer only for the activation that submitted it.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlHandshakeCompleted(long)" class="member-name-link">controlHandshakeCompleted(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Completes the normal connector connection progression after the peer's HELLO has been validated.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlHandshakeGeneration()" class="member-name-link">controlHandshakeGeneration()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Returns the activation generation associated with the current control handshake.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlHelloSent()" class="member-name-link">controlHelloSent()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Completes the local HELLO half after a transport finishes transmitting it.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#controlHelloSent(long)" class="member-name-link">controlHelloSent(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Completes the local HELLO half only if the captured activation still owns the pending handshake.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html#copyTransportConfig(org.eclipse.net4j.util.lifecycle.ILifecycle,org.eclipse.net4j.ITransportConfig)" class="member-name-link">copyTransportConfig(ILifecycle, ITransportConfig)</a> - Static method in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -789,6 +823,14 @@ needed to let a given maximum number of buffers survive in the pool.</div>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 </dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#failControlHandshake(long,org.eclipse.net4j.connector.ConnectorException)" class="member-name-link">failControlHandshake(long, ConnectorException)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Records and publishes a control-protocol failure so waiters receive its diagnostic instead of a connection timeout.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#failControlHandshakeIfPending(java.lang.Throwable)" class="member-name-link">failControlHandshakeIfPending(Throwable)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Fails a pending handshake when the transport closes before it advertises a control version.</div>
+</dd>
 <dt><a href="org/eclipse/spi/net4j/MessageConnector.IMessageConnection.SendCallback.html#failed(java.lang.Throwable)" class="member-name-link">failed(Throwable)</a> - Method in interface org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.IMessageConnection.SendCallback.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection.SendCallback</a></dt>
 <dd>
 <div class="block">Called once when transmission failed, delivery became ambiguous, or an accepted send was cancelled during termination.</div>
@@ -897,6 +939,10 @@ needed to let a given maximum number of buffers survive in the pool.</div>
 <dt><a href="org/eclipse/net4j/signal/RequestWithConfirmation.html#getAsyncExecutorService()" class="member-name-link">getAsyncExecutorService()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#getAttribute(org.w3c.dom.Element,java.lang.String)" class="member-name-link">getAttribute(Element, String)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/tcp/ITCPAcceptor.html#getBoundAddress()" class="member-name-link">getBoundAddress()</a> - Method in interface org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/tcp/ITCPAcceptor.html#getBoundPort()" class="member-name-link">getBoundPort()</a> - Method in interface org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/ITCPAcceptor.html" title="interface in org.eclipse.net4j.tcp">ITCPAcceptor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBufferProvider.Notification.BufferProvidedEvent.html#getBuffer()" class="member-name-link">getBuffer()</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBufferProvider.Notification.BufferProvidedEvent.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Notification.BufferProvidedEvent</a></dt>
 <dd>&nbsp;</dd>
@@ -1721,6 +1767,18 @@ scenario.</div>
 <dd>
 <div class="block">A <a href="org/eclipse/net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j"><code>location</code></a> in a <a href="org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/connector/IncompatibleControlProtocolException.html" class="type-name-link" title="class in org.eclipse.net4j.connector">IncompatibleControlProtocolException</a> - Exception Class in <a href="org/eclipse/net4j/connector/package-summary.html">org.eclipse.net4j.connector</a></dt>
+<dd>
+<div class="block">Reports that a peer cannot participate in the negotiated Net4j control protocol.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/connector/IncompatibleControlProtocolException.html#%3Cinit%3E(java.lang.String)" class="member-name-link">IncompatibleControlProtocolException(String)</a> - Constructor for exception class org.eclipse.net4j.connector.<a href="org/eclipse/net4j/connector/IncompatibleControlProtocolException.html" title="class in org.eclipse.net4j.connector">IncompatibleControlProtocolException</a></dt>
+<dd>
+<div class="block">Creates a control-protocol incompatibility with a diagnostic message.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/connector/IncompatibleControlProtocolException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">IncompatibleControlProtocolException(String, Throwable)</a> - Constructor for exception class org.eclipse.net4j.connector.<a href="org/eclipse/net4j/connector/IncompatibleControlProtocolException.html" title="class in org.eclipse.net4j.connector">IncompatibleControlProtocolException</a></dt>
+<dd>
+<div class="block">Creates a control-protocol incompatibility with a diagnostic message and its originating failure.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsIndication.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">indicating(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsIndication.html" title="class in org.eclipse.net4j.signal">AcknowledgeCompressedStringsIndication</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/EntityIndication.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">indicating(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
@@ -1890,6 +1948,14 @@ dequeued.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Connector.html#isConnecting()" class="member-name-link">isConnecting()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#isControlHelloBuffer(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">isControlHelloBuffer(InternalChannel, IBuffer)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Returns whether a complete frame is the HELLO sent on this connector's control channel.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#isCurrentControlHandshakeGeneration(long)" class="member-name-link">isCurrentControlHandshakeGeneration(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Returns whether the supplied control-handshake generation still belongs to the current activation.</div>
+</dd>
 <dt><a href="org/eclipse/spi/net4j/Connector.html#isDeferredActivation()" class="member-name-link">isDeferredActivation()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Connector.html#isDisconnected()" class="member-name-link">isDisconnected()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></dt>
@@ -2019,6 +2085,10 @@ multiplexer</code></a>, <a href="org/eclipse/net4j/connector/IConnector.html" ti
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
 <dt><a href="org/eclipse/spi/net4j/Connector.html#leaveConnecting()" class="member-name-link">leaveConnecting()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/MessageConnector.html#leaveConnecting()" class="member-name-link">leaveConnecting()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.html" title="class in org.eclipse.spi.net4j">MessageConnector</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#leaveConnecting()" class="member-name-link">leaveConnecting()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html#LOCAL_ACCEPTOR_DESCRIPTION" class="member-name-link">LOCAL_ACCEPTOR_DESCRIPTION</a> - Static variable in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -2172,6 +2242,12 @@ indicates that this buffer is not intended to be passed to a <a href="https://do
 <dt><a href="org/eclipse/spi/net4j/MessageConnector.html#onActivationFailed()" class="member-name-link">onActivationFailed()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.html" title="class in org.eclipse.spi.net4j">MessageConnector</a></dt>
 <dd>
 <div class="block">Called after a provider terminates while this connector is still undergoing deferred activation.</div>
+</dd>
+<dt><a href="org/eclipse/spi/net4j/MessageConnector.html#onControlHandshakeCompleted(long)" class="member-name-link">onControlHandshakeCompleted(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.html" title="class in org.eclipse.spi.net4j">MessageConnector</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#onControlHandshakeCompleted(long)" class="member-name-link">onControlHandshakeCompleted(long)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
+<dd>
+<div class="block">Called after normal connector progression resumes so transports can restart work deferred during the handshake.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/signal/RequestWithConfirmation.html#onRemoteException(org.eclipse.net4j.signal.RemoteException)" class="member-name-link">onRemoteException(RemoteException)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation</a></dt>
 <dd>&nbsp;</dd>

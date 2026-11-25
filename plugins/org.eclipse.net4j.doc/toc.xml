@@ -106,6 +106,7 @@
         <topic label="IConnector" href="javadoc/org/eclipse/net4j/connector/IConnector.html" icon="interface" />
         <topic label="IConnectorEvent" href="javadoc/org/eclipse/net4j/connector/IConnectorEvent.html" icon="interface" />
         <topic label="IConnectorStateEvent" href="javadoc/org/eclipse/net4j/connector/IConnectorStateEvent.html" icon="interface" />
+        <topic label="IncompatibleControlProtocolException" href="javadoc/org/eclipse/net4j/connector/IncompatibleControlProtocolException.html" icon="class" />
         <topic label="IServerConnector" href="javadoc/org/eclipse/net4j/connector/IServerConnector.html" icon="interface" />
       </topic>
       <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package">

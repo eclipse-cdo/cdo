@@ -185,88 +185,92 @@ serialize, and rebase versioned object state.</div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Internal cache and interner for revisions shared by a revision manager.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalCDORevisionCache.InternResult.html" title="class in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache.InternResult</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Result of an atomic cache interning operation whose event delivery is deferred to the caller.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Mutable internal form of a revision delta used while building, applying, and rebasing changes to one object.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">Internal owner of revision loading, interning, and caching for a session or repository.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Storage boundary used by the revision manager to retrieve revision state and enumerate historical revisions.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">Revision-loader extension for retrieving an object's lifetime at a branch point, enabling the manager to answer
 whether the object existed there without loading its full feature state.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Revision-loader extension for batch loading revision metadata and values using the older explicit chunk and
 prefetch options.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">The canonical revision-loading extension.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Lock used to keep a multi-step revision request atomic with respect to other loads for the same key.</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">Deprecated.
+<div class="deprecation-comment">As of 4.29 no longer supported or used.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A revision provider backed by a <a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> that provides revisions which are
 <a href="../../../common/revision/CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>valid</code></a> at the configured <a href="ManagedRevisionProvider.html#getBranchPoint()"><code>branch point</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ManagedRevisionProvider.WithSynthetics.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider.WithSynthetics</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ManagedRevisionProvider.WithSynthetics.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider.WithSynthetics</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A managed revision provider that can also provide <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic revisions</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MapRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">MapRevisionProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">MapRevisionProvider</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A revision providing <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link"><code>HashMap</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic</code></a> revision that represents the initial period of an object in a
 <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is still associated with a revision from one of the baseline branches.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Request and response record used by the revision-loading protocol for one object at a branch point.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Common request form for an object revision found in branch history.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Detached.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Detached</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Detached.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Detached</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Revision lookup result indicating that the object's latest relevant state is a detachment.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Normal.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Normal</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Normal.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Normal</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Revision lookup result for an object whose state is available directly at the requested branch point.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Pointer.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Pointer</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Pointer.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Pointer</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Revision lookup result for an object whose available state points to another branch version.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Missing.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Missing.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Revision lookup result for an object with no state available at the requested history point.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="RevisionInfo.Type.html" title="enum class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="RevisionInfo.Type.html" title="enum class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
 <div class="block">Wire-level category for a revision lookup result.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A synthetic revision that represents the initial period of an object in a <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> when the object is
 still associated with a revision from one of the baseline branches.</div>
 </div>

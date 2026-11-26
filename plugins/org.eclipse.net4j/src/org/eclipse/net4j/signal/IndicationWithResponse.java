@@ -76,6 +76,7 @@ public abstract class IndicationWithResponse extends SignalReactor
     }
     catch (Exception | Error ex)
     {
+      // Exception transmission is best effort; preserve the indication failure as the primary outcome.
       sendExceptionSignal(ex, responding);
       throw ex;
     }
@@ -101,22 +102,43 @@ public abstract class IndicationWithResponse extends SignalReactor
     responding(out);
   }
 
-  void sendExceptionSignal(Throwable t, boolean responding) throws Exception
+  void sendExceptionSignal(Throwable t, boolean responding)
   {
     SignalProtocol<?> protocol = getProtocol();
-    int correlationID = -getCorrelationID();
-    String message = getExceptionMessage(t);
-    boolean closeChannel = closeChannelAfterException();
-
-    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, t)
+    if (!protocol.isActive() || protocol.getChannel() == null)
     {
-      @Override
-      protected boolean closeChannelAfterMe()
-      {
-        return closeChannel;
-      }
-    };
+      SignalProtocol.traceDeactivation("Skipped remote exception propagation after protocol deactivation", null); //$NON-NLS-1$
+      return;
+    }
 
-    request.sendAsync();
+    try
+    {
+      int correlationID = -getCorrelationID();
+      String message = getExceptionMessage(t);
+      boolean closeChannel = closeChannelAfterException();
+
+      RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, t)
+      {
+        @Override
+        protected boolean closeChannelAfterMe()
+        {
+          return closeChannel;
+        }
+      };
+
+      request.sendAsync();
+    }
+    catch (Throwable secondary)
+    {
+      if (secondary instanceof SignalProtocolDeactivatedException)
+      {
+        SignalProtocol.traceDeactivation("Remote exception propagation raced with protocol deactivation", secondary); //$NON-NLS-1$
+      }
+      else if (secondary != t)
+      {
+        // Keep the application failure visible while retaining an unexpected transport failure for diagnosis.
+        t.addSuppressed(secondary);
+      }
+    }
   }
 }

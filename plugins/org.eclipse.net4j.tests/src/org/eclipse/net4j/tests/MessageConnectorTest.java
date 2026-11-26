@@ -18,9 +18,9 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.SignalProtocolDeactivatedException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
@@ -41,12 +41,10 @@ import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
 import org.eclipse.spi.net4j.Protocol;
 import org.eclipse.spi.net4j.SchedulingConnector;
 
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
-import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -129,6 +127,7 @@ public class MessageConnectorTest extends AbstractOMTest
   {
     MemoryConnection connection = new MemoryConnection();
     TestConnector connector = activate(connection);
+    int initialReceiveQueueCount = connector.getReceiveQueueCountForTest();
     IChannel channel = connector.openInverse((short)-28);
     CountDownLatch raceStart = new CountDownLatch(1);
     CountDownLatch frameReleased = new CountDownLatch(1);
@@ -170,11 +169,12 @@ public class MessageConnectorTest extends AbstractOMTest
       remover.join(5000);
       assertFalse("The receive callback did not finish", receiver.isAlive()); //$NON-NLS-1$
       assertFalse("The channel close did not finish", remover.isAlive()); //$NON-NLS-1$
+      assertEquals("Channel removal retained its receive queue", initialReceiveQueueCount, connector.getReceiveQueueCountForTest()); //$NON-NLS-1$
       assertTrue("The frame was not released after the channel removal race", frameReleased.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       assertNull(failure.get());
       assertNull(connector.getChannel((short)-28));
-      assertFalse("The receive/removal interleaving left a queue for the removed channel", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
       assertEquals("The stale-channel frame was not released exactly once", 1, providerReleases.get()); //$NON-NLS-1$
+      assertEquals("The removed channel's receive queue was retained", initialReceiveQueueCount, connector.getReceiveQueueCountForTest()); //$NON-NLS-1$
     }
     finally
     {
@@ -198,15 +198,15 @@ public class MessageConnectorTest extends AbstractOMTest
   {
     MemoryConnection connection = new MemoryConnection();
     TestConnector connector = activate(connection);
+    int initialReceiveQueueCount = connector.getReceiveQueueCountForTest();
     IChannel channel = connector.openInverse((short)-29);
     CountDownLatch frameReleased = new CountDownLatch(1);
     AtomicInteger providerReleases = new AtomicInteger();
     try
     {
-      assertFalse("A receive queue existed before the channel's first received frame", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
       channel.close();
       assertNull("The channel remained registered after removal", connector.getChannel((short)-29)); //$NON-NLS-1$
-      assertFalse("Removing a channel left a receive queue behind", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
+      assertEquals("Channel removal retained its receive queue", initialReceiveQueueCount, connector.getReceiveQueueCountForTest()); //$NON-NLS-1$
 
       connection.receive(dataFrame((short)-29), () -> {
         providerReleases.incrementAndGet();
@@ -215,8 +215,8 @@ public class MessageConnectorTest extends AbstractOMTest
 
       assertTrue("The frame for the removed channel was not released", frameReleased.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       assertNull("A stale frame made the removed channel visible again", connector.getChannel((short)-29)); //$NON-NLS-1$
-      assertFalse("The first stale frame reintroduced a receive queue for the removed channel", receiveQueues(connector).containsKey(channel)); //$NON-NLS-1$
       assertEquals("The discarded frame was not released exactly once", 1, providerReleases.get()); //$NON-NLS-1$
+      assertEquals("A stale frame created an orphaned receive queue", initialReceiveQueueCount, connector.getReceiveQueueCountForTest()); //$NON-NLS-1$
     }
     finally
     {
@@ -350,9 +350,8 @@ public class MessageConnectorTest extends AbstractOMTest
       awaitInactive(connector);
       requestThread.join(5000);
       assertFalse("Receive-budget exhaustion did not unblock the pending confirmation", requestThread.isAlive()); //$NON-NLS-1$
-      assertTrue("The pending request did not fail with a transport lifecycle exception", //$NON-NLS-1$
-          requestFailure.get() instanceof RemoteException);
-      assertTrue("The pending request did not report protocol deactivation", requestFailure.get().getMessage().contains("deactivated")); //$NON-NLS-1$
+      assertTrue("The pending request did not fail with a protocol deactivation exception", //$NON-NLS-1$
+          requestFailure.get() instanceof SignalProtocolDeactivatedException);
       assertEquals("The leased partial response was not released exactly once", 1, partialResponseReleases.get()); //$NON-NLS-1$
       assertEquals("The frame rejected by the receive budget was not released exactly once", 1, exhaustionFrameReleases.get()); //$NON-NLS-1$
       assertTrue("The exhausted connection was not aborted", connection.aborted); //$NON-NLS-1$
@@ -1814,13 +1813,6 @@ public class MessageConnectorTest extends AbstractOMTest
     return buffer;
   }
 
-  private static Map<?, ?> receiveQueues(MessageConnector connector) throws ReflectiveOperationException
-  {
-    Field field = MessageConnector.class.getDeclaredField("channelReceiveQueues"); //$NON-NLS-1$
-    field.setAccessible(true);
-    return (Map<?, ?>)field.get(connector);
-  }
-
   private static ByteBuffer registrationFrame(short channelID)
   {
     byte[] protocolID = "test.protocol".getBytes(StandardCharsets.UTF_8); //$NON-NLS-1$
@@ -1969,6 +1961,11 @@ public class MessageConnectorTest extends AbstractOMTest
     private void setSkipPeerRegistration(boolean skipPeerRegistration)
     {
       this.skipPeerRegistration = skipPeerRegistration;
+    }
+
+    private int getReceiveQueueCountForTest()
+    {
+      return getReceiveQueueCount();
     }
 
     @Override

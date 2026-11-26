@@ -11,10 +11,8 @@
  */
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.RunnableWithException;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.monitor.TimeoutMonitor;
@@ -188,10 +186,13 @@ public abstract class SignalReactor extends Signal
       }
       catch (Exception ex)
       {
-        IChannel channel = protocol.getChannel();
-        if (LifecycleUtil.isActive(channel))
+        if (ex instanceof SignalProtocolDeactivatedException)
         {
-          ExceptionHandler.Factory.handle(SignalReactor.this, ex, "MonitorProgressRequest failed", OM.LOG);
+          SignalProtocol.traceDeactivation("Monitor progress reporting stopped during protocol deactivation", ex); //$NON-NLS-1$
+        }
+        else
+        {
+          ExceptionHandler.Factory.handle(SignalReactor.this, ex, "MonitorProgressRequest failed", OM.LOG); //$NON-NLS-1$
         }
       }
     }

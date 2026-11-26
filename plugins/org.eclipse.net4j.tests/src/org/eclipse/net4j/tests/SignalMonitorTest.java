@@ -12,12 +12,14 @@
  */
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.SignalProtocolDeactivatedException;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.config.Net4jTestSuite;
@@ -59,9 +61,27 @@ public class SignalMonitorTest extends AbstractConfigTest
 
   public static final short SIGNAL_3 = 3;
 
+  public static final short SIGNAL_4 = 4;
+
+  public static final short SIGNAL_5 = 5;
+
   private CountDownLatch pendingConfirmationStarted;
 
   private CountDownLatch releasePendingConfirmation;
+
+  private CountDownLatch pendingIndicationStarted;
+
+  private CountDownLatch releasePendingIndication;
+
+  private CountDownLatch serverProtocolDeactivated;
+
+  private CountDownLatch indicationFailureHandled;
+
+  private AtomicReference<Throwable> indicationFailure;
+
+  private AtomicReference<Throwable> expectedIndicationFailure;
+
+  private AtomicReference<Throwable> expectedPropagationFailure;
 
   /**
    * Creates this test class under every supported transport configuration.
@@ -85,7 +105,8 @@ public class SignalMonitorTest extends AbstractConfigTest
       @Override
       public Object create(String description) throws ProductCreationException
       {
-        return new ServerProtocol(pendingConfirmationStarted, releasePendingConfirmation);
+        return new ServerProtocol(pendingConfirmationStarted, releasePendingConfirmation, pendingIndicationStarted, releasePendingIndication,
+            serverProtocolDeactivated, indicationFailureHandled, indicationFailure, expectedIndicationFailure, expectedPropagationFailure);
       }
     });
 
@@ -194,7 +215,8 @@ public class SignalMonitorTest extends AbstractConfigTest
       protocol.close();
       requestThread.join(1000);
       assertFalse("Protocol deactivation left the confirmation reader blocked", requestThread.isAlive()); //$NON-NLS-1$
-      assertTrue("The pending request did not receive a terminal protocol failure", failure.get() instanceof RemoteException); //$NON-NLS-1$
+      assertTrue("The pending request did not receive a local protocol deactivation failure", //$NON-NLS-1$
+          failure.get() instanceof SignalProtocolDeactivatedException);
     }
     finally
     {
@@ -205,6 +227,115 @@ public class SignalMonitorTest extends AbstractConfigTest
         requestThread.interrupt();
         requestThread.join(1000);
       }
+    }
+  }
+
+  public void testOngoingIndicationFailureAfterProtocolDeactivation() throws Exception
+  {
+    pendingIndicationStarted = new CountDownLatch(1);
+    releasePendingIndication = new CountDownLatch(1);
+    serverProtocolDeactivated = new CountDownLatch(1);
+    indicationFailureHandled = new CountDownLatch(1);
+    indicationFailure = new AtomicReference<>();
+    expectedIndicationFailure = new AtomicReference<>();
+    startTransport();
+
+    SignalProtocol<Object> protocol = new ClientProtocol();
+    protocol.open(getConnector());
+    AtomicReference<Throwable> clientFailure = new AtomicReference<>();
+    Thread requestThread = new Thread(() -> {
+      try
+      {
+        new RequestWithConfirmation<Boolean>(protocol, SIGNAL_4)
+        {
+          @Override
+          protected void requesting(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+
+          @Override
+          protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+          {
+            return in.readBoolean();
+          }
+        }.send();
+      }
+      catch (Throwable ex)
+      {
+        clientFailure.set(ex);
+      }
+    }, "Indication failing during protocol deactivation"); //$NON-NLS-1$
+
+    try
+    {
+      requestThread.start();
+      assertTrue("Server did not start the pending indication", pendingIndicationStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      protocol.close();
+      assertTrue("Server protocol did not deactivate", serverProtocolDeactivated.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      releasePendingIndication.countDown();
+
+      assertTrue("The indication failure was not handled", indicationFailureHandled.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertSame(expectedIndicationFailure.get(), indicationFailure.get());
+      assertEquals(0, indicationFailure.get().getSuppressed().length);
+      requestThread.join(1000);
+      assertFalse("Protocol deactivation left the request reader blocked", requestThread.isAlive()); //$NON-NLS-1$
+      assertTrue(clientFailure.get() instanceof SignalProtocolDeactivatedException);
+    }
+    finally
+    {
+      releasePendingIndication.countDown();
+      protocol.close();
+      requestThread.join(1000);
+    }
+  }
+
+  public void testIndicationFailureRetainsSecondaryTransmissionFailure() throws Exception
+  {
+    indicationFailureHandled = new CountDownLatch(1);
+    indicationFailure = new AtomicReference<>();
+    expectedIndicationFailure = new AtomicReference<>();
+    expectedPropagationFailure = new AtomicReference<>(new IllegalStateException("Secondary transmission failure")); //$NON-NLS-1$
+    startTransport();
+
+    SignalProtocol<Object> protocol = new ClientProtocol();
+    protocol.open(getConnector());
+    Thread requestThread = new Thread(() -> {
+      try
+      {
+        new RequestWithConfirmation<Boolean>(protocol, SIGNAL_5)
+        {
+          @Override
+          protected void requesting(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+
+          @Override
+          protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+          {
+            return in.readBoolean();
+          }
+        }.send();
+      }
+      catch (Exception ignore)
+      {
+        // The caller closes the protocol after checking the server-side failure.
+      }
+    }, "Indication with secondary propagation failure"); //$NON-NLS-1$
+
+    try
+    {
+      requestThread.start();
+      assertTrue("The indication failure was not handled", indicationFailureHandled.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertSame(expectedIndicationFailure.get(), indicationFailure.get());
+      assertEquals(1, indicationFailure.get().getSuppressed().length);
+      assertSame(expectedPropagationFailure.get(), indicationFailure.get().getSuppressed()[0]);
+    }
+    finally
+    {
+      protocol.close();
+      requestThread.join(1000);
     }
   }
 
@@ -247,11 +378,67 @@ public class SignalMonitorTest extends AbstractConfigTest
 
     private final CountDownLatch releasePendingConfirmation;
 
-    private ServerProtocol(CountDownLatch pendingConfirmationStarted, CountDownLatch releasePendingConfirmation)
+    private final CountDownLatch pendingIndicationStarted;
+
+    private final CountDownLatch releasePendingIndication;
+
+    private final CountDownLatch serverProtocolDeactivated;
+
+    private final CountDownLatch indicationFailureHandled;
+
+    private final AtomicReference<Throwable> indicationFailure;
+
+    private final AtomicReference<Throwable> expectedIndicationFailure;
+
+    private final AtomicReference<Throwable> expectedPropagationFailure;
+
+    private volatile boolean failExceptionPropagation;
+
+    public ServerProtocol(CountDownLatch pendingConfirmationStarted, CountDownLatch releasePendingConfirmation, CountDownLatch pendingIndicationStarted,
+        CountDownLatch releasePendingIndication, CountDownLatch serverProtocolDeactivated, CountDownLatch indicationFailureHandled,
+        AtomicReference<Throwable> indicationFailure, AtomicReference<Throwable> expectedIndicationFailure,
+        AtomicReference<Throwable> expectedPropagationFailure)
     {
       super(PROTOCOL_TYPE);
       this.pendingConfirmationStarted = pendingConfirmationStarted;
       this.releasePendingConfirmation = releasePendingConfirmation;
+      this.pendingIndicationStarted = pendingIndicationStarted;
+      this.releasePendingIndication = releasePendingIndication;
+      this.serverProtocolDeactivated = serverProtocolDeactivated;
+      this.indicationFailureHandled = indicationFailureHandled;
+      this.indicationFailure = indicationFailure;
+      this.expectedIndicationFailure = expectedIndicationFailure;
+      this.expectedPropagationFailure = expectedPropagationFailure;
+    }
+
+    @Override
+    public IBufferProvider getBufferProvider()
+    {
+      if (failExceptionPropagation)
+      {
+        return new IBufferProvider()
+        {
+          @Override
+          public short getBufferCapacity()
+          {
+            return 0;
+          }
+
+          @Override
+          public IBuffer provideBuffer()
+          {
+            throw (RuntimeException)expectedPropagationFailure.get();
+          }
+
+          @Override
+          public void retainBuffer(IBuffer buffer)
+          {
+            buffer.release();
+          }
+        };
+      }
+
+      return super.getBufferProvider();
     }
 
     @Override
@@ -357,8 +544,80 @@ public class SignalMonitorTest extends AbstractConfigTest
           }
         };
 
+      case SIGNAL_4:
+        return new IndicationWithResponse(this, SIGNAL_4)
+        {
+          @Override
+          protected void indicating(ExtendedDataInputStream in) throws Exception
+          {
+            in.readBoolean();
+            pendingIndicationStarted.countDown();
+            releasePendingIndication.await();
+
+            IllegalStateException exception = new IllegalStateException("Application indication failure"); //$NON-NLS-1$
+            expectedIndicationFailure.set(exception);
+            throw exception;
+          }
+
+          @Override
+          protected void responding(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+
+          @Override
+          protected void handleRunException(Throwable ex) throws Throwable
+          {
+            indicationFailure.set(ex);
+            indicationFailureHandled.countDown();
+          }
+        };
+
+      case SIGNAL_5:
+        return new IndicationWithResponse(this, SIGNAL_5)
+        {
+          @Override
+          protected void indicating(ExtendedDataInputStream in) throws Exception
+          {
+            in.readBoolean();
+            IllegalStateException exception = new IllegalStateException("Application indication failure"); //$NON-NLS-1$
+            expectedIndicationFailure.set(exception);
+            failExceptionPropagation = true;
+            throw exception;
+          }
+
+          @Override
+          protected void responding(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+
+          @Override
+          protected void handleRunException(Throwable ex) throws Throwable
+          {
+            indicationFailure.set(ex);
+            indicationFailureHandled.countDown();
+          }
+        };
+
       default:
         return super.createSignalReactor(signalID);
+      }
+    }
+
+    @Override
+    protected void doDeactivate() throws Exception
+    {
+      try
+      {
+        super.doDeactivate();
+      }
+      finally
+      {
+        if (serverProtocolDeactivated != null)
+        {
+          serverProtocolDeactivated.countDown();
+        }
       }
     }
   }
@@ -389,7 +648,7 @@ public class SignalMonitorTest extends AbstractConfigTest
 
     private volatile boolean intermediateRemoteProgress;
 
-    private TestMonitor()
+    public TestMonitor()
     {
       this(Thread.currentThread());
     }

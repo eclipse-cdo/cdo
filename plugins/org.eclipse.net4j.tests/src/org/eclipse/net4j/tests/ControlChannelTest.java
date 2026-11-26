@@ -615,7 +615,7 @@ public class ControlChannelTest extends AbstractOMTest
       registration.join(TimeUnit.SECONDS.toMillis(5));
       assertFalse("Registration thread did not terminate", registration.isAlive()); //$NON-NLS-1$
       assertNotNull(failure.get());
-      assertTrue(failure.get().getMessage().contains("deactivated")); //$NON-NLS-1$
+      assertTrue(failure.get() instanceof ChannelException);
     }
     finally
     {

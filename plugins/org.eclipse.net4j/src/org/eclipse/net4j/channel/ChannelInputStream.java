@@ -31,6 +31,7 @@ public class ChannelInputStream extends BufferInputStream
 
   private long millisBeforeTimeout = DEFAULT_MILLIS_BEFORE_TIMEOUT;
 
+  @SuppressWarnings("deprecation")
   private long millisInterruptCheck = DEFAULT_MILLIS_INTERRUPT_CHECK;
 
   public ChannelInputStream(IChannel channel)
@@ -62,12 +63,25 @@ public class ChannelInputStream extends BufferInputStream
     this.millisBeforeTimeout = millisBeforeTimeout;
   }
 
+  /**
+   * @deprecated Periodic interrupt checks are no longer performed by {@link BufferInputStream}.
+   *
+   * @since 2.0
+   */
+  @Deprecated
   @Override
   public long getMillisInterruptCheck()
   {
     return millisInterruptCheck;
   }
 
+  /**
+   * @deprecated Periodic interrupt checks are no longer performed by {@link BufferInputStream}; this value is retained
+   *             only for compatibility with existing callers.
+   *
+   * @since 2.0
+   */
+  @Deprecated
   public void setMillisInterruptCheck(long millisInterruptCheck)
   {
     this.millisInterruptCheck = millisInterruptCheck;

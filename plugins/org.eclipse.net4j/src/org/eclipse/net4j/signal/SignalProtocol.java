@@ -27,7 +27,6 @@ import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
 import org.eclipse.net4j.util.io.StringCompressor;
@@ -374,12 +373,19 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
     synchronized (signals)
     {
-      if (correlationID > 0)
+      IChannel channel = getChannel();
+      IBufferProvider bufferProvider = getBufferProvider();
+      if (!isActive() || channel == null || bufferProvider == null)
+      {
+        // The channel can deliver its last buffer after deactivation has begun; discard it below.
+      }
+      else if (correlationID > 0)
       {
         // Incoming indication
         if (beginOfSignal)
         {
           short signalID = byteBuffer.getShort();
+
           if (TRACER.isEnabled())
           {
             TRACER.trace("Got signalID: " + signalID); //$NON-NLS-1$
@@ -393,7 +399,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
             if (signal instanceof IndicationWithResponse)
             {
-              signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+              signal.setBufferOutputStream(new SignalOutputStream(channel, bufferProvider, -correlationID, signalID, false));
             }
 
             signals.put(-correlationID, signal);
@@ -476,7 +482,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
           BufferInputStream inputStream = signal.getBufferInputStream();
           if (inputStream != null)
           {
-            inputStream.setException(new RemoteException("Signal protocol was deactivated", false)); //$NON-NLS-1$
+            // Deactivation is a local lifecycle event, not a failure reported by the peer.
+            inputStream.abort(new SignalProtocolDeactivatedException());
           }
         }
 
@@ -766,10 +773,17 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   {
     checkArg(signalActor.getProtocol() == this, "Wrong protocol"); //$NON-NLS-1$
 
+    IChannel channel = getChannel();
+    IBufferProvider bufferProvider = getBufferProvider();
+    if (!isActive() || channel == null || bufferProvider == null)
+    {
+      throw new SignalProtocolDeactivatedException();
+    }
+
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
 
-    signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
+    signalActor.setBufferOutputStream(new SignalOutputStream(channel, bufferProvider, correlationID, signalID, true));
     if (signalActor instanceof RequestWithConfirmation<?>)
     {
       signalActor.setBufferInputStream(new SignalInputStream(timeout));
@@ -777,6 +791,12 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
     synchronized (signals)
     {
+      // Coordinate registration with doDeactivate's signal-map clear without serializing signal execution.
+      if (!isActive() || getChannel() != channel)
+      {
+        throw new SignalProtocolDeactivatedException();
+      }
+
       signals.put(correlationID, signalActor);
     }
 
@@ -879,9 +899,24 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
         }
         catch (Exception ex)
         {
-          ExceptionHandler.Factory.handle(this, ex, "AcknowledgeCompressedStringsRequest failed", OM.LOG);
+          if (ex instanceof SignalProtocolDeactivatedException)
+          {
+            traceDeactivation("Skipped compressed-string acknowledgement during protocol deactivation", ex); //$NON-NLS-1$
+          }
+          else
+          {
+            ExceptionHandler.Factory.handle(this, ex, "AcknowledgeCompressedStringsRequest failed", OM.LOG); //$NON-NLS-1$
+          }
         }
       }
+    }
+  }
+
+  static void traceDeactivation(String message, Throwable exception)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(message, exception);
     }
   }
 
@@ -1017,11 +1052,11 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
    */
   class SignalOutputStream extends ChannelOutputStream
   {
-    public SignalOutputStream(int correlationID, short signalID, boolean request)
+    public SignalOutputStream(IChannel channel, IBufferProvider bufferProvider, int correlationID, short signalID, boolean request)
     {
-      super(getChannel(), new IBufferProvider()
+      super(channel, new IBufferProvider()
       {
-        private IBufferProvider delegate = getBufferProvider();
+        private IBufferProvider delegate = bufferProvider;
 
         private boolean beginOfSignal = true;
 
@@ -1036,10 +1071,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
         @Override
         public IBuffer provideBuffer()
         {
-          IChannel channel = getChannel();
-          if (channel == null)
+          if (!isActive() || getChannel() != channel)
           {
-            throw new IORuntimeException("No channel for protocol " + SignalProtocol.this); //$NON-NLS-1$
+            throw new SignalProtocolDeactivatedException();
           }
 
           IBuffer buffer = delegate.provideBuffer();

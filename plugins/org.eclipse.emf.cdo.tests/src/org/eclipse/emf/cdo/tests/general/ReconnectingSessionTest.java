@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -703,28 +704,28 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       synchronized (received)
       {
         received.add(type);
+        received.notifyAll();
       }
     }
 
     public void assertReceivedMessages(List<String> expected) throws InterruptedException
     {
-      long timeout = System.currentTimeMillis() + 2000;
-
-      while (System.currentTimeMillis() < timeout)
-      {
-        synchronized (received)
-        {
-          if (expected.equals(received))
-          {
-            break;
-          }
-        }
-
-        Thread.sleep(20);
-      }
+      long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(2);
 
       synchronized (received)
       {
+        while (!expected.equals(received))
+        {
+          long remaining = deadline - System.nanoTime();
+          if (remaining <= 0)
+          {
+            break;
+          }
+
+          // The message callback notifies this monitor, avoiding a polling delay to infer delivery.
+          TimeUnit.NANOSECONDS.timedWait(received, remaining);
+        }
+
         assertEquals(expected, received);
       }
     }

@@ -23,7 +23,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
 {
   public void testPutConsumerFirst() throws Exception
   {
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     final CountDownLatch correlationEstablished = new CountDownLatch(1);
     final Boolean[] result = { false };
 
@@ -58,7 +58,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
 
   public void testBlockingPutConsumerFirst() throws Exception
   {
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     final CountDownLatch correlationEstablished = new CountDownLatch(1);
     final Boolean[] result = { false };
 
@@ -82,7 +82,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     msg("Consumed: " + consumed); //$NON-NLS-1$
     assertEquals(true, consumed);
 
-    consumer.join(1000);
+    consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
@@ -112,9 +112,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     };
 
     consumer.start();
-    Thread.sleep(10);
-
-    consumer.join(100);
+    consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
@@ -146,9 +144,10 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     };
 
     consumer.start();
-    Thread.sleep(10);
 
-    consumer.join(1000);
+    // The join only guards against a stuck consumer.
+    // The correlator's 50 ms put timeout is the functional timing assertion.
+    consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
 

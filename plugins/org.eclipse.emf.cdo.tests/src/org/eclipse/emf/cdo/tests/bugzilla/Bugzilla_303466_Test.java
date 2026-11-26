@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.SignalProtocolDeactivatedException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -69,7 +70,11 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     }
     catch (CommitException e)
     {
-      if (e.getCause() instanceof IllegalStateException)
+      if (e.getCause() instanceof SignalProtocolDeactivatedException)
+      {
+        fail("Protocol deactivation cannot satisfy client-side package validation"); //$NON-NLS-1$
+      }
+      else if (e.getCause() instanceof IllegalStateException)
       {
         // Good
       }
@@ -131,7 +136,11 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     }
     catch (CommitException e)
     {
-      if (e.getCause() instanceof IllegalStateException)
+      if (e.getCause() instanceof SignalProtocolDeactivatedException)
+      {
+        fail("Protocol deactivation cannot satisfy client-side URI validation"); //$NON-NLS-1$
+      }
+      else if (e.getCause() instanceof IllegalStateException)
       {
         // Good
       }

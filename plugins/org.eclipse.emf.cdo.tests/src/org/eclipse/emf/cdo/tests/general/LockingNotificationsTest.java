@@ -78,6 +78,7 @@ import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.tests.TestListener2;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -90,6 +91,7 @@ import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.ChangeLockAreaResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateQueryResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateSnapshotResult;
@@ -97,10 +99,9 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -371,7 +372,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOLockDelta unlock = CDOLockUtil.createLockDelta(cdoCompany.cdoID(), LockType.WRITE, newOwner, null);
     CDOLockChangeInfo unlockInfo = CDOLockUtil.createLockChangeInfo(branch.getHead(), newOwner, Collections.singletonList(unlock), Collections.emptyList());
 
-    invokeDoHandleLockNotification((InternalCDOSession)session, 2L, unlockInfo);
+    submitLockNotification((InternalCDOSession)session, 2L, unlockInfo);
     assertEquals(oldOwner, cache.getLockState(branch, cdoCompany.cdoID()).getWriteLockOwner());
 
     CDOSessionImpl internalSession = (CDOSessionImpl)session;
@@ -437,7 +438,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     CDOLockDelta unlock = CDOLockUtil.createLockDelta(lockedObject.cdoID(), LockType.WRITE, normalOwner, null);
     CDOLockChangeInfo unlockInfo = CDOLockUtil.createLockChangeInfo(branch.getHead(), normalOwner, Collections.singletonList(unlock), Collections.emptyList());
-    invokeDoHandleLockNotification((InternalCDOSession)session, 7L, unlockInfo);
+    submitLockNotification((InternalCDOSession)session, 7L, unlockInfo);
     implementation.handleLockOwnerRemappedNotification(6L, branch, durableOwner, normalOwner);
 
     assertEquals(staleOwner, cache.getLockState(branch, staleObject.cdoID()).getWriteLockOwner());
@@ -896,18 +897,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
-  private static List<CDOID> getLockStateIDs(Collection<? extends CDOLockState> lockStates)
-  {
-    List<CDOID> ids = new ArrayList<>(lockStates.size());
-
-    for (CDOLockState lockState : lockStates)
-    {
-      ids.add(CDOIDUtil.getCDOID(lockState.getID()));
-    }
-
-    return ids;
-  }
-
   public void testLockStatePrefetchQueriesAdditionalRevisionsAtOneBaseline() throws Exception
   {
     CDOSession locker = openSession();
@@ -1028,75 +1017,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
       observer.close();
       lockerTransaction.unlockObjects(Arrays.asList(CDOUtil.getCDOObject(company), CDOUtil.getCDOObject(category)), LockType.WRITE, false);
       locker.close();
-    }
-  }
-
-  private static LockStateQueryCapture findQuery(List<LockStateQueryCapture> queries, CDOID firstID, CDOID secondID)
-  {
-    for (LockStateQueryCapture query : queries)
-    {
-      boolean hasFirstID = false;
-      boolean hasSecondID = false;
-
-      for (CDOLockState lockState : query.result.getLockStates())
-      {
-        hasFirstID |= firstID.equals(lockState.getID());
-        hasSecondID |= secondID.equals(lockState.getID());
-      }
-
-      if (hasFirstID && hasSecondID && query.ids.contains(firstID) && query.ids.contains(secondID))
-      {
-        return query;
-      }
-    }
-
-    return null;
-  }
-
-  private static CDOLockOwner findWriteLockOwner(LockStateQueryCapture query, CDOID id)
-  {
-    for (CDOLockState lockState : query.result.getLockStates())
-    {
-      if (id.equals(lockState.getID()))
-      {
-        return lockState.getWriteLockOwner();
-      }
-    }
-
-    return null;
-  }
-
-  private static CDOLockState getCachedLockState(CDOLockStateCache cache, CDOBranch branch, CDOID id)
-  {
-    AtomicReference<CDOLockState> result = new AtomicReference<>();
-    cache.getLockStates(branch, Collections.singleton(id), false, result::set);
-    return result.get();
-  }
-
-  private static void awaitPendingLockStateQuery(CDOSessionImpl session, long baseline) throws Exception
-  {
-    Field sequencerField = CDOSessionImpl.class.getDeclaredField("lockChangeSequencer"); //$NON-NLS-1$
-    sequencerField.setAccessible(true);
-    Object sequencer = sequencerField.get(session);
-    Field actionsField = sequencer.getClass().getDeclaredField("pendingBaselineActions"); //$NON-NLS-1$
-    actionsField.setAccessible(true);
-
-    synchronized (sequencer)
-    {
-      @SuppressWarnings("unchecked")
-      Map<Long, ?> actions = (Map<Long, ?>)actionsField.get(sequencer);
-      long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
-
-      while (!actions.containsKey(baseline))
-      {
-        long remaining = deadline - System.nanoTime();
-        if (remaining <= 0L)
-        {
-          throw new AssertionError("Timed out waiting for accepted lock-state query baseline " + baseline); //$NON-NLS-1$
-        }
-
-        TimeUnit.NANOSECONDS.timedWait(sequencer, remaining);
-      }
     }
   }
 
@@ -1501,8 +1421,31 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOLockStateCache cache = ((InternalCDOSession)session1).getLockStateCache();
     CountDownLatch notificationSubmitted = new CountDownLatch(1);
     CountDownLatch ownOperationReturned = new CountDownLatch(1);
+    CountDownLatch lockResultReceived = new CountDownLatch(1);
+    CountDownLatch viewAccessAcquired = new CountDownLatch(1);
     AtomicReference<Throwable> failure = new AtomicReference<>();
+    AtomicReference<LockObjectsResult> ownLockResult = new AtomicReference<>();
+    InternalCDOSession internalSession1 = (InternalCDOSession)session1;
+    CDOSessionProtocol originalProtocol = internalSession1.getSessionProtocol();
+    Thread operation = null;
+    Thread accessProbe = null;
     lockNotificationSubmitted = notificationSubmitted;
+    internalSession1.setSessionProtocol(new DelegatingSessionProtocol(originalProtocol, null)
+    {
+      @Override
+      public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
+          long timeout) throws InterruptedException
+      {
+        LockObjectsResult result = super.lockObjects2(revisionKeys, viewID, viewedBranch, lockType, recursive, timeout);
+        if (result.getLockModCount() > 0L)
+        {
+          ownLockResult.set(result);
+          lockResultReceived.countDown();
+        }
+
+        return result;
+      }
+    });
 
     try
     {
@@ -1511,7 +1454,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
         transaction2.lockObjects(Collections.singleton(notifiedObject), LockType.WRITE, DEFAULT_TIMEOUT, false);
         assertTrue("The earlier notification must reach the session handler", notificationSubmitted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
 
-        Thread operation = new Thread(() -> {
+        operation = new Thread(() -> {
           try
           {
             transaction1.lockObjects(Collections.singleton(ownObject), LockType.WRITE, DEFAULT_TIMEOUT, false);
@@ -1528,35 +1471,56 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
         operation.start();
 
-        long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
+        assertTrue("The synchronous lock result was not received", lockResultReceived.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+        assertEquals(2L, ownLockResult.get().getLockModCount());
 
-        while (operation.getState() != Thread.State.WAITING && ownOperationReturned.getCount() != 0 && System.nanoTime() < deadline)
-        {
-          if (operation.getState() == Thread.State.BLOCKED)
+        accessProbe = new Thread(() -> {
+          try (Access access = ((InternalCDOView)transaction1).access())
           {
-            fail("The synchronous result must wait on its sequence completion, not block on the lock cache");
+            viewAccessAcquired.countDown();
           }
+          catch (Throwable ex)
+          {
+            failure.compareAndSet(null, ex);
+          }
+        }, "lock-result-access-probe"); //$NON-NLS-1$
+        accessProbe.start();
 
-          Thread.yield();
-        }
-
-        assertEquals(Thread.State.WAITING, operation.getState());
+        // The decoded lock result is held behind the earlier notification; an independent view access proves the
+        // operation released Access.
+        // This semantic handshake avoids JVM thread-state assumptions and does not depend on how Net4j waits for signal
+        // bytes.
+        assertTrue("View Access remained held while the synchronous lock result waited for its earlier notification",
+            viewAccessAcquired.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
         assertEquals(1L, ownOperationReturned.getCount());
-        assertFalse(((AbstractCDOView)transaction1).isAccessHeldBy(operation));
         assertEquals(0L, getCurrentLockModCount((InternalCDOSession)session1));
+        accessProbe.join(TimeUnit.SECONDS.toMillis(5));
+        assertFalse("The view-access probe did not terminate", accessProbe.isAlive()); //$NON-NLS-1$
 
       }
 
       assertTrue(ownOperationReturned.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
       assertNull(failure.get());
       assertEquals(2L, getCurrentLockModCount((InternalCDOSession)session1));
+      assertEquals(transaction2.getLockOwner(), cache.getLockState(transaction1.getBranch(), notifiedObject.cdoID()).getWriteLockOwner());
       assertEquals(transaction1.getLockOwner(), cache.getLockState(transaction1.getBranch(), ownObject.cdoID()).getWriteLockOwner());
     }
     finally
     {
       lockNotificationSubmitted = null;
+      internalSession1.setSessionProtocol(originalProtocol);
       session2.close();
       session1.close();
+
+      if (accessProbe != null)
+      {
+        accessProbe.join(TimeUnit.SECONDS.toMillis(5));
+      }
+
+      if (operation != null)
+      {
+        operation.join(TimeUnit.SECONDS.toMillis(5));
+      }
     }
   }
 
@@ -1591,7 +1555,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     CDOLockChangeInfo laterLock = CDOLockUtil.createLockChangeInfo(branch.getHead(), transaction.getLockOwner(), Collections.emptyList(),
         Collections.emptyList());
-    invokeDoHandleLockNotification((InternalCDOSession)session, 2L, laterLock);
+    submitLockNotification((InternalCDOSession)session, 2L, laterLock);
     assertEquals(0L, getCurrentLockModCount((InternalCDOSession)session));
     assertTrue(events.isEmpty());
 
@@ -1646,7 +1610,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     CDOLockChangeInfo earlierLock = CDOLockUtil.createLockChangeInfo(branch.getHead(), transaction.getLockOwner(), Collections.emptyList(),
         Collections.emptyList());
-    invokeDoHandleLockNotification((InternalCDOSession)session, 1L, earlierLock);
+    submitLockNotification((InternalCDOSession)session, 1L, earlierLock);
     implementation.awaitLockChange(2L);
 
     assertEquals(2L, getCurrentLockModCount((InternalCDOSession)session));
@@ -1659,11 +1623,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     transaction.close();
     session.close();
-  }
-
-  private static CDOID createMissingID()
-  {
-    return CDOIDUtil.createLong(TEST_LONG_ID.getAndDecrement());
   }
 
   public void testRepositoryWithoutPermissionManagerIsNotAuthorizing() throws Exception
@@ -2220,11 +2179,33 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOTransaction transaction2 = session2.openTransaction(transaction1.getBranch());
     CountDownLatch notificationSubmitted = new CountDownLatch(1);
     CountDownLatch commitReturned = new CountDownLatch(1);
+    CountDownLatch commitResultReceived = new CountDownLatch(1);
+    CountDownLatch viewAccessAcquired = new CountDownLatch(1);
     AtomicReference<CDOCommitInfo> commitInfo = new AtomicReference<>();
     AtomicReference<Throwable> failure = new AtomicReference<>();
+    AtomicReference<CommitTransactionResult> result = new AtomicReference<>();
     Company newCompany = getModel1Factory().createCompany();
     CDOLockStateCache cache = ((InternalCDOSession)session1).getLockStateCache();
+    InternalCDOSession internalSession1 = (InternalCDOSession)session1;
+    CDOSessionProtocol originalProtocol = internalSession1.getSessionProtocol();
+    Thread commitThread = null;
+    Thread accessProbe = null;
     lockNotificationSubmitted = notificationSubmitted;
+    internalSession1.setSessionProtocol(new DelegatingSessionProtocol(originalProtocol, null)
+    {
+      @Override
+      public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
+      {
+        CommitTransactionResult commitResult = super.commitTransaction(context, monitor);
+        if (commitResult.getLockModCount() > 0L)
+        {
+          result.set(commitResult);
+          commitResultReceived.countDown();
+        }
+
+        return commitResult;
+      }
+    });
 
     try
     {
@@ -2233,7 +2214,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
         transaction2.lockObjects(Collections.singleton(CDOUtil.getCDOObject(notifiedCompany)), LockType.WRITE, DEFAULT_TIMEOUT, false);
         assertTrue("The earlier notification must reach the session handler", notificationSubmitted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
 
-        Thread commitThread = new Thread(() -> {
+        commitThread = new Thread(() -> {
           try
           {
             Predicate<Long> retry = elapsed -> false;
@@ -2254,90 +2235,57 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
         commitThread.start();
 
-        ThreadInfo threadInfo = null;
-        long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
+        assertTrue("The commit result was not received", commitResultReceived.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+        assertEquals(2L, result.get().getLockModCount());
 
-        while (commitReturned.getCount() != 0 && System.nanoTime() < deadline)
-        {
-          threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(commitThread.threadId(), Integer.MAX_VALUE);
-          if (threadInfo == null)
+        accessProbe = new Thread(() -> {
+          try (Access access = ((InternalCDOView)transaction1).access())
           {
-            break;
+            viewAccessAcquired.countDown();
           }
-
-          if (threadInfo.getThreadState() == Thread.State.BLOCKED)
+          catch (Throwable ex)
           {
-            fail("The commit must wait on its sequence completion, not block on the lock cache");
+            failure.compareAndSet(null, ex);
           }
+        }, "commit-access-probe"); //$NON-NLS-1$
+        accessProbe.start();
 
-          if (threadInfo.getThreadState() == Thread.State.WAITING && isWaitingForLockChangeCompletion(threadInfo))
-          {
-            break;
-          }
-
-          Thread.yield();
-        }
-
-        assertNotNull("The commit thread must still be running", threadInfo);
-        assertTrue(Arrays.toString(threadInfo.getStackTrace()),
-            threadInfo.getThreadState() == Thread.State.WAITING && isWaitingForLockChangeCompletion(threadInfo));
+        // The commit result is held behind the earlier notification; a competing Access acquisition proves the outer
+        // Access was released.
+        // This semantic handshake avoids JVM thread-state and stack-frame assumptions.
+        assertTrue("View Access remained held while the commit waited for its earlier notification",
+            viewAccessAcquired.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
         assertEquals(1L, commitReturned.getCount());
-        assertFalse(((AbstractCDOView)transaction1).isAccessHeldBy(commitThread));
         assertEquals(0L, getCurrentLockModCount((InternalCDOSession)session1));
+        accessProbe.join(TimeUnit.SECONDS.toMillis(5));
+        assertFalse("The commit Access probe did not terminate", accessProbe.isAlive()); //$NON-NLS-1$
       }
 
       assertTrue(commitReturned.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
       assertNull(failure.get());
       assertNotNull(commitInfo.get());
       assertEquals(2L, getCurrentLockModCount((InternalCDOSession)session1));
+      assertEquals(transaction2.getLockOwner(),
+          cache.getLockState(transaction1.getBranch(), CDOUtil.getCDOObject(notifiedCompany).cdoID()).getWriteLockOwner());
       assertEquals(transaction1.getLockOwner(), cache.getLockState(transaction1.getBranch(), CDOUtil.getCDOObject(newCompany).cdoID()).getWriteLockOwner());
     }
     finally
     {
       lockNotificationSubmitted = null;
+      internalSession1.setSessionProtocol(originalProtocol);
       session2.close();
       session1.close();
-    }
-  }
 
-  private boolean isWaitingForLockChangeCompletion(ThreadInfo threadInfo)
-  {
-    for (StackTraceElement frame : threadInfo.getStackTrace())
-    {
-      if (frame.getClassName().equals("org.eclipse.emf.internal.cdo.session.LockChangeSequencer$Completion") //$NON-NLS-1$
-          && frame.getMethodName().equals("awaitUninterruptibly")) //$NON-NLS-1$
+      if (accessProbe != null)
       {
-        return true;
+        accessProbe.join(TimeUnit.SECONDS.toMillis(5));
+      }
+
+      if (commitThread != null)
+      {
+        commitThread.join(TimeUnit.SECONDS.toMillis(5));
       }
     }
-
-    return false;
-  }
-
-  private CommitNotificationInfo createCommitNotificationInfo(InternalCDOSession session, CDOBranch branch, long timeStamp, long previousTimeStamp,
-      long lockModCount)
-  {
-    CommitNotificationInfo info = new CommitNotificationInfo();
-    CDOCommitInfo commitInfo = session.getCommitInfoManager().createCommitInfo(branch, timeStamp, previousTimeStamp, "test", "test",
-        new CDOCommitDataImpl(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList()));
-    info.setCommitInfo(commitInfo);
-    info.setLockModCount(lockModCount);
-    return info;
-  }
-
-  private void invokeDoHandleLockNotification(InternalCDOSession session, long lockModCount, CDOLockChangeInfo lockChangeInfo) throws Exception
-  {
-    Method method = CDOSessionImpl.class.getDeclaredMethod("doHandleLockNotification", long.class, CDOLockChangeInfo.class, InternalCDOView.class,
-        boolean.class);
-    method.setAccessible(true);
-    method.invoke(session, lockModCount, lockChangeInfo, null, true);
-  }
-
-  private long getCurrentLockModCount(InternalCDOSession session) throws Exception
-  {
-    Method method = CDOSessionImpl.class.getDeclaredMethod("getCurrentLockModCount");
-    method.setAccessible(true);
-    return (long)method.invoke(session);
   }
 
   public void testLockStateHeldByDurableView() throws Exception
@@ -2437,6 +2385,31 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOSession session1 = openSession();
     CDOSession session2 = openSession();
     runCloseView(session1, session2);
+  }
+
+  private CommitNotificationInfo createCommitNotificationInfo(InternalCDOSession session, CDOBranch branch, long timeStamp, long previousTimeStamp,
+      long lockModCount)
+  {
+    CommitNotificationInfo info = new CommitNotificationInfo();
+    CDOCommitInfo commitInfo = session.getCommitInfoManager().createCommitInfo(branch, timeStamp, previousTimeStamp, "test", "test",
+        new CDOCommitDataImpl(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList()));
+    info.setCommitInfo(commitInfo);
+    info.setLockModCount(lockModCount);
+    return info;
+  }
+
+  private void submitLockNotification(InternalCDOSession session, long lockModCount, CDOLockChangeInfo lockChangeInfo)
+  {
+    // Sequenced notifications are always submitted; the public method invokes the same handler with view notifications
+    // enabled.
+    session.handleLockNotification(lockModCount, lockChangeInfo, null, false);
+  }
+
+  private long getCurrentLockModCount(InternalCDOSession session) throws Exception
+  {
+    Method method = CDOSessionImpl.class.getDeclaredMethod("getCurrentLockModCount"); //$NON-NLS-1$
+    method.setAccessible(true);
+    return (long)method.invoke(session);
   }
 
   private void runCloseView(CDOSession session1, CDOSession session2) throws ConcurrentAccessException, CommitException, InterruptedException
@@ -2782,6 +2755,92 @@ public class LockingNotificationsTest extends AbstractLockingTest
       sleep(100);
       assertEquals(0, controlViewListener.getEvents().size());
     }
+  }
+
+  private static List<CDOID> getLockStateIDs(Collection<? extends CDOLockState> lockStates)
+  {
+    List<CDOID> ids = new ArrayList<>(lockStates.size());
+
+    for (CDOLockState lockState : lockStates)
+    {
+      ids.add(CDOIDUtil.getCDOID(lockState.getID()));
+    }
+
+    return ids;
+  }
+
+  private static LockStateQueryCapture findQuery(List<LockStateQueryCapture> queries, CDOID firstID, CDOID secondID)
+  {
+    for (LockStateQueryCapture query : queries)
+    {
+      boolean hasFirstID = false;
+      boolean hasSecondID = false;
+
+      for (CDOLockState lockState : query.result.getLockStates())
+      {
+        hasFirstID |= firstID.equals(lockState.getID());
+        hasSecondID |= secondID.equals(lockState.getID());
+      }
+
+      if (hasFirstID && hasSecondID && query.ids.contains(firstID) && query.ids.contains(secondID))
+      {
+        return query;
+      }
+    }
+
+    return null;
+  }
+
+  private static CDOLockOwner findWriteLockOwner(LockStateQueryCapture query, CDOID id)
+  {
+    for (CDOLockState lockState : query.result.getLockStates())
+    {
+      if (id.equals(lockState.getID()))
+      {
+        return lockState.getWriteLockOwner();
+      }
+    }
+
+    return null;
+  }
+
+  private static CDOLockState getCachedLockState(CDOLockStateCache cache, CDOBranch branch, CDOID id)
+  {
+    AtomicReference<CDOLockState> result = new AtomicReference<>();
+    cache.getLockStates(branch, Collections.singleton(id), false, result::set);
+    return result.get();
+  }
+
+  private static void awaitPendingLockStateQuery(CDOSessionImpl session, long baseline) throws Exception
+  {
+    Field sequencerField = CDOSessionImpl.class.getDeclaredField("lockChangeSequencer"); //$NON-NLS-1$
+    sequencerField.setAccessible(true);
+    Object sequencer = sequencerField.get(session);
+    Field actionsField = sequencer.getClass().getDeclaredField("pendingBaselineActions"); //$NON-NLS-1$
+    actionsField.setAccessible(true);
+
+    synchronized (sequencer)
+    {
+      @SuppressWarnings("unchecked")
+      Map<Long, ?> actions = (Map<Long, ?>)actionsField.get(sequencer);
+      long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
+
+      while (!actions.containsKey(baseline))
+      {
+        long remaining = deadline - System.nanoTime();
+        if (remaining <= 0L)
+        {
+          throw new AssertionError("Timed out waiting for accepted lock-state query baseline " + baseline); //$NON-NLS-1$
+        }
+
+        TimeUnit.NANOSECONDS.timedWait(sequencer, remaining);
+      }
+    }
+  }
+
+  private static CDOID createMissingID()
+  {
+    return CDOIDUtil.createLong(TEST_LONG_ID.getAndDecrement());
   }
 
   public static void assertLockedObject(CDOObject expected, CDOLockDelta actual)

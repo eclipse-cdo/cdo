@@ -1796,9 +1796,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     doHandleLockNotification(0L, lockChangeInfo, sender, notifyViews);
   }
 
-  /**
-   * This method is also required for reflective access from org.eclipse.emf.cdo.tests.general.LockingNotificationsTest!
-   */
   protected void doHandleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
   {
     processLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);

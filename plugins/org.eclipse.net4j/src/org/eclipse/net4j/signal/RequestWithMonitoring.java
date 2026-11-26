@@ -167,6 +167,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
           while (mainMonitor != null)
           {
             ConcurrencyUtil.sleep(cancelationPollInterval);
+
             if (mainMonitor != null && mainMonitor.isCanceled())
             {
               try
@@ -175,7 +176,14 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
               }
               catch (Exception ex)
               {
-                ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG);
+                if (ex instanceof SignalProtocolDeactivatedException)
+                {
+                  SignalProtocol.traceDeactivation("Monitor cancellation reporting stopped during protocol deactivation", ex); //$NON-NLS-1$
+                }
+                else
+                {
+                  ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG); //$NON-NLS-1$
+                }
               }
 
               return;

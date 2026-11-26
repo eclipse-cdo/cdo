@@ -147,7 +147,7 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor
     }
     finally
     {
-      getBufferInputStream().setException(remoteException);
+      getBufferInputStream().abort(remoteException);
     }
   }
 

@@ -211,7 +211,15 @@ public abstract class Signal implements Runnable, IManagedContainerProvider
     }
     catch (Exception ex)
     {
-      if (DISABLE_LOG_EXCEPTIONS)
+      if (ex instanceof SignalProtocolDeactivatedException)
+      {
+        // A locally initiated lifecycle abort is expected; application failures still use the configured handler.
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Signal aborted during protocol deactivation", ex); //$NON-NLS-1$
+        }
+      }
+      else if (DISABLE_LOG_EXCEPTIONS)
       {
         if (TRACER.isEnabled())
         {

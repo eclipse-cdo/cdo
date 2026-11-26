@@ -28,9 +28,10 @@ public abstract class AbstractMonitor implements OMMonitor
 
   private static final long NOT_BEGUN = -1;
 
-  private double totalWork = NOT_BEGUN;
+  // Timer and protocol threads observe progress written by the signal thread.
+  private volatile double totalWork = NOT_BEGUN;
 
-  private double work;
+  private volatile double work;
 
   public AbstractMonitor()
   {
@@ -175,9 +176,9 @@ public abstract class AbstractMonitor implements OMMonitor
    */
   public static class AsyncTimerTask extends TrackableTimerTask implements Async
   {
-    private OMMonitor monitor;
+    private volatile OMMonitor monitor;
 
-    private boolean canceled;
+    private volatile boolean canceled;
 
     public AsyncTimerTask(AbstractMonitor parent, double parentWork, double timeFactor)
     {

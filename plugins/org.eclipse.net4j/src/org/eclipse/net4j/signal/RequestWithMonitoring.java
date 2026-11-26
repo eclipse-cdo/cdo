@@ -15,8 +15,6 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -25,11 +23,17 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Represents the sender side of a two-way {@link IndicationWithResponse signal} with additional support for remote progress monitoring.
+ * <p>
+ * Cancellation delivery uses the selected protocol executor. Configure enough capacity for cancellation reporting alongside active signal
+ * operations.
  *
  * @param <RESULT>
  *          the response type
@@ -38,8 +42,6 @@ import java.util.concurrent.Future;
  */
 public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmation<RESULT>
 {
-  private static final String MAIN_MONITOR_NAME = RequestWithMonitoring.class.getSimpleName() + "-MainMonitor";
-
   /**
    * @since 2.0
    */
@@ -65,6 +67,12 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   private Object monitorLock = new Object();
 
   private boolean isMonitoring;
+
+  private volatile TimerTask cancelationPollTask;
+
+  private final AtomicBoolean cancelationReported = new AtomicBoolean();
+
+  private volatile boolean signalCompleted;
 
   /**
    * @since 2.0
@@ -146,51 +154,54 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
       remoteMonitor = subMonitor;
     }
 
-    ExecutorService executorService = getCancelationExecutorService();
+    OMMonitor monitor = mainMonitor;
+
+    ExecutorService executorService = isMonitoring ? getCancelationExecutorService() : null;
     if (executorService != null)
     {
-      executorService.execute(new RunnableWithName()
-      {
-        @Override
-        public String getName()
-        {
-          return MAIN_MONITOR_NAME;
-        }
+      SignalProtocol<?> protocol = getProtocol();
+      int correlationID = getCorrelationID();
+      long interval = Math.max(1, getCancelationPollInterval());
 
-        @Override
-        protected void doRun()
+      // The timer only inspects cancellation; all signal output runs on the selected executor.
+      cancelationPollTask = Monitor.scheduleAtFixedRate(() -> {
+        if (!signalCompleted && monitor.isCanceled() && cancelationReported.compareAndSet(false, true))
         {
-          SignalProtocol<?> protocol = getProtocol();
-          int correlationID = getCorrelationID();
-          long cancelationPollInterval = getCancelationPollInterval();
-
-          while (mainMonitor != null)
+          TimerTask task = cancelationPollTask;
+          if (task != null)
           {
-            ConcurrencyUtil.sleep(cancelationPollInterval);
+            task.cancel();
+          }
 
-            if (mainMonitor != null && mainMonitor.isCanceled())
-            {
-              try
+          try
+          {
+            executorService.execute(() -> {
+              if (!signalCompleted && mainMonitor == monitor && monitor.isCanceled())
               {
-                new MonitorCanceledRequest(protocol, correlationID).sendAsync();
-              }
-              catch (Exception ex)
-              {
-                if (ex instanceof SignalProtocolDeactivatedException)
+                try
                 {
-                  SignalProtocol.traceDeactivation("Monitor cancellation reporting stopped during protocol deactivation", ex); //$NON-NLS-1$
+                  new MonitorCanceledRequest(protocol, correlationID).sendAsync();
                 }
-                else
+                catch (Exception ex)
                 {
-                  ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG); //$NON-NLS-1$
+                  if (ex instanceof SignalProtocolDeactivatedException)
+                  {
+                    SignalProtocol.traceDeactivation("Monitor cancellation reporting stopped during protocol deactivation", ex); //$NON-NLS-1$
+                  }
+                  else
+                  {
+                    ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG); //$NON-NLS-1$
+                  }
                 }
               }
-
-              return;
-            }
+            });
+          }
+          catch (RejectedExecutionException ex)
+          {
+            ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG); //$NON-NLS-1$
           }
         }
-      });
+      }, interval, interval);
     }
 
     int monitorTimeoutSeconds = getMonitorTimeoutSeconds();
@@ -203,6 +214,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
 
     out.writeInt(monitorProgressSeconds);
     out.writeInt(monitorTimeoutSeconds);
+
     requesting(out, mainMonitor.fork(getRequestingWorkPercent()));
   }
 
@@ -277,6 +289,16 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
     finally
     {
+      // Queued cancellation work observes completion before monitor references are released.
+      signalCompleted = true;
+
+      TimerTask task = cancelationPollTask;
+      if (task != null)
+      {
+        task.cancel();
+        cancelationPollTask = null;
+      }
+
       synchronized (monitorLock)
       {
         try

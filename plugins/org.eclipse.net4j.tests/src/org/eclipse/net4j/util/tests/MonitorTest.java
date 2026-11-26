@@ -14,6 +14,13 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+import org.eclipse.net4j.util.om.monitor.TimeoutMonitor;
+
+import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -299,5 +306,68 @@ public class MonitorTest extends AbstractOMTest
 
     main.worked();
     assertSimilar(OMMonitor.ONE + OMMonitor.ONE + OMMonitor.ONE, main.getWork(), 1000);
+  }
+
+  public void testSharedTimerSurvivesTaskFailure() throws Exception
+  {
+    CountDownLatch secondRun = new CountDownLatch(1);
+    AtomicInteger runs = new AtomicInteger();
+    TimerTask task = Monitor.scheduleAtFixedRate(() -> {
+      if (runs.incrementAndGet() == 1)
+      {
+        throw new IllegalStateException("Expected test failure"); //$NON-NLS-1$
+      }
+
+      secondRun.countDown();
+    }, 1, 10);
+
+    try
+    {
+      assertTrue("Shared timer did not continue after a task failure", secondRun.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+    }
+    finally
+    {
+      task.cancel();
+    }
+  }
+
+  public void testPeriodicCancellationInspectionDoesNotRefreshTimeout() throws Exception
+  {
+    CountDownLatch timedOut = new CountDownLatch(1);
+    AtomicReference<TimerTask> reportingTask = new AtomicReference<>();
+    TimeoutMonitor monitor = new TimeoutMonitor(150)
+    {
+      @Override
+      public OMMonitor begin(double totalWork)
+      {
+        OMMonitor result = super.begin(totalWork);
+        // Simulates periodic reporting inspection without refreshing the operation timeout.
+        reportingTask.set(Monitor.scheduleAtFixedRate(this::isCanceledState, 1, 10));
+        return result;
+      }
+
+      @Override
+      protected void handleTimeout(long untouched)
+      {
+        timedOut.countDown();
+        super.handleTimeout(untouched);
+      }
+    };
+
+    try
+    {
+      monitor.begin(1);
+      assertTrue("Periodic cancellation inspection prevented the monitor timeout", timedOut.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+    }
+    finally
+    {
+      TimerTask task = reportingTask.get();
+      if (task != null)
+      {
+        task.cancel();
+      }
+
+      monitor.done();
+    }
   }
 }

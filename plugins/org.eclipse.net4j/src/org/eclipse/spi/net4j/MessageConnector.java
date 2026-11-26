@@ -24,8 +24,6 @@ import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.internal.net4j.ControlChannel;
 import org.eclipse.internal.net4j.bundle.OM;
 
-import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
-
 import java.nio.ByteBuffer;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -179,22 +177,6 @@ public class MessageConnector extends SchedulingConnector
   private ReceiveAccounting receiveAccounting;
 
   private final Map<InternalChannel, ChannelReceiveQueue> channelReceiveQueues = new IdentityHashMap<>();
-
-  /**
-   * Returns the number of per-channel receive dispatch queues currently retained by this connector. The value is a synchronized
-   * diagnostic snapshot and does not expose the queues themselves; subclasses can use it to verify that channel removal and connector
-   * shutdown release receive-dispatch state.
-   *
-   * @return the current number of retained per-channel receive queues
-   * @since 4.23
-   */
-  protected final int getReceiveQueueCount()
-  {
-    synchronized (transportLock)
-    {
-      return channelReceiveQueues.size();
-    }
-  }
 
   private final ArrayDeque<IBuffer> receiveQueue = new ArrayDeque<>();
 
@@ -427,6 +409,22 @@ public class MessageConnector extends SchedulingConnector
     if (progressed)
     {
       onControlHandshakeCompleted(handshakeGeneration);
+    }
+  }
+
+  /**
+   * Returns the number of per-channel receive dispatch queues currently retained by this connector. The value is a synchronized
+   * diagnostic snapshot and does not expose the queues themselves; subclasses can use it to verify that channel removal and connector
+   * shutdown release receive-dispatch state.
+   *
+   * @return the current number of retained per-channel receive queues
+   * @since 4.23
+   */
+  protected final int getReceiveQueueCount()
+  {
+    synchronized (transportLock)
+    {
+      return channelReceiveQueues.size();
     }
   }
 

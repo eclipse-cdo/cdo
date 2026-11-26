@@ -20,9 +20,9 @@ import org.eclipse.net4j.util.concurrent.Timeouter;
  */
 public class TimeoutMonitor extends Monitor
 {
-  private long timeout;
+  private volatile long timeout;
 
-  private transient Timeouter timeouter;
+  private transient volatile Timeouter timeouter;
 
   public TimeoutMonitor(long timeout)
   {

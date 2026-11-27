@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Eike Stepper
  */
-public class WSConnectorFactory extends ConnectorFactory implements IManagedContainer.ContainerAware
+public class WSConnectorFactory extends ConnectorFactory
 {
   public static final String PROVIDER_TOKEN_PREFIX = "provider:";
 
@@ -49,11 +49,6 @@ public class WSConnectorFactory extends ConnectorFactory implements IManagedCont
 
   private static final char TOKEN_SEPARATOR_CHAR = TOKEN_SEPARATOR.charAt(0);
 
-  /**
-   * Container used to resolve and create the selected message-connection provider product.
-   */
-  private IManagedContainer container;
-
   public WSConnectorFactory()
   {
     this(WSUtil.FACTORY_TYPE);
@@ -62,12 +57,6 @@ public class WSConnectorFactory extends ConnectorFactory implements IManagedCont
   protected WSConnectorFactory(String type)
   {
     super(type);
-  }
-
-  @Override
-  public void setManagedContainer(IManagedContainer container)
-  {
-    this.container = container;
   }
 
   @Override
@@ -154,6 +143,7 @@ public class WSConnectorFactory extends ConnectorFactory implements IManagedCont
         }
       }
 
+      IManagedContainer container = getContainer();
       if (container == null)
       {
         throw new IllegalStateException("WSConnectorFactory has no managed container"); //$NON-NLS-1$

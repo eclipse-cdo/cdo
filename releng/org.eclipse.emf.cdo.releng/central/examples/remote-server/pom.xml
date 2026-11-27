@@ -26,9 +26,48 @@
 
   <properties>
     <plain.java.source.file>org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java</plain.java.source.file>
+    <exec.arg.db.url></exec.arg.db.url>
+    <exec.arg.db.user></exec.arg.db.user>
+    <exec.arg.db.password></exec.arg.db.password>
   </properties>
 
   <profiles>
+    <profile>
+      <id>forward-db-url</id>
+      <activation>
+        <property>
+          <name>cdo.db.url</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.db.url>-Dcdo.db.url="${cdo.db.url}"</exec.arg.db.url>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>forward-db-user</id>
+      <activation>
+        <property>
+          <name>cdo.db.user</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.db.user>-Dcdo.db.user="${cdo.db.user}"</exec.arg.db.user>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>forward-db-password</id>
+      <activation>
+        <property>
+          <name>cdo.db.password</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.db.password>-Dcdo.db.password="${cdo.db.password}"</exec.arg.db.password>
+      </properties>
+    </profile>
+
     <profile>
       <id>checkout-central-repository</id>
       <activation>
@@ -46,6 +85,7 @@
         </repository>
       </repositories>
     </profile>
+
     <profile>
       <id>checkout-source-copy</id>
       <activation>
@@ -116,6 +156,20 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven-plugin.version}</version>
+        <configuration>
+          <executable>java</executable>
+          <workingDirectory>${user.dir}</workingDirectory>
+          <inheritIo>true</inheritIo>
+          <commandlineArgs>
+            -classpath
+            %classpath
+            ${exec.arg.db.url}
+            ${exec.arg.db.user}
+            ${exec.arg.db.password}
+            org.eclipse.emf.cdo.examples.plain.server.RemoteServer
+            ${exec.arg.application}
+          </commandlineArgs>
+        </configuration>
       </plugin>
     </plugins>
   </build>

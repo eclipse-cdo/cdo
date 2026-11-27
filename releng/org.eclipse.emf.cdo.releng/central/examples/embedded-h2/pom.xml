@@ -48,6 +48,7 @@
         </repository>
       </repositories>
     </profile>
+
     <profile>
       <id>checkout-source-copy</id>
       <activation>
@@ -175,6 +176,17 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven-plugin.version}</version>
+        <configuration>
+          <executable>java</executable>
+          <workingDirectory>${user.dir}</workingDirectory>
+          <inheritIo>true</inheritIo>
+          <commandlineArgs>
+            -classpath
+            %classpath
+            org.eclipse.emf.cdo.examples.plain.embedded.EmbeddedH2Example
+            ${exec.arg.application}
+          </commandlineArgs>
+        </configuration>
       </plugin>
     </plugins>
   </build>

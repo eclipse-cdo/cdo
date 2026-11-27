@@ -4,21 +4,21 @@ Requires JDK 17 and Maven 3.9+. Build all examples from this directory with `mvn
 
 ## Embedded H2 Example
  
-Run the embedded H2 example with `mvn -pl embedded-h2 exec:java -Dexec.mainClass=org.eclipse.emf.cdo.examples.plain.embedded.EmbeddedH2Example`. 
+Run the embedded H2 example with `mvn -pl embedded-h2 exec:exec`. Its default database path is used when `exec.application.args` is omitted. 
 
 ## Remote Server Example
  
-Run the server with `mvn -pl remote-server exec:java -Dexec.mainClass=org.eclipse.emf.cdo.examples.plain.server.RemoteServer`.
+Run the server with `mvn -pl remote-server exec:exec`.
 
-RemoteServer requires PostgreSQL. Create a database and user, grant the user access to that database, then set `CDO_DB_URL` (for example `jdbc:postgresql://localhost:5432/cdo`), `CDO_DB_USER`, and optionally `CDO_DB_PASSWORD` before starting it.
+RemoteServer requires PostgreSQL. Create a database and user, grant the user access to that database, then set `CDO_DB_URL` (for example `jdbc:postgresql://localhost:5432/cdo`), `CDO_DB_USER`, and optionally `CDO_DB_PASSWORD` before starting it. Alternatively, pass `-Dcdo.db.url=...`, `-Dcdo.db.user=...`, and `-Dcdo.db.password=...`; supplied Maven properties are forwarded as JVM system properties. In PowerShell, quote the complete `-D` argument when its value contains spaces. Embedded quotation marks and other shell-sensitive characters may need shell-specific escaping. Enter a line or press Enter to stop the server.
 
 The server listens on `127.0.0.1:2036` by default, so it accepts local connections only. Its optional argument is a port, bind address, or `bind-address:port`. To allow remote connections, pass an explicit address such as `0.0.0.0:2036` and configure your network accordingly.
 
 ## Remote Client Example
  
-Run the client with `mvn -pl remote-client exec:java -Dexec.mainClass=org.eclipse.emf.cdo.examples.plain.client.RemoteClient`.
+Run the client with `mvn -pl remote-client exec:exec`.
 
-RemoteClient connects to `localhost:2036` by default; its optional argument is a port, hostname, or `hostname:port`.
+RemoteClient connects to `localhost:2036` by default; its optional argument is a port, hostname, or `hostname:port`. Pass it through `-Dexec.application.args=...`, for example `mvn -pl remote-client exec:exec -Dexec.application.args=server.example.org:2036`.
 
 ## Configured Server Example
 

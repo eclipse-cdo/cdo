@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.Factory;
@@ -145,9 +146,9 @@ public class TimerLifecycle extends Timer implements ILifecycle
     @Override
     public Object create(String name) throws ProductCreationException
     {
-      if (name == null)
+      if (StringUtil.isEmpty(name))
       {
-        return new TimerLifecycle(true);
+        name = "net4j-timer";
       }
 
       return new TimerLifecycle(name, true);

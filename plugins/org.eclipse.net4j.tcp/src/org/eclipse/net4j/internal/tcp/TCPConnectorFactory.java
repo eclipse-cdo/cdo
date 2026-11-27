@@ -47,7 +47,6 @@ public class TCPConnectorFactory extends ConnectorFactory
     connector.setPort(data.getPort());
     connector.setUserID(data.getUserID());
     return connector;
-
   }
 
   protected TCPConnector createConnector()

@@ -164,18 +164,16 @@ artifacts; Maven must be able to resolve those dependencies.
 From the examples directory, start the server with default H2 storage and TCP transport:
 
 ```powershell
-mvn -pl configured-server exec:java
+mvn -pl configured-server exec:exec
 ```
 
-The configured-server POM forwards Maven project and command-line properties to the server JVM;
-the defaults are `h2` and `tcp`. Thus `-Dtransport=ws` selects WebSocket without `MAVEN_OPTS`.
 Override transport with `-Dtransport=ssl`, `-Dtransport=ws`, or
 `-Dtransport=wss`. For PostgreSQL, use `-Ppostgresql` and provide any non-default
 `cdo.db.server`, `cdo.db.port`, `cdo.db.database`, `cdo.db.user`, and `cdo.db.password` values as
 Maven `-D` properties. With the PostgreSQL defaults except for the password, start it with:
 
 ```powershell
-mvn -pl configured-server -Ppostgresql exec:java -Dcdo.db.password=YOUR_PASSWORD
+mvn -pl configured-server -Ppostgresql exec:exec -Dcdo.db.password=YOUR_PASSWORD
 ```
 
 For SSL, also provide the keystore and passphrase properties from Section 2.2.2. The server
@@ -186,19 +184,21 @@ type defaults to PKCS12 and can be changed with `cdo.ssl.keystore.type`. For exa
 own keystore and password values with:
 
 ```powershell
-mvn -pl configured-server exec:java -Dtransport=wss `
+mvn -pl configured-server exec:exec -Dtransport=wss `
   -Dcdo.wss.keystore=C:/certs/server.p12 `
   -Dcdo.wss.keystore.password=YOUR_KEYSTORE_PASSWORD
 ```
 
-You can also run from `configured-server` itself with `mvn exec:java`; the same properties and
-defaults apply. Enter `stop` and press Enter to shut the server down cleanly. Use a normal
+Values containing spaces can be passed as a single quoted Maven `-D` argument in PowerShell. Embedded quotation marks and other shell-sensitive characters may need shell-specific escaping. 
+
+You can also run from `configured-server` itself with `mvn exec:exec`; the same properties and
+defaults apply. The Java process inherits Maven's working directory and console streams. Enter `stop` and press Enter to shut the server down cleanly. Use a normal
 PowerShell console for interactive shutdown. PowerShell ISE did not reliably deliver `stop` to
 Maven's interactive input.
 
 Maven `-D` options for `cdo.db.url`, `cdo.db.server`,
-`cdo.db.port`, `cdo.db.database`, `cdo.db.user`, and `cdo.db.password` are available as system
-properties to the in-process `exec:java` server. Unspecified values retain the fallbacks in
+`cdo.db.port`, `cdo.db.database`, `cdo.db.user`, and `cdo.db.password` are passed as system
+properties to the forked server. Unspecified values retain the fallbacks in
 `config/cdo-server.xml`.
 
 ### 3.3 Run the Client
@@ -206,20 +206,18 @@ properties to the in-process `exec:java` server. Unspecified values retain the f
 After building, run the existing `RemoteClient` from the examples directory:
 
 ```powershell
-mvn -pl remote-client exec:java
+mvn -pl remote-client exec:exec
 ```
 
-The client's Maven properties are forwarded to its JVM. The client's `transport` property is
-independent of the server's Maven invocation. Set it to the
-same value as the server; it defaults to TCP. The optional client argument accepts a port, host
+The client POM starts a separate Java process and forwards the `transport` system property and any supplied TLS, WSS, and WebSocket settings. Its `transport` property is independent of the server's Maven invocation. Set it to the same value as the server; it defaults to TCP. The optional client argument accepts a port, host
 name, or `host:port`; without an argument, the defaults are `localhost:2036` for TCP/SSL and
 `localhost:8080` or `localhost:8443` for WS/WSS.
 To connect to another TCP server, pass its address through the Exec Maven Plugin:
-`mvn -pl remote-client exec:java -Dexec.args=server.example.org:2036`. For SSL, select the same
+`mvn -pl remote-client exec:exec -Dexec.application.args=server.example.org:2036`. For SSL, select the same
 transport as the server and provide the client trust settings, for example:
 
 ```powershell
-mvn -pl remote-client exec:java -Dtransport=ssl `
+mvn -pl remote-client exec:exec -Dtransport=ssl `
   -Dcdo.ssl.truststore=C:/certs/cdo-trust.p12 `
   -Dcdo.ssl.passphrase=YOUR_TRUSTSTORE_PASSPHRASE
 ```
@@ -227,7 +225,7 @@ mvn -pl remote-client exec:java -Dtransport=ssl `
 For WSS, the client uses the JSSE truststore properties:
 
 ```powershell
-mvn -pl remote-client exec:java -Dtransport=wss `
+mvn -pl remote-client exec:exec -Dtransport=wss `
   -Dcdo.wss.truststore=C:/certs/cdo-trust.p12 `
   -Dcdo.wss.truststore.password=YOUR_TRUSTSTORE_PASSWORD
 ```
@@ -236,6 +234,8 @@ For WS/WSS, the client uses
 `ws://<host>:<port>/net4j/@cdo` or `wss://<host>:<port>/net4j/@cdo`, matching the configured Jetty
 route. For another server path, use `-Dcdo.ws.path=/` (or its configured service path) on the
 client command.
+
+For a PowerShell example that passes an application argument containing spaces, see the [embedded H2 example](../embedded-h2/README.md), which uses a database path rather than a host name.
 
 On a fresh repository, `CREATED` means the client committed `/company` and its Company model data.
 On a later invocation, `LOADED` means it found that resource in the repository and read the saved

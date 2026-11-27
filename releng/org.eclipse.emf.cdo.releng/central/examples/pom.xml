@@ -31,6 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     <exec-maven-plugin.version>3.7.0</exec-maven-plugin.version>
+    <exec.arg.application></exec.arg.application>
     <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
     <cdo.project.release>4.37.0</cdo.project.release>
     <h2.version>2.5.252</h2.version>
@@ -87,6 +88,17 @@
           </snapshots>
         </repository>
       </repositories>
+    </profile>
+    <profile>
+      <id>forward-application-argument</id>
+      <activation>
+        <property>
+          <name>exec.application.args</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.application>"${exec.application.args}"</exec.arg.application>
+      </properties>
     </profile>
   </profiles>
 

@@ -13,6 +13,8 @@ package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
 /**
@@ -23,7 +25,7 @@ import org.eclipse.net4j.util.security.INegotiatorAware;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface InternalAcceptor extends IAcceptor, ITransportConfigAware, INegotiatorAware
+public interface InternalAcceptor extends IAcceptor, IManagedContainerProvider, IManagedContainer.ContainerAware, ITransportConfigAware, INegotiatorAware
 {
   /**
    * @since 4.16

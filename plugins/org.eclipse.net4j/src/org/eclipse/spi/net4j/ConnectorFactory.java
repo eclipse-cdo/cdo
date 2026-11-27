@@ -11,6 +11,8 @@
  */
 package org.eclipse.spi.net4j;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.Factory;
 
 /**
@@ -19,12 +21,26 @@ import org.eclipse.net4j.util.factory.Factory;
  *
  * @author Eike Stepper
  */
-public abstract class ConnectorFactory extends Factory
+public abstract class ConnectorFactory extends Factory implements IManagedContainer.ContainerAware, IManagedContainerProvider
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.connectors"; //$NON-NLS-1$
+
+  private IManagedContainer container;
 
   public ConnectorFactory(String type)
   {
     super(PRODUCT_GROUP, type);
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return container;
+  }
+
+  @Override
+  public void setManagedContainer(IManagedContainer container)
+  {
+    this.container = container;
   }
 }

@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -65,6 +66,8 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
+  private IManagedContainer container;
+
   private ITransportConfig config;
 
   private long openChannelTimeout = IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT;
@@ -91,9 +94,15 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   }
 
   @Override
-  public boolean needsBufferProvider()
+  public IManagedContainer getContainer()
   {
-    return true;
+    return container;
+  }
+
+  @Override
+  public void setManagedContainer(IManagedContainer container)
+  {
+    this.container = container;
   }
 
   @Override
@@ -112,6 +121,12 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     checkInactive();
     this.config = Net4jUtil.copyTransportConfig(this, config);
+  }
+
+  @Override
+  public boolean needsBufferProvider()
+  {
+    return true;
   }
 
   @Override
@@ -490,7 +505,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   private void rollbackChannelAddition(InternalChannel channel)
   {
     short channelID = channel.getID();
-    
+
     synchronized (channelIDs)
     {
       channels.remove(channelID, channel);

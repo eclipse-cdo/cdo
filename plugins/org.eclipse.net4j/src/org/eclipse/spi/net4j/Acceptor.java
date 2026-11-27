@@ -16,6 +16,7 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -50,6 +51,8 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
+  private IManagedContainer container;
+
   private ITransportConfig config;
 
   private ConnectorPreparer connectorPreparer;
@@ -82,9 +85,15 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   }
 
   @Override
-  public boolean needsBufferProvider()
+  public IManagedContainer getContainer()
   {
-    return true;
+    return container;
+  }
+
+  @Override
+  public void setManagedContainer(IManagedContainer container)
+  {
+    this.container = container;
   }
 
   @Override
@@ -133,6 +142,12 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   }
 
   @Override
+  public boolean needsBufferProvider()
+  {
+    return true;
+  }
+
+  @Override
   public IConnector[] getAcceptedConnectors()
   {
     synchronized (acceptedConnectors)
@@ -158,6 +173,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
 
   public void prepareConnector(InternalConnector connector)
   {
+    connector.setManagedContainer(getContainer());
     connector.setConfig(getConfig());
 
     if (connectorPreparer != null)

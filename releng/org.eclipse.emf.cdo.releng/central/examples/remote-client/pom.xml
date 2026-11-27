@@ -26,59 +26,74 @@
 
   <properties>
     <plain.java.source.file>org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java</plain.java.source.file>
+    <exec.arg.wss.truststore></exec.arg.wss.truststore>
+    <exec.arg.wss.truststore.password></exec.arg.wss.truststore.password>
+    <exec.arg.ssl.truststore></exec.arg.ssl.truststore>
+    <exec.arg.ssl.passphrase></exec.arg.ssl.passphrase>
+    <exec.arg.ws.path></exec.arg.ws.path>
   </properties>
 
   <profiles>
     <profile>
       <id>forward-wss-truststore</id>
-      <activation><property><name>cdo.wss.truststore</name></property></activation>
-      <build><plugins><plugin>
-        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
-        <configuration><systemProperties combine.children="append"><systemProperty>
-          <key>javax.net.ssl.trustStore</key><value>${cdo.wss.truststore}</value>
-        </systemProperty></systemProperties></configuration>
-      </plugin></plugins></build>
+      <activation>
+        <property>
+          <name>cdo.wss.truststore</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.wss.truststore>-Djavax.net.ssl.trustStore="${cdo.wss.truststore}"</exec.arg.wss.truststore>
+      </properties>
     </profile>
+
     <profile>
       <id>forward-wss-truststore-password</id>
-      <activation><property><name>cdo.wss.truststore.password</name></property></activation>
-      <build><plugins><plugin>
-        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
-        <configuration><systemProperties combine.children="append"><systemProperty>
-          <key>javax.net.ssl.trustStorePassword</key><value>${cdo.wss.truststore.password}</value>
-        </systemProperty></systemProperties></configuration>
-      </plugin></plugins></build>
+      <activation>
+        <property>
+          <name>cdo.wss.truststore.password</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.wss.truststore.password>-Djavax.net.ssl.trustStorePassword="${cdo.wss.truststore.password}"</exec.arg.wss.truststore.password>
+      </properties>
     </profile>
+
     <profile>
       <id>forward-net4j-ssl-trust</id>
-      <activation><property><name>cdo.ssl.truststore</name></property></activation>
-      <build><plugins><plugin>
-        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
-        <configuration><systemProperties combine.children="append"><systemProperty>
-          <key>org.eclipse.net4j.tcp.ssl.trust</key><value>${cdo.ssl.truststore}</value>
-        </systemProperty></systemProperties></configuration>
-      </plugin></plugins></build>
+      <activation>
+        <property>
+          <name>cdo.ssl.truststore</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.ssl.truststore>-Dorg.eclipse.net4j.tcp.ssl.trust="${cdo.ssl.truststore}"</exec.arg.ssl.truststore>
+      </properties>
     </profile>
+
     <profile>
       <id>forward-net4j-ssl-passphrase</id>
-      <activation><property><name>cdo.ssl.passphrase</name></property></activation>
-      <build><plugins><plugin>
-        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
-        <configuration><systemProperties combine.children="append"><systemProperty>
-          <key>org.eclipse.net4j.tcp.ssl.passphrase</key><value>${cdo.ssl.passphrase}</value>
-        </systemProperty></systemProperties></configuration>
-      </plugin></plugins></build>
+      <activation>
+        <property>
+          <name>cdo.ssl.passphrase</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.ssl.passphrase>-Dorg.eclipse.net4j.tcp.ssl.passphrase="${cdo.ssl.passphrase}"</exec.arg.ssl.passphrase>
+      </properties>
     </profile>
+
     <profile>
       <id>forward-ws-path</id>
-      <activation><property><name>cdo.ws.path</name></property></activation>
-      <build><plugins><plugin>
-        <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId>
-        <configuration><systemProperties combine.children="append"><systemProperty>
-          <key>cdo.ws.path</key><value>${cdo.ws.path}</value>
-        </systemProperty></systemProperties></configuration>
-      </plugin></plugins></build>
+      <activation>
+        <property>
+          <name>cdo.ws.path</name>
+        </property>
+      </activation>
+      <properties>
+        <exec.arg.ws.path>-Dcdo.ws.path="${cdo.ws.path}"</exec.arg.ws.path>
+      </properties>
     </profile>
+
     <profile>
       <id>checkout-central-repository</id>
       <activation>
@@ -96,6 +111,7 @@
         </repository>
       </repositories>
     </profile>
+
     <profile>
       <id>checkout-source-copy</id>
       <activation>
@@ -158,10 +174,21 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven-plugin.version}</version>
         <configuration>
-          <mainClass>org.eclipse.emf.cdo.examples.plain.client.RemoteClient</mainClass>
-          <systemProperties>
-            <systemProperty><key>transport</key><value>${transport}</value></systemProperty>
-          </systemProperties>
+          <executable>java</executable>
+          <workingDirectory>${user.dir}</workingDirectory>
+          <inheritIo>true</inheritIo>
+          <commandlineArgs>
+            -classpath
+            %classpath
+            -Dtransport="${transport}"
+            ${exec.arg.wss.truststore}
+            ${exec.arg.wss.truststore.password}
+            ${exec.arg.ssl.truststore}
+            ${exec.arg.ssl.passphrase}
+            ${exec.arg.ws.path}
+            org.eclipse.emf.cdo.examples.plain.client.RemoteClient
+            ${exec.arg.application}
+          </commandlineArgs>
         </configuration>
       </plugin>
     </plugins>

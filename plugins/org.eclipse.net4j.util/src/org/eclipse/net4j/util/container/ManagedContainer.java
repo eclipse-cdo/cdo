@@ -395,6 +395,7 @@ public class ManagedContainer extends AbstractManagedContainer
     checkActive();
     ElementKey key = new ElementKey(productGroup, factoryType, description);
     Object element;
+
     synchronized (elementRegistry)
     {
       element = elementRegistry.get(key);
@@ -546,6 +547,7 @@ public class ManagedContainer extends AbstractManagedContainer
   {
     ContainerEvent<Object> event = new ContainerEvent<>(this);
     Object oldElement;
+
     synchronized (elementRegistry)
     {
       key.setID(++maxElementID);

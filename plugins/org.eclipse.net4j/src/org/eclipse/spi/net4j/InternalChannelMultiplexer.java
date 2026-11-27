@@ -16,6 +16,8 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 /**
  * Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers. It also provides the
@@ -26,7 +28,8 @@ import org.eclipse.net4j.channel.IChannelMultiplexer;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBufferProvider, ITransportConfigAware
+public interface InternalChannelMultiplexer
+    extends IChannelMultiplexer, IBufferProvider, IManagedContainerProvider, IManagedContainer.ContainerAware, ITransportConfigAware
 {
   /**
    * @since 4.5

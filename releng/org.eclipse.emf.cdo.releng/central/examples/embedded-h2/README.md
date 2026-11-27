@@ -2,7 +2,7 @@
 
 This Java 17 application starts an embedded CDO repository backed by a persistent file-based H2 database. It registers the existing Company model, creates the Company resource on first use, and loads it on later runs through a read-only CDO view. Maven runs the same application in two separate JVMs to demonstrate persistence across process boundaries.
 
-See also [ CDO Programmer's Guide](https://download.eclipse.org/modeling/emf/cdo/updates/integration/help/?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc01_Introduction.html). 
+See also [CDO Programmer's Guide](https://download.eclipse.org/modeling/emf/cdo/updates/integration/help/?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc01_Introduction.html).
 
 ## Prerequisites and dependencies
 
@@ -21,14 +21,18 @@ ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f releng/org.eclipse.emf
 From the repository root, run:
 
 ```powershell
-mvn -f releng/org.eclipse.emf.cdo.releng/central/examples/embedded-h2/pom.xml compile exec:exec `
-  -Dexec.executable=java `
-  -Dexec.args="-classpath %classpath org.eclipse.emf.cdo.examples.plain.embedded.EmbeddedH2Example target/manual-db"
+mvn -f releng/org.eclipse.emf.cdo.releng/central/examples/embedded-h2/pom.xml compile exec:exec -Dexec.application.args=target/manual-db
 ```
 
-The database directory defaults to `target/embedded-h2-data` when no path is supplied. Pass a different directory as the first application argument to keep multiple manual repositories separate. Existing data is preserved across runs. Maven build output is isolated in `target/build`, so `mvn clean` does not remove the manual database. To start fresh, stop the application and remove that database directory yourself.
+The Maven POM supplies the Java executable, runtime classpath, and main class. The database directory defaults to `target/embedded-h2-data` when no argument is supplied. Pass a different directory through `exec.application.args` to keep multiple manual repositories separate. Existing data is preserved across runs. Maven build output is isolated in `target/build`, so `mvn clean` does not remove the manual database. To start fresh, stop the application and remove that database directory yourself.
 
-The application automatically prints `CREATED` or `LOADED`. Its only optional argument selects the database directory; it does not select the application behavior.
+For an application argument containing spaces, pass the complete Maven property as one PowerShell argument. The Exec Plugin parser keeps the quoted value as one application argument:
+
+```powershell
+mvn -f releng/org.eclipse.emf.cdo.releng/central/examples/embedded-h2/pom.xml compile exec:exec '-Dexec.application.args=target/my database'
+```
+
+Embedded quotation marks and other shell-sensitive characters may need shell-specific escaping. Prefer ordinary argument values when possible.
 
 ## Run the two-JVM verification
 

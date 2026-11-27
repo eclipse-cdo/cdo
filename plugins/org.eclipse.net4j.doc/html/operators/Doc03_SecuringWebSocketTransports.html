@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Securing WebSocket Transports</h1></td>
+		<td width="100%"><h1>Securing WebSocket Transports<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc02_ConfiguringWebSocketClients.html" title="Backward to Configuring WebSocket Clients"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Forward to Operating and Troubleshooting WebSockets"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -93,7 +93,7 @@ embedding server. Certificate validation and host-name verification remain enabl
 </p>
 
 
-<h2><a name="Client_Trust_Configuration"></a>1&nbsp;&nbsp;Client Trust Configuration</h2>
+<h2><a name="Client_Trust_Configuration"></a>1&nbsp;&nbsp;Client Trust Configuration<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html#Client_Trust_Configuration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A WSS client must trust the server certificate chain and the requested DNS name must match a certificate subject
 alternative name. The JDK provider uses normal JDK trust when given a default client; to trust a private CA, load the
@@ -185,7 +185,7 @@ under a distinct provider type.
 Do not install a trust-all manager, disable endpoint identification, or replace a hostname with an unrelated address
 merely to suppress a certificate error. Correct the certificate chain, URI host name, or intended trust anchors.
 
-<h2><a name="Server_Certificates_and_HTTPS_Listeners"></a>2&nbsp;&nbsp;Server Certificates and HTTPS Listeners</h2>
+<h2><a name="Server_Certificates_and_HTTPS_Listeners"></a>2&nbsp;&nbsp;Server Certificates and HTTPS Listeners<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html#Server_Certificates_and_HTTPS_Listeners" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Jetty owns the TLS listener and certificate material. Configure its <code>SslContextFactory.Server</code> with the
 server key store named by <code>net4j.tls.server.keyStore</code> and password from
@@ -246,7 +246,7 @@ and passwords through deployment-managed secrets. For mutual TLS, Jetty can requ
 can provide its own key managers; only enable this when the application also maps authenticated client identities to
 authorization decisions.
 
-<h2><a name="Mutual_TLS"></a>3&nbsp;&nbsp;Mutual TLS</h2>
+<h2><a name="Mutual_TLS"></a>3&nbsp;&nbsp;Mutual TLS<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html#Mutual_TLS" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Mutual TLS is supported by the standard TLS components around the transport. Configure Jetty with its server identity,
 a trust store containing only the client CA certificates accepted by this endpoint, and required client authentication.
@@ -479,7 +479,7 @@ container. The standalone examples' JVM shutdown hook stops Jetty only; JVM shut
 waiting in <code>server.join()</code> resumes to execute the Net4j cleanup in <code>finally</code>. Embedded Jetty hosts
 must coordinate all three lifecycles through their own shutdown manager.
 
-<h2><a name="TLS_Termination_and_Secure_Request_Detection"></a>4&nbsp;&nbsp;TLS Termination and Secure Request Detection</h2>
+<h2><a name="TLS_Termination_and_Secure_Request_Detection"></a>4&nbsp;&nbsp;TLS Termination and Secure Request Detection<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html#TLS_Termination_and_Secure_Request_Detection" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The Jetty adapter requires the incoming request's secure state to match the acceptor type. It accepts WS only for
 non-secure requests and WSS only for secure requests. If a reverse proxy terminates TLS and forwards plain HTTP, Jetty
@@ -490,7 +490,7 @@ metadata from a controlled proxy and configure the Jetty edge accordingly.
 The simplest arrangement is end-to-end HTTPS from the TLS terminator to Jetty. If TLS terminates before Jetty, validate
 the trusted-proxy chain and secure-request configuration in an integration environment before exposing WSS.
 
-<h2><a name="Deployment_Checks_and_Common_Failures"></a>5&nbsp;&nbsp;Deployment Checks and Common Failures</h2>
+<h2><a name="Deployment_Checks_and_Common_Failures"></a>5&nbsp;&nbsp;Deployment Checks and Common Failures<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc03_SecuringWebSocketTransports.html#Deployment_Checks_and_Common_Failures" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A certificate-chain error usually means a missing intermediate or untrusted CA. A host-name error means the URI host
 does not match the certificate. A handshake failure can also result from expired certificates, incompatible protocol

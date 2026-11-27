@@ -58,6 +58,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Initiates immediate termination, prevents further sends from being accepted, and causes outstanding accepted sends to complete
 unsuccessfully unless already successfully completed.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#abort(java.lang.RuntimeException)" class="member-name-link">abort(RuntimeException)</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
+<dd>
+<div class="block">Aborts this stream and immediately wakes a thread waiting for its next buffer.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/ws/IWSAcceptor.html#accept(org.eclipse.spi.net4j.MessageConnector.IMessageConnection)" class="member-name-link">accept(MessageConnector.IMessageConnection)</a> - Method in interface org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/IWSAcceptor.html" title="interface in org.eclipse.net4j.ws">IWSAcceptor</a></dt>
 <dd>
 <div class="block">Attaches a WebSocket message connection accepted by a server provider to this Net4j acceptor.</div>
@@ -278,7 +282,9 @@ underlying transport while managing channel registration and lifecycle.</div>
 <dt><a href="org/eclipse/spi/net4j/ClientProtocolFactory.html#%3Cinit%3E(java.lang.String)" class="member-name-link">ClientProtocolFactory(String)</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ClientProtocolFactory.html" title="class in org.eclipse.spi.net4j">ClientProtocolFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#close()" class="member-name-link">close()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Closes the stream, detaches its current and queued buffers, and wakes any waiting reader.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferOutputStream.html#close()" class="member-name-link">close()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/ISignalProtocol.html#close()" class="member-name-link">close()</a> - Method in interface org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a></dt>
@@ -622,7 +628,11 @@ for this protocol.</div>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#DEFAULT_MILLIS_BEFORE_TIMEOUT" class="member-name-link">DEFAULT_MILLIS_BEFORE_TIMEOUT</a> - Static variable in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#DEFAULT_MILLIS_INTERRUPT_CHECK" class="member-name-link">DEFAULT_MILLIS_INTERRUPT_CHECK</a> - Static variable in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#DEFAULT_MONITOR_PROGRESS_SECONDS" class="member-name-link">DEFAULT_MONITOR_PROGRESS_SECONDS</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#DEFAULT_MONITOR_TIMEOUT_SECONDS" class="member-name-link">DEFAULT_MONITOR_TIMEOUT_SECONDS</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
@@ -884,6 +894,10 @@ needed to let a given maximum number of buffers survive in the pool.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBuffer.html#get(byte%5B%5D)" class="member-name-link">get(byte[])</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#getAbortCause()" class="member-name-link">getAbortCause()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
+<dd>
+<div class="block">Returns the cause supplied to <a href="org/eclipse/net4j/buffer/BufferInputStream.html#abort(java.lang.RuntimeException)"><code>BufferInputStream.abort(RuntimeException)</code></a>, or <code>null</code> if this stream has not been aborted.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html#getAcceptableResponses()" class="member-name-link">getAcceptableResponses()</a> - Method in class org.eclipse.net4j.signal.confirmation.<a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationPrompt</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/acceptor/IAcceptor.html#getAcceptedConnectors()" class="member-name-link">getAcceptedConnectors()</a> - Method in interface org.eclipse.net4j.acceptor.<a href="org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor">IAcceptor</a></dt>
@@ -1150,7 +1164,11 @@ needed to let a given maximum number of buffers survive in the pool.</div>
 <dt><a href="org/eclipse/net4j/buffer/IBuffer.html#getErrorHandler()" class="member-name-link">getErrorHandler()</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#getException()" class="member-name-link">getException()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="org/eclipse/net4j/buffer/BufferInputStream.html#getAbortCause()"><code>BufferInputStream.getAbortCause()</code></a>.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/SignalFinishedEvent.html#getException()" class="member-name-link">getException()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">SignalFinishedEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/IndicationWithResponse.html#getExceptionMessage(java.lang.Throwable)" class="member-name-link">getExceptionMessage(Throwable)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</a></dt>
@@ -1260,9 +1278,17 @@ configuration.</div>
 <dt><a href="org/eclipse/net4j/channel/ChannelInputStream.html#getMillisBeforeTimeout()" class="member-name-link">getMillisBeforeTimeout()</a> - Method in class org.eclipse.net4j.channel.<a href="org/eclipse/net4j/channel/ChannelInputStream.html" title="class in org.eclipse.net4j.channel">ChannelInputStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/channel/ChannelInputStream.html#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck()</a> - Method in class org.eclipse.net4j.channel.<a href="org/eclipse/net4j/channel/ChannelInputStream.html" title="class in org.eclipse.net4j.channel">ChannelInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService()" class="member-name-link">getMonitoringExecutorService()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html" title="class in org.eclipse.net4j.signal">IndicationWithMonitoring</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -1421,6 +1447,10 @@ configuration.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/Channel.html#getReceiveHandler()" class="member-name-link">getReceiveHandler()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/MessageConnector.html#getReceiveQueueCount()" class="member-name-link">getReceiveQueueCount()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/MessageConnector.html" title="class in org.eclipse.spi.net4j">MessageConnector</a></dt>
+<dd>
+<div class="block">Returns the number of per-channel receive dispatch queues currently retained by this connector.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/FactoriesProtocolProvider.html#getRegistry()" class="member-name-link">getRegistry()</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/FactoriesProtocolProvider.html" title="class in org.eclipse.net4j">FactoriesProtocolProvider</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#getRequestingWorkPercent()" class="member-name-link">getRequestingWorkPercent()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
@@ -1601,7 +1631,9 @@ configuration.</div>
 <dt><a href="org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html#handleAccept(org.eclipse.net4j.tcp.ITCPSelector,java.nio.channels.ServerSocketChannel)" class="member-name-link">handleAccept(ITCPSelector, ServerSocketChannel)</a> - Method in interface org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBuffer(IBuffer)</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Accepts a buffer from a producer.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBuffer(IBuffer)</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></dt>
 <dd>
 <div class="block">Handles an <a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.</div>
@@ -1919,7 +1951,9 @@ dequeued.</div>
 <div class="block">Provides <a href="org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><code>protocol</code></a> instances for given types.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#isCCAM()" class="member-name-link">isCCAM()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns whether the currently acquired buffer requested that its channel be closed after consumption.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBuffer.html#isCCAM()" class="member-name-link">isCCAM()</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></dt>
 <dd>
 <div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
@@ -2514,11 +2548,15 @@ indicates that this buffer is not intended to be passed to a <a href="https://do
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#read()" class="member-name-link">read()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the next byte, or <code>IOUtil.EOF</code> at end of stream.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/channel/ChannelInputStream.html#read()" class="member-name-link">read()</a> - Method in class org.eclipse.net4j.channel.<a href="org/eclipse/net4j/channel/ChannelInputStream.html" title="class in org.eclipse.net4j.channel">ChannelInputStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#read(byte%5B%5D,int,int)" class="member-name-link">read(byte[], int, int)</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Reads bytes from this stream, acquiring the monitor for at most one buffer per iteration.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html#read(org.eclipse.net4j.util.io.ExtendedDataInput)" class="member-name-link">read(ExtendedDataInput)</a> - Static method in class org.eclipse.net4j.signal.confirmation.<a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationPrompt</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferState.html#READING_BODY" class="member-name-link">READING_BODY</a> - Enum constant in enum class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferState.html" title="enum class in org.eclipse.net4j.buffer">BufferState</a></dt>
@@ -2656,7 +2694,9 @@ indicates that this buffer is not intended to be passed to a <a href="https://do
 <dt><a href="org/eclipse/net4j/signal/security/AuthenticationIndication.html#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">responding(ExtendedDataOutputStream, OMMonitor)</a> - Method in class org.eclipse.net4j.signal.security.<a href="org/eclipse/net4j/signal/security/AuthenticationIndication.html" title="class in org.eclipse.net4j.signal.security">AuthenticationIndication</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#restartTimeout()" class="member-name-link">restartTimeout()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Restarts the current read timeout and wakes a waiting reader to recompute its deadline.</div>
+</dd>
 <dt><a href="org/eclipse/spi/net4j/SchedulingConnector.html#restoreSendingInterest(boolean)" class="member-name-link">restoreSendingInterest(boolean)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/SchedulingConnector.html" title="class in org.eclipse.spi.net4j">SchedulingConnector</a></dt>
 <dd>
 <div class="block">Restores transport write readiness according to scheduler work and any transport-specific work that must be serviced on the write
@@ -2803,7 +2843,11 @@ path.</div>
 <dt><a href="org/eclipse/net4j/buffer/IBuffer.html#setErrorHandler(org.eclipse.net4j.util.IErrorHandler)" class="member-name-link">setErrorHandler(IErrorHandler)</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)" class="member-name-link">setException(RemoteException)</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="org/eclipse/net4j/buffer/BufferInputStream.html#abort(java.lang.RuntimeException)"><code>BufferInputStream.abort(RuntimeException)</code></a> to abort the stream.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/protocol/IProtocol.html#setExecutorService(java.util.concurrent.ExecutorService)" class="member-name-link">setExecutorService(ExecutorService)</a> - Method in interface org.eclipse.net4j.protocol.<a href="org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Protocol.html#setExecutorService(java.util.concurrent.ExecutorService)" class="member-name-link">setExecutorService(ExecutorService)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</a></dt>
@@ -2838,7 +2882,12 @@ configuration.</div>
 <dt><a href="org/eclipse/net4j/channel/ChannelInputStream.html#setMillisBeforeTimeout(long)" class="member-name-link">setMillisBeforeTimeout(long)</a> - Method in class org.eclipse.net4j.channel.<a href="org/eclipse/net4j/channel/ChannelInputStream.html" title="class in org.eclipse.net4j.channel">ChannelInputStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/channel/ChannelInputStream.html#setMillisInterruptCheck(long)" class="member-name-link">setMillisInterruptCheck(long)</a> - Method in class org.eclipse.net4j.channel.<a href="org/eclipse/net4j/channel/ChannelInputStream.html" title="class in org.eclipse.net4j.channel">ChannelInputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>; this value is retained
+            only for compatibility with existing callers.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/spi/net4j/Channel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)" class="member-name-link">setMultiplexer(IChannelMultiplexer)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)" class="member-name-link">setMultiplexer(IChannelMultiplexer)</a> - Method in interface org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></dt>
@@ -2983,6 +3032,26 @@ the local execution of a scheduled <a href="org/eclipse/net4j/signal/SignalFinis
 <dd>
 <div class="block">An <code>event</code> fired from a <a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a> when the protocol <a href="org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout(long)"><code>timeout</code></a>
 has been changed.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" class="type-name-link" title="class in org.eclipse.net4j.signal">SignalProtocolDeactivatedException</a> - Exception Class in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
+<dd>
+<div class="block">Indicates that a signal was aborted or rejected locally because its protocol was deactivated.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html#%3Cinit%3E()" class="member-name-link">SignalProtocolDeactivatedException()</a> - Constructor for exception class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" title="class in org.eclipse.net4j.signal">SignalProtocolDeactivatedException</a></dt>
+<dd>
+<div class="block">Creates an exception with the standard protocol deactivation message.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html#%3Cinit%3E(java.lang.String)" class="member-name-link">SignalProtocolDeactivatedException(String)</a> - Constructor for exception class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" title="class in org.eclipse.net4j.signal">SignalProtocolDeactivatedException</a></dt>
+<dd>
+<div class="block">Creates an exception with a message describing the rejected signal operation.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">SignalProtocolDeactivatedException(String, Throwable)</a> - Constructor for exception class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" title="class in org.eclipse.net4j.signal">SignalProtocolDeactivatedException</a></dt>
+<dd>
+<div class="block">Creates an exception with a message and cause.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html#%3Cinit%3E(java.lang.Throwable)" class="member-name-link">SignalProtocolDeactivatedException(Throwable)</a> - Constructor for exception class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" title="class in org.eclipse.net4j.signal">SignalProtocolDeactivatedException</a></dt>
+<dd>
+<div class="block">Creates an exception with an underlying cause.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/signal/SignalReactor.html" class="type-name-link" title="class in org.eclipse.net4j.signal">SignalReactor</a> - Class in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
 <dd>
@@ -3205,7 +3274,7 @@ the order they are declared.</div>
 <a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:X">X</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

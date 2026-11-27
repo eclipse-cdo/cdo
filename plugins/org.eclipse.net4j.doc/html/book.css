@@ -228,3 +228,22 @@ div.box {
   border: 1px solid DarkGray;
 }
 
+.help-center-link {
+  float: right;
+  margin-left: 1em;
+  font-size: 12px;
+  font-weight: normal;
+  color: #777;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.help-center-link:before {
+  content: "\1F517";
+  margin-right: 0.4em;
+}
+
+.help-center-link:hover {
+  color: #444;
+  text-decoration: underline;
+}

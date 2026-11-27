@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Working with Views</h1></td>
+		<td width="100%"><h1>Working with Views<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc03_WorkingWithSessions.html" title="Backward to Working with Sessions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_WorkingWithTransactions.html" title="Forward to Working with Transactions"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -129,7 +129,7 @@ to use views effectively is key to building responsive and scalable applications
 </p>
 
 
-<h2><a name="UnderstandingViewsAndTheirTypes"></a>1&nbsp;&nbsp;Understanding Views and Their Types</h2>
+<h2><a name="UnderstandingViewsAndTheirTypes"></a>1&nbsp;&nbsp;Understanding Views and Their Types<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#UnderstandingViewsAndTheirTypes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A view binds one client-side <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> and its objects to a session, a resource set,
 and a branch point. Use a read-only view for navigation, queries, or a stable historical target; use a
@@ -225,7 +225,7 @@ instead of carrying model objects across view lifetimes.
 <p>
  shows an editable view and its commit boundary.
 
-<h2><a name="OpeningAndClosingViews"></a>2&nbsp;&nbsp;Opening and Closing Views</h2>
+<h2><a name="OpeningAndClosingViews"></a>2&nbsp;&nbsp;Opening and Closing Views<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#OpeningAndClosingViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Open views from a session with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>CDOSession.openView()</code></a> for the current branch head, or choose an explicit
 branch point through the session's view-opener overloads. Open a transaction when the operation must modify data;
@@ -322,7 +322,7 @@ avoid reopening it; view lifetime should match the consistency and object-identi
 <p>
  shows the transaction cleanup pattern.
 
-<h2><a name="ThreadSafety"></a>3&nbsp;&nbsp;Thread Safety</h2>
+<h2><a name="ThreadSafety"></a>3&nbsp;&nbsp;Thread Safety<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ThreadSafety" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Views in CDO are inherently thread-safe, but this guarantee applies only to <b>individual</b> method calls. When performing
 <b>multiple</b> operations that need to be atomic or consistent, developers must use a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Interface in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> to
@@ -333,7 +333,7 @@ not make a sequence of separate calls atomic: an invalidation may occur between 
 around the smallest multi-call operation that must observe one coherent state. Keep that critical section short;
 do not wait for network work, block on another thread, or call arbitrary application callbacks while holding it.
 
-<h3><a name="UsingCriticalSections"></a>3.1&nbsp;&nbsp;Using Critical Sections</h3>
+<h3><a name="UsingCriticalSections"></a>3.1&nbsp;&nbsp;Using Critical Sections<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#UsingCriticalSections" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 To ensure thread-safe access to a CDO view when performing multiple operations, use the view's critical section
 object. It is returned by the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a> method. The critical section provides methods to execute code blocks
@@ -460,7 +460,7 @@ access the same view, such as an SWT UI callback. It solves that specific lock-o
 reason to hold the critical section across arbitrary blocking work. Register the relevant delegate detector and
 enable the session option or install the lock before opening the view.
 
-<h3><a name="UsingDelegableLock"></a>3.2&nbsp;&nbsp;Using a Delegable Lock</h3>
+<h3><a name="UsingDelegableLock"></a>3.2&nbsp;&nbsp;Using a Delegable Lock<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#UsingDelegableLock" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 As an alternative to the default locking strategy of a view's critical section, you can use
 a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a>, which allows to delegate the lock ownership to a
@@ -647,14 +647,14 @@ There are two ways to use a <code>DelegableReentrantLock</code> with a CDO view:
    <p>
 </ol>
 
-<h2><a name="UnderstandingTheCDOFileSystem"></a>4&nbsp;&nbsp;Understanding the CDO File System</h2>
+<h2><a name="UnderstandingTheCDOFileSystem"></a>4&nbsp;&nbsp;Understanding the CDO File System<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#UnderstandingTheCDOFileSystem" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The CDO repository exposes a virtual file system for organizing model resources. This section describes the
 structure and usage of the file system, including root resources, folders, and different resource types.
 <p>
 <img src="FileSystem.png"/>
 
-<h3><a name="TheRootResource"></a>4.1&nbsp;&nbsp;The Root Resource</h3>
+<h3><a name="TheRootResource"></a>4.1&nbsp;&nbsp;The Root Resource<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#TheRootResource" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The root resource is the entry point to the CDO file system. It contains all top-level folders and resources,
 providing a hierarchical view of the repository's contents.
@@ -752,7 +752,7 @@ When you don't have a view or transaction available, you can ask a session for t
 The root resource of a repository is created automatically when the repository is initialized for the first time.
 It can not be deleted, but its contents can be modified like any other resource.
 
-<h3><a name="ResourceFolders"></a>4.2&nbsp;&nbsp;Resource Folders</h3>
+<h3><a name="ResourceFolders"></a>4.2&nbsp;&nbsp;Resource Folders<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ResourceFolders" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The CDO resource hierarchy is a repository-side virtual file system. A <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> is a persistent
 model object that contains resource nodes; those nodes may be folders, model resources, binary resources, or text
@@ -853,7 +853,7 @@ can be done as follows:
 Note that resource folders <b>are</b> model objects and therefore support EMF features such as adapters,
 notifications, and so on.
 
-<h3><a name="ModelResources"></a>4.3&nbsp;&nbsp;Model Resources</h3>
+<h3><a name="ModelResources"></a>4.3&nbsp;&nbsp;Model Resources<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ModelResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOResource.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> is an EMF resource backed by a CDO view. Its root objects and resource metadata participate
 in the view's model and notification behavior; creating a resource or changing its contents requires a
@@ -949,7 +949,7 @@ can be done as follows:
 Note that model resources <b>are</b> model objects and therefore support EMF features such as adapters,
 notifications, and so on.
 
-<h3><a name="BinaryResources"></a>4.4&nbsp;&nbsp;Binary Resources</h3>
+<h3><a name="BinaryResources"></a>4.4&nbsp;&nbsp;Binary Resources<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#BinaryResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Binary resources allow storage of non-model data, such as images or files, within the CDO repository.
 They are based on CDO's special data type <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a>, which supports efficient handling of large binary objects.
@@ -1042,7 +1042,7 @@ can be done as follows:
 Note that binary resources <b>are</b> model objects and therefore support EMF features such as adapters,
 notifications, and so on.
 
-<h3><a name="TextResources"></a>4.5&nbsp;&nbsp;Text Resources</h3>
+<h3><a name="TextResources"></a>4.5&nbsp;&nbsp;Text Resources<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#TextResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Text resources store textual data, such as configuration files or documentation, in the repository.
 They are based on CDO's special data type <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a>, which supports efficient handling of large text objects.
@@ -1135,7 +1135,7 @@ can be done as follows:
 Note that text resources <b>are</b> model objects and therefore support EMF features such as adapters,
 notifications, and so on.
 
-<h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage</h2>
+<h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ResourceSetsAndTheirUsage" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> is the CDO access context; its <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>ResourceSet</code></a> is the EMF loading
 context used to resolve CDO resource URIs and keep the resulting objects associated with that view. A session can
@@ -1187,7 +1187,7 @@ The examples show direct path lookup and EMF URI loading from the same view Reso
 <p>
 
 
-<h2><a name="NavigatingModels"></a>6&nbsp;&nbsp;Navigating Models</h2>
+<h2><a name="NavigatingModels"></a>6&nbsp;&nbsp;Navigating Models<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#NavigatingModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Use ordinary EMF navigation for a known, bounded part of the graph: <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainer()" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eContainer()</code></a>,
 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContents()" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eContents()</code></a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet(org.eclipse.emf.ecore.EStructuralFeature)" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eGet(EStructuralFeature)</code></a>, and generated getters all preserve normal
@@ -1244,7 +1244,7 @@ the independent bulk lookup. It demonstrates graph walking and batched ID lookup
 <p>
 
 
-<h2><a name="WaitingForUpdates"></a>7&nbsp;&nbsp;Waiting For Updates</h2>
+<h2><a name="WaitingForUpdates"></a>7&nbsp;&nbsp;Waiting For Updates<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#WaitingForUpdates" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> implements <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html" title="Interface in org.eclipse.emf.cdo.util"><code>org.eclipse.emf.cdo.util.CDOUpdatable</code></a>. Its
 <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime()" title="Method in org.eclipse.emf.cdo.util.CDOUpdatable"><code>org.eclipse.emf.cdo.util.CDOUpdatable.getLastUpdateTime()</code></a> reports the timestamp of the last processed
@@ -1299,7 +1299,7 @@ the timestamp from the committing session's commit result or commit-info event a
 <p>
 
 
-<h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources</h2>
+<h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#QueryingResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryResources(org.eclipse.emf.cdo.eresource.CDOResourceFolder,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryResources(CDOResourceFolder, String, boolean)</code></a> searches child resource nodes in one folder;
 pass null for the folder to search at the repository root. With exactMatch == true, the name must
@@ -1354,7 +1354,7 @@ This example contrasts exact matching with prefix matching and closes the asynch
 <p>
 
 
-<h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects</h2>
+<h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#QueryingModelObjects" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryInstances(org.eclipse.emf.ecore.EClass)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryInstances(org.eclipse.emf.ecore.EClass)</code></a> selects instances of an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>org.eclipse.emf.ecore.EClass</code></a>;
 use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync(org.eclipse.emf.ecore.EClass,boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryInstancesAsync(org.eclipse.emf.ecore.EClass, boolean)</code></a> when results should be consumed
@@ -1412,7 +1412,7 @@ asynchronous pattern, where type is the desired package classifier:
 <p>
 
 
-<h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References</h2>
+<h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#QueryingCrossReferences" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.ecore.EReference[])" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryXRefs(CDOObject, EReference...)</code></a> and its set overload ask the repository for incoming
 references to one or several targets. An empty reference array means all source references; supplying features
@@ -1464,7 +1464,7 @@ The asynchronous form streams results and requires closure. The example filters 
 <p>
 
 
-<h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries</h2>
+<h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#CustomQueries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOQuery</code></a> is a request associated with the creating view. Create it with
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.createQuery(String, String)</code></a> or its context overload, set named arguments with
@@ -1514,7 +1514,7 @@ supplied context object must have a purchaseOrders reference:
 <p>
 
 
-<h2><a name="Units"></a>12&nbsp;&nbsp;Units</h2>
+<h2><a name="Units"></a>12&nbsp;&nbsp;Units<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#Units" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOUnit</code></a> is a managed set of disjunct object subtrees rooted at CDO objects.
 Unlike a resource, a unit can gather related subtrees without requiring one common containment root. The view's
@@ -1606,7 +1606,7 @@ The inspection example checks membership using <a href="../../../javadoc/org/ecl
 <p>
 
 
-<h2><a name="ViewEvents"></a>13&nbsp;&nbsp;View Events</h2>
+<h2><a name="ViewEvents"></a>13&nbsp;&nbsp;View Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ViewEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewEvent</code></a> is the common view-scoped event contract; its source is the affected
 view. Listen on the view's <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)" title="Method in org.eclipse.net4j.util.event.INotifier"><code>org.eclipse.net4j.util.event.INotifier.addListener(org.eclipse.net4j.util.event.IListener)</code></a>
@@ -1655,50 +1655,50 @@ Registering and removing a listener:
 <p>
 
 
-<h3><a name="InvalidationEvents"></a>13.1&nbsp;&nbsp;View Invalidation Events</h3>
+<h3><a name="InvalidationEvents"></a>13.1&nbsp;&nbsp;View Invalidation Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#InvalidationEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewInvalidationEvent</code></a> is emitted after a view processes a remote commit.
 It exposes the commit timestamp, dirty objects, revision deltas, and detached objects. It reports view update
 processing; adapters receive their own EMF notifications separately. Keep listeners fast and use the timestamp
 to correlate with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent</code></a>.
 
-<h3><a name="LockEvents"></a>13.2&nbsp;&nbsp;View Lock Events</h3>
+<h3><a name="LockEvents"></a>13.2&nbsp;&nbsp;View Lock Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#LockEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent</code></a> reports lock changes visible to the view, including
 sender and affected objects. Use it to refresh lock decorations; it is distinct from a lock acquisition call
 result. Delivery follows view event threading rules.
 
-<h3><a name="PermissionEvents"></a>13.3&nbsp;&nbsp;View Permission Events</h3>
+<h3><a name="PermissionEvents"></a>13.3&nbsp;&nbsp;View Permission Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#PermissionEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewPermissionsChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent</code></a> carries a map of object IDs to old/new
 permissions when permissions visible to the view change. Applications can refresh enabled actions from this
 event. Permission state may also depend on server security configuration.
 
-<h3><a name="TargetEvents"></a>13.4&nbsp;&nbsp;View Target Events</h3>
+<h3><a name="TargetEvents"></a>13.4&nbsp;&nbsp;View Target Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#TargetEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewTargetChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent</code></a> reports the old and new branch point when a
 movable view changes target. It is useful for invalidating client presentations tied to a branch point. A
 fixed historical view does not advance merely because a commit occurs.
 
-<h3><a name="AdaptersNotifiedEvents"></a>13.5&nbsp;&nbsp;Adapter Notification Completion Events</h3>
+<h3><a name="AdaptersNotifiedEvents"></a>13.5&nbsp;&nbsp;Adapter Notification Completion Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#AdaptersNotifiedEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent</code></a> indicates that the view has finished notifying
 EMF adapters for a remote commit; its timestamp correlates with the invalidation event. This is a view event
 about completed adapter delivery, not an individual <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>Notification</code></a> and not an adapter notification itself.
 
-<h3><a name="DurabilityEvents"></a>13.6&nbsp;&nbsp;Durability Events</h3>
+<h3><a name="DurabilityEvents"></a>13.6&nbsp;&nbsp;Durability Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#DurabilityEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent</code></a> reports changes to a view's durable-locking
 identifier, exposing the old and new IDs. Use it to track durability state; lock operations and lock-change
 events remain separate APIs.
 
-<h3><a name="ProviderEvents"></a>13.7&nbsp;&nbsp;Provider Events</h3>
+<h3><a name="ProviderEvents"></a>13.7&nbsp;&nbsp;Provider Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ProviderEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent</code></a> reports the old and new provider associated with
 a view. It is primarily useful to infrastructure managing view-provider selection; ordinary clients rarely
 need it. Treat it as a view event and keep its callback short.
 
-<h2><a name="ViewOptions"></a>14&nbsp;&nbsp;View Options</h2>
+<h2><a name="ViewOptions"></a>14&nbsp;&nbsp;View Options<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ViewOptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html" title="Interface in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.Options</code></a> controls view-local notification, invalidation, cache, and loading behavior. These
 settings differ from <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html" title="Interface in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.Options</code></a>, which configures the session and can affect all its views (for
@@ -1740,28 +1740,28 @@ A listener can observe option changes directly:
 <p>
 
 
-<h3><a name="LoadNotificationEnabled"></a>14.1&nbsp;&nbsp;Load Notification Enabled</h3>
+<h3><a name="LoadNotificationEnabled"></a>14.1&nbsp;&nbsp;Load Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#LoadNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isLoadNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setLoadNotificationEnabled(boolean)</code></a>
 control EMF adapter notifications when objects load. The implementation default is false. Enable this
 when adapters maintain derived or presentation state that must react to loading. It is separate from remote
 invalidation and subscriptions; changes emit CDOView.LoadNotificationEvent.
 
-<h3><a name="DetachmentNotificationEnabled"></a>14.2&nbsp;&nbsp;Detachment Notification Enabled</h3>
+<h3><a name="DetachmentNotificationEnabled"></a>14.2&nbsp;&nbsp;Detachment Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#DetachmentNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isDetachmentNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setDetachmentNotificationEnabled(boolean)</code></a>
 control adapter notification when remote changes detach objects. The default is false. Enable it when
 clients need to discard references to removed objects. It does not subscribe objects; changes emit
 CDOView.DetachmentNotificationEvent.
 
-<h3><a name="InvalidationNotificationEnabled"></a>14.3&nbsp;&nbsp;Invalidation Notification Enabled</h3>
+<h3><a name="InvalidationNotificationEnabled"></a>14.3&nbsp;&nbsp;Invalidation Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#InvalidationNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isInvalidationNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setInvalidationNotificationEnabled(boolean)</code></a>
 control object adapter invalidation notifications. Default is false. This controls EMF notifications,
 not whether the view processes remote commits or emits its view-level invalidation event. Changes emit
 CDOView.InvalidationNotificationEvent.
 
-<h3><a name="InvalidationPolicy"></a>14.4&nbsp;&nbsp;Invalidation Policy</h3>
+<h3><a name="InvalidationPolicy"></a>14.4&nbsp;&nbsp;Invalidation Policy<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#InvalidationPolicy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getInvalidationPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getInvalidationPolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)</code></a>
 select how a view treats remotely changed objects. The default is
@@ -1770,7 +1770,7 @@ clears the object's revision on invalidation and reports objects that have becom
 that handling to later access. This is view-local and requires the session to receive passive updates. Changes
 emit CDOView.InvalidationPolicyEvent.
 
-<h3><a name="ChangeSubscriptionPolicies"></a>14.5&nbsp;&nbsp;Change Subscription Policies</h3>
+<h3><a name="ChangeSubscriptionPolicies"></a>14.5&nbsp;&nbsp;Change Subscription Policies<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ChangeSubscriptionPolicies" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getChangeSubscriptionPolicies()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>,
 and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.removeChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a> select adapted objects registered
@@ -1778,7 +1778,7 @@ for remote changes. Initially the policy set is empty. Common policies are <a hr
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.ALL</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.CDO</code></a>; an object needs a matching adapter. Session
 passive updates must also be enabled. Changes emit CDOView.ChangeSubscriptionPoliciesEvent.
 
-<h3><a name="CacheReferenceType"></a>14.6&nbsp;&nbsp;Cache Reference Type</h3>
+<h3><a name="CacheReferenceType"></a>14.6&nbsp;&nbsp;Cache Reference Type<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#CacheReferenceType" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getCacheReferenceType()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)</code></a>
 select strong, soft, or weak references in the view cache. The implementation default is
@@ -1787,14 +1787,14 @@ soft and weak references permit collection subject to the strong-reference polic
 restores soft references. The setter reports whether it changed and emits
 CDOView.CacheReferenceTypeEvent.
 
-<h3><a name="StrongReferencePolicy"></a>14.7&nbsp;&nbsp;Strong Reference Policy</h3>
+<h3><a name="StrongReferencePolicy"></a>14.7&nbsp;&nbsp;Strong Reference Policy<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#StrongReferencePolicy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getStrongReferencePolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setStrongReferencePolicy(CDOAdapterPolicy)</code></a>
 choose which adapted objects remain strongly referenced when the cache reference type is non-strong. Default
 is <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.ALL</code></a>; policies can be narrowed to NONE, CDO, or a custom policy.
 Balance memory use against adapter/object continuity. Changes emit CDOView.StrongReferencePolicyEvent.
 
-<h3><a name="StaleReferencePolicy"></a>14.8&nbsp;&nbsp;Stale Reference Policy</h3>
+<h3><a name="StaleReferencePolicy"></a>14.8&nbsp;&nbsp;Stale Reference Policy<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#StaleReferencePolicy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getStaleReferencePolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)</code></a>
 control references to objects absent at the view target. The default is
@@ -1803,7 +1803,7 @@ control references to objects absent at the view target. The default is
 <a href="../../../javadoc/org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="Class in org.eclipse.emf.cdo.util"><code>org.eclipse.emf.cdo.util.ObjectNotFoundException</code></a>. The older Behaviour methods are deprecated. Changes
 emit CDOView.StaleReferencePolicyEvent.
 
-<h3><a name="RevisionPrefetchingPolicy"></a>14.9&nbsp;&nbsp;Revision Prefetching Policy</h3>
+<h3><a name="RevisionPrefetchingPolicy"></a>14.9&nbsp;&nbsp;Revision Prefetching Policy<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#RevisionPrefetchingPolicy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getRevisionPrefetchingPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getRevisionPrefetchingPolicy()</code></a> and
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)</code></a>
@@ -1812,19 +1812,19 @@ policy to NO_REVISION_PREFETCHING; DEFAULT_REVISION_PREFETCHING is a policy cons
 guarantee of every read's batch size. Profile before tuning because prefetching trades transfer and memory for
 fewer later requests. Changes emit CDOView.RevisionPrefetchingPolicyEvent.
 
-<h3><a name="FeatureAnalyzer"></a>14.10&nbsp;&nbsp;Feature Analyzer</h3>
+<h3><a name="FeatureAnalyzer"></a>14.10&nbsp;&nbsp;Feature Analyzer<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#FeatureAnalyzer" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getFeatureAnalyzer()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getFeatureAnalyzer()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)</code></a>
 install analysis of feature access for loading strategies. Default is <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#NOOP" title="Field in org.eclipse.emf.cdo.view.CDOFeatureAnalyzer"><code>CDOFeatureAnalyzer.NOOP</code></a>. It does
 not change model semantics. Changes emit CDOView.FeatureAnalyzerEvent.
 
-<h3><a name="ClearAdapterPolicy"></a>14.11&nbsp;&nbsp;Clear Adapter Policy</h3>
+<h3><a name="ClearAdapterPolicy"></a>14.11&nbsp;&nbsp;Clear Adapter Policy<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ClearAdapterPolicy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getClearAdapterPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getClearAdapterPolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setClearAdapterPolicy(CDOAdapterPolicy)</code></a>
 select which adapters CDO removes when clearing object adapters. Per-view default is null, so the view
 set's default policy applies. Changes emit CDOView.ClearAdapterPolicyEvent.
 
-<h3><a name="LockNotificationEnabled"></a>14.12&nbsp;&nbsp;Lock Notification Enabled</h3>
+<h3><a name="LockNotificationEnabled"></a>14.12&nbsp;&nbsp;Lock Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#LockNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 This inherited option is managed by <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.isLockNotificationEnabled()</code></a>
 and <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.setLockNotificationEnabled(boolean)</code></a>. Default is
@@ -1834,7 +1834,7 @@ also controls notification delivery modes. Changes emit the inherited
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="Interface in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.LockNotificationEvent</code></a>; this is an option event, not a
 view event.
 
-<h2><a name="ViewProperties"></a>15&nbsp;&nbsp;View Properties</h2>
+<h2><a name="ViewProperties"></a>15&nbsp;&nbsp;View Properties<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc04_WorkingWithViews.html#ViewProperties" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html#properties()" title="Method in org.eclipse.net4j.util.properties.IPropertiesContainer"><code>CDOView.properties()</code></a> exposes the view's <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html" title="Interface in org.eclipse.net4j.util.properties"><code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></a>
 for application metadata. Properties are local to that view's lifetime, are not persisted in the repository, and

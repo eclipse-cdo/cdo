@@ -53,6 +53,7 @@ loadScripts(document, 'script');</script>
 <h2 title="Contents">Contents</h2>
 <ul class="contents-list">
 <li id="contents-class"><a href="#class">Classes</a></li>
+<li id="contents-field"><a href="#field">Fields</a></li>
 <li id="contents-method"><a href="#method">Methods</a></li>
 <li id="contents-constructor"><a href="#constructor">Constructors</a></li>
 </ul>
@@ -81,109 +82,145 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="block-list">
 <li>
+<div id="field">
+<div class="caption"><span>Deprecated Fields</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/buffer/BufferInputStream.html#DEFAULT_MILLIS_INTERRUPT_CHECK">org.eclipse.net4j.buffer.BufferInputStream.DEFAULT_MILLIS_INTERRUPT_CHECK</a></div>
+<div class="col-last even-row-color">
+<div class="block">Periodic interrupt checks are no longer performed.</div>
+</div>
+</div>
+</div>
+</li>
+</ul>
+<ul class="block-list">
+<li>
 <div id="method">
 <div class="caption"><span>Deprecated Methods</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider()">org.eclipse.net4j.buffer.IBuffer.getBufferProvider()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/buffer/BufferInputStream.html#getException()">org.eclipse.net4j.buffer.BufferInputStream.getException()</a></div>
 <div class="col-last even-row-color">
+<div class="block">Use <a href="org/eclipse/net4j/buffer/BufferInputStream.html#getAbortCause()"><code>BufferInputStream.getAbortCause()</code></a>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/buffer/BufferInputStream.html#getMillisInterruptCheck()">org.eclipse.net4j.buffer.BufferInputStream.getMillisInterruptCheck()</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Periodic interrupt checks are no longer performed.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)">org.eclipse.net4j.buffer.BufferInputStream.setException<wbr>(RemoteException)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Use <a href="org/eclipse/net4j/buffer/BufferInputStream.html#abort(java.lang.RuntimeException)"><code>BufferInputStream.abort(RuntimeException)</code></a> to abort the stream.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider()">org.eclipse.net4j.buffer.IBuffer.getBufferProvider()</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Buffers are not required to originate from an <a href="org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Use <a href="org/eclipse/net4j/buffer/IBuffer.html#release()"><code>IBuffer.release()</code></a> to
             relinquish ownership without assuming that the buffer belongs to a provider.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/jvm/JVMUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.jvm.JVMUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
-            <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
-            configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/channel/ChannelInputStream.html#getMillisInterruptCheck()">org.eclipse.net4j.channel.ChannelInputStream.getMillisInterruptCheck()</a></div>
+<div class="col-last even-row-color">
+<div class="block">Periodic interrupt checks are no longer performed by <a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/Net4jUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.Net4jUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/channel/ChannelInputStream.html#setMillisInterruptCheck(long)">org.eclipse.net4j.channel.ChannelInputStream.setMillisInterruptCheck<wbr>(long)</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Periodic interrupt checks are no longer performed by <a href="org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>; this value is retained
+            only for compatibility with existing callers.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/jvm/JVMUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.jvm.JVMUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
 <div class="col-last even-row-color">
 <div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService()">org.eclipse.net4j.signal.IndicationWithMonitoring.getMonitoringExecutorService()</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/Net4jUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.Net4jUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+            <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+            configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService()">org.eclipse.net4j.signal.IndicationWithMonitoring.getMonitoringExecutorService()</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.13 not used anymore.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#createSSLEngine(boolean,java.lang.String,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.createSSLEngine<wbr>(boolean, String, int)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#createSSLEngine(boolean,java.lang.String,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.createSSLEngine<wbr>(boolean, String, int)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 no longer supported (was only used internally before).</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getHandShakeTimeOut()">org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeTimeOut()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getHandShakeTimeOut()">org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeTimeOut()</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getDefaultHandShakeTimeOut()"><code>SSLUtil.getDefaultHandShakeTimeOut()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getHandShakeWaitTime()">org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeWaitTime()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getHandShakeWaitTime()">org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeWaitTime()</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getDefaultHandShakeWaitTime()"><code>SSLUtil.getDefaultHandShakeWaitTime()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.ssl.SSLUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.ssl.SSLUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
 <div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultKeyPath(java.lang.String)"><code>SSLUtil.setDefaultKeyPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultTrustPath(java.lang.String)"><code>SSLUtil.setDefaultTrustPath(String)</code></a>, and <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultPassPhrase(java.lang.String)"><code>SSLUtil.setDefaultPassPhrase(String)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String,int,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String, int, int)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String,int,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String, int, int)</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultKeyPath(java.lang.String)"><code>SSLUtil.setDefaultKeyPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultTrustPath(java.lang.String)"><code>SSLUtil.setDefaultTrustPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultPassPhrase(java.lang.String)"><code>SSLUtil.setDefaultPassPhrase(String)</code></a>,
 <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultHandShakeTimeOut(int)"><code>SSLUtil.setDefaultHandShakeTimeOut(int)</code></a>, and <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultHandShakeWaitTime(int)"><code>SSLUtil.setDefaultHandShakeWaitTime(int)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setSSLConfigurationFile(java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile<wbr>(String)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setSSLConfigurationFile(java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile<wbr>(String)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setConfigFile(java.lang.String)"><code>SSLUtil.setConfigFile(String)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/TCPUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.TCPUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/TCPUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.TCPUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
 <div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/TransportConfigurator.html#getStoreConfig(org.w3c.dom.Element)">org.eclipse.net4j.TransportConfigurator.getStoreConfig<wbr>(Element)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/TransportConfigurator.html#getStoreConfig(org.w3c.dom.Element)">org.eclipse.net4j.TransportConfigurator.getStoreConfig<wbr>(Element)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.19 no longer supported.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/ws/WSSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.ws.WSSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/ws/WSSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.ws.WSSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
 <div class="block">Initialized containers are prepared automatically.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/ws/WSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.ws.WSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/ws/WSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.ws.WSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">org.eclipse.spi.net4j.Channel.createReceiverWork<wbr>(IBuffer)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">org.eclipse.spi.net4j.Channel.createReceiverWork<wbr>(IBuffer)</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.10 scheduled for future removal.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.html#getReceiveExecutor()">org.eclipse.spi.net4j.Channel.getReceiveExecutor()</a></div>
-<div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiverWork.html#doRun()">org.eclipse.spi.net4j.Channel.ReceiverWork.doRun()</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.html#getReceiveExecutor()">org.eclipse.spi.net4j.Channel.getReceiveExecutor()</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiverWork.html#getName()">org.eclipse.spi.net4j.Channel.ReceiverWork.getName()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiverWork.html#doRun()">org.eclipse.spi.net4j.Channel.ReceiverWork.doRun()</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiveSerializer.html#getThreadName()">org.eclipse.spi.net4j.Channel.ReceiveSerializer.getThreadName()</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiverWork.html#getName()">org.eclipse.spi.net4j.Channel.ReceiverWork.getName()</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiveSerializer.html#noWork(org.eclipse.net4j.util.concurrent.Worker.WorkContext)">org.eclipse.spi.net4j.Channel.ReceiveSerializer.noWork<wbr>(Worker.WorkContext)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiveSerializer.html#getThreadName()">org.eclipse.spi.net4j.Channel.ReceiveSerializer.getThreadName()</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">org.eclipse.spi.net4j.Channel.setReceiveExecutor<wbr>(ExecutorService)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/Channel.ReceiveSerializer.html#noWork(org.eclipse.net4j.util.concurrent.Worker.WorkContext)">org.eclipse.spi.net4j.Channel.ReceiveSerializer.noWork<wbr>(Worker.WorkContext)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String)">org.eclipse.spi.net4j.ChannelMultiplexer.inverseOpenChannel<wbr>(short, String)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">org.eclipse.spi.net4j.Channel.setReceiveExecutor<wbr>(ExecutorService)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String)">org.eclipse.spi.net4j.ChannelMultiplexer.inverseOpenChannel<wbr>(short, String)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Use <a href="org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String,int)"><code>ChannelMultiplexer.inverseOpenChannel(short, String, int)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor()">org.eclipse.spi.net4j.InternalChannel.getReceiveExecutor()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor()">org.eclipse.spi.net4j.InternalChannel.getReceiveExecutor()</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.8 no longer supported.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">org.eclipse.spi.net4j.InternalChannel.setReceiveExecutor<wbr>(ExecutorService)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">org.eclipse.spi.net4j.InternalChannel.setReceiveExecutor<wbr>(ExecutorService)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.8 no longer supported.</div>
 </div>
 </div>
@@ -219,7 +256,7 @@ window.addEventListener("load", function(e) {
 </script>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

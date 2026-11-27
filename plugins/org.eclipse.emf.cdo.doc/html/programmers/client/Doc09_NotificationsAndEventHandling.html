@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Notifications and Event Handling</h1></td>
+		<td width="100%"><h1>Notifications and Event Handling<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc08_BranchingAndVersioning.html" title="Backward to Branching and Versioning"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Forward to Integrating with EMF and Other Frameworks"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -56,7 +56,7 @@ remote invalidation with a local edit or a transaction commit. Detailed configur
 </p>
 
 
-<h2><a name="NotificationAndEventModel"></a>1&nbsp;&nbsp;The Notification and Event Model</h2>
+<h2><a name="NotificationAndEventModel"></a>1&nbsp;&nbsp;The Notification and Event Model<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#NotificationAndEventModel" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 There are four useful levels of observation. A local model edit produces ordinary EMF notifications on the affected
 objects. A transaction can additionally report its transition from clean to dirty and back to clean. A remote
@@ -67,7 +67,7 @@ An invalidation says that the revision known by a view is no longer current; it 
 Use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html#getRevisionDeltas()" title="Method in org.eclipse.emf.cdo.view.CDOViewInvalidationEvent"><code>CDOViewInvalidationEvent.getRevisionDeltas()</code></a> when a view has a delta, and use adapters when the
 application needs object-level notifications. These channels are complementary, not interchangeable.
 
-<h2><a name="EMFNotifications"></a>2&nbsp;&nbsp;EMF Model Notifications</h2>
+<h2><a name="EMFNotifications"></a>2&nbsp;&nbsp;EMF Model Notifications<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#EMFNotifications" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 CDO objects are EMF objects. Applications can attach an EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>adapter</code></a> to an object's adapter list and receive normal
 EMF notifications for local changes. A local transaction edit is the right place to use an adapter when a component
@@ -85,7 +85,7 @@ lazily. Do not use the absence of an object notification as proof that the repos
 invalidation or refresh the object instead. Detachment and load notifications are separately configurable through
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html" title="Interface in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.Options</code></a>.
 
-<h2><a name="CDOEventsAndListeners"></a>3&nbsp;&nbsp;CDO Events and Listeners</h2>
+<h2><a name="CDOEventsAndListeners"></a>3&nbsp;&nbsp;CDO Events and Listeners<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#CDOEventsAndListeners" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The Net4j event pattern is small: an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html" title="Interface in org.eclipse.net4j.util.event"><code>notifier</code></a> exposes add/remove-listener operations and invokes
 <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" title="Method in org.eclipse.net4j.util.event.IListener"><code>IListener.notifyEvent(IEvent)</code></a> with an event whose source is the notifier. Sessions, views, transactions,
@@ -94,7 +94,7 @@ option objects, and managers use this same pattern.
 Keep the listener instance if it must later be removed. Filtering is normally done with instanceof, which
 preserves subtype relationships. Each registration has its own removal obligation.
 
-<h2><a name="SessionEvents"></a>4&nbsp;&nbsp;Session Events</h2>
+<h2><a name="SessionEvents"></a>4&nbsp;&nbsp;Session Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#SessionEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Register session listeners for events whose scope is the connection or repository view shared by all of the
 session's views. The application-level categories are <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a> for received passive
@@ -107,7 +107,7 @@ A session invalidation is emitted after passive-update processing has received a
 <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#getLocalTransaction()" title="Method in org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent"><code>CDOSessionInvalidationEvent.getLocalTransaction()</code></a> identifies the local transaction when applicable. See
 <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> for passive-update and session configuration details.
 
-<h2><a name="ViewEvents"></a>5&nbsp;&nbsp;View Events</h2>
+<h2><a name="ViewEvents"></a>5&nbsp;&nbsp;View Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#ViewEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 View listeners are the most useful CDO-level observation point for model visibility. Important public event families
 include <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewInvalidationEvent</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewAdaptersNotifiedEvent</code></a>,
@@ -118,7 +118,7 @@ provide revision deltas; the adapters-notified event marks completion of adapter
 A view's branch point and time-machine position determine which revision is visible. See
 <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> for branch/time and passive-update configuration.
 
-<h2><a name="TransactionEvents"></a>6&nbsp;&nbsp;Transaction Events</h2>
+<h2><a name="TransactionEvents"></a>6&nbsp;&nbsp;Transaction Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#TransactionEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionStartedEvent.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionStartedEvent</code></a> is fired when a transaction first becomes dirty. A
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionFinishedEvent</code></a> is fired when it becomes clean after a commit, rollback, or undo; use its
@@ -131,7 +131,7 @@ scope is not a repository commit. Transaction and view option objects report opt
 types. Commit details are returned by <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.commit()</code></a>, not by an invented generic "commit event".
 See <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a> for commit, rollback, conflict, and scope semantics.
 
-<h2><a name="RemoteChangesAndSubscriptions"></a>7&nbsp;&nbsp;Remote Changes, Invalidations, and Subscriptions</h2>
+<h2><a name="RemoteChangesAndSubscriptions"></a>7&nbsp;&nbsp;Remote Changes, Invalidations, and Subscriptions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#RemoteChangesAndSubscriptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 When another transaction commits, a session configured for passive updates receives a commit notification. The
 session emits a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a>, and each eligible non-historical view incorporates the update
@@ -152,7 +152,7 @@ adapter when the observing component is disposed. Subscriptions can reduce unnec
 they do not replace passive updates, view invalidations, or normal cache loading. Temporary objects are subscribed
 automatically after they become persistent.
 
-<h2><a name="LockEvents"></a>8&nbsp;&nbsp;Lock Notifications</h2>
+<h2><a name="LockEvents"></a>8&nbsp;&nbsp;Lock Notifications<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#LockEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Lock events are part of the same CDO event model but describe repository lock state, not model feature changes.
 Views can emit <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewLocksChangedEvent</code></a>; sessions can emit
@@ -160,7 +160,7 @@ Views can emit <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewLocksCh
 lock-notification mode and, where applicable, the view lock-notification option. Use the current lock state before
 acting and see <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a> for configuration, ownership, durable locking, and lock lifecycle semantics.
 
-<h2><a name="EventThreading"></a>9&nbsp;&nbsp;Event Threading and Delivery</h2>
+<h2><a name="EventThreading"></a>9&nbsp;&nbsp;Event Threading and Delivery<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#EventThreading" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Net4j notifier delivery is synchronous by default: a notifier invokes its listeners on the thread that fires the
 event. CDO invalidation and remote-session processing can therefore invoke listeners on a CDO/network or
@@ -172,7 +172,7 @@ callback owns a view critical section. If several view accesses must form one co
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>critical section</code></a>; then hand UI or expensive work to the appropriate application executor.
 The session Javadoc specifically warns about deadlocks when adapter callbacks synchronously cross to a UI thread.
 
-<h2><a name="LifetimeErrorsAndOrdering"></a>10&nbsp;&nbsp;Listener Lifetime, Errors, and Ordering</h2>
+<h2><a name="LifetimeErrorsAndOrdering"></a>10&nbsp;&nbsp;Listener Lifetime, Errors, and Ordering<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#LifetimeErrorsAndOrdering" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Listener registration is strong unless a particular notifier documents otherwise. Remove listeners from the same
 notifier when the component, view, transaction, or session is disposed. Remove object adapters as well, and remove
@@ -188,7 +188,7 @@ Rely only on documented family-level ordering: a view invalidation is associated
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewAdaptersNotifiedEvent</code></a> can be used to observe completion of adapter notification for that update.
 There is no general global ordering across all session, view, object, option, and transaction listeners.
 
-<h2><a name="ChoosingTheRightMechanism"></a>11&nbsp;&nbsp;Choosing the Right Mechanism</h2>
+<h2><a name="ChoosingTheRightMechanism"></a>11&nbsp;&nbsp;Choosing the Right Mechanism<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc09_NotificationsAndEventHandling.html#ChoosingTheRightMechanism" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Use an EMF adapter when one model object needs feature-level local or subscribed remote notifications. Use a view
 listener for invalidation, adapter-delivery completion, branch/time, permission, or lock changes. Use a session

@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Operating and Troubleshooting WebSockets</h1></td>
+		<td width="100%"><h1>Operating and Troubleshooting WebSockets<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc03_SecuringWebSocketTransports.html" title="Backward to Securing WebSocket Transports"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="DocXX_MigratingWebSocketTransport.html" title="Forward to Migrating the WebSocket Transport"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -92,7 +92,7 @@ and TLS setup, see the related Operator's Guide articles linked below.
 </p>
 
 
-<h2><a name="Resource_Ownership_and_Lifecycle"></a>1&nbsp;&nbsp;Resource Ownership and Lifecycle</h2>
+<h2><a name="Resource_Ownership_and_Lifecycle"></a>1&nbsp;&nbsp;Resource Ownership and Lifecycle<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Resource_Ownership_and_Lifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An <code>IWSConnector</code> is an individual Net4j client connection and can be closed on its own. A managed container
 owns the products it creates, including factories, acceptors, and connectors; deactivate the container only when its
@@ -171,7 +171,7 @@ Stop its Net4j connectors before using those newer methods. The application that
 <p>
 
 
-<h2><a name="Graceful_Shutdown"></a>2&nbsp;&nbsp;Graceful Shutdown</h2>
+<h2><a name="Graceful_Shutdown"></a>2&nbsp;&nbsp;Graceful Shutdown<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Graceful_Shutdown" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Stop producing new application messages first. Close or drain Net4j protocols and connectors, stop admitting new
 HTTP upgrades, then stop the application-owned Jetty server. Deactivate the acceptor and its container after the server
@@ -182,7 +182,7 @@ Cleanup should use nested <code>finally</code> blocks so an exception while stop
 remaining resource cleanup. Keep HTTP client shutdown after the connectors that borrow the client have stopped.
 <a href="Doc01_DeployingWebSocketServers.html" title="Article in Net4j Signaling Platform Documentation">Deploying WebSocket Servers</a>
 
-<h2><a name="Diagnosing_Connection_and_Upgrade_Failures"></a>3&nbsp;&nbsp;Diagnosing Connection and Upgrade Failures</h2>
+<h2><a name="Diagnosing_Connection_and_Upgrade_Failures"></a>3&nbsp;&nbsp;Diagnosing Connection and Upgrade Failures<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Diagnosing_Connection_and_Upgrade_Failures" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 First verify that the WS core bundle is resolved and that the container contains the provider type named in the
 connector description. A missing custom provider is reported as an error identifying the message-connection provider
@@ -196,7 +196,7 @@ For JDK client failures, inspect the complete exception cause chain from connect
 provider lookup error, certificate validation error, proxy connection failure, and HTTP upgrade rejection. Do not log
 complete connector descriptions when they carry cookies.
 
-<h2><a name="TLS_and_Proxy_Diagnosis"></a>4&nbsp;&nbsp;TLS and Proxy Diagnosis</h2>
+<h2><a name="TLS_and_Proxy_Diagnosis"></a>4&nbsp;&nbsp;TLS and Proxy Diagnosis<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#TLS_and_Proxy_Diagnosis" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 For a certificate error, verify the service host against the certificate name, confirm the server sends its
 intermediates, check expiry, and inspect the trust store used by the selected provider. For a proxy failure, verify
@@ -208,7 +208,7 @@ The Net4j WS and Jetty adapter bundles declare <code>debug</code> tracing option
 does not emit transport events through those tracers. Do not expect enabling those options to produce handshake
 diagnostics. Use the connector exception cause chain and the application's configured Jetty/JDK logging facilities.
 
-<h2><a name="Operational_Checklist"></a>5&nbsp;&nbsp;Operational Checklist</h2>
+<h2><a name="Operational_Checklist"></a>5&nbsp;&nbsp;Operational Checklist<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Operational_Checklist" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Before release, verify the deployed WS feature and optional Jetty adapter version; confirm that every client provider
 is registered in the connector's container; keep provider types distinct when clients have different trust or proxy

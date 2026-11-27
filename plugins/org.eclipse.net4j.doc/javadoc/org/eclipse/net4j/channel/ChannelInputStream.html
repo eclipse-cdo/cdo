@@ -137,7 +137,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -149,18 +149,29 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMillisBeforeTimeout()" class="member-name-link">getMillisBeforeTimeout</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>.</div>
+</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read()" class="member-name-link">read</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the next byte, or <code>IOUtil.EOF</code> at end of stream.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMillisBeforeTimeout(long)" class="member-name-link">setMillisBeforeTimeout</a><wbr>(long&nbsp;millisBeforeTimeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMillisInterruptCheck(long)" class="member-name-link">setMillisInterruptCheck</a><wbr>(long&nbsp;millisInterruptCheck)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setMillisInterruptCheck(long)" class="member-name-link">setMillisInterruptCheck</a><wbr>(long&nbsp;millisInterruptCheck)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>; this value is retained
+            only for compatibility with existing callers.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -169,7 +180,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.buffer.BufferInputStream">Methods inherited from class&nbsp;<a href="../buffer/BufferInputStream.html#method-summary" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></h3>
-<code><a href="../buffer/BufferInputStream.html#close()" title="close()">close</a>, <a href="../buffer/BufferInputStream.html#closeChannel()" title="closeChannel()">closeChannel</a>, <a href="../buffer/BufferInputStream.html#ensureBuffer()" title="ensureBuffer()">ensureBuffer</a>, <a href="../buffer/BufferInputStream.html#getException()" title="getException()">getException</a>, <a href="../buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" title="handleBuffer(IBuffer)">handleBuffer</a>, <a href="../buffer/BufferInputStream.html#isCCAM()" title="isCCAM()">isCCAM</a>, <a href="../buffer/BufferInputStream.html#read(byte%5B%5D,int,int)" title="read(byte[], int, int)">read</a>, <a href="../buffer/BufferInputStream.html#restartTimeout()" title="restartTimeout()">restartTimeout</a>, <a href="../buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)" title="setException(RemoteException)">setException</a></code></div>
+<code><a href="../buffer/BufferInputStream.html#abort(java.lang.RuntimeException)" title="abort(RuntimeException)">abort</a>, <a href="../buffer/BufferInputStream.html#close()" title="close()">close</a>, <a href="../buffer/BufferInputStream.html#closeChannel()" title="closeChannel()">closeChannel</a>, <a href="../buffer/BufferInputStream.html#ensureBuffer()" title="ensureBuffer()">ensureBuffer</a>, <a href="../buffer/BufferInputStream.html#getAbortCause()" title="getAbortCause()">getAbortCause</a>, <a href="../buffer/BufferInputStream.html#getException()" title="getException()">getException</a>, <a href="../buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" title="handleBuffer(IBuffer)">handleBuffer</a>, <a href="../buffer/BufferInputStream.html#isCCAM()" title="isCCAM()">isCCAM</a>, <a href="../buffer/BufferInputStream.html#read(byte%5B%5D,int,int)" title="read(byte[], int, int)">read</a>, <a href="../buffer/BufferInputStream.html#restartTimeout()" title="restartTimeout()">restartTimeout</a>, <a href="../buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)" title="setException(RemoteException)">setException</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.io.InputStream">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#method-summary" title="class or interface in java.io" class="external-link">InputStream</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#available()" title="class or interface in java.io" class="external-link">available</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#mark(int)" title="class or interface in java.io" class="external-link">mark</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#markSupported()" title="class or interface in java.io" class="external-link">markSupported</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#nullInputStream()" title="class or interface in java.io" class="external-link">nullInputStream</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#read(byte%5B%5D)" title="class or interface in java.io" class="external-link">read</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#readAllBytes()" title="class or interface in java.io" class="external-link">readAllBytes</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#readNBytes(byte%5B%5D,int,int)" title="class or interface in java.io" class="external-link">readNBytes</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#readNBytes(int)" title="class or interface in java.io" class="external-link">readNBytes</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#reset()" title="class or interface in java.io" class="external-link">reset</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#skip(long)" title="class or interface in java.io" class="external-link">skip</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#skipNBytes(long)" title="class or interface in java.io" class="external-link">skipNBytes</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#transferTo(java.io.OutputStream)" title="class or interface in java.io" class="external-link">transferTo</a></code></div>
@@ -244,10 +255,16 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMillisInterruptCheck()">
 <h3>getMillisInterruptCheck</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getMillisInterruptCheck</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getMillisInterruptCheck</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>.</div>
+</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../buffer/BufferInputStream.html#getMillisInterruptCheck()">getMillisInterruptCheck</a></code>&nbsp;in class&nbsp;<code><a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></dd>
+<dt>Since:</dt>
+<dd>2.0</dd>
 </dl>
 </div>
 </section>
@@ -256,7 +273,16 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setMillisInterruptCheck(long)">
 <h3>setMillisInterruptCheck</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMillisInterruptCheck</span><wbr><span class="parameters">(long&nbsp;millisInterruptCheck)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMillisInterruptCheck</span><wbr><span class="parameters">(long&nbsp;millisInterruptCheck)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed by <a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer"><code>BufferInputStream</code></a>; this value is retained
+            only for compatibility with existing callers.</div>
+</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -266,11 +292,17 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">read</span>()
          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../buffer/BufferInputStream.html#read()">BufferInputStream</a></code></span></div>
+<div class="block">Returns the next byte, or <code>IOUtil.EOF</code> at end of stream.
+<p>
+The monitor protects acquisition and access to the current buffer. If this method waits for a buffer, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link"><code>Object.wait()</code></a>
+releases the monitor fully, including this method's reentrant acquisition, so producers and lifecycle operations
+can proceed. An exhausted buffer is detached under the monitor and released afterward.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../buffer/BufferInputStream.html#read()">read</a></code>&nbsp;in class&nbsp;<code><a href="../buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if waiting for a buffer times out</dd>
 </dl>
 </div>
 </section>
@@ -295,7 +327,7 @@ loadScripts(document, 'script');</script>
 <!-- ========= END OF CLASS DATA ========= -->
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

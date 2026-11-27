@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Integrating with EMF and Other Frameworks</h1></td>
+		<td width="100%"><h1>Integrating with EMF and Other Frameworks<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc09_NotificationsAndEventHandling.html" title="Backward to Notifications and Event Handling"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc11_AdvancedTopics.html" title="Forward to Advanced Topics"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -103,7 +103,7 @@ details belong to <a href="Doc03_WorkingWithSessions.html" title="Article in CDO
 </p>
 
 
-<h2><a name="CDOAndEMF"></a>1&nbsp;&nbsp;CDO in the EMF Programming Model</h2>
+<h2><a name="CDOAndEMF"></a>1&nbsp;&nbsp;CDO in the EMF Programming Model<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#CDOAndEMF" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Use generated EMF interfaces, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObject</code></a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>Resource</code></a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a>, and
 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/EcoreUtil.html" target="_blank" title="Class in org.eclipse.emf.ecore.util"><code>EcoreUtil</code></a> with CDO objects where their contracts apply. A CDO object is not a
@@ -116,7 +116,7 @@ lazily and can be invalidated by repository changes. Code that needs CDO-specifi
 <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#getCDOObject(org.eclipse.emf.ecore.EObject)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.getCDOObject(EObject)</code></a> or <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#getView(org.eclipse.emf.common.notify.Notifier)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.getView(Notifier)</code></a>; code that
 only needs EMF behavior should remain expressed in EMF terms.
 
-<h2><a name="ResourceSets"></a>2&nbsp;&nbsp;ResourceSet Integration</h2>
+<h2><a name="ResourceSets"></a>2&nbsp;&nbsp;ResourceSet Integration<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ResourceSets" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A view owns a CDO view set, and the view set owns exactly one <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a>. Obtain that resource set from
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getResourceSet()</code></a> or pass an application-created resource set when opening the view. The same set
@@ -164,7 +164,7 @@ remains referenced after its view is closed is not a substitute for a live CDO v
 <p>
  shows the direct pattern.
 
-<h2><a name="CDOURIs"></a>3&nbsp;&nbsp;CDO URIs</h2>
+<h2><a name="CDOURIs"></a>3&nbsp;&nbsp;CDO URIs<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#CDOURIs" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 CDO has a canonical cdo://repositoryUUID/resource/path form and connection-aware forms such as
 cdo.net4j.tcp://host:2036/repository/resource/path. The canonical form identifies a repository by UUID and
@@ -212,7 +212,7 @@ normalize its resource path. Avoid hand-parsing authority and query strings, and
 <p>
  illustrates the public parser.
 
-<h2><a name="ViewProviders"></a>4&nbsp;&nbsp;View Providers</h2>
+<h2><a name="ViewProviders"></a>4&nbsp;&nbsp;View Providers<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ViewProviders" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProvider.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProvider</code></a> adapts URI-driven EMF loading to CDO. When <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html#getResource(org.eclipse.emf.common.util.URI,boolean)" target="_blank" title="Method in org.eclipse.emf.ecore.resource.ResourceSet"><code>ResourceSet.getResource(URI, boolean)</code></a>
 encounters a URI, the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProviderRegistry</code></a> selects matching providers by regular expression and priority.
@@ -281,7 +281,7 @@ not hide connector and session configuration. The repository name is read from <
 retaining the leading colon. This corrects the former legacy provider pattern without reactivating that excluded
 material.
 
-<h2><a name="ExtensionPoints"></a>5&nbsp;&nbsp;View-Provider Extension Point</h2>
+<h2><a name="ExtensionPoints"></a>5&nbsp;&nbsp;View-Provider Extension Point<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ExtensionPoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Plug-in applications can contribute providers with the org.eclipse.emf.cdo.viewProviders extension point.
 Each viewProvider specifies a public implementation class, a URI regular expression, and an optional
@@ -294,7 +294,7 @@ regular expression narrow enough not to capture another provider's URI space. Re
 providers when the contributing component is disposed. Provider registration does not transfer ownership of a
 session, connector, view, or resource set.
 
-<h2><a name="EMFToolsAndEditing"></a>6&nbsp;&nbsp;Standard EMF Tools and Editing</h2>
+<h2><a name="EMFToolsAndEditing"></a>6&nbsp;&nbsp;Standard EMF Tools and Editing<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#EMFToolsAndEditing" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Generated model APIs, EMF traversal, adapters, and utilities such as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/EcoreUtil.html" target="_blank" title="Class in org.eclipse.emf.ecore.util"><code>EcoreUtil</code></a>
 remain useful with CDO-backed objects. EMF Edit item-provider and command infrastructure can be used when the
@@ -311,7 +311,7 @@ Serialization is also contextual: saving a CDO resource through its CDO resource
 as serializing a detached object graph to an ordinary file. Use a CDO resource URI and its owning view when the
 intent is repository access; use ordinary EMF resources when the intent is a standalone interchange file.
 
-<h2><a name="AdapterIntegration"></a>7&nbsp;&nbsp;Adapters and Remote Changes</h2>
+<h2><a name="AdapterIntegration"></a>7&nbsp;&nbsp;Adapters and Remote Changes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#AdapterIntegration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Ordinary EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>adapters</code></a> can be attached to CDO objects. CDO-specific <a href="../../../javadoc/org/eclipse/emf/cdo/CDOAdapter.html" title="Interface in org.eclipse.emf.cdo"><code>adapters</code></a>
 and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> change-subscription policies are available when an application needs selected remote
@@ -322,7 +322,7 @@ Remove adapters and policies when the observing component is disposed. Do not in
 merely because an adapter did not receive a notification: objects may not be loaded or subscribed. For invalidation,
 subscription, and event ordering details, see <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a>.
 
-<h2><a name="UIAndOtherFrameworks"></a>8&nbsp;&nbsp;UI and Other Frameworks</h2>
+<h2><a name="UIAndOtherFrameworks"></a>8&nbsp;&nbsp;UI and Other Frameworks<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#UIAndOtherFrameworks" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An Eclipse editor or viewer can consume a CDO resource through the same EMF resource and adapter-factory
 contracts as other EMF resources. UI plug-ins may add selection, navigation, and editor integrations, but those
@@ -333,7 +333,7 @@ through its documented EMF APIs, provide the required adapter factories, and mak
 and resource-set lifecycle. Do not assume that a framework that accepts EMF objects also understands lazy loading,
 read-only views, invalidation, or CDO transactions without an integration-specific adapter.
 
-<h2><a name="ChoosingAnIntegration"></a>9&nbsp;&nbsp;Lifecycle and Choosing an Integration</h2>
+<h2><a name="ChoosingAnIntegration"></a>9&nbsp;&nbsp;Lifecycle and Choosing an Integration<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ChoosingAnIntegration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Direct session/view APIs are the clearest choice when the application owns connection setup, view reuse, commits,
 and shutdown. Use a view's resource set when an EMF-based component needs CDO resources while the application still

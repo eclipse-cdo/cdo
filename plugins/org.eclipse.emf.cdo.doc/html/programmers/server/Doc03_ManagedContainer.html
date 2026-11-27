@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>The Managed Container</h1></td>
+		<td width="100%"><h1>The Managed Container<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc03_ManagedContainer.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc02_ServerApplicationAndStartup.html" title="Backward to CDO Server Application and Startup"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_ApplicationExtensions.html" title="Forward to Application Extensions"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -94,7 +94,7 @@ standalone application. Do not deactivate the shared plugin container.
 </p>
 
 
-<h2><a name="FactoriesAndElements"></a>1&nbsp;&nbsp;Factories, Product Groups, and Lookup</h2>
+<h2><a name="FactoriesAndElements"></a>1&nbsp;&nbsp;Factories, Product Groups, and Lookup<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc03_ManagedContainer.html#FactoriesAndElements" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Register an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html" title="Interface in org.eclipse.net4j.util.factory"><code>factory</code></a> before asking a raw, unprepared container to create its product. An
 <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>registered factory</code></a> is selected by its own product group and type; an
@@ -138,7 +138,7 @@ locates and owns the registered instance. The short lookup form is shown in
 <p>
 .
 
-<h2><a name="LifecycleAndConfiguration"></a>2&nbsp;&nbsp;Lifecycle and Configuration</h2>
+<h2><a name="LifecycleAndConfiguration"></a>2&nbsp;&nbsp;Lifecycle and Configuration<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc03_ManagedContainer.html#LifecycleAndConfiguration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/ContainerUtil.html#createContainer()" title="Method in org.eclipse.net4j.util.container.ContainerUtil"><code>ContainerUtil.createContainer()</code></a> returns an empty, inactive ManagedContainer; it has no CDO/Net4j
 factory contributions until the application registers or prepares them. For ordinary standalone use,
@@ -156,7 +156,7 @@ independently close a product after transferring ownership. For server XML, use 
 described in <a href="Doc02_ServerApplicationAndStartup.html" title="Article in CDO Model Repository Documentation">CDO Server Application and Startup</a>, not generic container configuration. Deactivate an
 application-owned container at shutdown so its elements and dependencies are released.
 
-<h2><a name="Examples"></a>3&nbsp;&nbsp;Standalone Container Example</h2>
+<h2><a name="Examples"></a>3&nbsp;&nbsp;Standalone Container Example<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc03_ManagedContainer.html#Examples" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The initialized container is the owner of the acceptor created through it. The caller's work runs while that
 acceptor is active; deactivating the container releases it even when the work fails.

@@ -141,6 +141,7 @@
         <topic label="SignalProtocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.html" icon="class" />
         <topic label="SignalProtocol.InvalidSignalIDException" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.InvalidSignalIDException.html" icon="class" />
         <topic label="SignalProtocol.TimeoutChangedEvent" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" icon="class" />
+        <topic label="SignalProtocolDeactivatedException" href="javadoc/org/eclipse/net4j/signal/SignalProtocolDeactivatedException.html" icon="class" />
         <topic label="SignalReactor" href="javadoc/org/eclipse/net4j/signal/SignalReactor.html" icon="class" />
         <topic label="SignalScheduledEvent&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/SignalScheduledEvent.html" icon="class" />
       </topic>

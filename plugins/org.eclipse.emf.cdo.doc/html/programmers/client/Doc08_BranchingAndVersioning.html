@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Branching and Versioning</h1></td>
+		<td width="100%"><h1>Branching and Versioning<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc07_LargeObjects.html" title="Backward to Large Objects"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_NotificationsAndEventHandling.html" title="Forward to Notifications and Event Handling"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -53,7 +53,7 @@ in <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repo
 </p>
 
 
-<h2><a name="MentalModel"></a>1&nbsp;&nbsp;Mental Model</h2>
+<h2><a name="MentalModel"></a>1&nbsp;&nbsp;Mental Model<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#MentalModel" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A CDO model object is the application-level object obtained from a resource in a view. Its <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> is
 its identity: the ID remains the same while the object changes, and an ID alone does not select a historical state.
@@ -70,7 +70,7 @@ A normal view can follow a branch head and update as new commits arrive. A histo
 exposes the immutable state that was valid there. These coordinates are the important distinction: a version number
 is useful for one object's revision on one branch, but it is not a complete coordinate for a whole repository state.
 
-<h2><a name="BranchesAndBranchPoints"></a>2&nbsp;&nbsp;Branches and Branch Points</h2>
+<h2><a name="BranchesAndBranchPoints"></a>2&nbsp;&nbsp;Branches and Branch Points<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#BranchesAndBranchPoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Branches form a tree rooted at <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchManager"><code>MAIN</code></a>. A normal branch has a positive
 technical ID; the main branch has ID <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html#MAIN_BRANCH_ID" title="Field in org.eclipse.emf.cdo.common.branch.CDOBranch"><code>0</code></a>. Branch names are mutable and are unique
@@ -88,7 +88,7 @@ a historical point remains fixed even when later commits advance the branch.
 <p>
 For branch-manager lookup, enumeration, events, and deletion, see the <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> chapter.
 
-<h2><a name="VersionsAndRevisions"></a>3&nbsp;&nbsp;Versions and Revisions</h2>
+<h2><a name="VersionsAndRevisions"></a>3&nbsp;&nbsp;Versions and Revisions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#VersionsAndRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchVersion</code></a> is the pair of a branch and an integer version. The version is assigned to one object's
 successive revisions on that branch, beginning with <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#FIRST_VERSION" title="Field in org.eclipse.emf.cdo.common.branch.CDOBranchVersion"><code>1</code></a>. It is not a global
@@ -107,7 +107,7 @@ which it is valid. Historical revisions report <a href="../../../javadoc/org/ecl
 at a branch head has an unspecified revised time. A revision can be missing at a branch point because the object had
 not yet been created, or because it was already detached there.
 
-<h2><a name="HistoricalViews"></a>4&nbsp;&nbsp;Historical Views and Navigating History</h2>
+<h2><a name="HistoricalViews"></a>4&nbsp;&nbsp;Historical Views and Navigating History<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#HistoricalViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Open a read-only view at a branch, at a branch point, or at a timestamp on a branch with the corresponding
 <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,long)" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>openView()</code></a> overload. The concise branch-point form is
@@ -123,14 +123,14 @@ therefore different from restoring data: use a transaction and the transaction A
 <p>
 For the complete view-type and lifecycle discussion, see <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
 
-<h3><a name="HistoryNavigation"></a>4.1&nbsp;&nbsp;An object's commit history is available through</h3>
+<h3><a name="HistoryNavigation"></a>4.1&nbsp;&nbsp;An object's commit history is available through<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#HistoryNavigation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoHistory()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoHistory()</code></a> and a view also provides commit
 history for its objects. These histories describe commit metadata; they are not a replacement for loading the
 object's revisions. Use the session's <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revision
 manager</code></a> with a branch point or branch version when the actual historical values are needed. This separation keeps
 application code explicit about whether it needs commit metadata or model state.
 
-<h2><a name="ComparingVersions"></a>5&nbsp;&nbsp;Comparing Historical State</h2>
+<h2><a name="ComparingVersions"></a>5&nbsp;&nbsp;Comparing Historical State<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#ComparingVersions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 To compare two states, first identify both with complete branch points and then use
 <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.compareRevisions(CDOBranchPoint, CDOBranchPoint)</code></a> or
@@ -143,7 +143,7 @@ For a single object, loading two <a href="../../../javadoc/org/eclipse/emf/cdo/c
 change-set APIs. The result is data for inspection or application to a transaction; it is not itself a commit and
 it does not alter either historical state.
 
-<h2><a name="BranchTransactionsAndMerges"></a>6&nbsp;&nbsp;Branching, Transactions, and Merge Concepts</h2>
+<h2><a name="BranchTransactionsAndMerges"></a>6&nbsp;&nbsp;Branching, Transactions, and Merge Concepts<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#BranchTransactionsAndMerges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Open a transaction on a branch to edit that branch's head. Commits made by the transaction create new revisions on
 that branch and are isolated from the parent branch until an application explicitly merges changes. The transaction
@@ -158,7 +158,7 @@ The detailed merge overloads, conflict handling, and commit lifecycle are docume
 <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>. This chapter supplies the branch-point vocabulary needed to choose source
 and base states.
 
-<h2><a name="RevertTagsAndCapability"></a>7&nbsp;&nbsp;Revert, Tags, and Repository Capability</h2>
+<h2><a name="RevertTagsAndCapability"></a>7&nbsp;&nbsp;Revert, Tags, and Repository Capability<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#RevertTagsAndCapability" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Viewing an old branch point is read-only inspection. Reverting is a transaction operation that creates local changes
 intended to restore the transaction toward a historical branch point; it is not a deletion of repository history.
@@ -175,7 +175,7 @@ branches. The main branch exists in every repository mode, while sub-branches re
 views and tags depend on auditing support; check <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>CDOCommonRepository.isSupportingAudits()</code></a> when those features
 are required. The repository's <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>CDOCommonRepository.getMode()</code></a> summarizes these capabilities.
 
-<h2><a name="PracticalGuidance"></a>8&nbsp;&nbsp;Practical Guidance</h2>
+<h2><a name="PracticalGuidance"></a>8&nbsp;&nbsp;Practical Guidance<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc08_BranchingAndVersioning.html#PracticalGuidance" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Keep the branch and time (or branch and version for one object) explicit in history-sensitive code. Use branches for
 genuinely divergent model histories, historical views for read-only inspection, revision or change-set APIs for

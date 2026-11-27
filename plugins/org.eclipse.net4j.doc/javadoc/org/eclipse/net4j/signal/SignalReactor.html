@@ -96,7 +96,11 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">SignalReactor</span>
 <span class="extends-implements">extends <a href="Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></span></div>
-<div class="block">Represents the receiver side of a <a href="Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.</div>
+<div class="block">Represents the receiver side of a <a href="Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.
+<p>
+For monitored signals, periodic progress reports use the protocol executor. That executor needs enough available
+capacity to run reporting work alongside active signal reactors; delayed reports can cause the peer's signal input
+timeout to expire.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -261,7 +265,7 @@ loadScripts(document, 'script');</script>
 <!-- ========= END OF CLASS DATA ========= -->
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

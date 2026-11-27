@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Advanced Server Integration</h1></td>
+		<td width="100%"><h1>Advanced Server Integration<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc09_AdvancedServerIntegration.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Backward to Security, Queries, and Specialized Extensions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../DocXX_InstallingSources.html" title="Forward to Installing the Sources"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -91,7 +91,7 @@ for production topology, backups, or failover operation.
 </p>
 
 
-<h2><a name="SynchronizationAndFailover"></a>1&nbsp;&nbsp;Synchronization and Failover</h2>
+<h2><a name="SynchronizationAndFailover"></a>1&nbsp;&nbsp;Synchronization and Failover<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc09_AdvancedServerIntegration.html#SynchronizationAndFailover" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An offline clone or failover participant is assembled from a local <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a>, repository properties, and an
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositorySynchronizer</code></a>. Create the synchronizer from a remote <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionConfigurationFactory</code></a>;
@@ -123,7 +123,7 @@ itself establish an operational failover topology or guarantee promotion safety.
 retry policy, and lifecycle as application design; production failover and recovery procedures belong to the
 Operator's Guide.
 
-<h2><a name="MonitoringAndDiagnostics"></a>2&nbsp;&nbsp;Monitoring and Activity Logs</h2>
+<h2><a name="MonitoringAndDiagnostics"></a>2&nbsp;&nbsp;Monitoring and Activity Logs<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc09_AdvancedServerIntegration.html#MonitoringAndDiagnostics" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Repository state, manager containers, lifecycle events, and commit information provide lightweight programmatic
 diagnostics. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>RepositoryActivityLog</code></a> is a lifecycle hook that registers a session-manager listener and a
@@ -172,7 +172,7 @@ audit trail or retention policy.
 <p>
 
 
-<h2><a name="ImportAndExport"></a>3&nbsp;&nbsp;Import and Export</h2>
+<h2><a name="ImportAndExport"></a>3&nbsp;&nbsp;Import and Export<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc09_AdvancedServerIntegration.html#ImportAndExport" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerExporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerExporter</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerImporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerImporter</code></a> are stream-based programmatic transfer boundaries. Choose
 matching XML or binary implementations. An exporter reads package metadata, branches/revisions, large-object
@@ -230,7 +230,7 @@ The example uses an application-owned file as the transfer boundary.
 
 Backup consistency, scheduling, storage retention, and recovery runbooks remain Operator's Guide concerns.
 
-<h2><a name="IntegrationBoundary"></a>4&nbsp;&nbsp;Net4j and Other Intentional Extensions</h2>
+<h2><a name="IntegrationBoundary"></a>4&nbsp;&nbsp;Net4j and Other Intentional Extensions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc09_AdvancedServerIntegration.html#IntegrationBoundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Use the managed container to integrate supported acceptors, connectors, factories, and monitors with a CDO
 repository. Do not customize internal signal indications or protocol dispatch. When an extension cannot be

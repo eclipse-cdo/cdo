@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Application Extensions</h1></td>
+		<td width="100%"><h1>Application Extensions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc04_ApplicationExtensions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc03_ManagedContainer.html" title="Backward to The Managed Container"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_CreatingAndConfiguringRepositories.html" title="Forward to Creating and Configuring Repositories"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -93,7 +93,7 @@ application behavior; it is not itself a repository handler, a repository listen
 </p>
 
 
-<h2><a name="VariantsAndContext"></a>1&nbsp;&nbsp;Choosing an Extension Variant</h2>
+<h2><a name="VariantsAndContext"></a>1&nbsp;&nbsp;Choosing an Extension Variant<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc04_ApplicationExtensions.html#VariantsAndContext" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The interfaces extend the base <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> lifecycle. The packaged server constructs one contributed
 instance at startup, then calls <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#start(java.io.File)" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.start(File)</code></a> and later <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#stop()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.stop()</code></a>. The base
@@ -116,7 +116,7 @@ selects the early phase through <a href="../../../javadoc/org/eclipse/emf/cdo/sp
 repository configurator and must not use repository state. These are orthogonal choices; an extension can
 implement more than one variant.
 
-<h2><a name="LifecycleDiscipline"></a>2&nbsp;&nbsp;Lifecycle Discipline</h2>
+<h2><a name="LifecycleDiscipline"></a>2&nbsp;&nbsp;Lifecycle Discipline<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc04_ApplicationExtensions.html#LifecycleDiscipline" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Startup and stop callbacks run synchronously on the server application lifecycle path. Keep them bounded. Retain
 only the repository/listener/handler pairs needed for teardown. If setup fails after installing some listeners,
@@ -127,7 +127,7 @@ delivery thread, so queue expensive work elsewhere. The contribution's predecess
 a competing extension implementation; it is not an ordering mechanism. Do not depend on internal repository
 classes merely because the packaged application uses them.
 
-<h2><a name="Examples"></a>3&nbsp;&nbsp;Repository-aware Extension Example</h2>
+<h2><a name="Examples"></a>3&nbsp;&nbsp;Repository-aware Extension Example<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc04_ApplicationExtensions.html#Examples" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 This repository-aware extension notifies an application service when its session state changes. It stores every
 listener that it adds, unwinds partial setup if installation fails, and removes exactly those listeners on shutdown.

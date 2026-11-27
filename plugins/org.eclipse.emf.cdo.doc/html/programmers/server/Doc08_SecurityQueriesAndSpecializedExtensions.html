@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Security, Queries, and Specialized Extensions</h1></td>
+		<td width="100%"><h1>Security, Queries, and Specialized Extensions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Backward to Repository Handlers and Commit Processing"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_AdvancedServerIntegration.html" title="Forward to Advanced Server Integration"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -94,7 +94,7 @@ credentials, password files, TLS, and directory-server configuration remain
 </p>
 
 
-<h2><a name="SecurityModel"></a>1&nbsp;&nbsp;Repository Protection</h2>
+<h2><a name="SecurityModel"></a>1&nbsp;&nbsp;Repository Protection<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#SecurityModel" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositoryProtector</code></a> protects a repository by combining a <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.UserAuthenticator.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>UserAuthenticator</code></a>, authorization
 strategy, revision authorizers, and commit handlers. Authentication answers “which repository user presented
@@ -182,7 +182,7 @@ IRepositoryProtector directly.
 org.eclipse.emf.cdo.server.security module supplies its own ISecurityManager; use its public API
 when that module is intentionally part of an application, without coupling to its internal realm implementation.
 
-<h2><a name="PermissionCacheSPI"></a>2&nbsp;&nbsp;Permission Cache SPI</h2>
+<h2><a name="PermissionCacheSPI"></a>2&nbsp;&nbsp;Permission Cache SPI<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#PermissionCacheSPI" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The optional org.eclipse.emf.cdo.server.security module provides the PermissionCache and
 PermissionCacheFactory SPIs for applications that need an alternative resource-permission cache. Register
@@ -220,7 +220,7 @@ implementation must support concurrent authorization access. The built-in cache'
 by its creator's backing store; it is not a separate quota for every user or branch. Invalid capacity
 configuration prevents creator creation and therefore repository startup.
 
-<h2><a name="AuthenticationExample"></a>3&nbsp;&nbsp;Authentication Example</h2>
+<h2><a name="AuthenticationExample"></a>3&nbsp;&nbsp;Authentication Example<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#AuthenticationExample" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An authenticator must delegate credential validation to application-owned policy and return null when the
 policy rejects the credentials. This example shows the integration seam without embedding credentials or choosing
@@ -266,7 +266,7 @@ a password-storage scheme.
 <p>
 
 
-<h2><a name="QueryHandlers"></a>4&nbsp;&nbsp;Query Handlers</h2>
+<h2><a name="QueryHandlers"></a>4&nbsp;&nbsp;Query Handlers<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The client creates a query with a language identifier, query string, and named parameters. The server provider
 selects a factory by language; that factory creates an <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a>, which receives
@@ -391,7 +391,7 @@ cancellation during long scans and stop when <a href="../../../javadoc/org/eclip
 <p>
 
 
-<h2><a name="FactoryExtensions"></a>5&nbsp;&nbsp;Extension Boundaries</h2>
+<h2><a name="FactoryExtensions"></a>5&nbsp;&nbsp;Extension Boundaries<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#FactoryExtensions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Repository factories, query handler factories, repository-protector elements, DB adapters, and mapping
 strategies are container/factory extension mechanisms. They serve different responsibilities and should not be

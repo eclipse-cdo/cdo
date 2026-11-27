@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Configuring Repositories</h1></td>
+		<td width="100%"><h1>Configuring Repositories<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc00_OperatingServer.html" title="Backward to Operating a CDO Server"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringAcceptors.html" title="Forward to Configuring Acceptors"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -191,7 +191,7 @@ The following sections describe the various elements and properties.
 </p>
 
 
-<h2><a name="Element_repository"></a>1&nbsp;&nbsp;Element repository</h2>
+<h2><a name="Element_repository"></a>1&nbsp;&nbsp;Element repository<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_repository" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Defines an <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a> instance.
 <p>
@@ -199,7 +199,7 @@ The <code>name</code> attribute uniquely identifies a repository in the scope of
 <p>
 The <code>repository</code> element can contain several property elements (see below) and must contain exactly one <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> element.
 
-<h3><a name="Property_overrideUUID"></a>1.1&nbsp;&nbsp;Property overrideUUID</h3>
+<h3><a name="Property_overrideUUID"></a>1.1&nbsp;&nbsp;Property overrideUUID<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_overrideUUID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies a constant UUID for the repository. If omitted the repository will be created with a random UUID.
 The format of an override UUID is not further specified but should respect the file naming conventions of the used operating system.
@@ -207,7 +207,7 @@ The format of an override UUID is not further specified but should respect the f
 Overriding the default random UUID can be useful if you have scripts that operate on the file system folder
 that is created on the server for each repository and named after the repository UUID.
 
-<h3><a name="Property_supportingAudits"></a>1.2&nbsp;&nbsp;Property supportingAudits</h3>
+<h3><a name="Property_supportingAudits"></a>1.2&nbsp;&nbsp;Property supportingAudits<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_supportingAudits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will support audit views or not. Please note that a repository can only support audit views
 if its <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> supports audit views, as well.
@@ -216,14 +216,14 @@ The shipped DBStore does support audit views.
 Note also that it will not delete or update rows for modified objects if audits are supported.
 All revised state of the repository will be kept in the DB which can result in databases growing very large!
 
-<h3><a name="Property_supportingBranches"></a>1.3&nbsp;&nbsp;Property supportingBranches</h3>
+<h3><a name="Property_supportingBranches"></a>1.3&nbsp;&nbsp;Property supportingBranches<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_supportingBranches" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will support the creation and usage of branches below the always existing main branch or not.
 Please note that a repository can only support branches if its <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> supports branches, as well.
 <p>
 Also note that branching support always <b>requires</b> <a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">auditing support</a>, too.
 
-<h3><a name="Property_supportingEcore"></a>1.4&nbsp;&nbsp;Property supportingEcore</h3>
+<h3><a name="Property_supportingEcore"></a>1.4&nbsp;&nbsp;Property supportingEcore<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_supportingEcore" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will support the storage of instances of the Ecore (meta meta) model or not.
 <p>
@@ -237,7 +237,7 @@ Valid values: <code>false</code> (default) or <code>true</code>.
 <p>
 <b>This property is deprecated. As of 4.2 instances of Ecore are always supported (on demand).</b>
 
-<h3><a name="Property_supportingUnits"></a>1.5&nbsp;&nbsp;Property supportingUnits</h3>
+<h3><a name="Property_supportingUnits"></a>1.5&nbsp;&nbsp;Property supportingUnits<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_supportingUnits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will support the creation and optimized loading of <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>units</code></a> or not.
 <p>
@@ -245,7 +245,7 @@ Unit support is only available if the configured <a href="../../javadoc/org/ecli
 <p>
 Valid values: <code>false</code> (default) or <code>true</code>.
 
-<h3><a name="Property_checkUnitMoves"></a>1.6&nbsp;&nbsp;Property checkUnitMoves</h3>
+<h3><a name="Property_checkUnitMoves"></a>1.6&nbsp;&nbsp;Property checkUnitMoves<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_checkUnitMoves" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will apply extra validation to prevent moves of objects between <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>units</code></a> or not.
 <p>
@@ -256,13 +256,13 @@ Valid values: <code>false</code> (default) or <code>true</code>.
 </ul>
 
 
-<h3><a name="Property_ensureReferentialIntegrity"></a>1.7&nbsp;&nbsp;Property ensureReferentialIntegrity</h3>
+<h3><a name="Property_ensureReferentialIntegrity"></a>1.7&nbsp;&nbsp;Property ensureReferentialIntegrity<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_ensureReferentialIntegrity" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will detect and reject commits that would leave stale references in the object graph.
 <p>
 Valid values: <code>false</code> (default) or <code>true</code>.
 
-<h3><a name="Property_serializeCommits"></a>1.8&nbsp;&nbsp;Property serializeCommits</h3>
+<h3><a name="Property_serializeCommits"></a>1.8&nbsp;&nbsp;Property serializeCommits<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_serializeCommits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will serialize commit operations by utilizing a lock or not.
 <p>
@@ -270,7 +270,7 @@ Some stores, such as the LissomeStore, require commit operations to be serialize
 <p>
 Valid values: <code>false</code> (default) or <code>true</code>.
 
-<h3><a name="Property_allowInterruptRunningQueries"></a>1.9&nbsp;&nbsp;Property allowInterruptRunningQueries</h3>
+<h3><a name="Property_allowInterruptRunningQueries"></a>1.9&nbsp;&nbsp;Property allowInterruptRunningQueries<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_allowInterruptRunningQueries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will cancel a scheduled query job if it is already running.
 Some underlying stores (e.g. DBStore with a Derby database) might not be able to deal with this cleanly.
@@ -278,13 +278,13 @@ For such stores, this parameter can be set to <code>false</code>.
 <p>
 Valid values: <code>false</code> (default) or <code>true</code>.
 
-<h3><a name="Property_idGenerationLocation"></a>1.10&nbsp;&nbsp;Property idGenerationLocation</h3>
+<h3><a name="Property_idGenerationLocation"></a>1.10&nbsp;&nbsp;Property idGenerationLocation<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_idGenerationLocation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the repository will expect clients to generate IDs for new objects or whether it will ask the backend store to generate them.
 <p>
 Valid values: <code>STORE</code> (default) or <code>CLIENT</code>.
 
-<h2><a name="Element_securityManager"></a>2&nbsp;&nbsp;Element securityManager</h2>
+<h2><a name="Element_securityManager"></a>2&nbsp;&nbsp;Element securityManager<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_securityManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Example:
 <pre>
@@ -312,19 +312,19 @@ PermissionCacheFactory.PROP_DESCRIPTION, and PermissionCacheFactory.Default.PROP
 <p>
 See also: <a href="https://wiki.eclipse.org/CDO/Security_Manager">https://wiki.eclipse.org/CDO/Security_Manager</a>
 
-<h2><a name="Element_authenticator"></a>3&nbsp;&nbsp;Element authenticator</h2>
+<h2><a name="Element_authenticator"></a>3&nbsp;&nbsp;Element authenticator<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_authenticator" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Example: &lt;authenticator type="file" description="_database/repo1.users"/>
 <p>
 See also: <a href="https://bugs.eclipse.org/302775">https://bugs.eclipse.org/302775</a>
 
-<h2><a name="Element_initialPackage"></a>4&nbsp;&nbsp;Element initialPackage</h2>
+<h2><a name="Element_initialPackage"></a>4&nbsp;&nbsp;Element initialPackage<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_initialPackage" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Example: &lt;initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
 <p>
 See also: <a href="https://bugs.eclipse.org/345431">https://bugs.eclipse.org/345431</a>
 
-<h2><a name="Element_store"></a>5&nbsp;&nbsp;Element store</h2>
+<h2><a name="Element_store"></a>5&nbsp;&nbsp;Element store<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_store" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Defines an <a href="../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> instance.
 <p>
@@ -348,53 +348,53 @@ The following values are possible with the shipped distribution (subject to user
 <li> <b>db4o:</b> Store that uses DB4O, see [[CDO/DB4O Store]].
 </ul>
 
-<h3><a name="Property_schemaName"></a>5.1&nbsp;&nbsp;Property schemaName</h3>
+<h3><a name="Property_schemaName"></a>5.1&nbsp;&nbsp;Property schemaName<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_schemaName" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, the name of the DB schema to use for the repository.
 If omitted the <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDefaultSchemaName(java.sql.Connection)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>default schema name</code></a> of the repository's
 <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>DB adapter</code></a> is used as the schema name.
 
-<h3><a name="Property_prependSchemaName"></a>5.2&nbsp;&nbsp;Property prependSchemaName</h3>
+<h3><a name="Property_prependSchemaName"></a>5.2&nbsp;&nbsp;Property prependSchemaName<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_prependSchemaName" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, whether to qualify table names with the <a href="Doc01_ConfiguringRepositories.html#Property_schemaName" title="Chapter in CDO Model Repository Documentation">schema name</a>.
 
-<h3><a name="Property_createSchemaIfNeeded"></a>5.3&nbsp;&nbsp;Property createSchemaIfNeeded</h3>
+<h3><a name="Property_createSchemaIfNeeded"></a>5.3&nbsp;&nbsp;Property createSchemaIfNeeded<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_createSchemaIfNeeded" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, whether to create the schema with the specified <a href="Doc01_ConfiguringRepositories.html#Property_schemaName" title="Chapter in CDO Model Repository Documentation">name</a>
 at startup time, if it does not exist.
 
-<h3><a name="Property_connectionKeepAlivePeriod"></a>5.4&nbsp;&nbsp;Property connectionKeepAlivePeriod</h3>
+<h3><a name="Property_connectionKeepAlivePeriod"></a>5.4&nbsp;&nbsp;Property connectionKeepAlivePeriod<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, at what interval in minutes the store will issue an SQL statement to keep the connection to the database alive.
 
-<h3><a name="Property_connectionRetryCount"></a>5.5&nbsp;&nbsp;Property connectionRetryCount</h3>
+<h3><a name="Property_connectionRetryCount"></a>5.5&nbsp;&nbsp;Property connectionRetryCount<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_connectionRetryCount" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, the number of additional attempts to connect to the DB after initial connection failure.
 
-<h3><a name="Property_connectionRetrySeconds"></a>5.6&nbsp;&nbsp;Property connectionRetrySeconds</h3>
+<h3><a name="Property_connectionRetrySeconds"></a>5.6&nbsp;&nbsp;Property connectionRetrySeconds<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_connectionRetrySeconds" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, the number of seconds to wait before additional attempts to connect to the DB after initial connection failure.
 
-<h3><a name="Property_readerPoolCapacity"></a>5.7&nbsp;&nbsp;Property readerPoolCapacity</h3>
+<h3><a name="Property_readerPoolCapacity"></a>5.7&nbsp;&nbsp;Property readerPoolCapacity<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the reader pool.
 <p>
 The default value is 15.
 
-<h3><a name="Property_writerPoolCapacity"></a>5.8&nbsp;&nbsp;Property writerPoolCapacity</h3>
+<h3><a name="Property_writerPoolCapacity"></a>5.8&nbsp;&nbsp;Property writerPoolCapacity<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the writer pool.
 <p>
 The default value is 15.
 
-<h3><a name="Property_dropAllDataOnActivate"></a>5.9&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
+<h3><a name="Property_dropAllDataOnActivate"></a>5.9&nbsp;&nbsp;Property dropAllDataOnActivate<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 If set to <code>true</code> and the store is a DBStore, drops all database tables of the configured
 <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">schema</a> at the beginning of the store activation.
 <p>
 The default value is <code>false</code>.
 
-<h2><a name="Element_mappingStrategy"></a>6&nbsp;&nbsp;Element mappingStrategy</h2>
+<h2><a name="Element_mappingStrategy"></a>6&nbsp;&nbsp;Element mappingStrategy<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_mappingStrategy" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 This element is recognized by DBStores and defines the overall <a href="../../javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="Interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> of the built-in O/R mapper.
 <p>
@@ -414,7 +414,7 @@ The following values are possible with the shipped distribution (subject to user
      </ul>
 </ul>
 
-<h3><a name="Property_toManyReferences"></a>6.1&nbsp;&nbsp;Property toManyReferences</h3>
+<h3><a name="Property_toManyReferences"></a>6.1&nbsp;&nbsp;Property toManyReferences<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_toManyReferences" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies how the built-in O/R mapper will handle to-many references (collections). The following values are recognized:
 <ul>
@@ -424,31 +424,31 @@ Specifies how the built-in O/R mapper will handle to-many references (collection
 <li> <b>ONE_TABLE_PER_REPOSITORY</b>: All to-many references of all model classes i the repository will share a single DB table.
 </ul>
 
-<h3><a name="Property_maxTableNameLength"></a>6.2&nbsp;&nbsp;Property maxTableNameLength</h3>
+<h3><a name="Property_maxTableNameLength"></a>6.2&nbsp;&nbsp;Property maxTableNameLength<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Enables you to override the default value of the chosen DB adapter for the maximum length of table names.
 
-<h3><a name="Property_maxFieldNameLength"></a>6.3&nbsp;&nbsp;Property maxFieldNameLength</h3>
+<h3><a name="Property_maxFieldNameLength"></a>6.3&nbsp;&nbsp;Property maxFieldNameLength<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_maxFieldNameLength" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Enables you to override the default value of the chosen DB adapter for the maximum length of column names.
 
-<h3><a name="Property_tableNamePrefix"></a>6.4&nbsp;&nbsp;Property tableNamePrefix</h3>
+<h3><a name="Property_tableNamePrefix"></a>6.4&nbsp;&nbsp;Property tableNamePrefix<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_tableNamePrefix" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies a common fixed prefix for all table names generated by this mapping strategy.
 
-<h3><a name="Property_qualifiedNames"></a>6.5&nbsp;&nbsp;Property qualifiedNames</h3>
+<h3><a name="Property_qualifiedNames"></a>6.5&nbsp;&nbsp;Property qualifiedNames<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_qualifiedNames" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether generated package or class table names are qualified or not.
 
-<h3><a name="Property_forceNamesWithID"></a>6.6&nbsp;&nbsp;Property forceNamesWithID</h3>
+<h3><a name="Property_forceNamesWithID"></a>6.6&nbsp;&nbsp;Property forceNamesWithID<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_forceNamesWithID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether generated names are always suffixed with an internal ID or only in cases where the generated name absolutely needs mangling.
 
-<h3><a name="Property_fieldConstructionTracking"></a>6.7&nbsp;&nbsp;Property fieldConstructionTracking</h3>
+<h3><a name="Property_fieldConstructionTracking"></a>6.7&nbsp;&nbsp;Property fieldConstructionTracking<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_fieldConstructionTracking" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether you want <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBField.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBField</code></a> construction stacktrace on schema update to have the origin of the nullable index field.
 
-<h3><a name="Property_objectTypeCacheSize"></a>6.8&nbsp;&nbsp;Property objectTypeCacheSize</h3>
+<h3><a name="Property_objectTypeCacheSize"></a>6.8&nbsp;&nbsp;Property objectTypeCacheSize<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_objectTypeCacheSize" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies the size of the object type in-memory cache. Possible configuration values are:
 <ul>
@@ -457,11 +457,11 @@ Specifies the size of the object type in-memory cache. Possible configuration va
 </ul>
 The default is a memory cache size of 10,000,000.
 
-<h3><a name="Property_columnTypeModifier"></a>6.9&nbsp;&nbsp;Property columnTypeModifier</h3>
+<h3><a name="Property_columnTypeModifier"></a>6.9&nbsp;&nbsp;Property columnTypeModifier<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_columnTypeModifier" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies the name of a <a href="../../javadoc/org/eclipse/emf/cdo/server/db/mapping/ColumnTypeModifier.html" title="Class in org.eclipse.emf.cdo.server.db.mapping"><code>ColumnTypeModifier</code></a>.
 
-<h3><a name="Property_typeMappingProvider"></a>6.10&nbsp;&nbsp;Property typeMappingProvider</h3>
+<h3><a name="Property_typeMappingProvider"></a>6.10&nbsp;&nbsp;Property typeMappingProvider<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_typeMappingProvider" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies the type name of the <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html" title="Interface in org.eclipse.net4j.util.factory"><code>factory</code></a> for a custom type mapping provider. Possible values:
 <ul>
@@ -471,7 +471,7 @@ Specifies the type name of the <a href="../../../org.eclipse.net4j.util.doc/java
 <p>
 This property is optional.
 
-<h3><a name="Property_forceIndexes"></a>6.11&nbsp;&nbsp;Property forceIndexes</h3>
+<h3><a name="Property_forceIndexes"></a>6.11&nbsp;&nbsp;Property forceIndexes<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_forceIndexes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies on what types of structural features additional indexes are to be created.
 The value is either empty or a &#124; (pipe) separated list of the following tokens:
@@ -485,7 +485,7 @@ The value is either empty or a &#124; (pipe) separated list of the following tok
 <li> XREF
 </ul>
 
-<h3><a name="Property_eagerTableCreation"></a>6.12&nbsp;&nbsp;Property eagerTableCreation</h3>
+<h3><a name="Property_eagerTableCreation"></a>6.12&nbsp;&nbsp;Property eagerTableCreation<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_eagerTableCreation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether all tables for a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> are created eagerly.
 <p>
@@ -495,7 +495,7 @@ Possible configuration values are:
 <li> <code>true</code> (creates tables eagerly, i.e., when a new <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> is committed)
 </ul>
 
-<h3><a name="Property_withRanges"></a>6.13&nbsp;&nbsp;Property withRanges</h3>
+<h3><a name="Property_withRanges"></a>6.13&nbsp;&nbsp;Property withRanges<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_withRanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> create entire new copies of all their list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a>
 or whether just the list deltas are stored.
@@ -509,7 +509,7 @@ Possible configuration values are:
 This property is only applicable to horizontal mapping strategies in <a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">auditing</a>
 or <a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">branching</a> repositories.
 
-<h3><a name="Property_copyOnBranch"></a>6.14&nbsp;&nbsp;Property copyOnBranch</h3>
+<h3><a name="Property_copyOnBranch"></a>6.14&nbsp;&nbsp;Property copyOnBranch<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_copyOnBranch" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether <b>the first</b> new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> create entire new copies
 of all their list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> or whether just the list deltas (relative to the base revisions in the parent branch) are stored.
@@ -523,7 +523,7 @@ Possible configuration values are:
 This property is only applicable to <a href="Doc01_ConfiguringRepositories.html#Property_withRanges" title="Chapter in CDO Model Repository Documentation">range-based</a> horizontal mapping strategies in
 <a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">branching</a> repositories.
 
-<h3><a name="Property_forceZeroBasedIndex"></a>6.15&nbsp;&nbsp;Property forceZeroBasedIndex</h3>
+<h3><a name="Property_forceZeroBasedIndex"></a>6.15&nbsp;&nbsp;Property forceZeroBasedIndex<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Property_forceZeroBasedIndex" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether element removals from the beginning of list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> adjust the
 list indexes of all following elements or whether the first element is allowed to have a non-zero list index.
@@ -537,7 +537,7 @@ Possible configuration values are:
 This property is only applicable to <a href="Doc01_ConfiguringRepositories.html#Property_withRanges" title="Chapter in CDO Model Repository Documentation">range-based</a> horizontal mapping strategies in
 <a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">auditing</a> or <a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">branching</a> repositories.
 
-<h2><a name="Element_dbAdapter"></a>7&nbsp;&nbsp;Element dbAdapter</h2>
+<h2><a name="Element_dbAdapter"></a>7&nbsp;&nbsp;Element dbAdapter<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_dbAdapter" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Defines the <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> instance of the store that interprets the SQL dialect of the used database.
 <p>
@@ -546,7 +546,7 @@ The <code>type</code> attribute corresponds to the name of a DB adapter factory 
 <p>
 The DB adapter must match the database specified in the <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">dataSource</a> element.
 
-<h2><a name="Element_dataSource"></a>8&nbsp;&nbsp;Element dataSource</h2>
+<h2><a name="Element_dataSource"></a>8&nbsp;&nbsp;Element dataSource<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/operators/Doc01_ConfiguringRepositories.html#Element_dataSource" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Defines the DataSource instance of the store.
 <p>

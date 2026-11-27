@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2011-2021, 2023-2026 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
-  are made available under the terms of the Eclipse Public License v1.0
-  which accompanies this distribution, and is available at
-  http://www.eclipse.org/legal/epl-v10.html
+  are made available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0
+  
+  SPDX-License-Identifier: EPL-2.0
 
   Contributors:
     Eike Stepper - initial API and implementation
@@ -15,9 +16,14 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
-  <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
+  <tstamp>
+    <format property="current.year" pattern="yyyy" />
+  </tstamp>
 
-	<property name="jdk.link" value="https://docs.oracle.com/en/java/javase/11/docs/api" />
+  <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
+  <property name="legal.date" value="${cdo.legal.date.from}-${current.year}" />
+
+  <property name="jdk.link" value="https://docs.oracle.com/en/java/javase/11/docs/api" />
   <property name="emf.link" value="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
   <property name="platform.link" value="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
@@ -222,6 +228,11 @@
     <mkdir dir="${schemadoc.destdir}" />
     <copy todir="${schemadoc.destdir}" failonerror="true" verbose="true">
       <fileset dir="${releng.project}/html">
+        <include name="schema.css" />
+      </fileset>
+    </copy>
+    <copy todir="${schemadoc.destdir}" failonerror="false" verbose="true">
+      <fileset dir="${helpcenter.project}/html">
         <include name="schema.css" />
       </fileset>
     </copy>

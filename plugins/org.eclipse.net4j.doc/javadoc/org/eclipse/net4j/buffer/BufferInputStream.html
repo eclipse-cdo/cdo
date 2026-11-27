@@ -74,10 +74,9 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#isCCAM()" tabindex="0">isCCAM()</a></li>
 <li><a href="#getMillisBeforeTimeout()" tabindex="0">getMillisBeforeTimeout()</a></li>
-<li><a href="#getMillisInterruptCheck()" tabindex="0">getMillisInterruptCheck()</a></li>
 <li><a href="#restartTimeout()" tabindex="0">restartTimeout()</a></li>
-<li><a href="#getException()" tabindex="0">getException()</a></li>
-<li><a href="#setException(org.eclipse.net4j.signal.RemoteException)" tabindex="0">setException(RemoteException)</a></li>
+<li><a href="#getAbortCause()" tabindex="0">getAbortCause()</a></li>
+<li><a href="#abort(java.lang.RuntimeException)" tabindex="0">abort(RuntimeException)</a></li>
 <li><a href="#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" tabindex="0">handleBuffer(IBuffer)</a></li>
 <li><a href="#read()" tabindex="0">read()</a></li>
 <li><a href="#read(byte%5B%5D,int,int)" tabindex="0">read(byte[], int, int)</a></li>
@@ -85,6 +84,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#ensureBuffer()" tabindex="0">ensureBuffer()</a></li>
 <li><a href="#closeChannel()" tabindex="0">closeChannel()</a></li>
+<li><a href="#getMillisInterruptCheck()" tabindex="0">getMillisInterruptCheck()</a></li>
+<li><a href="#getException()" tabindex="0">getException()</a></li>
+<li><a href="#setException(org.eclipse.net4j.signal.RemoteException)" tabindex="0">setException(RemoteException)</a></li>
 </ol>
 </li>
 </ol>
@@ -114,7 +116,16 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>
 implements <a href="IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></span></div>
 <div class="block">A <a href="IBufferHandler.html" title="interface in org.eclipse.net4j.buffer"><code>buffer handler</code></a> that defragments the passed <a href="IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> into a continuous byte
-sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link"><code>input stream</code></a>.</div>
+sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link"><code>input stream</code></a>.
+<p>
+Reading is restricted to one reader thread at a time. Buffers may be supplied concurrently by producer threads, and
+<a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a>, <a href="#close()"><code>close()</code></a>, and <a href="#restartTimeout()"><code>restartTimeout()</code></a> may be called during a read.
+Concurrent close never releases a buffer while the reader accesses its contents. Waiting readers are notified when a
+buffer arrives, the stream is aborted or closed, or the timeout is restarted. Abort is observed at buffer acquisition
+boundaries, without per-byte checks. This class does not guarantee fairness or producer priority.
+<p>
+A buffer's ownership transfers to this stream when <a href="#handleBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>handleBuffer(IBuffer)</code></a> accepts it. The stream releases it
+after consumption or closure. A reader that has detached an exhausted buffer releases it after leaving the monitor.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -137,7 +148,11 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final long</code></div>
 <div class="col-second odd-row-color"><code><a href="#DEFAULT_MILLIS_INTERRUPT_CHECK" class="member-name-link">DEFAULT_MILLIS_INTERRUPT_CHECK</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
+</div>
 <div class="col-first even-row-color"><code>static final long</code></div>
 <div class="col-second even-row-color"><code><a href="#NO_TIMEOUT" class="member-name-link">NO_TIMEOUT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -162,54 +177,86 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#closeChannel()" class="member-name-link">closeChannel</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#abort(java.lang.RuntimeException)" class="member-name-link">abort</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a>&nbsp;cause)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Aborts this stream and immediately wakes a thread waiting for its next buffer.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Closes the stream, detaches its current and queued buffers, and wakes any waiting reader.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#closeChannel()" class="member-name-link">closeChannel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Subclasses may override.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ensureBuffer()" class="member-name-link">ensureBuffer</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getException()" class="member-name-link">getException</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ensureBuffer()" class="member-name-link">ensureBuffer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAbortCause()" class="member-name-link">getAbortCause</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the cause supplied to <a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a>, or <code>null</code> if this stream has not been aborted.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getException()" class="member-name-link">getException</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#getAbortCause()"><code>getAbortCause()</code></a>.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMillisBeforeTimeout()" class="member-name-link">getMillisBeforeTimeout</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getMillisInterruptCheck()" class="member-name-link">getMillisInterruptCheck</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBuffer</a><wbr>(<a href="IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles an <a href="IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.</div>
+<div class="block">Accepts a buffer from a producer.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCCAM()" class="member-name-link">isCCAM</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether the currently acquired buffer requested that its channel be closed after consumption.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read()" class="member-name-link">read</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the next byte, or <code>IOUtil.EOF</code> at end of stream.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(byte%5B%5D,int,int)" class="member-name-link">read</a><wbr>(byte[]&nbsp;b,
  int&nbsp;off,
  int&nbsp;len)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Reads bytes from this stream, acquiring the monitor for at most one buffer per iteration.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restartTimeout()" class="member-name-link">restartTimeout</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setException(org.eclipse.net4j.signal.RemoteException)" class="member-name-link">setException</a><wbr>(<a href="../signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Restarts the current read timeout and wakes a waiting reader to recompute its deadline.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setException(org.eclipse.net4j.signal.RemoteException)" class="member-name-link">setException</a><wbr>(<a href="../signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a> to abort the stream.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -269,8 +316,14 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 <section class="detail" id="DEFAULT_MILLIS_INTERRUPT_CHECK">
 <h3>DEFAULT_MILLIS_INTERRUPT_CHECK</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">DEFAULT_MILLIS_INTERRUPT_CHECK</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">DEFAULT_MILLIS_INTERRUPT_CHECK</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
 <dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -310,6 +363,7 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 <h3>isCCAM</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCCAM</span>()</div>
+<div class="block">Returns whether the currently acquired buffer requested that its channel be closed after consumption.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.4</dd>
@@ -326,18 +380,11 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 </section>
 </li>
 <li>
-<section class="detail" id="getMillisInterruptCheck()">
-<h3>getMillisInterruptCheck</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getMillisInterruptCheck</span>()</div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="restartTimeout()">
 <h3>restartTimeout</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">restartTimeout</span>()</div>
+<div class="block">Restarts the current read timeout and wakes a waiting reader to recompute its deadline.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -346,25 +393,33 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 </section>
 </li>
 <li>
-<section class="detail" id="getException()">
-<h3>getException</h3>
+<section class="detail" id="getAbortCause()">
+<h3>getAbortCause</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span>&nbsp;<span class="element-name">getException</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span>&nbsp;<span class="element-name">getAbortCause</span>()</div>
+<div class="block">Returns the cause supplied to <a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a>, or <code>null</code> if this stream has not been aborted.</div>
 <dl class="notes">
 <dt>Since:</dt>
-<dd>2.0</dd>
+<dd>4.23</dd>
 </dl>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="setException(org.eclipse.net4j.signal.RemoteException)">
-<h3>setException</h3>
+<section class="detail" id="abort(java.lang.RuntimeException)">
+<h3>abort</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setException</span><wbr><span class="parameters">(<a href="../signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">abort</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a>&nbsp;cause)</span></div>
+<div class="block">Aborts this stream and immediately wakes a thread waiting for its next buffer. The first non-null cause wins; later
+calls do not replace it. Abort is observed at a buffer-acquisition boundary and does not release queued or acquired
+buffers, which remain owned until consumed or closed.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>cause</code> - the non-null cause thrown by a waiting or subsequent reader</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>cause</code> is <code>null</code></dd>
 <dt>Since:</dt>
-<dd>4.0</dd>
+<dd>4.23</dd>
 </dl>
 </div>
 </section>
@@ -374,17 +429,13 @@ sequence which is exposed as an <a href="https://docs.oracle.com/en/java/javase/
 <h3>handleBuffer</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleBuffer</span><wbr><span class="parameters">(<a href="IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">IBufferHandler</a></code></span></div>
-<div class="block">Handles an <a href="IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.
-<p>
-The implementor of this method takes over the ownership of
-the buffer. Care must be taken to properly <a href="IBuffer.html#release()"><code>release</code></a> the buffer if the ownership is not
-explicitly passed on to some further party.</div>
+<div class="block">Accepts a buffer from a producer. Invoking this method transfers ownership to the stream. If it has already been
+closed, this method releases the supplied buffer itself; the caller must not release it again.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>buffer</code> - The buffer to be handled.</dd>
+<dd><code>buffer</code> - the buffer to accept</dd>
 </dl>
 </div>
 </section>
@@ -395,11 +446,16 @@ explicitly passed on to some further party.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">read</span>()
          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Returns the next byte, or <code>IOUtil.EOF</code> at end of stream.
+<p>
+The monitor protects acquisition and access to the current buffer. If this method waits for a buffer, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link"><code>Object.wait()</code></a>
+releases the monitor fully, including this method's reentrant acquisition, so producers and lifecycle operations
+can proceed. An exhausted buffer is detached under the monitor and released afterward.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#read()" title="class or interface in java.io" class="external-link">read</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if waiting for a buffer times out</dd>
 </dl>
 </div>
 </section>
@@ -412,11 +468,21 @@ explicitly passed on to some further party.</div>
  int&nbsp;off,
  int&nbsp;len)</span>
          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Reads bytes from this stream, acquiring the monitor for at most one buffer per iteration. A read spanning multiple
+buffers releases the monitor between them so producers and lifecycle operations can proceed. After bytes have been
+copied, a later timeout or EOS returns the partial result; an exception before any bytes are read is propagated.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#read(byte%5B%5D,int,int)" title="class or interface in java.io" class="external-link">read</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>b</code> - the destination array</dd>
+<dd><code>off</code> - the destination offset</dd>
+<dd><code>len</code> - the maximum number of bytes to read</dd>
+<dt>Returns:</dt>
+<dd>the number of bytes read, or <code>IOUtil.EOF</code> if a positive-length read reaches end of stream before
+        reading any bytes</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if waiting for a buffer fails before any bytes are read</dd>
 </dl>
 </div>
 </section>
@@ -427,6 +493,8 @@ explicitly passed on to some further party.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Closes the stream, detaches its current and queued buffers, and wakes any waiting reader. Buffer release and channel
+lifecycle callbacks occur outside the stream monitor.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
@@ -435,7 +503,7 @@ explicitly passed on to some further party.</div>
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the superclass close operation fails</dd>
 </dl>
 </div>
 </section>
@@ -478,6 +546,61 @@ explicitly passed on to some further party.</div>
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="getMillisInterruptCheck()">
+<h3>getMillisInterruptCheck</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getMillisInterruptCheck</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Periodic interrupt checks are no longer performed.</div>
+</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getException()">
+<h3>getException</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span>&nbsp;<span class="element-name">getException</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#getAbortCause()"><code>getAbortCause()</code></a>.</div>
+</div>
+<div class="block">Returns the exception injected into this stream.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the injected exception, or <code>null</code> if none was set</dd>
+<dt>Since:</dt>
+<dd>2.0</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setException(org.eclipse.net4j.signal.RemoteException)">
+<h3>setException</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setException</span><wbr><span class="parameters">(<a href="../signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a> to abort the stream.</div>
+</div>
+<div class="block">Replaces or clears the historical exception property and wakes a waiting reader. Passing <code>null</code> clears the
+cause. Unlike <a href="#abort(java.lang.RuntimeException)"><code>abort(RuntimeException)</code></a>, this compatibility setter may replace an earlier cause.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>exception</code> - the exception to inject, or <code>null</code> to clear it</dd>
+<dt>Since:</dt>
+<dd>4.0</dd>
+</dl>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -486,7 +609,7 @@ explicitly passed on to some further party.</div>
 <!-- ========= END OF CLASS DATA ========= -->
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

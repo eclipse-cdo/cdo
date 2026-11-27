@@ -77,6 +77,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#onSendingRequired()" tabindex="0">onSendingRequired()</a></li>
 <li><a href="#leaveConnecting()" tabindex="0">leaveConnecting()</a></li>
 <li><a href="#advanceConnectionAfterHandshake(long)" tabindex="0">advanceConnectionAfterHandshake(long)</a></li>
+<li><a href="#getReceiveQueueCount()" tabindex="0">getReceiveQueueCount()</a></li>
 <li><a href="#onControlHandshakeCompleted(long)" tabindex="0">onControlHandshakeCompleted(long)</a></li>
 <li><a href="#onSendingNoLongerRequired()" tabindex="0">onSendingNoLongerRequired()</a></li>
 <li><a href="#createNegotiationContext()" tabindex="0">createNegotiationContext()</a></li>
@@ -280,47 +281,52 @@ accepted sends but cannot reclaim their buffers until terminal completion; abort
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the configured client or server role used for signed Net4j channel identifiers.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leaveConnecting()" class="member-name-link">leaveConnecting</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReceiveQueueCount()" class="member-name-link">getReceiveQueueCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of per-channel receive dispatch queues currently retained by this connector.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onActivationFailed()" class="member-name-link">onActivationFailed</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leaveConnecting()" class="member-name-link">leaveConnecting</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onActivationFailed()" class="member-name-link">onActivationFailed</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called after a provider terminates while this connector is still undergoing deferred activation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onControlHandshakeCompleted(long)" class="member-name-link">onControlHandshakeCompleted</a><wbr>(long&nbsp;generation)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onControlHandshakeCompleted(long)" class="member-name-link">onControlHandshakeCompleted</a><wbr>(long&nbsp;generation)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called after normal connector progression resumes so transports can restart work deferred during the handshake.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingNoLongerRequired()" class="member-name-link">onSendingNoLongerRequired</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingNoLongerRequired()" class="member-name-link">onSendingNoLongerRequired</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the scheduler becomes idle.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingRequired()" class="member-name-link">onSendingRequired</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onSendingRequired()" class="member-name-link">onSendingRequired</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called when the scheduler transitions from idle to having pending work.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setConnection(org.eclipse.spi.net4j.MessageConnector.IMessageConnection)" class="member-name-link">setConnection</a><wbr>(<a href="MessageConnector.IMessageConnection.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection</a>&nbsp;connection)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setConnection(org.eclipse.spi.net4j.MessageConnector.IMessageConnection)" class="member-name-link">setConnection</a><wbr>(<a href="MessageConnector.IMessageConnection.html" title="interface in org.eclipse.spi.net4j">MessageConnector.IMessageConnection</a>&nbsp;connection)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the provider connection before activation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLocation(org.eclipse.net4j.ILocationAware.Location)" class="member-name-link">setLocation</a><wbr>(<a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;location)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLocation(org.eclipse.net4j.ILocationAware.Location)" class="member-name-link">setLocation</a><wbr>(<a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;location)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets whether this connector represents a Net4j client or a server-side accepted connection.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(org.eclipse.net4j.connector.ConnectorState)" class="member-name-link">setState</a><wbr>(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(org.eclipse.net4j.connector.ConnectorState)" class="member-name-link">setState</a><wbr>(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Updates this connector's transport and negotiation state.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#terminatePendingActivation()" class="member-name-link">terminatePendingActivation</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#terminatePendingActivation()" class="member-name-link">terminatePendingActivation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Ends a deferred activation when its owner explicitly aborts the provider connection.</div>
 </div>
 </div>
@@ -577,6 +583,23 @@ the supplied handshake generation when publishing its state.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="getReceiveQueueCount()">
+<h3>getReceiveQueueCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getReceiveQueueCount</span>()</div>
+<div class="block">Returns the number of per-channel receive dispatch queues currently retained by this connector. The value is a synchronized
+diagnostic snapshot and does not expose the queues themselves; subclasses can use it to verify that channel removal and connector
+shutdown release receive-dispatch state.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the current number of retained per-channel receive queues</dd>
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="onControlHandshakeCompleted(long)">
 <h3>onControlHandshakeCompleted</h3>
 <div class="horizontal-scroll">
@@ -712,7 +735,7 @@ an owner can remove themselves from that owner's registry here because the faile
 <!-- ========= END OF CLASS DATA ========= -->
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
 </main>
 </div>

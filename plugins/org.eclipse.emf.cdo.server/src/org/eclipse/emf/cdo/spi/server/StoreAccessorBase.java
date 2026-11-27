@@ -290,6 +290,8 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
    */
   public static class CommitDataRevisionHandler implements CDORevisionHandler
   {
+    private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
     private IStoreAccessor storeAccessor;
 
     private long timeStamp;
@@ -355,8 +357,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
       if (version > CDOBranchVersion.FIRST_VERSION)
       {
         CDOBranchVersion oldVersion = branch.getVersion(version - 1);
-        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion,
-            new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
+        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, UNCHUNKED_LOADING_CONFIG);
 
         InternalCDORevisionDelta delta = revision.compare(oldRevision);
         changedObjects.add(delta);
@@ -389,8 +390,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
 
       CDOBranchPoint base = branch.getBase();
 
-      InternalCDORevision revision = revisionManager.getRevision(id, base,
-          new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
+      InternalCDORevision revision = revisionManager.getRevision(id, base, UNCHUNKED_LOADING_CONFIG);
       if (revision == null)
       {
         revision = getRevisionFromBase(id, base.getBranch());

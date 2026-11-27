@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -113,6 +112,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
   private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
+  private static final Config NO_CHUNKS_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   private InternalRepository repository;
 
@@ -1382,8 +1383,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public CDORevision getRevision(CDOID id)
     {
-      InternalCDORevision revision = revisionManager.getRevision(id, branchPoint,
-          new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0));
+      InternalCDORevision revision = revisionManager.getRevision(id, branchPoint, NO_CHUNKS_LOADING_CONFIG);
       if (revision != null)
       {
         for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentContainments())

@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Understanding the Technical Background<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Understanding the Technical Background<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc08_Collaborating.html" title="Backward to Collaborating in Real-Time"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -49,7 +49,7 @@ This article explains the relationship between the main concepts that are expose
 </p>
 
 
-<h2><a name="Doc_BackgroundModelElements"></a>1&nbsp;&nbsp;Technical Background of Model Elements<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundModelElements" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundModelElements"></a>1&nbsp;&nbsp;Technical Background of Model Elements<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundModelElements" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Model elements are <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>.
 <p>
@@ -63,7 +63,7 @@ EPackages are registered in the <a href="https://download.eclipse.org/modeling/e
 </ul>
 
 
-<h3><a name="Doc_BackgroundNativeModels"></a>1.1&nbsp;&nbsp;Native Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Doc_BackgroundNativeModels"></a>1.1&nbsp;&nbsp;Native Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundNativeModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The term "native model" refers to an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EPackage</code></a> that is <a href="../programmers/Doc04_PreparingModels.html#Doc_GeneratingModel" title="Chapter in CDO Model Repository Documentation">generated</a>
 with some CDO-specific <a href="../programmers/Doc04_PreparingModels.html#Doc_MigratingManually" title="Chapter in CDO Model Repository Documentation">options</a> to fully exploit CDO's unprecedented
@@ -81,7 +81,7 @@ Technically native model elements are instances of the Java class <a href="../..
 </ul>
 
 
-<h3><a name="Doc_BackgroundLegacyModels"></a>1.2&nbsp;&nbsp;Legacy Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundLegacyModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Doc_BackgroundLegacyModels"></a>1.2&nbsp;&nbsp;Legacy Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundLegacyModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Generating or regenerating an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EPackage</code></a> with the CDO-specific <a href="../programmers/Doc04_PreparingModels.html#Doc_MigratingManually" title="Chapter in CDO Model Repository Documentation">options</a>
 (as explained in <a href="Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">Native Models</a>) is not always possible, for example if an EPackage has already
@@ -92,7 +92,7 @@ The integration of legacy models with CDO is based on CDOLegacyAdapters.
 <p>
 Legacy model elements are not loaded lazily and not automatically garbage-collected.
 
-<h3><a name="Doc_BackgroundDynamicModels"></a>1.3&nbsp;&nbsp;Dynamic Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundDynamicModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Doc_BackgroundDynamicModels"></a>1.3&nbsp;&nbsp;Dynamic Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundDynamicModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 It is not strictly necessary for an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EPackage</code></a> to be generated into Java code to be used with CDO.
 An EPackage can also be loaded dynamically at runtime (see <a href="../programmers/Doc04_PreparingModels.html#Doc_CreatingEcore" title="Chapter in CDO Model Repository Documentation">Creating an Ecore Model</a> for an example of the
@@ -103,7 +103,7 @@ Technically dynamic model elements are instances of the Java class DynamicCDOObj
 Dynamic model elements share the characteristics of <a href="Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">native</a> model elements
 with respect to enhanced scalability and performance,
 
-<h2><a name="Doc_BackgroundRepositories"></a>2&nbsp;&nbsp;Technical Background of Repositories<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundRepositories"></a>2&nbsp;&nbsp;Technical Background of Repositories<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The term "repository" is a slightly ambiguous in CDO, as it may refer to both a server-side / core-level <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>
 and a client-side / UI-level <a href="../../javadoc/org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="Interface in org.eclipse.emf.cdo.explorer.repositories"><code>CDORepository</code></a>.
@@ -126,7 +126,7 @@ from that CDORepository.<p><b>See Also:</b></p>
 </ul>
 
 
-<h2><a name="Doc_BackgroundCheckouts"></a>3&nbsp;&nbsp;Technical Background of Checkouts<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundCheckouts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundCheckouts"></a>3&nbsp;&nbsp;Technical Background of Checkouts<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundCheckouts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../javadoc/org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="Interface in org.eclipse.emf.cdo.explorer.checkouts"><code>CDOCheckout</code></a> is not necessarily a physical copy of a repository on the local disk (only <a href="Doc04_CheckingOut.html#Doc_OfflineCheckouts" title="Chapter in CDO Model Repository Documentation">offline checkouts</a>
 maintain a locally replicated repository copy). More generally they represent the following two aspects:
@@ -147,7 +147,7 @@ Each <a href="Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chap
 views and transactions. Typically the save action of a model editor delegates directly to the <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>commit</code></a>
 method of its associated CDOTransaction.
 
-<h2><a name="Doc_BackgroundSessions"></a>4&nbsp;&nbsp;Technical Background of Sessions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundSessions"></a>4&nbsp;&nbsp;Technical Background of Sessions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> is the technical representation of a <a href="../../javadoc/org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="Interface in org.eclipse.emf.cdo.common.protocol"><code>CDOProtocol</code></a> connection to an <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>.
 On the transport level this connection is provided by an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html" title="Interface in org.eclipse.net4j.connector"><code>IConnector</code></a> / <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a> pair.
@@ -160,7 +160,7 @@ On the transport level this connection is provided by an <a href="../../../org.e
 </ul>
 
 
-<h2><a name="Doc_BackgroundViews"></a>5&nbsp;&nbsp;Technical Background of Views<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundViews"></a>5&nbsp;&nbsp;Technical Background of Views<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> is a technical facility that provides a client application with all the models and model elements in a repository
 for a specific <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>point in time</code></a> and in a specific <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>branch</code></a>.
@@ -173,7 +173,7 @@ The model elements provided by a CDOView are <a href="../../javadoc/org/eclipse/
 </ul>
 
 
-<h2><a name="Doc_BackgroundTransactions"></a>6&nbsp;&nbsp;Technical Background of Transactions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundTransactions"></a>6&nbsp;&nbsp;Technical Background of Transactions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> is a technical facility that provides a client application with all the latest models
 and model elements in a repository in a specific <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>branch</code></a>.
@@ -188,7 +188,7 @@ persistent in the repository and to distribute them to the views and transaction
 </ul>
 
 
-<h2><a name="Doc_BackgroundCompare"></a>7&nbsp;&nbsp;Technical Background of the Compare Integration<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html#Doc_BackgroundCompare" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Doc_BackgroundCompare"></a>7&nbsp;&nbsp;Technical Background of the Compare Integration<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/users/Doc09_TechnicalBackground.html%23Doc_BackgroundCompare" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 With CDO both EMF Compare editors and EMF Merge editors are instrumented to utilize an optimized CDO mechanism in order to compute
 matches in a very efficient and scalable way. This mechanism consists of special <a href="../../javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadMergeData(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)" title="Method in org.eclipse.emf.spi.cdo.CDOSessionProtocol"><code>client-server protocol</code></a>

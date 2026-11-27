@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Configuring WebSocket Clients<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Configuring WebSocket Clients<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc01_DeployingWebSocketServers.html" title="Backward to Deploying WebSocket Servers"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_SecuringWebSocketTransports.html" title="Forward to Securing WebSocket Transports"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -92,7 +92,7 @@ proxy policy, authentication policy, or opening-handshake timeout to a distinct 
 </p>
 
 
-<h2><a name="Default_Provider_and_Connector_Descriptions"></a>1&nbsp;&nbsp;Default Provider and Connector Descriptions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html#Default_Provider_and_Connector_Descriptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Default_Provider_and_Connector_Descriptions"></a>1&nbsp;&nbsp;Default Provider and Connector Descriptions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html%23Default_Provider_and_Connector_Descriptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Create connectors with <code>WSUtil</code> for WS and <code>WSSUtil</code> for WSS. A secure connection needs both
 the WSS connector factory and a <code>wss</code> service URI. The named acceptor is encoded in the route path. With no
@@ -167,7 +167,7 @@ factory and <code>cookie:&lt;name&gt;=&lt;value&gt;</code> for a handshake cooki
 instead of manually constructing the route or delimiter escaping. Descriptions are configuration data; protect any
 saved description that contains a session cookie.
 
-<h2><a name="Registering_Configured_Providers"></a>2&nbsp;&nbsp;Registering Configured Providers<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html#Registering_Configured_Providers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Registering_Configured_Providers"></a>2&nbsp;&nbsp;Registering Configured Providers<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html%23Registering_Configured_Providers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Use <code>JDKWSUtil.createMessageConnectionFactory(type, client, timeout)</code> to configure a provider with a
 caller-owned <code>HttpClient</code>. Register the factory in the same managed container that creates the connector,
@@ -254,7 +254,7 @@ created connections; separate provider types can use different options concurren
 WebSocket Pong sent periodically while the connection is open. Set its interval below the server's WebSocket idle timeout
 to keep an otherwise quiet connection alive. It is cancelled when graceful closure or termination begins.
 
-<h2><a name="Cookies_Authentication_and_Proxy_Tunnels"></a>3&nbsp;&nbsp;Cookies, Authentication, and Proxy Tunnels<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html#Cookies_Authentication_and_Proxy_Tunnels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Cookies_Authentication_and_Proxy_Tunnels"></a>3&nbsp;&nbsp;Cookies, Authentication, and Proxy Tunnels<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html%23Cookies_Authentication_and_Proxy_Tunnels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Handshake cookies are sent to the WebSocket endpoint during the HTTP upgrade. Treat them like credentials: limit their
 scope and lifetime, use WSS, protect connector descriptions that contain them, and do not log full descriptions.
@@ -362,7 +362,7 @@ Review that boundary carefully and prefer a supported stronger proxy scheme wher
 <p>
 
 
-<h2><a name="Reconstructing_Connectors_Safely"></a>4&nbsp;&nbsp;Reconstructing Connectors Safely<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html#Reconstructing_Connectors_Safely" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Reconstructing_Connectors_Safely"></a>4&nbsp;&nbsp;Reconstructing Connectors Safely<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc02_ConfiguringWebSocketClients.html%23Reconstructing_Connectors_Safely" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <code>IConnector.getURL()</code> reports the endpoint URL, not the complete WS/WSS factory description. It omits the
 selected provider and handshake cookies. Rebuilding from that URL can silently use <code>jdk</code> and lose a custom

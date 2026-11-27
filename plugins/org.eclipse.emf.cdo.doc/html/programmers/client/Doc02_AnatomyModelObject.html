@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Anatomy of a Model Object<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Anatomy of a Model Object<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc01_ArchitectureClientApplication.html" title="Backward to Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_WorkingWithSessions.html" title="Forward to Working with Sessions"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -80,7 +80,7 @@ Object feature access follows the concurrency rules of the owning view. A single
 view, but a sequence that must observe one consistent state needs the view's critical section. Do not share an
 object between views or use it after closing its view. See <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> for synchronization.
 
-<h2><a name="DocID"></a>1&nbsp;&nbsp;CDOID<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html#DocID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="DocID"></a>1&nbsp;&nbsp;CDOID<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html%23DocID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> identifies a logical object independently of the view-bound Java instance and its revisions.
 Newly attached objects can initially have a temporary ID; the repository assigns or confirms persistent identity
@@ -89,7 +89,7 @@ generation policy depend on repository configuration.
 <p>
 The identifier of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoID()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoID()</code></a> method.
 
-<h2><a name="DocRevision"></a>2&nbsp;&nbsp;CDORevision<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html#DocRevision" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="DocRevision"></a>2&nbsp;&nbsp;CDORevision<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html%23DocRevision" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a> is the data for one object's state at a historical coordinate. It contains feature values
 and metadata such as object ID, branch, version, and time; it does not contain the owning Java object's identity.
@@ -109,7 +109,7 @@ branch and time point provide the historical context described in <a href="Doc08
 <p>
 The revision of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoRevision()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoRevision()</code></a> method.
 
-<h2><a name="DocView"></a>3&nbsp;&nbsp;CDOView<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html#DocView" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="DocView"></a>3&nbsp;&nbsp;CDOView<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html%23DocView" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Every CDO object belongs to the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> that owns its loaded instance. The view determines branch and time
 context, resource set, synchronization boundary, and transaction state. A second view can load the same CDOID into
@@ -118,7 +118,7 @@ reference does not keep its repository access alive.
 <p>
 The view of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoView()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoView()</code></a> method.
 
-<h2><a name="DocState"></a>4&nbsp;&nbsp;CDOState<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html#DocState" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="DocState"></a>4&nbsp;&nbsp;CDOState<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc02_AnatomyModelObject.html%23DocState" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 CDOState describes the object's lifecycle in its owning view. A newly created, unattached EMF object is
 transient; attaching it to a transaction makes it new. A persisted object is clean after loading. Its first

@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Advanced Topics<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Advanced Topics<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Backward to Integrating with EMF and Other Frameworks"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc12_BestPracticesAndPatterns.html" title="Forward to Best Practices and Common Pitfalls"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -100,7 +100,7 @@ semantics, or ordinary session and transaction lifecycle. Those subjects are own
 </p>
 
 
-<h2><a name="PartialCollectionLoading"></a>1&nbsp;&nbsp;Modern Partial Collection Loading<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#PartialCollectionLoading" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="PartialCollectionLoading"></a>1&nbsp;&nbsp;Modern Partial Collection Loading<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23PartialCollectionLoading" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Modern CDO clients can configure partial loading of many-valued features with
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" title="Class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>. A non-null configuration enables the mode; its <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html" title="Class in org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig"><code>chunk configuration</code></a> controls how many elements are materialized initially and how many are resolved around a later
@@ -145,7 +145,7 @@ compatibility APIs. New code should use the immutable configuration snapshot sho
 <p>
 .
 
-<h2><a name="RevisionRequests"></a>2&nbsp;&nbsp;Cache-Aware Revision Requests<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#RevisionRequests" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="RevisionRequests"></a>2&nbsp;&nbsp;Cache-Aware Revision Requests<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23RevisionRequests" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a> exposes a current request API for advanced applications that need explicit control over
 cache and loader behavior. <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html#lookupCacheOnly()" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request"><code>CDORevisionManager.Request.lookupCacheOnly()</code></a> is useful for observing cache state
@@ -188,7 +188,7 @@ enough, and avoid the deprecated overloads that expose the old boolean loading c
  demonstrates a read-only
 cache probe.
 
-<h2><a name="Units"></a>3&nbsp;&nbsp;Units and Bounded Graph Loading<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#Units" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Units"></a>3&nbsp;&nbsp;Units and Bounded Graph Loading<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23Units" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOUnit</code></a> is a disjoint repository subtree with explicit loading semantics. Opening a unit loads its
 elements in one request and keeps them loaded until the unit is closed. While open, its elements receive server
@@ -235,7 +235,7 @@ use an <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.i
 <p>
 .
 
-<h2><a name="LargeScaleAccess"></a>4&nbsp;&nbsp;Queries and Large-Scale Model Access<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#LargeScaleAccess" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="LargeScaleAccess"></a>4&nbsp;&nbsp;Queries and Large-Scale Model Access<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23LargeScaleAccess" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 For very large models, prefer a server-side <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>query</code></a> when the task is to
 find candidates rather than to materialize a broad containment graph. Limit results with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#setMaxResults(int)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>CDOQuery.setMaxResults(int)</code></a>,
@@ -250,7 +250,7 @@ measure round trips for the actual access pattern. Avoid infinite containment pr
 to make later reads convenient. Large binary and text payloads should use the CDO large-object APIs described in
 <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>, not oversized ordinary attributes.
 
-<h2><a name="Recovery"></a>5&nbsp;&nbsp;Reconnect and Session Recovery<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#Recovery" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Recovery"></a>5&nbsp;&nbsp;Reconnect and Session Recovery<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23Recovery" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Net4j provides public recovering and reconnecting session configurations. A recovering configuration uses heartbeat
 detection; a reconnecting configuration retries the connection to the same repository. Configure retry interval and
@@ -294,7 +294,7 @@ stale UI state, and user-visible failures. Durable locks and their recovery impl
 
 shows the supported configuration entry point.
 
-<h2><a name="CustomizationAndDiagnostics"></a>6&nbsp;&nbsp;Conflict Customization and Diagnostics<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#CustomizationAndDiagnostics" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CustomizationAndDiagnostics"></a>6&nbsp;&nbsp;Conflict Customization and Diagnostics<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23CustomizationAndDiagnostics" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Advanced transaction applications can install a conflict resolver through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" title="Interface in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.Options</code></a>. The
 public <a href="../../../javadoc/org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html" title="Class in org.eclipse.emf.spi.cdo"><code>CDOMergingConflictResolver</code></a> is an SPI-level customization and should be selected only when its merge
@@ -336,7 +336,7 @@ metrics. Do not depend on internal protocol, cache, or state-machine classes.
 <p>
  is intentionally minimal.
 
-<h2><a name="PerformanceAtScale"></a>7&nbsp;&nbsp;Advanced Performance Guidance<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html#PerformanceAtScale" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="PerformanceAtScale"></a>7&nbsp;&nbsp;Advanced Performance Guidance<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc11_AdvancedTopics.html%23PerformanceAtScale" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Reduce round trips by choosing the smallest useful combination of collection chunks, revision prefetch depth, and
 server-side query results. Reuse sessions and views when their branch/time and consistency requirements match, but

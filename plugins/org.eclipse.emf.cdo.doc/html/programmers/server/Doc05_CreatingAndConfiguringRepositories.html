@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Creating and Configuring Repositories<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Creating and Configuring Repositories<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc04_ApplicationExtensions.html" title="Backward to Application Extensions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc06_RepositoryServicesAndEvents.html" title="Forward to Repository Services and Events"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -94,7 +94,7 @@ pieces declaratively. Production XML and database operation syntax are described
 </p>
 
 
-<h2><a name="ProgrammaticSetup"></a>1&nbsp;&nbsp;Programmatic Repository Setup<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#ProgrammaticSetup" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ProgrammaticSetup"></a>1&nbsp;&nbsp;Programmatic Repository Setup<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html%23ProgrammaticSetup" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepository(String, IStore, Map)</code></a> creates an inactive repository from its container
 name, store and property map. The name is the lookup identity within that container and should remain stable for
@@ -111,7 +111,7 @@ activated separately. At shutdown, stop extensions that use the repository and t
 container. Capability checks should use the repository's advertised information; do not infer support from a
 requested property alone.
 
-<h2><a name="EmbeddedRepositories"></a>2&nbsp;&nbsp;MEMStore and Embedded Repositories<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#EmbeddedRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="EmbeddedRepositories"></a>2&nbsp;&nbsp;MEMStore and Embedded Repositories<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html%23EmbeddedRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/mem/MEMStoreUtil.html" title="Class in org.eclipse.emf.cdo.server.mem"><code>MEMStoreUtil</code></a> is suitable for an in-memory repository used by an embedded application, test, or short-lived
 service. Its model data is not a durable substitute for a persistent store. CDOEmbeddedRepositoryConfig
@@ -169,7 +169,7 @@ application already owns those boundaries.
 <p>
 
 
-<h2><a name="PersistentStoreConfiguration"></a>3&nbsp;&nbsp;Existing Persistent Stores<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#PersistentStoreConfiguration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="PersistentStoreConfiguration"></a>3&nbsp;&nbsp;Existing Persistent Stores<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html%23PersistentStoreConfiguration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A persistent store changes how the <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> is created and configured, not the repository registration
 lifecycle. Configure the selected DB adapter, datasource, and mapping strategy through application setup or the

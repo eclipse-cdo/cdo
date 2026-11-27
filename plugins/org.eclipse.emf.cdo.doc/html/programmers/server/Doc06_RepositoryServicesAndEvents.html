@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Repository Services and Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Repository Services and Events<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc05_CreatingAndConfiguringRepositories.html" title="Backward to Creating and Configuring Repositories"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Forward to Repository Handlers and Commit Processing"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -92,7 +92,7 @@ belongs to <a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Art
 </p>
 
 
-<h2><a name="Services"></a>1&nbsp;&nbsp;Repository Services<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Services" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Services"></a>1&nbsp;&nbsp;Repository Services<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html%23Services" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.getSessionManager()</code></a> owns active <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>sessions</code></a>. Each session owns its <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>server views</code></a>, and the <a href="../../../javadoc/org/eclipse/emf/cdo/server/ITransaction.html" title="Interface in org.eclipse.emf.cdo.server"><code>transaction</code></a> subtype is the mutable commit context for a client
 operation. The repository's <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a>,
@@ -100,7 +100,7 @@ and <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoMan
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/IUnitManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>unit manager</code></a> is available when repository configuration enables it. Check repository/store
 capabilities before depending on optional history or unit behavior.
 
-<h2><a name="ServerSideContexts"></a>2&nbsp;&nbsp;Server Session, View, and Transaction Context<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ServerSideContexts"></a>2&nbsp;&nbsp;Server Session, View, and Transaction Context<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html%23ServerSideContexts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A server <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISession</code></a> is the repository-side connection identity and authenticated user context, not the
 client's CDOSession. Its server <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>IView</code></a> instances carry view IDs and branch points; transactions
@@ -108,7 +108,7 @@ additionally represent mutable commit work. These objects are live runtime conte
 removal event, capture values such as session ID, user ID, view ID, branch and transaction kind before scheduling
 work. Never queue a session, view, or transaction for later use after it can close.
 
-<h2><a name="Events"></a>3&nbsp;&nbsp;Events and Listener Lifetimes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Events" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Events"></a>3&nbsp;&nbsp;Events and Listener Lifetimes<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc06_RepositoryServicesAndEvents.html%23Events" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The session manager emits container add/remove events for sessions; each session emits container events for views
 and transactions. Repository lifecycle, branch-manager, and locking-manager notifications cover other transitions.

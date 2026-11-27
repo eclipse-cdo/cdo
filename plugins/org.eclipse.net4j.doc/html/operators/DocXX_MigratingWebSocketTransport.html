@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Migrating the WebSocket Transport<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Migrating the WebSocket Transport<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Backward to Operating and Troubleshooting WebSockets"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../../javadoc/overview-summary.html" title="Forward to API Reference"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -95,7 +95,7 @@ remain compatible so that operators can limit changes to the installations that 
 </p>
 
 
-<h2><a name="Migration_Overview"></a>1&nbsp;&nbsp;Migration Overview<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Migration_Overview" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Migration_Overview"></a>1&nbsp;&nbsp;Migration Overview<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Migration_Overview" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Issue #226 replaces a Jetty-specific transport implementation in the provider-neutral WS bundle with a Net4j framing
 layer and message-connection providers. The built-in provider uses the JDK WebSocket client. A separate optional bundle
@@ -126,7 +126,7 @@ Continue with <a href="Doc01_DeployingWebSocketServers.html" title="Article in N
 <a href="Doc03_SecuringWebSocketTransports.html" title="Article in Net4j Signaling Platform Documentation">TLS setup</a>, and
 <a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Article in Net4j Signaling Platform Documentation">operations and troubleshooting</a>.
 
-<h2><a name="Dependencies_and_Deployment"></a>2&nbsp;&nbsp;Dependencies and Deployment<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Dependencies_and_Deployment" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Dependencies_and_Deployment"></a>2&nbsp;&nbsp;Dependencies and Deployment<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Dependencies_and_Deployment" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Deploy the <code>org.eclipse.net4j.ws</code> feature (or its <code>org.eclipse.net4j.ws</code> bundle) for WS and WSS
 connectors and acceptors. It contributes the WS and WSS factories and registers the JDK message-connection provider
@@ -179,7 +179,7 @@ WS acceptor declaration uses the same configuration mechanism as the CDO server 
 <p>
 
 
-<h2><a name="Migrating_WebSocket_Clients"></a>3&nbsp;&nbsp;Migrating WebSocket Clients<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Clients" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Migrating_WebSocket_Clients"></a>3&nbsp;&nbsp;Migrating WebSocket Clients<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Migrating_WebSocket_Clients" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The JDK provider is selected by default, so a normal WS or WSS connector needs no provider token. Use the utility
 methods to construct connector descriptions rather than assembling route paths by hand. A description targets the
@@ -372,7 +372,7 @@ description with <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <p>
 
 
-<h2><a name="Migrating_WebSocket_Servers"></a>4&nbsp;&nbsp;Migrating WebSocket Servers<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Servers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Migrating_WebSocket_Servers"></a>4&nbsp;&nbsp;Migrating WebSocket Servers<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Migrating_WebSocket_Servers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The previous <code>Net4jWebSocketServlet</code> and Jetty socket endpoint were removed from the core WS bundle. With
 Jetty 12, create an application-owned <code>Server</code> and <code>ContextHandler</code>, then install the returned
@@ -477,7 +477,7 @@ with a WSS acceptor, a WSS connector, and an application-configured HTTPS server
 <p>
 
 
-<h2><a name="Migrating_Security_and_Proxy_Configuration"></a>5&nbsp;&nbsp;Migrating Security and Proxy Configuration<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_Security_and_Proxy_Configuration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Migrating_Security_and_Proxy_Configuration"></a>5&nbsp;&nbsp;Migrating Security and Proxy Configuration<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Migrating_Security_and_Proxy_Configuration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Configure TLS at the layer that owns the connection. A WSS client can use the default JDK TLS context, or a custom
 <code>SSLContext</code> configured with the application's trust material. The JDK provider keeps normal certificate
@@ -496,7 +496,7 @@ disables Basic authentication for HTTP CONNECT tunneling. Enabling it with
 untrusted proxies; use it only after reviewing the security consequences and the proxy trust boundary. Prefer a proxy
 authentication scheme supported by the JDK without that override.
 
-<h2><a name="Migration_Checklist"></a>6&nbsp;&nbsp;Migration Checklist<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Migration_Checklist" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Migration_Checklist"></a>6&nbsp;&nbsp;Migration Checklist<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Migration_Checklist" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Work through this sequence for each client or server installation:
 <ol>
@@ -516,7 +516,7 @@ Work through this sequence for each client or server installation:
      application consumer has migrated.
 </ol>
 
-<h2><a name="Troubleshooting"></a>7&nbsp;&nbsp;Troubleshooting<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html#Troubleshooting" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Troubleshooting"></a>7&nbsp;&nbsp;Troubleshooting<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/DocXX_MigratingWebSocketTransport.html%23Troubleshooting" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <b>Missing provider factory:</b> check that the <code>org.eclipse.net4j.ws</code> bundle is resolved and its factories
 are initialized in the same managed container that creates the connector. For a custom provider, register its factory

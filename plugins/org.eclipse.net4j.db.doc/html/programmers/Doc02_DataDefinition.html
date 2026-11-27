@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Data Definition<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Data Definition<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc01_GeneralUtilities.html" title="Backward to Architecture and Core Concepts"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_DataManipulation.html" title="Forward to Data Manipulation"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -101,7 +101,7 @@ cache-coordination lock. For the broader architecture, see <a href="Doc01_Genera
 </p>
 
 
-<h2><a name="SchemaModel"></a>1&nbsp;&nbsp;Standalone and Managed Schema Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#SchemaModel" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SchemaModel"></a>1&nbsp;&nbsp;Standalone and Managed Schema Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23SchemaModel" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> creates an independent, mutable metadata model. It is appropriate for
 defining an application's desired tables before opening a database. <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.readSchema(IDBAdapter,
@@ -158,7 +158,7 @@ create a coordinated managed database merely because the schema model is passed 
 <p>
 
 
-<h2><a name="TablesFieldsAndIndexes"></a>2&nbsp;&nbsp;Tables, Fields, Indexes, and Types<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#TablesFieldsAndIndexes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="TablesFieldsAndIndexes"></a>2&nbsp;&nbsp;Tables, Fields, Indexes, and Types<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23TablesFieldsAndIndexes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A table owns ordered fields and indexes. A field records a logical <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>, precision, scale, and
 nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
@@ -173,7 +173,7 @@ Use descriptive, stable names and model constraints explicitly. For example, CUS
 unique index, while ORDERS.CUSTOMER_ID can have a non-unique index for common customer order lookups.
 A model-level index does not itself create or verify a physical index.
 
-<h2><a name="SchemaInspectionAndComparison"></a>3&nbsp;&nbsp;Creating, Reading, and Comparing Schemas<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#SchemaInspectionAndComparison" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SchemaInspectionAndComparison"></a>3&nbsp;&nbsp;Creating, Reading, and Comparing Schemas<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23SchemaInspectionAndComparison" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)" title="Method in org.eclipse.net4j.db.ddl.IDBSchema"><code>IDBSchema.create(IDBAdapter, DataSource)</code></a> delegates creation to the adapter. The overloads accepting a
 JDBC connection or IDBConnectionProvider let the caller choose resource ownership. Creation returns the
@@ -229,7 +229,7 @@ Review removals, type changes, and constraint changes before applying them to pr
 <p>
 
 
-<h2><a name="SchemaTransactions"></a>4&nbsp;&nbsp;Schema Transactions and Working Copies<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#SchemaTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SchemaTransactions"></a>4&nbsp;&nbsp;Schema Transactions and Working Copies<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23SchemaTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> snapshots the current managed schema into a working copy. Edit the
 copy, inspect <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.getSchemaDelta()</code></a>, and commit the transaction to invoke the adapter's
@@ -320,7 +320,7 @@ it by adding CUSTOMER.LOYALTY_CODE and ORDERS.PROMOTION_CODE fields.
 <p>
 
 
-<h2><a name="EnsureAndMigrationPolicies"></a>5&nbsp;&nbsp;Ensure Policies and Migration Review<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#EnsureAndMigrationPolicies" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="EnsureAndMigrationPolicies"></a>5&nbsp;&nbsp;Ensure Policies and Migration Review<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23EnsureAndMigrationPolicies" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.ensureSchema(IDBSchema)</code></a> compares a desired model with the transaction's working
 copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
@@ -336,7 +336,7 @@ In the base adapter, the delta is applied to managed in-memory metadata before a
 transaction completion path then coordinates invalidation of managed connection caches as explained in
 <a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a>.
 
-<h2><a name="DDLBoundaries"></a>6&nbsp;&nbsp;Limitations and Failure Boundaries<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html#DDLBoundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="DDLBoundaries"></a>6&nbsp;&nbsp;Limitations and Failure Boundaries<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc02_DataDefinition.html%23DDLBoundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
 database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's

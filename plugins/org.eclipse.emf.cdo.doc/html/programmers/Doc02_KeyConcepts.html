@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Understanding the Key Concepts<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Understanding the Key Concepts<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc01_Introduction.html" title="Backward to Introduction"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_PreparingWorkspace.html" title="Forward to Preparing the Workspace"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -34,7 +34,7 @@ client is looking at and what a commit will change. Detailed client behavior is 
 <a href="client/index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a> guide; server-side ownership and capabilities
 are covered in the <a href="server/index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a> guide.
 
-<h2><a name="ConceptModels"></a>1&nbsp;&nbsp;Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptModels"></a>1&nbsp;&nbsp;Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An EMF model is the runtime object graph that represents application data: instances connected
 through attributes and references. The graph conforms to a metamodel, which describes the
@@ -44,7 +44,7 @@ into an EMF ResourceSet and works with familiar EMF APIs, while CDO tracks their
 repository identity and changes. Model preparation and generated-model choices are described in
 <a href="Doc04_PreparingModels.html" title="Article in CDO Model Repository Documentation">Preparing the Models</a>.
 
-<h2><a name="ConceptMetaModels"></a>2&nbsp;&nbsp;Meta Models<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptMetaModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptMetaModels"></a>2&nbsp;&nbsp;Meta Models<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptMetaModels" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A metamodel defines the types and features used by model instances. In EMF this is commonly an
 Ecore model containing EPackage, EClass, EAttribute, and
@@ -53,7 +53,7 @@ object data, so clients that access the same repository data must have compatibl
 definitions registered. A metamodel is distinct from the repository model data: registering a
 package does not create instances of its classes.
 
-<h2><a name="ConceptModelObjects"></a>3&nbsp;&nbsp;Model Objects<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptModelObjects" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptModelObjects"></a>3&nbsp;&nbsp;Model Objects<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptModelObjects" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 In EMF, model objects are instances of EObject, which is the base class for all EMF model elements. Each EObject
 corresponds to an instance of an EClass defined in the metamodel and, hence, has a set of
@@ -66,7 +66,7 @@ between these contracts rather than assuming every generated Java object directl
 both. A CDOID identifies the logical object across revisions; it is not a revision number and
 does not by itself identify a historical state.
 
-<h2><a name="ConceptResources"></a>4&nbsp;&nbsp;Resources<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptResources"></a>4&nbsp;&nbsp;Resources<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptResources" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 In EMF, a resource contains model objects and gives a resource set a URI-based way to find
 them. A conventional resource may be backed by a file; a CDO resource is backed by a repository
@@ -85,7 +85,7 @@ and CDOTextResources to store binary large objects (LOBs) and text files, respec
 All these resource types are subtypes of CDOResourceNode.
 CDOResourceNodes are regular CDOObjects and are, therefore, part of the versioned and shared model themselves.
 
-<h2><a name="ConceptBranches"></a>5&nbsp;&nbsp;Branches<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptBranches" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptBranches"></a>5&nbsp;&nbsp;Branches<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptBranches" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A branch is a line of development with its own sequence of committed states. A branch has an
 identity and may inherit its initial state from a parent branch. Its name is a human-readable
@@ -93,7 +93,7 @@ lookup key, not its identity. Branching requires a repository/store configuratio
 it. The detailed branch and history operations are
 described in <a href="client/Doc08_BranchingAndVersioning.html" title="Article in CDO Model Repository Documentation">Branching and Versioning</a>.
 
-<h2><a name="ConceptBranchPoints"></a>6&nbsp;&nbsp;Branch Points<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptBranchPoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptBranchPoints"></a>6&nbsp;&nbsp;Branch Points<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptBranchPoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A branch point is a coordinate: a branch together with a time on that branch. It identifies a
 model state, while a branch alone identifies the history in which states occur. A child
@@ -102,7 +102,7 @@ latest state and moves as commits arrive. A fixed timestamp or commit point rema
 Branch points are therefore suitable for opening historical views and comparing states; they
 are not interchangeable with an object version number.
 
-<h2><a name="ConceptCommits"></a>7&nbsp;&nbsp;Commits<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptCommits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptCommits"></a>7&nbsp;&nbsp;Commits<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptCommits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A commit publishes a transaction's accepted changes to one branch. Its commit timestamp
 identifies the committed change set and also defines a branch point on that branch. A branch
@@ -112,7 +112,7 @@ revisions for many objects, and an object may not change in a given commit. See
 <a href="client/Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a> for client
 commit behavior.
 
-<h2><a name="ConceptRevisions"></a>8&nbsp;&nbsp;Revisions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptRevisions"></a>8&nbsp;&nbsp;Revisions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A revision is the repository representation of one object's data at a point in its history.
 Object identity (the CDOID) remains stable while successive commits can create new revisions.
@@ -122,14 +122,14 @@ the branch and time together locate the complete model state. Committed revision
 historical records; a transaction may also have a mutable local revision representing its
 uncommitted data. CDO transfers revision data, not the application's Java object instance.
 
-<h2><a name="ConceptRevisionDeltas"></a>9&nbsp;&nbsp;Revision Deltas<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptRevisionDeltas" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptRevisionDeltas"></a>9&nbsp;&nbsp;Revision Deltas<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptRevisionDeltas" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A revision delta describes changes relative to an object's base revision, including changed
 features and detached objects as appropriate. It lets CDO communicate transaction changes
 without treating the in-memory EObject as the repository record. A delta is meaningful
 in the context of its object identity and base state; it is not a complete standalone snapshot.
 
-<h2><a name="ConceptRepositories"></a>10&nbsp;&nbsp;Repositories<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptRepositories"></a>10&nbsp;&nbsp;Repositories<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptRepositories" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A repository is the server-side boundary for model data, branches, commits, and repository
 services. Objects are stored as revisions. Whether old revisions can be queried and whether
@@ -139,14 +139,14 @@ deployment supports every history operation. Package metadata is registered and 
 separately from ordinary versioned model instances. Server architecture and these capabilities
 are described in <a href="server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Architecture</a>.
 
-<h2><a name="ConceptSessions"></a>11&nbsp;&nbsp;Sessions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptSessions"></a>11&nbsp;&nbsp;Sessions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A session is the client connection and identity context for repository services. It owns the
 views and transactions opened through it and provides access to managers such as branch and
 package registries. A session is not itself a model snapshot: open one or more views to access
 model objects. Closing the session closes its open views and releases connection resources.
 
-<h2><a name="ConceptViews"></a>12&nbsp;&nbsp;Views<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptViews"></a>12&nbsp;&nbsp;Views<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A view gives access to model objects at a repository coordinate. A read-only view observes a
 state without publishing changes; a transaction is also a view but overlays local edits on its
@@ -156,7 +156,7 @@ not be treated as an object owned by another view. Concurrent access to the same
 defined synchronization contract: individual accesses and multi-step critical sections differ;
 see <a href="client/Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
 
-<h2><a name="ConceptTransactions"></a>13&nbsp;&nbsp;Transactions<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptTransactions"></a>13&nbsp;&nbsp;Transactions<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A transaction is a writable view based on a branch head. Its edits, new objects, and deletions
 are local until commit succeeds; other clients continue to see committed repository state until
@@ -165,7 +165,7 @@ commit does not mean the application operation should be blindly replayed: the t
 need conflict resolution or rollback. Savepoints and scopes organize local transaction state
 but do not themselves create repository commits.
 
-<h2><a name="ConceptChangeNotifications"></a>14&nbsp;&nbsp;Change Notifications<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html#ConceptChangeNotifications" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConceptChangeNotifications"></a>14&nbsp;&nbsp;Change Notifications<a class="help-center-link" href="../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/Doc02_KeyConcepts.html%23ConceptChangeNotifications" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Passive updates let a live view learn that another client has committed changes relevant to
 the view's branch. Depending on the session update mode and subscriptions, the client may

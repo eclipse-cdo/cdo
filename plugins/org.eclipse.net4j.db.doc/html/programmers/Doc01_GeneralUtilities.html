@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Architecture and Core Concepts<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Architecture and Core Concepts<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Programmer's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_DataDefinition.html" title="Forward to Data Definition"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -101,7 +101,7 @@ schema design and evolution, and <a href="Doc03_DataManipulation.html" title="Ar
 </p>
 
 
-<h2><a name="Architecture"></a>1&nbsp;&nbsp;How the Pieces Fit Together<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#Architecture" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Architecture"></a>1&nbsp;&nbsp;How the Pieces Fit Together<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23Architecture" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Start from <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. It is created with an <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> and an
 <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a>; it reads and locks a managed <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBSchema</code></a>, creates and tracks
@@ -124,7 +124,7 @@ Follow the lower path for query execution: schema-backed expressions are capture
 adapter, and prepared through a managed connection. The upper path shows that the same database instance owns
 the managed schema snapshot and connection population, while each connection retains its own statement cache.
 
-<h2><a name="AdaptersAndDatabases"></a>2&nbsp;&nbsp;Adapters, Providers, and Database Instances<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#AdaptersAndDatabases" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="AdaptersAndDatabases"></a>2&nbsp;&nbsp;Adapters, Providers, and Database Instances<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23AdaptersAndDatabases" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 An <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> handles vendor-sensitive behavior: identifier quoting, logical type adaptation, schema
 inspection and updates, and selected SQL-generation or exception-classification rules. It is not a pool and does
@@ -241,7 +241,7 @@ The following example retrieves the adapter for a given adapter name:
 <p>
 
 
-<h2><a name="ManagedSchemasAndConnections"></a>3&nbsp;&nbsp;Managed Schema and Connections<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ManagedSchemasAndConnections"></a>3&nbsp;&nbsp;Managed Schema and Connections<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23ManagedSchemasAndConnections" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A standalone schema made with <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> is an ordinary mutable metadata model. It does
 not represent a live catalog until an API reads from or writes to a database. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a>
@@ -310,7 +310,7 @@ connection:
 <p>
 .
 
-<h2><a name="SchemaAccessAndCaching"></a>4&nbsp;&nbsp;Coordinated Schema Access and Statement Caches<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#SchemaAccessAndCaching" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SchemaAccessAndCaching"></a>4&nbsp;&nbsp;Coordinated Schema Access and Statement Caches<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23SchemaAccessAndCaching" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Net4j DB coordinates managed preparation with schema transaction completion so that a statement already in use
 is not silently reused across a schema-cache invalidation. When DBConnection.prepareStatement(...) is
@@ -421,7 +421,7 @@ The following example illustrates how a query statement execution is coordinated
 <p>
 
 
-<h2><a name="LifecycleAndFailures"></a>5&nbsp;&nbsp;Ownership, Transactions, and Failure Handling<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#LifecycleAndFailures" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="LifecycleAndFailures"></a>5&nbsp;&nbsp;Ownership, Transactions, and Failure Handling<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23LifecycleAndFailures" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A managed connection belongs to the <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a> while open and should also be closed by the code that
 acquired it. A prepared statement belongs to that connection; close it after closing its result sets. For a
@@ -442,7 +442,7 @@ connection acquisition, prepare/bind, SQL execution, DDL update, coordination ti
 completion fails, do not infer the physical database state solely from the in-memory model or event; inspect the
 target database using its supported tooling and adapter behavior.
 
-<h2><a name="Utilities"></a>6&nbsp;&nbsp;DBUtil and Supporting Facilities<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html#Utilities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Utilities"></a>6&nbsp;&nbsp;DBUtil and Supporting Facilities<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.db.doc/html/programmers/Doc01_GeneralUtilities.html%23Utilities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> provides focused helpers around the architecture: adapter lookup, connection-provider creation,
 opening a database, creating/copying/reading schema models, SQL-type lookup, naming and identifier utilities,

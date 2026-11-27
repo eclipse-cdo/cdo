@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Extending WebSocket Transports<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Extending WebSocket Transports<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc01_WebSocketTransportArchitecture.html" title="Backward to WebSocket Transport Architecture"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -93,7 +93,7 @@ satisfy. It deliberately does not present a fabricated third-party transport imp
 </p>
 
 
-<h2><a name="Configuring_and_Registering_Client_Providers"></a>1&nbsp;&nbsp;Configuring and Registering Client Providers<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html#Configuring_and_Registering_Client_Providers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Configuring_and_Registering_Client_Providers"></a>1&nbsp;&nbsp;Configuring and Registering Client Providers<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html%23Configuring_and_Registering_Client_Providers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The built-in JDK provider is a public utility for configuring a registered factory. Give each distinct client policy
 its own provider type and register the factory in the container that owns the connectors. The connector description's
@@ -157,7 +157,7 @@ every connector using that client has stopped; the provider factory does not own
 <p>
 
 
-<h2><a name="Message_Connection_Factory_Contract"></a>2&nbsp;&nbsp;The Message-Connection Factory Contract<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html#Message_Connection_Factory_Contract" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Message_Connection_Factory_Contract"></a>2&nbsp;&nbsp;The Message-Connection Factory Contract<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html%23Message_Connection_Factory_Contract" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A custom provider extends the SPI <code>MessageConnectionFactory</code> and implements
 <code>create(String description)</code>. It returns a fresh, not-yet-started <code>IMessageConnection</code> for each
@@ -169,7 +169,7 @@ bundle can contribute a factory through the standard Net4j factories extension p
 useful when the provider depends on application-created configuration. The selected type must be present in the
 connector's managed container before the provider connection is created.
 
-<h2><a name="Implementing_a_Different_WebSocket_Integration"></a>3&nbsp;&nbsp;Implementing a Different WebSocket Integration<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html#Implementing_a_Different_WebSocket_Integration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Implementing_a_Different_WebSocket_Integration"></a>3&nbsp;&nbsp;Implementing a Different WebSocket Integration<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html%23Implementing_a_Different_WebSocket_Integration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The supported provider boundary is the message-connection SPI, not Net4j's internal JDK or Jetty implementation
 classes. A client provider must perform its own handshake, emit complete Net4j frames, accept outgoing frames, and
@@ -184,7 +184,7 @@ The public <code>IWSConnector</code>, <code>IWSAcceptor</code>, and <code>IMessa
 appropriate integration points. Packages named <code>internal</code> are implementation details, even when visible in
 a developer workspace or test bundle.
 
-<h2><a name="Threading_Buffering_and_Backpressure"></a>4&nbsp;&nbsp;Threading, Buffering, and Backpressure<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html#Threading_Buffering_and_Backpressure" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Threading_Buffering_and_Backpressure"></a>4&nbsp;&nbsp;Threading, Buffering, and Backpressure<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html%23Threading_Buffering_and_Backpressure" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Providers must treat send buffers as borrowed storage. When <code>send</code> accepts a buffer, it returns
 <code>true</code> and invokes exactly one terminal callback only after it stops accessing that storage. If it returns
@@ -199,7 +199,7 @@ indefinitely for callbacks.
 Keep provider callbacks non-blocking where the underlying WebSocket API permits asynchronous completion. Do not add
 another unbounded queue that defeats Net4j's demand and buffer ownership contracts.
 
-<h2><a name="Lifecycle_and_Testing"></a>5&nbsp;&nbsp;Lifecycle and Testing<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html#Lifecycle_and_Testing" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Lifecycle_and_Testing"></a>5&nbsp;&nbsp;Lifecycle and Testing<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc02_ExtendingWebSocketTransports.html%23Lifecycle_and_Testing" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A provider factory belongs to its managed container; each connection belongs to one Net4j connector. Connector
 activation starts its provider connection and connector deactivation closes or aborts it according to the transport

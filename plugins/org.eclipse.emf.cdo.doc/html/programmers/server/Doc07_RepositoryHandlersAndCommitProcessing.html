@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Repository Handlers and Commit Processing<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Repository Handlers and Commit Processing<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc06_RepositoryServicesAndEvents.html" title="Backward to Repository Services and Events"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Forward to Security, Queries, and Specialized Extensions"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -90,7 +90,7 @@ same instance when the owning extension stops.
 </p>
 
 
-<h2><a name="AccessHandlers"></a>1&nbsp;&nbsp;Read and Write Access<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#AccessHandlers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="AccessHandlers"></a>1&nbsp;&nbsp;Read and Write Access<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html%23AccessHandlers" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>ReadAccessHandler</code></a> receives the exact requested revisions and a separate list of optimizer-supplied
 additional revisions. If any requested revision is forbidden, throw to reject the request; the handler cannot
@@ -105,7 +105,7 @@ its documented modify(...) operation rather than altering its internal state dir
 is observation-only and must not mutate the context. Both callbacks are on the commit path and should avoid slow
 work. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>ObjectWriteAccessHandler</code></a> is the supported SPI base for object-level write checks.
 
-<h2><a name="CommitObservationAndConflicts"></a>2&nbsp;&nbsp;Commit Information and Conflicts<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#CommitObservationAndConflicts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CommitObservationAndConflicts"></a>2&nbsp;&nbsp;Commit Information and Conflicts<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html%23CommitObservationAndConflicts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A write handler's after-commit callback observes the specific transaction and commit context immediately after its
 store commit. A <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoHandler</code></a> registered with the repository's commit-info manager observes completed
@@ -115,7 +115,7 @@ processing to an application executor. <a href="../../../javadoc/org/eclipse/emf
 transaction conflicts and is configured as part of repository setup. Its contract exposes commit-context SPI, so
 use it only when policy cannot be expressed through ordinary validation and client conflict handling.
 
-<h2><a name="CommitFlow"></a>3&nbsp;&nbsp;Application-facing Commit Flow<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#CommitFlow" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CommitFlow"></a>3&nbsp;&nbsp;Application-facing Commit Flow<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html%23CommitFlow" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A client transaction arrives with authenticated session and transaction context. Repository protection and
 authorization decide whether the user may read or write; before-commit handlers apply application validation;

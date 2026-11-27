@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Server Architecture<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Server Architecture<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Developing Server Applications"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ServerApplicationAndStartup.html" title="Forward to CDO Server Application and Startup"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -63,7 +63,7 @@ extension points.
 </p>
 
 
-<h2><a name="RepositoryCore"></a>1&nbsp;&nbsp;Repository Core<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html#RepositoryCore" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="RepositoryCore"></a>1&nbsp;&nbsp;Repository Core<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html%23RepositoryCore" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A running repository owns the package registry, <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a>,
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info manager</code></a>,
@@ -80,21 +80,21 @@ Continue with <a href="Doc02_ServerApplicationAndStartup.html" title="Article in
 covered in <a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Article in CDO Model Repository Documentation">Security, Queries, and Specialized Extensions</a> and
 <a href="Doc09_AdvancedServerIntegration.html" title="Article in CDO Model Repository Documentation">Advanced Server Integration</a>.
 
-<h2><a name="StoreBoundary"></a>2&nbsp;&nbsp;Store Boundary<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html#StoreBoundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="StoreBoundary"></a>2&nbsp;&nbsp;Store Boundary<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html%23StoreBoundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> is the persistence boundary for revisions, commit data, and large objects. Its capabilities determine
 whether a repository can offer facilities such as auditing and branching. Choose and configure an existing store at the repository boundary; a
 custom store and IStoreAccessor implementation are expert persistence SPI work, not normal server
 application programming.
 
-<h2><a name="ProtocolBoundary"></a>3&nbsp;&nbsp;Protocol and Transport Boundary<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html#ProtocolBoundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ProtocolBoundary"></a>3&nbsp;&nbsp;Protocol and Transport Boundary<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html%23ProtocolBoundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ISessionProtocol</code></a> separates the CDO repository from wire communication. CDO's supplied server integration
 uses Net4j acceptors and connectors: an <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>acceptor</code></a> receives client connections and an
 <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html" title="Interface in org.eclipse.net4j.connector"><code>connector</code></a> carries the resulting protocol traffic. Server applications commonly configure an
 acceptor through the container, but do not implement protocol indications.
 
-<h2><a name="ContainerAndLifecycle"></a>4&nbsp;&nbsp;Container and Lifecycle<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html#ContainerAndLifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ContainerAndLifecycle"></a>4&nbsp;&nbsp;Container and Lifecycle<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Architecture.html%23ContainerAndLifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>managed container</code></a> locates factories and creates or retains named server elements.
 In an OSGi server, bundle registration supplies much of that wiring. Standalone and embedded applications prepare

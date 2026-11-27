@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Working with Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Working with Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc04_WorkingWithViews.html" title="Backward to Working with Views"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc06_Locking.html" title="Forward to Locking"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -107,7 +107,7 @@ Server applications that validate or observe these commits use the supported han
 </p>
 
 
-<h2><a name="CreatingAndManagingTransactions"></a>1&nbsp;&nbsp;Creating and Managing Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#CreatingAndManagingTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CreatingAndManagingTransactions"></a>1&nbsp;&nbsp;Creating and Managing Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23CreatingAndManagingTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Transactions are opened from a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>. The session supplies the repository connection and
 the transaction owns its view and resource set until it is closed. The common overload of
@@ -160,7 +160,7 @@ close it. Closing the transaction releases its client-side resources; it does no
 <p>
 
 
-<h2><a name="LocalChangesAndDirtyState"></a>2&nbsp;&nbsp;Local Changes and Dirty State<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#LocalChangesAndDirtyState" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="LocalChangesAndDirtyState"></a>2&nbsp;&nbsp;Local Changes and Dirty State<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23LocalChangesAndDirtyState" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A transaction is dirty when it contains uncommitted changes. The public transaction API exposes separate maps
 for new, detached, and modified objects through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getNewObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getNewObjects()</code></a>,
@@ -208,7 +208,7 @@ are cleared or reduced as changes are committed or rolled back.
 <p>
 
 
-<h2><a name="CommittingChanges"></a>3&nbsp;&nbsp;Committing Changes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#CommittingChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CommittingChanges"></a>3&nbsp;&nbsp;Committing Changes<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23CommittingChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.commit()</code></a> sends the transaction's effective changes to the repository and returns a
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info</code></a> object. The transaction stays open after a successful commit. Commit comments
@@ -251,7 +251,7 @@ possible commit failure.
 <p>
 
 
-<h2><a name="CommitRetryAndConflicts"></a>4&nbsp;&nbsp;Commit Retry and Conflicts<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#CommitRetryAndConflicts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CommitRetryAndConflicts"></a>4&nbsp;&nbsp;Commit Retry and Conflicts<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23CommitRetryAndConflicts" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.hasConflict()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getConflicts()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getConflicts()</code></a> expose objects whose local
 modifications conflict with remote changes. A configured <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>conflict resolver</code></a> can resolve conflicts during invalidation; otherwise an application commonly rolls back,
@@ -292,7 +292,7 @@ overload. The operation supplied for retry must therefore be repeatable and must
 <p>
 
 
-<h2><a name="RollingBackChanges"></a>5&nbsp;&nbsp;Rolling Back Changes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#RollingBackChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="RollingBackChanges"></a>5&nbsp;&nbsp;Rolling Back Changes<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23RollingBackChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.rollback()</code></a> removes all uncommitted changes from the root transaction and leaves the
 transaction open for further work. It is different from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>savepoint</code></a>, which
@@ -331,7 +331,7 @@ affects only that scope and its descendants.
 <p>
 
 
-<h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#PartialCommits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23PartialCommits" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
@@ -371,7 +371,7 @@ to reason about as separate transactions.
 <p>
 
 
-<h2><a name="Savepoints"></a>7&nbsp;&nbsp;Savepoints<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#Savepoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Savepoints"></a>7&nbsp;&nbsp;Savepoints<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23Savepoints" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setSavepoint()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setSavepoint()</code></a> creates an in-memory client-side boundary in the transaction's change
 history. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserSavepoint"><code>CDOUserSavepoint.rollback()</code></a> restores the transaction to that boundary by undoing changes made
@@ -425,7 +425,7 @@ about the change segment itself.
 <p>
 
 
-<h2><a name="NestedTransactionScopes"></a>8&nbsp;&nbsp;Nested Transaction Scopes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#NestedTransactionScopes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="NestedTransactionScopes"></a>8&nbsp;&nbsp;Nested Transaction Scopes<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23NestedTransactionScopes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#openScope()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.openScope()</code></a> creates a stack-disciplined scope inside the root transaction. A scope shares
 the transaction's view, resource set, object identities, cache, dirty state, locks, and session. Its changes are
@@ -474,7 +474,7 @@ transaction. Commit operations on that facade are unsupported; the scope itself 
 <p>
 
 
-<h2><a name="Merging"></a>9&nbsp;&nbsp;Merge<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#Merging" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Merging"></a>9&nbsp;&nbsp;Merge<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23Merging" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.merge(CDOBranch, CDOMerger)</code></a> and the related branch-point overloads apply changes from a
 source branch or branch point to the local transaction. They create local changes; the caller still decides when
@@ -484,14 +484,14 @@ of the transaction conflict model and must be resolved before a successful commi
 Branch selection and historical branch points belong in the Branching and Versioning chapter. This section is
 limited to the transaction side of applying and committing a merge.
 
-<h2><a name="RevertingChanges"></a>10&nbsp;&nbsp;Revert<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#RevertingChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="RevertingChanges"></a>10&nbsp;&nbsp;Revert<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23RevertingChanges" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.revertTo(CDOBranchPoint)</code></a> creates local changes that restore the transaction's model to a
 specified historical branch point. Revert is not the same as <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>rollback</code></a>: rollback
 discards uncommitted local work, whereas revert prepares a new change set that can itself be reviewed and committed.
 It is also distinct from a savepoint rollback and from opening a historical read-only view.
 
-<h2><a name="ChangeExportAndImport"></a>11&nbsp;&nbsp;Change Export and Import<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#ChangeExportAndImport" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ChangeExportAndImport"></a>11&nbsp;&nbsp;Change Export and Import<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23ChangeExportAndImport" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#exportChanges(java.io.OutputStream)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.exportChanges(OutputStream)</code></a> serializes the transaction's local changes to an output
 stream and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#importChanges(java.io.InputStream,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.importChanges(InputStream, boolean)</code></a> applies serialized transaction
@@ -532,7 +532,7 @@ application controls the transfer stream.
 <p>
 
 
-<h2><a name="FileBackedTransactions"></a>12&nbsp;&nbsp;File-Backed Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#FileBackedTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="FileBackedTransactions"></a>12&nbsp;&nbsp;File-Backed Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23FileBackedTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> is the current public API for persisting uncommitted changes in its stable backing file
 (available through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#getFile()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.getFile()</code></a>) and later pushing them to the repository. Its normal
@@ -587,7 +587,7 @@ not used in this example.
 <p>
 
 
-<h2><a name="TransactionQueries"></a>13&nbsp;&nbsp;Queries in Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#TransactionQueries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="TransactionQueries"></a>13&nbsp;&nbsp;Queries in Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23TransactionQueries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 General querying is covered in the Views chapter. A transaction additionally offers
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#createQuery(java.lang.String,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.createQuery(String, String, boolean)</code></a> and its context overload, whose
@@ -627,7 +627,7 @@ different question.
 <p>
 
 
-<h2><a name="TransactionOptions"></a>14&nbsp;&nbsp;Transaction Options<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html#TransactionOptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="TransactionOptions"></a>14&nbsp;&nbsp;Transaction Options<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc05_WorkingWithTransactions.html%23TransactionOptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.options()</code></a> exposes the transaction-specific options in addition to the view options
 described in the Views chapter. Application developers should normally consider three groups: conflict resolvers

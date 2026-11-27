@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Best Practices and Common Pitfalls<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Best Practices and Common Pitfalls<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc11_AdvancedTopics.html" title="Backward to Advanced Topics"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../server/index.html" title="Forward to Developing Server Applications"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -104,7 +104,7 @@ The detailed API references remain in <a href="Doc03_WorkingWithSessions.html" t
 </p>
 
 
-<h2><a name="OwnershipAndLifecycle"></a>1&nbsp;&nbsp;Own Sessions, Views, Transactions, and Resources Explicitly<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#OwnershipAndLifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="OwnershipAndLifecycle"></a>1&nbsp;&nbsp;Own Sessions, Views, Transactions, and Resources Explicitly<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23OwnershipAndLifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Decide which application component owns each <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>, view, transaction, and CDO-managed
 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>. The owner closes
@@ -180,7 +180,7 @@ its own transaction, committing one bounded operation, rolling back failures, an
 <p>
 
 
-<h2><a name="SessionViewAndTransactionBoundaries"></a>2&nbsp;&nbsp;Reuse Sessions, Keep Views Purposeful, and Bound Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#SessionViewAndTransactionBoundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionViewAndTransactionBoundaries"></a>2&nbsp;&nbsp;Reuse Sessions, Keep Views Purposeful, and Bound Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23SessionViewAndTransactionBoundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Reuse a session when its connector, repository, authentication, and passive-update policy are appropriate for the
 component. Repeatedly opening and closing sessions adds connection and package/revision setup cost. Reuse a view
@@ -197,7 +197,7 @@ transaction commit persists changes.
 Separate read-only views from editing transactions when a reader must not observe or mutate work-in-progress.
 Detailed session and view lifecycle belongs to <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> and <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
 
-<h2><a name="ConcurrencyAndCallbacks"></a>3&nbsp;&nbsp;Use Supported Concurrency Boundaries<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#ConcurrencyAndCallbacks" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConcurrencyAndCallbacks"></a>3&nbsp;&nbsp;Use Supported Concurrency Boundaries<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23ConcurrencyAndCallbacks" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 CDO views and their model objects support concurrent single accesses. That does not make a sequence of reads atomic
 with respect to invalidation. When several reads must describe one consistent observation, execute them through the
@@ -210,7 +210,7 @@ state. Listener callbacks can run on the thread that delivers the event; they sh
 hand expensive or UI work to an application executor. See <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>,
 and <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a> for the respective contracts.
 
-<h2><a name="LockingChoices"></a>4&nbsp;&nbsp;Choose Optimistic or Pessimistic Coordination Deliberately<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#LockingChoices" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="LockingChoices"></a>4&nbsp;&nbsp;Choose Optimistic or Pessimistic Coordination Deliberately<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23LockingChoices" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Prefer normal optimistic transaction conflict detection when concurrent edits are uncommon or can be merged at the
 domain level. Use explicit object locks when a short operation must exclude competing writers, and use durable locks
@@ -221,7 +221,7 @@ Do not acquire broad or long-lived locks merely to avoid learning how conflicts 
 timeouts as a decision for the caller, and release locks according to the transaction's configured lock policy.
 Locking ownership, timeouts, and durable areas are covered in <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>.
 
-<h2><a name="ConflictsAndRetries"></a>5&nbsp;&nbsp;Handle Conflicts and Retries as Business Decisions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#ConflictsAndRetries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ConflictsAndRetries"></a>5&nbsp;&nbsp;Handle Conflicts and Retries as Business Decisions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23ConflictsAndRetries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Distinguish <a href="../../../javadoc/org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="Class in org.eclipse.emf.cdo.util"><code>ConcurrentAccessException</code></a> from a general <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitException</code></a>. A concurrent-access failure
 means that the operation must decide whether to refresh, merge, ask the user, or retry. A retry is safe only when the
@@ -236,7 +236,7 @@ reconstructed. The transaction chapter's bounded retry example and conflict guid
 <a href="../../../javadoc/org/eclipse/emf/cdo/util/LockTimeoutException.html" title="Class in org.eclipse.emf.cdo.util"><code>LockTimeoutException</code></a> and commit conflicts are different failures: one concerns lock acquisition, the other
 concerns concurrent repository state. Do not handle both by blindly retrying the same mutation.
 
-<h2><a name="LoadingAndPerformance"></a>6&nbsp;&nbsp;Load Only What the Operation Needs<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#LoadingAndPerformance" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="LoadingAndPerformance"></a>6&nbsp;&nbsp;Load Only What the Operation Needs<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23LoadingAndPerformance" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Treat loading as a cost decision. Prefer server-side queries when the task is to identify a bounded set of objects,
 and prefer deliberate units when a known disjoint subtree is the working set. For graph traversal, choose collection
@@ -248,7 +248,7 @@ be loaded from, while view invalidation and branch/time semantics determine what
 large-object types and streams for large payloads instead of materializing them into memory. See
 <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a> and <a href="Doc11_AdvancedTopics.html" title="Article in CDO Model Repository Documentation">Advanced Topics</a> for the detailed loading and query APIs.
 
-<h2><a name="RemoteChangesAndRecovery"></a>7&nbsp;&nbsp;Treat Remote Changes and Recovery as Asynchronous Failure Modes<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#RemoteChangesAndRecovery" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="RemoteChangesAndRecovery"></a>7&nbsp;&nbsp;Treat Remote Changes and Recovery as Asynchronous Failure Modes<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23RemoteChangesAndRecovery" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A passive update and view invalidation signal that the visible state may have changed; it is not automatically a
 feature-level delta for every adapter. Use subscriptions only for objects that need detailed remote adapter
@@ -262,7 +262,7 @@ rebuild a transaction, or report failure. Never assume that a commit was not app
 its response. Recovery configuration and recovery events are described in <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> and
 <a href="Doc11_AdvancedTopics.html" title="Article in CDO Model Repository Documentation">Advanced Topics</a>.
 
-<h2><a name="ContextAndIntegration"></a>8&nbsp;&nbsp;Preserve Branch, History, and Integration Context<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#ContextAndIntegration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ContextAndIntegration"></a>8&nbsp;&nbsp;Preserve Branch, History, and Integration Context<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23ContextAndIntegration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A revision version is meaningful together with its branch; it is not a globally unique object version. Keep the
 branch and time point with identifiers used for history operations. A historical view is a read context, not a
@@ -274,7 +274,7 @@ as an ordinary platform file URI, do not assume a provider caches or closes view
 resource set while EMF clients still use its resources. See <a href="Doc08_BranchingAndVersioning.html" title="Article in CDO Model Repository Documentation">Branching and Versioning</a> and
 <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a>.
 
-<h2><a name="FailureHandlingAndAPIStability"></a>9&nbsp;&nbsp;Distinguish Failure Classes and Keep APIs Current<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#FailureHandlingAndAPIStability" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="FailureHandlingAndAPIStability"></a>9&nbsp;&nbsp;Distinguish Failure Classes and Keep APIs Current<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23FailureHandlingAndAPIStability" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Handle commit failures, concurrent access, lock timeouts, transport disconnects, query failures, LOB I/O failures,
 and closed-lifecycle errors according to their recovery meaning. Preserve causes and repository context in logs,
@@ -286,7 +286,7 @@ an older example still compiles. A public SPI can be used for its documented ext
 treated as an extension contract, not as ordinary application state. The integration and advanced-topics chapters
 identify the current replacements for provider and loading patterns.
 
-<h2><a name="CommonPitfalls"></a>10&nbsp;&nbsp;Common CDO Pitfalls<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html#CommonPitfalls" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CommonPitfalls"></a>10&nbsp;&nbsp;Common CDO Pitfalls<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc12_BestPracticesAndPatterns.html%23CommonPitfalls" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Before shipping a client, check the boundaries that are easiest to get wrong:
 <ul>

@@ -22,7 +22,7 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>CDO Server Application and Startup<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>CDO Server Application and Startup<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Architecture.html" title="Backward to Server Architecture"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_ManagedContainer.html" title="Forward to The Managed Container"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -44,7 +44,7 @@ the packaged application.
 </p>
 
 
-<h2><a name="Lifecycle"></a>1&nbsp;&nbsp;Startup and Shutdown<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html#Lifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Lifecycle"></a>1&nbsp;&nbsp;Startup and Shutdown<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html%23Lifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The OSGi application lifecycle starts first; CDOServerApplication obtains the shared plugin container
 through its container accessor. If the configured server
@@ -86,14 +86,14 @@ lifecycle, not appended to the initial repository array. Use <a href="../../../j
 callbacks; use repository-specific extension behavior only when its callback provides the needed repository
 context. See <a href="Doc04_ApplicationExtensions.html" title="Article in CDO Model Repository Documentation">Application Extensions</a>.
 
-<h2><a name="ExtensionTiming"></a>2&nbsp;&nbsp;Early Extensions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html#ExtensionTiming" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ExtensionTiming"></a>2&nbsp;&nbsp;Early Extensions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html%23ExtensionTiming" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html#startBeforeRepositories()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension5"><code>IAppExtension5.startBeforeRepositories()</code></a> separates extensions that must prepare container-level services
 before repository configuration from extensions that need running repositories. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html#getName()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension5"><code>IAppExtension5.getName()</code></a>
 supplies the lifecycle log name. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension4.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>priorities</code></a> order each
 group; lower values start first and reverse stopping follows the final order.
 
-<h2><a name="ExecutionModes"></a>3&nbsp;&nbsp;Standalone, Embedded, and OSGi Use<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html#ExecutionModes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ExecutionModes"></a>3&nbsp;&nbsp;Standalone, Embedded, and OSGi Use<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/server/Doc02_ServerApplicationAndStartup.html%23ExecutionModes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The packaged OSGi application uses the shared plugin container; its bundle registry supplies factories and
 appExtension contributions, and the application owns shutdown of that shared container. A standalone

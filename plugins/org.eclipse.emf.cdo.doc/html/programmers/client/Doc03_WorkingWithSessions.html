@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Working with Sessions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Working with Sessions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc02_AnatomyModelObject.html" title="Backward to Anatomy of a Model Object"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_WorkingWithViews.html" title="Forward to Working with Views"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -177,7 +177,7 @@ access, and keep UI or blocking application work outside CDO event callbacks.
 </p>
 
 
-<h2><a name="CreatingAndConfiguringSessions"></a>1&nbsp;&nbsp;Creating and Configuring Sessions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#CreatingAndConfiguringSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="CreatingAndConfiguringSessions"></a>1&nbsp;&nbsp;Creating and Configuring Sessions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23CreatingAndConfiguringSessions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A session configuration is the recipe for connecting to one named repository: it supplies a Net4j connector,
 repository name, credential provider, and session options. Opening it performs the connection and authentication
@@ -186,7 +186,7 @@ session for the lifetime of the logical client connection, then close it to rele
 state. The session configuration does not make application-owned credentials or shared connector lifecycle
 disappear; keep those under their own owners.
 
-<h3><a name="SessionConfigurations"></a>1.1&nbsp;&nbsp;Session Configurations<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionConfigurations" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="SessionConfigurations"></a>1.1&nbsp;&nbsp;Session Configurations<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionConfigurations" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 In order to create a session, you first need to create a session configuration. This configuration
 specifies the connector to use and the repository name to connect to, as well as various other options.
@@ -246,7 +246,7 @@ Once a session is opened, you can still change various options on it, such as en
 disabling passive updates. For more information about session options, refer to the
 <a href="Doc03_WorkingWithSessions.html#SessionOptions" title="Chapter in CDO Model Repository Documentation">Session Options</a> section.
 
-<h3><a name="Net4jConnectors"></a>1.2&nbsp;&nbsp;Net4j Connectors<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#Net4jConnectors" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Net4jConnectors"></a>1.2&nbsp;&nbsp;Net4j Connectors<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23Net4jConnectors" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A Net4j connector carries CDO protocol traffic between the client session and server acceptor. Choose a connector
 factory type that matches the deployment boundary: JVM transport for processes in the same runtime, TCP for a
@@ -371,7 +371,7 @@ session and its owning container.
 More details on the architecture and usage of Net4j connectors can be found in the
 <a href="../../../../org.eclipse.net4j.doc/html/Overview.html" title="Article in Net4j Signaling Platform Documentation">Net4j documentation</a>.
 
-<h3><a name="AuthenticationAndSecurity"></a>1.3&nbsp;&nbsp;Authentication and Security<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#AuthenticationAndSecurity" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="AuthenticationAndSecurity"></a>1.3&nbsp;&nbsp;Authentication and Security<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23AuthenticationAndSecurity" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The repository may require clients to authenticate before allowing access. In this this case, the repository
 administrator configures one or more authentication providers on the server side. When a client opens a session,
@@ -452,7 +452,7 @@ It is not sent over the network in clear text, but is restored to clear text on 
 Server-side authentication and authorization customization is covered in
 <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Article in CDO Model Repository Documentation">Security, Queries, and Specialized Extensions</a>.
 
-<h3><a name="RecoveringFromDisconnects"></a>1.4&nbsp;&nbsp;Recovering from Disconnects<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RecoveringFromDisconnects" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="RecoveringFromDisconnects"></a>1.4&nbsp;&nbsp;Recovering from Disconnects<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RecoveringFromDisconnects" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A normal session closes when its connection is lost. A reconnecting configuration can restore the connection
 and session, while a failover configuration can obtain another server endpoint through the configured failover
@@ -563,7 +563,7 @@ Fail-over sessions use a special network service, called fail-over monitor, to a
 The configuration and operation of the fail-over monitor is beyond the scope of this documentation.
 For more information, refer to <a href="../../../javadoc/org/eclipse/emf/cdo/server/net4j/FailoverMonitor.html" title="Class in org.eclipse.emf.cdo.server.net4j"><code>FailoverMonitor</code></a>.
 
-<h3><a name="PassiveUpdatesAndRefreshing"></a>1.5&nbsp;&nbsp;Passive Updates and Refreshing<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PassiveUpdatesAndRefreshing" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PassiveUpdatesAndRefreshing"></a>1.5&nbsp;&nbsp;Passive Updates and Refreshing<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PassiveUpdatesAndRefreshing" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Passive updates allow sessions to receive notifications about changes in the repository. Understand how to enable
 passive updates and refresh views to keep your client data synchronized.
@@ -682,7 +682,7 @@ Here is an example of how to set the passive update mode:
 Note that the passive update mode can also be changed at any time on a session via the <a href="Doc03_WorkingWithSessions.html#SessionOptions" title="Chapter in CDO Model Repository Documentation">session options</a>.
 For more information about passive update modes, refer to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>PassiveUpdateMode</code></a>.
 
-<h3><a name="WaitingForUpdates"></a>1.6&nbsp;&nbsp;Waiting For Updates<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#WaitingForUpdates" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="WaitingForUpdates"></a>1.6&nbsp;&nbsp;Waiting For Updates<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23WaitingForUpdates" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 In some scenarios, your application may need to wait for a specific update to be processed before proceeding.
 As updates are generally triggered by the server asynchronously, for example when another client commits
@@ -738,7 +738,7 @@ For more information about session events and listeners, refer to the <a href="D
 Note also that applications usually wait for updates on views rather than sessions.
 For more information about views, refer to the <a href="Doc03_WorkingWithSessions.html#ViewManagement" title="Chapter in CDO Model Repository Documentation">View Management</a> section.
 
-<h2><a name="ViewManagement"></a>2&nbsp;&nbsp;View Management<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#ViewManagement" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ViewManagement"></a>2&nbsp;&nbsp;View Management<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23ViewManagement" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Views are the primary mechanism for accessing and working with models that are stored in a CDO repository. They provide
 a consistent and isolated perspective on the repository state, allowing clients to read and, in the case of
@@ -762,7 +762,7 @@ Note that a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.htm
 <li><a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewOpener.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewOpener</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionOpener</code></a>: Provide various methods for opening views and transactions.</li>
 </ul>
 
-<h3><a name="PurposeOfViewsAndTransactions"></a>2.1&nbsp;&nbsp;Purpose of Views and Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PurposeOfViewsAndTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PurposeOfViewsAndTransactions"></a>2.1&nbsp;&nbsp;Purpose of Views and Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PurposeOfViewsAndTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A CDO repository can store many different versions of a model. Each time a change is committed to the repository,
 a new version of the model is created. These versions are organized into branches, allowing for parallel lines of development.
@@ -782,7 +782,7 @@ concurrent development.
 <p>
 For more detailed information on working with views, refer to the <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> section.
 
-<h3><a name="BranchPointsAndTheViewTarget"></a>2.2&nbsp;&nbsp;Branch Points and the View Target<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#BranchPointsAndTheViewTarget" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="BranchPointsAndTheViewTarget"></a>2.2&nbsp;&nbsp;Branch Points and the View Target<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23BranchPointsAndTheViewTarget" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Every view or transaction in CDO is associated with a specific <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>, which determines the exact state of the
 repository that the view exposes. The branch point consists of a <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>branch</code></a> and a
@@ -819,7 +819,7 @@ As transactions always target the branch head, they are always working with the 
 For more information about branches and branch points, see the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchPoint</code></a>
 interface and the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a> facility.
 
-<h3><a name="OpeningViewsAndTransactions"></a>2.3&nbsp;&nbsp;Opening Views and Transactions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#OpeningViewsAndTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="OpeningViewsAndTransactions"></a>2.3&nbsp;&nbsp;Opening Views and Transactions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23OpeningViewsAndTransactions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Views and transactions are created from a session using the various <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>openView()</code></a> and
 <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionContainer"><code>openTransaction()</code></a> methods. These methods allow you to specify the initial branch and/or timestamp
@@ -905,7 +905,7 @@ Here is a summary of the various ways to open views and transactions:
 </ul>
 <p>
 
-<h3><a name="AccessingOpenViews"></a>2.4&nbsp;&nbsp;Accessing Open Views<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#AccessingOpenViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="AccessingOpenViews"></a>2.4&nbsp;&nbsp;Accessing Open Views<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23AccessingOpenViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A session maintains a collection of all currently open views and transactions. You can access this collection using the
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession"><code>getViews()</code></a> method, which returns an unmodifiable list of all open views.
@@ -953,7 +953,7 @@ Example:
 <p>
 
 
-<h3><a name="FindingViewsByID"></a>2.5&nbsp;&nbsp;Finding Views by ID<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#FindingViewsByID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="FindingViewsByID"></a>2.5&nbsp;&nbsp;Finding Views by ID<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23FindingViewsByID" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Each view in a session is assigned a unique integer ID. You can retrieve a view by its ID using the
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.html#getView(int)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession"><code>getView(int viewID)</code></a> method. This is useful for
@@ -996,7 +996,7 @@ Example:
 <p>
 
 
-<h3><a name="ListeningForViewEvents"></a>2.6&nbsp;&nbsp;Listening for View-Related Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#ListeningForViewEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="ListeningForViewEvents"></a>2.6&nbsp;&nbsp;Listening for View-Related Events<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23ListeningForViewEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 A session is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer&lt;CDOView&gt;</code></a> and, hence, emits events when views are opened or closed.
 You can listen for these events by registering an
@@ -1045,7 +1045,7 @@ Example:
 <p>
 
 
-<h3><a name="ClosingViews"></a>2.7&nbsp;&nbsp;Closing Views<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#ClosingViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="ClosingViews"></a>2.7&nbsp;&nbsp;Closing Views<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23ClosingViews" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 It is important to close views when they are no longer needed to free up resources and avoid memory leaks.
 You can close a view by calling its <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html#close()" title="Method in org.eclipse.net4j.util.collection.Closeable"><code>close()</code></a> method.
@@ -1080,7 +1080,7 @@ Example:
 <p>
 
 
-<h2><a name="AuthorizableOperations"></a>3&nbsp;&nbsp;Authorizable Operations<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#AuthorizableOperations" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="AuthorizableOperations"></a>3&nbsp;&nbsp;Authorizable Operations<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23AuthorizableOperations" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 CDO's main focus is on modeling and model management. From this perspective, models are very much like normal <b>data</b>,
 and CDO provides a rich set of features for working with model data, including access control and permissions.
@@ -1196,7 +1196,7 @@ Here is an example of how to use ContextOperationAuthorization:
 <p>
 
 
-<h2><a name="ClientAndServerEntities"></a>4&nbsp;&nbsp;Client and Server Entities<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#ClientAndServerEntities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="ClientAndServerEntities"></a>4&nbsp;&nbsp;Client and Server Entities<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23ClientAndServerEntities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A CDO repository can make arbitrary information available to client sessions in the form of entities.
 Entities have a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Entity.html#name()" title="Method in org.eclipse.net4j.util.collection.Entity"><code>name</code></a> and are contained in a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Entity.html#namespace()" title="Method in org.eclipse.net4j.util.collection.Entity"><code>namespace</code></a>.
@@ -1305,12 +1305,12 @@ Here is an example of how to request and access specific server entities:
 <p>
 For more information about entities, refer to the <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Entity.html" title="Class in org.eclipse.net4j.util.collection"><code>Entity</code></a> interface.
 
-<h2><a name="SessionFacilities"></a>5&nbsp;&nbsp;Session Facilities<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionFacilities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionFacilities"></a>5&nbsp;&nbsp;Session Facilities<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionFacilities" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Sessions provide access to several facilities that manage branches, packages, revisions, and more. Each facility
 offers specialized APIs for advanced repository operations.
 
-<h3><a name="RepositoryInfo"></a>5.1&nbsp;&nbsp;Repository Info<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RepositoryInfo" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="RepositoryInfo"></a>5.1&nbsp;&nbsp;Repository Info<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RepositoryInfo" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Access metadata and status information about the connected repository, including version, capabilities, and
 health. The repository info is available as soon as the session is opened.
@@ -1399,7 +1399,7 @@ triggering fail-over logic:
 
 <p>
 
-<h3><a name="PackageRegistry"></a>5.2&nbsp;&nbsp;Package Registry<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PackageRegistry" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PackageRegistry"></a>5.2&nbsp;&nbsp;Package Registry<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PackageRegistry" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The package registry manages EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>packages</code></a> known to the session. CDO's package registry is a sub-type of EMF's
 package registry. It adds support for dynamic package loading from the repository and ensures that packages are
@@ -1421,7 +1421,7 @@ the package info is added to the <a href="https://download.eclipse.org/modeling/
 <p>
 For more information about package units, refer to <a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageRegistry</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageUnit</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageInfo</code></a>.
 
-<h3><a name="RevisionManager"></a>5.3&nbsp;&nbsp;Revision Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RevisionManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="RevisionManager"></a>5.3&nbsp;&nbsp;Revision Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RevisionManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 The <a href="../../../javadoc/org/eclipse/emf/cdo/explorer/repositories/CDORepositoryManager.html" title="Interface in org.eclipse.emf.cdo.explorer.repositories"><code>revision manager</code></a> loads, caches, and provides object <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.
 It is automatically available in every session and can be accessed using the
@@ -1651,7 +1651,7 @@ a listener for this purpose:
 <p>
 For more information about revision management, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a> interface.
 
-<h4><a name="WorkingWithRevisions"></a>5.3.1&nbsp;&nbsp;Working with Revisions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#WorkingWithRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="WorkingWithRevisions"></a>5.3.1&nbsp;&nbsp;Working with Revisions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23WorkingWithRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 A revision is an immutable object that represents a specific state of a model object at a given period in time.
 A new revision is always created and stored when a new model object is created or an existing model object is modified.
@@ -1812,7 +1812,7 @@ and returns a <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/delt
 <p>
 For more information about revisions, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionData</code></a> interfaces.
 
-<h4><a name="PrefetchingRevisions"></a>5.3.2&nbsp;&nbsp;Pre-fetching Revisions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PrefetchingRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="PrefetchingRevisions"></a>5.3.2&nbsp;&nbsp;Pre-fetching Revisions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PrefetchingRevisions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 In addition to loading revisions on demand, the revision manager supports pre-fetching of related revisions.
 When a revision is loaded, the revision manager can automatically load additional revisions that are
@@ -1857,7 +1857,7 @@ There are different mechanisms available for pre-fetching related revisions:
      of objects in addition to their revisions.
 </ul>
 
-<h3><a name="BranchManager"></a>5.4&nbsp;&nbsp;Branch Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#BranchManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="BranchManager"></a>5.4&nbsp;&nbsp;Branch Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23BranchManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Manage <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchTag.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>tags</code></a> within the repository. Branches enable parallel
 development and versioning. Tags provide meaningful names for specific <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>points</code></a> in a branch's history.
@@ -1874,7 +1874,7 @@ Sub-branches are only supported in <a href="../../../javadoc/org/eclipse/emf/cdo
 <p>
 For more information about branch management, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a> interface.
 
-<h4><a name="WorkingWithBranches"></a>5.4.1&nbsp;&nbsp;Working with Branches<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#WorkingWithBranches" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="WorkingWithBranches"></a>5.4.1&nbsp;&nbsp;Working with Branches<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23WorkingWithBranches" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 Branches are organized in a tree structure, starting from the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchManager"><code>main branch</code></a>. In addition to
 their immutable technical IDs, branches have user-friendly names, which can change over time. Due to the tree structure
@@ -2046,7 +2046,7 @@ Here is an example of how to listen for branch changes:
 <p>
 For more information about branches, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranch</code></a> interface.
 
-<h4><a name="WorkingWithTags"></a>5.4.2&nbsp;&nbsp;Working with Tags<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#WorkingWithTags" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="WorkingWithTags"></a>5.4.2&nbsp;&nbsp;Working with Tags<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23WorkingWithTags" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 Tags are used to mark specific points in a branch's history with meaningful names. Unlike branches, tags do not
 have a hierarchical structure. A tag name is unique within the entire repository. Tags
@@ -2218,7 +2218,7 @@ Here is an example of how to listen for tag changes:
 <p>
 For more information about tags, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchTag.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchTag</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.CDOTagList.html" title="Interface in org.eclipse.emf.cdo.common.branch.CDOBranchManager"><code>CDOTagList</code></a> interfaces.
 
-<h3><a name="FetchRuleManager"></a>5.5&nbsp;&nbsp;Fetch Rule Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#FetchRuleManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="FetchRuleManager"></a>5.5&nbsp;&nbsp;Fetch Rule Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23FetchRuleManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Control how data is fetched from the repository. Learn to define fetch rules for efficient data loading and
 minimize network overhead.
@@ -2363,7 +2363,7 @@ Here is an example of how to use the UI feature analyzer in a transaction:
 See also <a href="Doc03_WorkingWithSessions.html#PrefetchingRevisions" title="Chapter in CDO Model Repository Documentation">Pre-fetching Revisions</a> and <a href="Doc04_WorkingWithViews.html#Units" title="Chapter in CDO Model Repository Documentation">Units</a>.
 For more information about fetch rules, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="Class in org.eclipse.emf.cdo.common.util"><code>CDOFetchRule</code></a> interface.
 
-<h3><a name="CommitInfoManager"></a>5.6&nbsp;&nbsp;Commit Info Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#CommitInfoManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="CommitInfoManager"></a>5.6&nbsp;&nbsp;Commit Info Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23CommitInfoManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Access commit history and metadata. This facility allows you to query, filter, and analyze commit information for
 auditing and tracking changes.
@@ -2479,7 +2479,7 @@ and accessing the detailed change data of commits.
 <p>
 For more information about commit info management, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoManager</code></a> interface.
 
-<h3><a name="UserInfoManager"></a>5.7&nbsp;&nbsp;User Info Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#UserInfoManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="UserInfoManager"></a>5.7&nbsp;&nbsp;User Info Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23UserInfoManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 If a repository is configured to authenticate users, the authenticated session provides access to just the
 <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html#getUserID()" title="Method in org.eclipse.net4j.util.security.IUserAware"><code>user ID</code></a> of the authenticated user. The user info manager allows you to retrieve
@@ -2530,7 +2530,7 @@ Here is an example of how to retrieve user information using the user info manag
 <p>
 For more information about user info management, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOUserInfoManager.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOUserInfoManager</code></a> interface.
 
-<h3><a name="RemoteSessionManager"></a>5.8&nbsp;&nbsp;Remote Session Manager<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RemoteSessionManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="RemoteSessionManager"></a>5.8&nbsp;&nbsp;Remote Session Manager<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RemoteSessionManager" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Monitor and interact with other sessions connected to the repository. Useful for collaboration and administrative
 tasks.
@@ -2667,7 +2667,7 @@ Here is an example of how to subscribe to remote session events using the remote
 <p>
 
 
-<h4><a name="RemoteMessages"></a>5.8.1&nbsp;&nbsp;Exchanging Messages With Other Sessions<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RemoteMessages" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="RemoteMessages"></a>5.8.1&nbsp;&nbsp;Exchanging Messages With Other Sessions<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RemoteMessages" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 Exchanging messages between sessions enables real-time collaboration, notifications, and coordination among users.
 This is useful for chat, alerts, or workflow triggers.
@@ -2783,7 +2783,7 @@ Here is an example of how to receive messages from other sessions using the remo
 <p>
 
 
-<h4><a name="RemoteTopics"></a>5.8.2&nbsp;&nbsp;Collaborating on Shared Topics<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#RemoteTopics" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="RemoteTopics"></a>5.8.2&nbsp;&nbsp;Collaborating on Shared Topics<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23RemoteTopics" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 Shared topics allow users to collaborate by grouping sessions around common subjects, such as projects,
 documents, or activities. Topics provide a way to broadcast messages, track presence, and coordinate work.
@@ -2882,7 +2882,7 @@ Here is an example of how to collaborate on a shared topic using the remote sess
 <p>
 
 
-<h4><a name="IntegratingTopicsWithUI"></a>5.8.3&nbsp;&nbsp;Integrating Topics With Your User Interface<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#IntegratingTopicsWithUI" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
+<h4><a name="IntegratingTopicsWithUI"></a>5.8.3&nbsp;&nbsp;Integrating Topics With Your User Interface<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23IntegratingTopicsWithUI" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h4>
 <p>
 Integrating <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html" title="Interface in org.eclipse.emf.cdo.session.remote"><code>topics</code></a> into your UI allows users to see available topics, track presence,
 and view messages in real time. This enhances collaboration and awareness.
@@ -2982,7 +2982,7 @@ Here is an example of how to integrate topics with your user interface using a c
 <p>
 
 
-<h2><a name="SessionEvents"></a>6&nbsp;&nbsp;Session Events<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionEvents"></a>6&nbsp;&nbsp;Session Events<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionEvents" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Session events report changes to the connection and repository context; they are not model-object notifications.
 Listen to invalidation and recovery events when application state depends on remote commits or a restored
@@ -3048,7 +3048,7 @@ Example of listening for session events:
 <p>
 
 
-<h2><a name="SessionOptions"></a>7&nbsp;&nbsp;Session Options<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionOptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionOptions"></a>7&nbsp;&nbsp;Session Options<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionOptions" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Configure session options to customize behavior such as passive updates, caching, and performance settings.
 <p>
@@ -3060,7 +3060,7 @@ dynamically to configuration changes.
 <p>
 Each option is documented in its own sub-chapter below.
 
-<h3><a name="GeneratedPackageEmulation"></a>7.1&nbsp;&nbsp;Generated Package Emulation<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#GeneratedPackageEmulation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="GeneratedPackageEmulation"></a>7.1&nbsp;&nbsp;Generated Package Emulation<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23GeneratedPackageEmulation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Controls whether the session creates dynamic EMF packages for
 missing generated packages. This is useful when working with models that have not been
@@ -3068,14 +3068,14 @@ generated yet. Can be enabled or disabled. By default, it is disabled.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isGeneratedPackageEmulationEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.isGeneratedPackageEmulationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setGeneratedPackageEmulationEnabled(boolean)</code></a>
 
-<h3><a name="PassiveUpdateEnabled"></a>7.2&nbsp;&nbsp;Passive Update Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PassiveUpdateEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PassiveUpdateEnabled"></a>7.2&nbsp;&nbsp;Passive Update Enabled<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PassiveUpdateEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Controls whether the session receives passive updates from the server.
 Can be enabled or disabled. By default, it is enabled.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.isPassiveUpdateEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setPassiveUpdateEnabled(boolean)</code></a>
 
-<h3><a name="Doc_PassiveUpdateMode"></a>7.3&nbsp;&nbsp;Passive Update Mode<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#Doc_PassiveUpdateMode" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Doc_PassiveUpdateMode"></a>7.3&nbsp;&nbsp;Passive Update Mode<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23Doc_PassiveUpdateMode" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies the mode for passive updates (INVALIDATIONS, CHANGES, ADDITIONS).
 The mode determines the type of updates the session receives from the server. By default, it is set to
@@ -3088,14 +3088,14 @@ The choice of mode depends on the application's requirements for data freshness 
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.getPassiveUpdateMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setPassiveUpdateMode(PassiveUpdateMode)</code></a>
 
-<h3><a name="LockNotificationEnabled"></a>7.4&nbsp;&nbsp;Lock Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#LockNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="LockNotificationEnabled"></a>7.4&nbsp;&nbsp;Lock Notification Enabled<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23LockNotificationEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Controls whether the session receives lock notifications.
 Can be enabled or disabled. By default, it is disabled.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.isLockNotificationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setLockNotificationEnabled(boolean)</code></a>
 
-<h3><a name="Doc_LockNotificationMode"></a>7.5&nbsp;&nbsp;Lock Notification Mode<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#Doc_LockNotificationMode" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="Doc_LockNotificationMode"></a>7.5&nbsp;&nbsp;Lock Notification Mode<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23Doc_LockNotificationMode" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Controls the mode for lock notifications <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#OFF" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>OFF</code></a>,
 <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#IF_REQUIRED_BY_VIEWS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>IF_REQUIRED_BY_VIEWS</code></a>, or <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#ALWAYS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>ALWAYS</code></a>.
@@ -3108,7 +3108,7 @@ The choice of mode depends on the application's requirements for lock awareness 
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.getLockNotificationMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setLockNotificationMode(LockNotificationMode)</code></a>
 
-<h3><a name="CollectionLoadingConfiguration"></a>7.6&nbsp;&nbsp;Collection Loading Configuration<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#CollectionLoadingConfiguration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="CollectionLoadingConfiguration"></a>7.6&nbsp;&nbsp;Collection Loading Configuration<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23CollectionLoadingConfiguration" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Defines how large collections are loaded (e.g., all at once or in chunks).
 Collection loading can impact performance and memory usage. A collection loading policy helps balance
@@ -3122,7 +3122,7 @@ but increases memory usage. The optimal chunk sizes depend on the application's 
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getCollectionLoadingConfig()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getCollectionLoadingConfig()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setCollectionLoadingConfig(CDOCollectionLoadingConfig)</code></a>
 
-<h3><a name="LargeObjectCache"></a>7.7&nbsp;&nbsp;Large Object Cache<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#LargeObjectCache" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="LargeObjectCache"></a>7.7&nbsp;&nbsp;Large Object Cache<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23LargeObjectCache" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Manages caching of large objects to optimize memory usage and performance. You
 can either implement your own cache by implementing the <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="Interface in org.eclipse.emf.cdo.common.lob"><code>CDOLobStore</code></a> interface and setting it via
@@ -3133,7 +3133,7 @@ set to <a href="../../../javadoc/org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getLobCache()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getLobCache()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setLobCache(CDOLobStore)</code></a>
 
-<h3><a name="PermissionUpdater"></a>7.8&nbsp;&nbsp;Permission Updater<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PermissionUpdater" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PermissionUpdater"></a>7.8&nbsp;&nbsp;Permission Updater<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PermissionUpdater" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Controls how to update permissions of <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> when
 passive updates are received or the <a href="../../../javadoc/org/eclipse/emf/spi/cdo/InternalCDOSession.html#updatePermissions()" title="Method in org.eclipse.emf.spi.cdo.InternalCDOSession"><code>InternalCDOSession.updatePermissions()</code></a> method is called.
@@ -3142,7 +3142,7 @@ from the server.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPermissionUpdater()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getPermissionUpdater()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setPermissionUpdater(CDOPermissionUpdater3)</code></a>
 
-<h3><a name="DelegableViewLockEnabled"></a>7.9&nbsp;&nbsp;Delegable View Lock Enabled<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#DelegableViewLockEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="DelegableViewLockEnabled"></a>7.9&nbsp;&nbsp;Delegable View Lock Enabled<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23DelegableViewLockEnabled" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Specifies whether the session supports delegable view locks. All view methods
 are protected from concurrent access by the view's internal reentrant <i>view lock</i>. The deprecated
@@ -3173,7 +3173,7 @@ for the next view that is created in the current thread.
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isDelegableViewLockEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.isDelegableViewLockEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setDelegableViewLockEnabled(boolean)</code></a>
 
-<h3><a name="PrefetchSendMaxRevisionKeys"></a>7.10&nbsp;&nbsp;Prefetch Send Max Revision Keys<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#PrefetchSendMaxRevisionKeys" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
+<h3><a name="PrefetchSendMaxRevisionKeys"></a>7.10&nbsp;&nbsp;Prefetch Send Max Revision Keys<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23PrefetchSendMaxRevisionKeys" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h3>
 <p>
 Revision prefetching can improve performance by reducing
 the number of network round-trips required to load multiple revisions. On the other hand, prefetching
@@ -3187,7 +3187,7 @@ You can also change this default value by setting the system property <code>PREF
 <p>
 API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPrefetchSendMaxRevisionKeys()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getPrefetchSendMaxRevisionKeys()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPrefetchSendMaxRevisionKeys(int)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setPrefetchSendMaxRevisionKeys(int)</code></a>
 
-<h2><a name="SessionProperties"></a>8&nbsp;&nbsp;Session Properties<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionProperties" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionProperties"></a>8&nbsp;&nbsp;Session Properties<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionProperties" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Access and modify session properties to store custom metadata and configuration values.
 <p>
@@ -3201,7 +3201,7 @@ so you can be notified when properties are added, removed, or changed.
 <p>
 The properties are not persisted and are lost when the session is closed.
 
-<h2><a name="SessionRegistry"></a>9&nbsp;&nbsp;Session Registry<a class="help-center-link" href="../../../../index.html?topic=plugins/org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html#SessionRegistry" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="SessionRegistry"></a>9&nbsp;&nbsp;Session Registry<a class="help-center-link" href="../../../../index.html?topic=org.eclipse.emf.cdo.doc/html/programmers/client/Doc03_WorkingWithSessions.html%23SessionRegistry" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionRegistry.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionRegistry</code></a> keeps track of all active sessions in the application.
 It allows you to enumerate, find, and manage sessions. You can also register listeners

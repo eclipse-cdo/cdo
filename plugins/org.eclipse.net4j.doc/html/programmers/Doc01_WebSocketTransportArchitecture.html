@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>WebSocket Transport Architecture<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>WebSocket Transport Architecture<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Programmer's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ExtendingWebSocketTransports.html" title="Forward to Extending WebSocket Transports"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -94,7 +94,7 @@ transport. Practical server and client deployment belongs to the Operator's Guid
 </p>
 
 
-<h2><a name="Provider_Neutral_Core"></a>1&nbsp;&nbsp;Provider-Neutral Core<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Provider_Neutral_Core" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Provider_Neutral_Core"></a>1&nbsp;&nbsp;Provider-Neutral Core<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Provider_Neutral_Core" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The <code>org.eclipse.net4j.ws</code> bundle provides WS/WSS acceptor and connector factories, route descriptions,
 and Net4j connector integration. It does not depend on Jetty. The default <code>jdk</code> message-connection provider
@@ -105,7 +105,7 @@ A provider is selected from the <code>org.eclipse.net4j.messageConnections</code
 connector factories look up that provider in their owning managed container, using the configured provider type or
 the default type <code>jdk</code>.
 
-<h2><a name="Connectors_Acceptors_and_Schemes"></a>2&nbsp;&nbsp;Connectors, Acceptors, and WS/WSS<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Connectors_Acceptors_and_Schemes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Connectors_Acceptors_and_Schemes"></a>2&nbsp;&nbsp;Connectors, Acceptors, and WS/WSS<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Connectors_Acceptors_and_Schemes" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A client <code>IWSConnector</code> represents an outgoing Net4j connection and uses a service URI plus a named
 acceptor route. The server-side <code>IWSAcceptor</code> receives the message connection after the server integration
@@ -168,7 +168,7 @@ factory type must agree. WSS TLS configuration remains in the selected client pr
 <p>
 
 
-<h2><a name="Message_Connection_Boundary"></a>3&nbsp;&nbsp;The Message-Connection Boundary<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Message_Connection_Boundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Message_Connection_Boundary"></a>3&nbsp;&nbsp;The Message-Connection Boundary<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Message_Connection_Boundary" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 A provider factory creates one fresh <code>IMessageConnection</code> for each Net4j connector. It provides asynchronous
 transport operations: start with a listener, send one complete framed buffer, request inbound messages, close
@@ -180,7 +180,7 @@ WebSocket message is not a Net4j channel buffer. The message connector owns Net4
 scheduling, control-channel processing, negotiation, and buffer lifecycle. The provider must preserve the complete
 frame payload and honor the buffer ownership callbacks.
 
-<h2><a name="Connection_Establishment_and_Data_Flow"></a>4&nbsp;&nbsp;Connection Establishment and Data Flow<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Connection_Establishment_and_Data_Flow" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Connection_Establishment_and_Data_Flow"></a>4&nbsp;&nbsp;Connection Establishment and Data Flow<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Connection_Establishment_and_Data_Flow" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The client connector factory parses the endpoint, route, optional cookies, and provider token. It asks the selected
 message-connection factory for a deferred connection and binds it to the Net4j connector. Connector activation starts
@@ -191,7 +191,7 @@ Outbound Net4j buffers are framed by the message connector and submitted through
 complete frames are parsed by the connector and routed to channels. The provider does not choose Net4j channels or
 interpret application protocols.
 
-<h2><a name="Scheduling_Flow_Control_and_Lifecycle"></a>5&nbsp;&nbsp;Scheduling, Flow Control, and Lifecycle<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Scheduling_Flow_Control_and_Lifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Scheduling_Flow_Control_and_Lifecycle"></a>5&nbsp;&nbsp;Scheduling, Flow Control, and Lifecycle<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Scheduling_Flow_Control_and_Lifecycle" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Each accepted provider send has exactly one terminal callback. While the provider owns a submitted buffer, it must
 not mutate or reuse its storage; the callback marks the point after which provider access has ended. A rejected send
@@ -202,7 +202,7 @@ The connector schedules buffer work and applies Net4j receive demand independent
 Provider implementations must not block indefinitely in abort and must complete accepted sends even during shutdown.
 These rules allow Net4j to keep channel and buffer semantics stable across providers.
 
-<h2><a name="Client_and_Server_Integration_Boundaries"></a>6&nbsp;&nbsp;Client and Server Integration Boundaries<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html#Client_and_Server_Integration_Boundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Client_and_Server_Integration_Boundaries"></a>6&nbsp;&nbsp;Client and Server Integration Boundaries<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/programmers/Doc01_WebSocketTransportArchitecture.html%23Client_and_Server_Integration_Boundaries" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 The client provider owns its <code>HttpClient</code> configuration and WebSocket instance. A factory configured with a
 caller-supplied client does not own or close that client. The embedding application controls its lifetime.

@@ -72,7 +72,7 @@ function maximize(id)
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Deploying WebSocket Servers<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
+		<td width="100%"><h1>Deploying WebSocket Servers<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html" target="_top" title="Link to this article in the Help Center">Article Link</a></h1></td>
 		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Operator's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringWebSocketClients.html" title="Forward to Configuring WebSocket Clients"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
@@ -93,7 +93,7 @@ for Jetty listeners, TLS, handler composition, startup, and shutdown.
 </p>
 
 
-<h2><a name="Features_Bundles_and_Acceptors"></a>1&nbsp;&nbsp;Features, Bundles, and Acceptor Configuration<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html#Features_Bundles_and_Acceptors" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Features_Bundles_and_Acceptors"></a>1&nbsp;&nbsp;Features, Bundles, and Acceptor Configuration<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html%23Features_Bundles_and_Acceptors" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Install the <code>org.eclipse.net4j.ws</code> feature for the provider-neutral WS/WSS factories and the JDK client
 provider. Install <code>org.eclipse.net4j.ws.jetty.server</code> when hosting on Jetty; its feature includes the core
@@ -140,7 +140,7 @@ A managed container can also create products programmatically. <code>WSUtil.getA
 <code>WSSUtil.getAcceptor</code> obtain the corresponding factory type; activation registers the active acceptor name
 in the Net4j acceptor manager. Use distinct names for separately exposed routes.
 
-<h2><a name="Hosting_WS_over_HTTP"></a>2&nbsp;&nbsp;Hosting WS over HTTP<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html#Hosting_WS_over_HTTP" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Hosting_WS_over_HTTP"></a>2&nbsp;&nbsp;Hosting WS over HTTP<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html%23Hosting_WS_over_HTTP" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Create an initialized managed container, obtain and activate an acceptor, then construct an application-owned Jetty
 <code>Server</code>, <code>ServerConnector</code>, and <code>ContextHandler</code>. Install
@@ -261,7 +261,7 @@ upgrade must have a decoded path suffix and a <code>Net4jAcceptor</code> header 
 an unknown or mismatched route receive 404; an insecure request sent to a WSS acceptor, or a secure request sent to a
 WS acceptor, is rejected with 403.
 
-<h2><a name="Hosting_WSS_over_HTTPS"></a>3&nbsp;&nbsp;Hosting WSS over HTTPS<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html#Hosting_WSS_over_HTTPS" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Hosting_WSS_over_HTTPS"></a>3&nbsp;&nbsp;Hosting WSS over HTTPS<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html%23Hosting_WSS_over_HTTPS" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 WSS requires a WSS acceptor and a Jetty HTTPS listener. Configure the listener with an application-managed
 <code>SslContextFactory.Server</code>, a key store containing the server private key and certificate chain, and a
@@ -401,7 +401,7 @@ waiting application thread resumes and executes this method's <code>finally</cod
 Net4j cleanup. An embedded Jetty deployment must retain the server and coordinate Jetty and Net4j shutdown through the
 embedding application's lifecycle.
 
-<h2><a name="Multiple_Acceptors_and_Routing_Isolation"></a>4&nbsp;&nbsp;Multiple Acceptors and Routing Isolation<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html#Multiple_Acceptors_and_Routing_Isolation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Multiple_Acceptors_and_Routing_Isolation"></a>4&nbsp;&nbsp;Multiple Acceptors and Routing Isolation<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html%23Multiple_Acceptors_and_Routing_Isolation" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 One upgrade handler can expose several active acceptors. Pass only the names intended for that Jetty context; the Jetty
 adapter snapshots this explicit allow-list and does not choose an arbitrary acceptor from the process-wide registry.
@@ -456,7 +456,7 @@ the handler must be installed before Jetty starts.
 <p>
 
 
-<h2><a name="Startup_Shutdown_and_Failure_Cleanup"></a>5&nbsp;&nbsp;Startup, Shutdown, and Failure Cleanup<a class="help-center-link" href="../../../index.html?topic=plugins/org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html#Startup_Shutdown_and_Failure_Cleanup" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
+<h2><a name="Startup_Shutdown_and_Failure_Cleanup"></a>5&nbsp;&nbsp;Startup, Shutdown, and Failure Cleanup<a class="help-center-link" href="../../../index.html?topic=org.eclipse.net4j.doc/html/operators/Doc01_DeployingWebSocketServers.html%23Startup_Shutdown_and_Failure_Cleanup" target="_top" title="Link to this chapter in the Help Center">Chapter Link</a></h2>
 <p>
 Start the Net4j container and activate each acceptor before creating the Jetty upgrade handler. Start Jetty only after
 its listeners and handler tree are complete. During shutdown, stop admission and drain application work, close any
